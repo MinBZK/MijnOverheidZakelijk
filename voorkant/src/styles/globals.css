@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "RijksoverheidSansWebText";
+  src: url("./fonts/RijksoverheidSansWebText.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-custom:
+      "RijksoverheidSansWebText", "-apple-system", "BlinkMacSystemFont",
+      "Segoe UI", "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+      "Noto Color Emoji", sans-serif;
+  }
+
+  body {
+    font-family: var(--font-custom);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--color-black);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+
+  dialog,
+  dialog::backdrop {
+    transition:
+      display 300ms allow-discrete,
+      overlay 300ms allow-discrete,
+      transform 300ms,
+      opacity 300ms;
+  }
+  dialog {
+    transform: translateX(-288px);
+  }
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+  }
+
+  dialog[open] {
+    transform: translateX(0);
+  }
+  dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    dialog[open] {
+      transform: translateX(-288px);
+    }
+  }
+  @starting-style {
+    dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+}
+
+@theme {
+  --color-primary: #007bc7;
+  --color-secondary: #ccf2ff;
+
+  --color-blue-text: #004ca0; /* links */
+  --color-blue-background: #d9ebf7; /* background */
+  --color-ro-blue: #154273; /* RO-blue */
+  --color-blue-menu-item: #01689b; /* menu items */
+
+  --color-black: rgb(33, 37, 41);
+  --color-gray: dimgray;
+
+  --text-base: 16px;
+  --text-base--line-height: 1.5;
+  --text-base--font-weight: 400;
+
+  --text-sub: 14px;
+  --text-sub--line-height: 16px;
+  --text-sub--color: var(--color-gray);
+
+  --text-h1: 32px;
+  --text-h1--line-height: 1.2;
+  --text-h2: 24px;
+  --text-h2--line-height: 1.2;
+  --text-h3: 20px;
+  --text-h3--line-height: 1.2;
+  --text-h4: 18px;
+  --text-h4--line-height: 1.333;
+  --text-h4--font-weight: 500;
+
+  --breakpoint-xs: 640px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1536px;
+}
+
+.hover-up {
+  display: block;
+  transition: transform 0.2s ease-in-out;
+  transform: translateY(0);
+}
+.hover-up:hover {
+  transform: translateY(-2px);
+}

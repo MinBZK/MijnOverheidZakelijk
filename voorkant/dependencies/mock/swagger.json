@@ -1,0 +1,534 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Zaak Mock Service API",
+    "version": "v1"
+  },
+  "paths": {
+    "/uwv/meldingen": {
+      "post": {
+        "tags": ["UwvZwangerchapsverlof"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ZwangerschapsverlofRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ZwangerschapsverlofRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ZwangerschapsverlofRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uwv/meldingen/{id}": {
+      "get": {
+        "tags": ["UwvZwangerchapsverlof"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uwv/meldingen/{bedrijfsKvk}": {
+      "get": {
+        "tags": ["UwvZwangerchapsverlof"],
+        "parameters": [
+          {
+            "name": "bedrijfsKvk",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UwvMeldingResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UwvMeldingResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UwvMeldingResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uwv/meldingen/{id}/opmerking": {
+      "patch": {
+        "tags": ["UwvZwangerchapsverlof"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateZwangerschapsverlofRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateZwangerschapsverlofRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateZwangerschapsverlofRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UwvMeldingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vng/aanvragen/parkeervergunning": {
+      "post": {
+        "tags": ["Vng"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParkeervergunningAanvraagRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParkeervergunningAanvraagRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParkeervergunningAanvraagRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vng/aanvragen/subsidie": {
+      "post": {
+        "tags": ["Vng"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubsidieAanvraagRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubsidieAanvraagRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubsidieAanvraagRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vng/aanvragen/{id}": {
+      "get": {
+        "tags": ["Vng"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VngAanvraagResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Vng"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/vng/aanvragen/bedrijf/{bedrijfsKvk}": {
+      "get": {
+        "tags": ["Vng"],
+        "parameters": [
+          {
+            "name": "bedrijfsKvk",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VngAanvraagResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VngAanvraagResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VngAanvraagResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AanvraagStatusEnum": {
+        "enum": ["Ontvangen", "InBehandeling", "Goedgekeurd", "Afgewezen"],
+        "type": "string"
+      },
+      "AanvraagTypeEnum": {
+        "enum": ["Parkeervergunning", "Subsidie"],
+        "type": "string"
+      },
+      "ParkeervergunningAanvraagRequest": {
+        "type": "object",
+        "properties": {
+          "bedrijfsKvk": {
+            "type": "string"
+          },
+          "kenteken": {
+            "type": "string"
+          },
+          "motivatie": {
+            "type": "string",
+            "nullable": true
+          },
+          "aanvragerEmail": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubsidieAanvraagRequest": {
+        "type": "object",
+        "properties": {
+          "bedrijfsKvk": {
+            "type": "string"
+          },
+          "subtype": {
+            "type": "string"
+          },
+          "motivatie": {
+            "type": "string",
+            "nullable": true
+          },
+          "aanvragerEmail": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateZwangerschapsverlofRequest": {
+        "type": "object",
+        "properties": {
+          "opmerking": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UwvMeldingResponse": {
+        "type": "object",
+        "properties": {
+          "referentie": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "ontvangenOp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VngAanvraagResponse": {
+        "type": "object",
+        "properties": {
+          "referentie": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "bedrijfsKvk": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/AanvraagTypeEnum"
+          },
+          "subtype": {
+            "type": "string",
+            "nullable": true
+          },
+          "motivatie": {
+            "type": "string",
+            "nullable": true
+          },
+          "kenteken": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/AanvraagStatusEnum"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ZwangerschapsverlofRequest": {
+        "required": ["bedrijfsKvk", "bsn", "eindDatum", "naam", "startDatum"],
+        "type": "object",
+        "properties": {
+          "bsn": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "naam": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "startDatum": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "eindDatum": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bedrijfsKvk": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "opmerking": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

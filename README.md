@@ -15,5 +15,3 @@ Uw kijkt naar de eerste ruwe opzet van dit project, deze repository zal met de v
 - Betere omschrijvingen van services
 - Een docker/podman compose file zodat u na het uitchecken van deze repository direct alles lokaal kunt opstarten
 - Configs van externe systemen die wij draaien (Bijv. Keycloak) zodat dit niet zelf opzet hoeft te worden
-
-test

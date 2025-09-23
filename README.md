@@ -1,17 +1,22 @@
-# MijnOverheidZakelijk 
-MijnOverheidZakelijk is een project in de prototype fase waarmee we ondernemers proberen te helpen al hun gegevens te centraleseren zodat men alles vanuit 1 protal kan regelen.
+# MijnOverheid Zakelijk
 
-Deze repository zal langzamerhand grooienm, hieronder zal een korte omschrijving volgen van de huididge applicaties die nu in het systeem landschap te vinden zijn.
-Voor meer inforatie kunt u terecht op https://www.mijnoverheidzakelijk.nl
+ℹ️ MijnOverheid Zakelijk is momenteel in prototype fase.
 
-1. Voorkant - dit is de front-end applicatie, geschreven in React / Nextjs, waarop de ondernemer kan inloggen en die communiceerd met en tal van back-end applicaties. Voor en live versie van repo zie: https://moza.mijnoverheidzakelijk.nl/
+MijnOverheid Zakelijk biedt zakelijke gebruikers een centraal portaal waar zij al hun gegevens en interacties met de overheid op één plek kunnen terugvinden.
 
+Deze repository is groeiende.
 
+Voor meer informatie kunt u terecht op [mijnoverheidzakelijk.nl](https://www.mijnoverheidzakelijk.nl).
 
-## let op
-Deze repository is voor nu een upstream van een interne gitlab omgeving, deze kan dus achter lopen.
-Uw kijkt naar de eerste ruwe opzet van dit project, deze repository zal met de volgende dingen worden uitgebreid zodat deze makkelijker lokaal ook te draaien is.
-- Meer back-end systemen die ontwikkeld worden
-- Betere omschrijvingen van services
-- Een docker/podman compose file zodat u na het uitchecken van deze repository direct alles lokaal kunt opstarten
-- Configs van externe systemen die wij draaien (Bijv. Keycloak) zodat dit niet zelf opzet hoeft te worden
+1. Voorkant; dit is de front-end applicatie, ontwikkeld met React en Next.js, waarmee zakelijke gebruikers kunnen inloggen. Deze applicatie communiceert met diverse back-end applicaties. De ‘live’ versie hiervan is te vinden op [moza.mijnoverheidzakelijk.nl/](https://moza.mijnoverheidzakelijk.nl/).
+
+## ⚠️ Let op!
+
+Deze repository is momenteel een upstream van een interne GitLab omgeving. Deze kan dus achter lopen.
+
+Dit is een eerste ruwe opzet van het project. Deze repository zal worden uitgebreid met verschillende dingen om het gemakkelijker te maken om deze lokaal te draaien:
+
+- Meer back-endsystemen die in ontwikkeling zijn,
+- Betere omschrijvingen van services,
+- Een Docker/Podman compose-bestand, zodat u na het uitchecken van deze repository alles direct lokaal kunt opstarten,
+- Configuraties van externe systemen die wij beheren (bijvoorbeeld Keycloak), zodat u deze niet zelf hoeft op te zetten.

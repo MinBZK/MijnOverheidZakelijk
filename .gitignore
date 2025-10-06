@@ -2,7 +2,6 @@
 
 # Structurizr
 .structurizr
-workspace.json
 
 # Logs
 *.log

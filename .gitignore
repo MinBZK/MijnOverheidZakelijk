@@ -1,0 +1,21 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Structurizr
+.structurizr
+workspace.json
+
+# Logs
+*.log
+
+# Visual Studio Code
+/.vscode
+/.vs
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/.vs/Structurizr/v17/.wsuo
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+
+
+# Idea
+/.idea

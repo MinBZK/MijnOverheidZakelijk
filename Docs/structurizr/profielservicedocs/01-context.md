@@ -1,4 +1,4 @@
-## Context en doelstelling
+## Context
 
 Er bestaan al voorzieningen waarmee burgers gegevens kunnen beheren (zoals MijnOverheid-profielen), maar ondernemers vallen daar grotendeels buiten. Bovendien is de huidige inrichting vaak monolithisch en niet federatief; data wordt centraal opgeslagen in plaats van bij de bron of eigenaar.
 

@@ -50,20 +50,17 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                 KennisgevingService = container "Kennisgeving service" "Regelt communicatie naar NotifyNL en Kanaalherstel" "" "Kennisgeving Service"
                 NotifyNL = container "NotifyNL" "Verstuurt emails & sms naar gebruikers" "" "Notificatie Service"
             }    
-            ProfielService = softwareSystem "Profiel Service" "Bevat contactvoorkeuren en contactgegevens van een identificeerbaar persoon"  {
-                !docs profielservicedocs
-                ProfielServiceBackend = container "Profiel Service" "Bevat contactvoorkeuren en contactgegevens van een identificeerbaar persoon" "C#"
-                
-                group "Datastores" {
-                        profielServiceDatabase = container "Profiel service Database" "Bevat basis profielinformatie over ondernemingen" "PostgreSQL" "Database"
-                }  
-            }
         }
 
         group "MOZA" {
             MOZA = softwareSystem "Mijn Overheid Zakelijk" "De Mijn Overheid omgeving voor zakelijke gebruikers" {
                 MozFE = container "MOZA Frontend" "Portaal voor de NextJS applicatie" "React" "Front-End"
                 MozBE = container "MOZA Backend" "Webapplicatie waar een zakelijke gebruiker zijn contactvoorkeuren kan beheren" "NextJS" 
+            }
+            ProfielService = softwareSystem "Profiel Service" "Bevat contactvoorkeuren en contactgegevens van een identificeerbaar persoon"  {
+                !docs profielservicedocs
+                ProfielServiceBackend = container "Profiel Service" "Bevat contactvoorkeuren en contactgegevens van een identificeerbaar persoon" "C#"
+                profielServiceDatabase = container "Profiel service Database" "Bevat basis profielinformatie over ondernemingen" "PostgreSQL" "Database"
             }
             IAM = softwareSystem "IAM Gateway" "Identity Provider / Broker en Access Management System (Keycloak)" "Shared System" {
                 !docs iamdocs

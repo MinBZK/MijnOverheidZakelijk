@@ -42,6 +42,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                 }
             }
         }
+        
         group "Logius" {
             KanaalHerstelDienst = softwareSystem "Kanaalhersteldienst " "Verstuurt brieven t.b.v. het kaneelherstel met burgers of ondernemingen" "Existing System" 
             Berichtenbox = softwareSystem "BBO" "De Berichtenbox voor Burgers en Ondernemers" "Existing System"

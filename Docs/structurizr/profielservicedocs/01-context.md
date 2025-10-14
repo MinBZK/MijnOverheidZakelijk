@@ -40,7 +40,7 @@ De Profiel Service stelt burgers en ondernemers in staat om op één vertrouwde 
 
 - Versterken van vertrouwen in digitale dienstverlening (conform het Federatieve Datastelsel)
 - Verlagen van administratieve lasten voor ondernemers
-- Verbeteren van “omnichannel communicatie” tussen overheid en gebruiker
+- Verbeteren van "omnichannel communicatie" tussen overheid en gebruiker
 - Herbruikbaarheid van profieldata over meerdere overheidsdomeinen heen
 - Incrementele groei: klein beginnen en iteratief uitbreiden
 
@@ -58,7 +58,7 @@ De Profiel Service stelt burgers en ondernemers in staat om op één vertrouwde 
 
 - **Federatief Datastelsel** - alignment met de stelselafspraken en -richtlijnen
 - **Data bij de bron** - Profiel Service beheert verwijzingen, niet kopieën
-- **Verifieerbare toegang** - Toegang via IODC/oAuth2, met “consent” en logging
+- **Verifieerbare toegang** - Toegang via IODC/oAuth2, met "consent" en logging
 - **Federatieve identiteit** - Gebruikers kunnen inloggen via hun bestaande middelen (DigiD, eHerkenning en eIDAS)
 - **Interoperabiliteit** - API's volgen Nederlandse standaarden (zoals NORA, NL GOV API Design Rules, HaalCentraal, etc)
 - **Privacy by design** - Minimale dataverwerking en expliciete toestemming
@@ -68,7 +68,7 @@ De Profiel Service stelt burgers en ondernemers in staat om op één vertrouwde 
 - De Profiel Service wordt een bouwsteen binnen het Federatief Datastelsel; een federatief profielregister waar elke overheidsorganisatie op kan aansluiten.
 - Burgers en ondernemers hebben volledige regie over hun gegevens.
 - De overheid kan gepersonaliseerde commnunicatie aanbieden, zonder centrale opslag.
-- De dienst wordt een ondersteunt en/of faciliteert andere diensten, zoals:
+- De dienst ondersteunt en/of faciliteert andere diensten, zoals:
   - MijnServices (VNG)
   - MijnOverheid.nl
   - Digitaal Ondernemersplein

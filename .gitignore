@@ -19,3 +19,7 @@ workspace.json
 
 # Idea
 /.idea
+
+# Ignore macOS Finder files
+*/.DS_Store
+.DS_Store

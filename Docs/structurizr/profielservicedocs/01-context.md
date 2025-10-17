@@ -1,5 +1,9 @@
 # Profielservice
 
+## Visie
+
+De Profiel Service stelt burgers en ondernemers in staat om op één vertrouwde plek hun contactgegevens en communicatievoorkeuren te beheren, en biedt overheidsinstanties via federatieve koppelingen veilige, actuele en herbruikbare profielinformatie voor persoonlijke en efficiënte dienstverlening.
+
 ## Context
 
 Er bestaan al voorzieningen waarmee burgers gegevens kunnen beheren (zoals MijnOverheid-profielen), maar ondernemers vallen daar grotendeels buiten. Bovendien is de huidige inrichting vaak monolithisch en niet federatief; data wordt centraal opgeslagen in plaats van bij de bron of eigenaar.
@@ -21,12 +25,6 @@ De Profiel Service biedt een betrouwbare, gestandaardiseerde en federatieve mani
 De Profiel Service is een (verzameling van) service(s) die gebruikt kan worden in portalen of andere interactiecomponenten.
 
 De Profiel Service bevat persoons- en bedrijfsgegevens die gebruikt kunnen worden voor de communicatie tussen de gebruiker en overheidsorganisaties. Dit zijn zowel contactgegevens (zoals e-mailadres en telefoonnummer) als kanaalvoorkeuren (zoals e-mail, SMS of post) waarover de communicatie tussen de gebruiker en de overheidsorganisatie plaatsvindt.
-
-## Visie
-
-De Profiel Service stelt burgers en ondernemers in staat om op één vertrouwde plek hun contactgegevens en communicatievoorkeuren te beheren, en biedt overheidsinstanties via federatieve koppelingen veilige, actuele en herbruikbare profielinformatie voor persoonlijke en efficiënte dienstverlening.
-
-## Doelstellingen
 
 ### Functionele doelstellingen
 

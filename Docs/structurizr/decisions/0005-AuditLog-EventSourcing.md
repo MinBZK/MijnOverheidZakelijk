@@ -1,4 +1,4 @@
-# 5. Scenario bepaling
+# 5. Event Sourcing
 
 Date: 2025-10-05
 

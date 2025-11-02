@@ -2,7 +2,7 @@
 
 > | **Status**     | 🟢 Conceptversie   |
 > | -------------- | ------------------ |
-> | Laatste update | 31-10-2025         |
+> | Laatste update | 02-11-2025         |
 > | Auteur         | Robin Alderliesten |
 
 ## Visie

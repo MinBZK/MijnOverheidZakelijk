@@ -1,4 +1,4 @@
-# Profielservice
+# Profiel Service
 
 > | **Status**     | 🟢 Conceptversie   |
 > | -------------- | ------------------ |
@@ -22,7 +22,9 @@ Er bestaan al voorzieningen waarmee burgers gegevens kunnen beheren (zoals de Mi
 
 ## Doel
 
-De Profiel Service biedt een betrouwbare, gestandaardiseerde en federatieve manier om persoonlijke en bedrijfsprofielgegevens en (communicatie)voorkeuren vast te leggen, en te delen tussen erkende partijen.
+**Burgers** en **ondernemers** kunnen op één vertrouwde plek hun communicatievoorkeuren en contactgegevens opslaan.
+
+**Overheidsorganisaties** kunnen bij deze centrale service actuele en betrouwbare contactvoorkeuren en contactgegevens ophalen, o.a. voor het versturen van notificaties.
 
 ![Profiel Service Context](embed:ProfielServiceContext)
 
@@ -51,12 +53,7 @@ De Profiel Service bevat persoons- en bedrijfsgegevens en die gebruikt kunnen wo
 
 Om een centrale profiel service voor burgers en ondernemers neer te zetten is het noodzakelijk dat dienstverleners deze adopteren in hun eigen ecosystemen en MijnOmgevingen. Dit betekent dat er een algemeen erkende koppelvlak definitie moet komen op basis van de diverse bestaande unieke identificerende nummers, zoals BSN, KVK, eHerkenning PseudoID's, RSIN, etc, op basis waarvan de ingelogde gebruiker kan worden geidentificeerd en zijn gegevens kunnen worden bevraagd door de dienstverleners binnen hun eigen context.
 
-Een aantal vragen die we daarbij nog beantwoord moeten krijgen zijn;
-
-- PseudoID's - zijn deze uniek over alle dienstverleners heen?
-- TODO: aanvullen
-
-
+In de komende periode werken we aan het verzamelen van informatie en het beantwoorden van vragen die hierover onstaan bij de uitwerking.
 
 ## Gefaseerde ontwikkelstrategie
 

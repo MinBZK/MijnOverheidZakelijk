@@ -1,5 +1,7 @@
 # Kennisgeving en Attendering
 
+[Zie issue #61](https://github.com/MinBZK/MijnOverheidZakelijk/issues/61).
+
 Er is een belangrijk verschil tussen een *kennisgeving* en een *attendering*;
 
 - **Kennisgeving**; een notificatie die verwijst naar een bericht in een berichtenmagazijn (BBO). Deze hebben de Overheid.nl merkidentiteit.

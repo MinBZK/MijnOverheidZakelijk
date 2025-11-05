@@ -128,3 +128,64 @@ Hoewel scenario 2 (RVO) geen gebruik maakt van MOZA en daarom niet is opgenomen 
 In **scenario 8** (UWV) zorgt MOZA ervoor dat de zakelijke gebruiker zijn contactinformatie up-to-date kan houden in de Profiel Service. De UWV raadpleegt deze gegevens vervolgens om kennisgevingen correct te adresseren.
 
 In **scenario 9** (BD) is deze rol vergelijkbaar, maar uitgebreider: de contactinformatie is niet alleen nodig voor de initiële kennisgeving, maar ook voor het kanaalherstelproces indien een notificatie niet succesvol kan worden afgeleverd. Ook in dit scenario speelt MOZA een cruciale rol in het beschikbaar stellen van actuele en betrouwbare gegevens.
+
+### Architectuur ProfielService
+
+#### Gegevensmodel
+
+Het gegevensmodel van de ProfielService is opgebouwd rond twee entiteiten: PARTIJ en CONTACTVOORKEUR.
+
+1. PARTIJ beschrijft een natuurlijke persoon of rechtspersoon die geïdentificeerd kan worden via verschillende identificatietypen, zoals BSN, KVK of RSIN.
+
+2. CONTACTVOORKEUR legt vast hoe en via welk kanaal een partij gecontacteerd wil worden door een bepaalde dienst of organisatie.  
+
+Hiermee kunnen burgers en ondernemers hun voorkeuren zelf beheren en bepalen of communicatie bijvoorbeeld via e-mail of telefoon verloopt, en of dit zakelijk of privé van toepassing is.
+
+Hieronder een tabel van definities die wij aanhouden binnen die entiteiten.
+
+| Attribuut | Omschrijving |
+| --- | --- |
+| PARTIJ | |
+| Id | Unieke identificator van PARTIJ |
+| IdentificatieType | Wijze waarop PARTIJ uniek kan worden geïdentificeerd, te weten: BSN, KVK, RSIN of ander identificatiesysteem |
+| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType |
+
+| Attribuut | Omschrijving |
+| --- | --- |
+| CONTACTVOORKEUR | |
+| Id | Unieke identificator van CONTACTVOORKEUR |
+| VanPartijId | Identificator van de eigenaar uit PARTIJ voor deze CONTACTVOORKEUR |
+| VoorPartijId | Identificator op welke PARTIJ deze CONTACTVOORKEUR betrekking heeft |
+| Scope | Het toepassingsgebied van deze CONTACTVOORKEUR, te weten: Burger of Zakelijk |
+| DienstType | Het organisatie-identificatienummer (OIN) waarop dit CONTACTVOORKEUR mogelijk kan zijn |
+| Type | Het soort CONTACTVOORKEUR, te weten: e-mail of (mobiel) telefoonnummer |
+| Waarde | De door de eigenaar opgegeven waarde voor het CONTACTVOORKEUR-Type |
+| IsGeverifieerd | Indicator of Waarde daadwerkelijk is verbonden met VanPartijId |
+| GeverifieerdAt | Datum waarop IsGeverifieerd voor het laatst is ingesteld |
+
+
+Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ en CONTACTVOORKEUR.  
+
+![Gegevensmodel met Persoon](./images/ArchitectuurProfielService/Gegevensmodel.png "Gegevensmodel")
+
+
+#### Sequentiediagrammen
+De volgende diagrammen illustreren de belangrijkste interacties met de ProfielService.  
+
+1. Dienstverlener bevraagt de ProfielService  
+In dit scenario vraagt een dienstverlener de contactvoorkeuren op van een ondernemer of onderneming.  
+Deze informatie kan de dienstverlener dan gebruiken om kennisgevingen en/of attenderingen correct af te kunnen leveren.
+
+![Sequentiediagram dienstverlener bevraagd profielservice](./images/ArchitectuurProfielService/SeqDienstverlenerBevraagdProfiel.png "Sequentiediagram dienstverlener bevraagd profielservice")
+
+
+2. Ondernemer bekijkt en wijzigt contactvoorkeuren  
+Dit scenario toont hoe een ondernemer via het MOZa-portaal zijn eigen contactvoorkeuren kan inzien en aanpassen.  
+Afhankelijk van de loginmethode (bijv. DigiD of eHerkenning) worden de relevante ondernemingen opgehaald, waarna de ondernemer zijn voorkeuren per onderneming kan beheren.  
+Na het aanpassen van een voorkeur wordt deze wijziging via de ProfielService opgeslagen, en indien van toepassing geverifieerd.  
+
+![Sequentiediagram ondernemer bekijkt en update contactvoorkeuren](./images/ArchitectuurProfielService/SeqOndernemerProfiel.png "Sequentiediagram ondernemer bekijkt en update contactvoorkeuren")
+
+
+Deze scenario’s vormen de basis voor de interacties tussen de ProfielService, dienstverleners en eindgebruikers binnen de keten.
+

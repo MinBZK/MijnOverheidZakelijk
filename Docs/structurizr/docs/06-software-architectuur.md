@@ -165,7 +165,7 @@ Hieronder een tabel van definities die wij aanhouden binnen die entiteiten.
 
 Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ en CONTACTVOORKEUR.
 
-![Gegevensmodel met Persoon](./images/ArchitectuurProfielService/Gegevensmodel.png "Gegevensmodel")
+![Gegevensmodel](./images/ArchitectuurProfielService/Gegevensmodel.png "Gegevensmodel")
 
 <details>
   <summary>Zie mermaid code</summary>

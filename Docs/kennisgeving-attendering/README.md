@@ -1,7 +1,5 @@
 # Kennisgeving en Attendering
 
-[Zie issue #61](https://github.com/MinBZK/MijnOverheidZakelijk/issues/61).
-
 Er is een belangrijk verschil tussen een *kennisgeving* en een *attendering*;
 
 - **Kennisgeving**; een notificatie die verwijst naar een bericht in een berichtenmagazijn (BBO). Deze hebben de Overheid.nl merkidentiteit.
@@ -21,6 +19,4 @@ Er is tevens uitgegaan dat met templates in deze context het stramien van de tek
 
 Ontwerpen zijn puur illustratief voor het concept en de uitleg van het verschil tussen een kennisgeving en een attendering en de speelruimte die organisaties in beiden hebben. Het zijn geen daadwerkelijk visuele ontwerpen. Zo wijkt bijvoorbeeld vanwege het logo de doorloop van het lint aan het einde van de tekstinhoud bij de e-mailnotificatie van de Belastingdienst (04) af. Dit (geen doorloop, doorloop die uitgelijnd is op logo) kunnen keuzes zijn die organisaties zelf, binnen een nog te bepalen consistent stramien, kunnen maken. Ook zijn deze ontwerpen niet gestaafd op de respectievelijke huisstijlen.
 
-Overwogen kan worden om ook een voorbeeld te maken van enkele nieuwsbrieven van (semi-)overheidsorganisaties met verwijzingen naar MOZa (bv. nieuwsbrieven-beheer, wijzigen van gegevens).
-
-
+Er zijn verschillende voorbeelden te bedenken van situaties met notificaties, zoals nieuwsbrieven van (semi-)overheidsorganisaties waarin wordt verwezen naar MOZa — bijvoorbeeld voor het beheren van nieuwsbrief-abonnementen of het wijzigen van persoonsgegevens.

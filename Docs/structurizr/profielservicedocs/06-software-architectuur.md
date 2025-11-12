@@ -23,17 +23,17 @@ Hieronder een tabel van definities die wij aanhouden binnen die entiteiten.
 
 <br/>
 
-| Attribuut       | Omschrijving                                                                           |
-| --------------- | -------------------------------------------------------------------------------------- |
-| CONTACTVOORKEUR |                                                                                        |
-| Id              | Unieke identificator van CONTACTVOORKEUR                                               |
-| VanPartijId     | Identificator van de eigenaar uit PARTIJ voor deze CONTACTVOORKEUR                     |
-| VoorPartijId    | Identificator op welke PARTIJ deze CONTACTVOORKEUR betrekking heeft                    |
-| Scope           | Het toepassingsgebied van deze CONTACTVOORKEUR, te weten: Burger of Zakelijk           |
-| DienstType      | Het organisatie-identificatienummer (OIN) waarop dit CONTACTVOORKEUR mogelijk kan zijn |
-| Type            | Het soort CONTACTVOORKEUR, te weten: e-mail of (mobiel) telefoonnummer                 |
-| Waarde          | De door de eigenaar opgegeven waarde voor het CONTACTVOORKEUR-Type                     |
-| GeverifieerdAt  | Datum waarop IsGeverifieerd voor het laatst is ingesteld                               |
+| Attribuut           | Omschrijving                                                                           |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| CONTACTVOORKEUR     |                                                                                        |
+| Id                  | Unieke identificator van CONTACTVOORKEUR                                               |
+| EigenaarPartijId    | Identificator van de eigenaar uit PARTIJ voor deze CONTACTVOORKEUR                     |
+| BetreffendePartijId | Identificator op welke PARTIJ deze CONTACTVOORKEUR betrekking heeft                    |
+| Scope               | Het toepassingsgebied van deze CONTACTVOORKEUR, te weten: Burger of Zakelijk           |
+| DienstType          | Het organisatie-identificatienummer (OIN) waarop dit CONTACTVOORKEUR mogelijk kan zijn |
+| Type                | Het soort CONTACTVOORKEUR, te weten: e-mail of (mobiel) telefoonnummer                 |
+| Waarde              | De door de eigenaar opgegeven waarde voor het CONTACTVOORKEUR-Type                     |
+| GeverifieerdAt      | Datum waarop IsGeverifieerd voor het laatst is ingesteld                               |
 
 Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ en CONTACTVOORKEUR.
 
@@ -51,8 +51,8 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
 
         CONTACTVOORKEUR {
             int Id PK "NOT NULL"
-            int VanPartijId FK "NOT NULL"
-            int VoorPartijId FK ""
+            int EigenaarPartijId FK "NOT NULL"
+            int BetreffendePartijId FK ""
             enum Scope "NOT NULL"
             enum DienstType ""
             enum Type "NOT NULL"
@@ -62,8 +62,8 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
         }
 
         %% Relationships
-        PARTIJ ||--o{ CONTACTVOORKEUR : "VanPartijId"
-        PARTIJ |o--|{ CONTACTVOORKEUR : "VoorPartijId"
+        PARTIJ ||--o{ CONTACTVOORKEUR : "EigenaarPartijId"
+        PARTIJ |o--|{ CONTACTVOORKEUR : "BetreffendePartijId"
 
 </details>
 

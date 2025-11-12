@@ -9,25 +9,20 @@
 We maken gebruik van de GitFlow branching strategie. Dat wil zeggen dat er elke feature in zijn eigen feature-branch wordt
 ontwikkeld en na review via een Merge Request naar de `develop` branch wordt gemerged. Nieuwe releases worden via een merge request van `develop` naar een `release/x.x.x` branch gepushed. Om de release naar productie te brengen, wordt de `release/x.x.x` branch naar `main` gemerged.
 
-De software wordt door CI/CD pipelines uitgerold naar de omgevingen. Dat is een OpenShift 4.x omgeving. De uitrol naar de ontwikkelomgeving gaat automatisch na een commit op de `develop` branch.
-De uitrol naar pre-productie gaat automatisch na een commit op de `main` branch. De uitrol naar productie vereist een
-handmatige actie van een developer/beheerder in de build pipeline.
+De software wordt via CI/CD-pipelines uitgerold naar de omgevingen. Dit gebeurt binnen een OpenShift 4.x-omgeving.
+De uitrol wordt handmatig gestart via een pipeline in het GitLab-project dat je wilt uitrollen. Deze pipeline downloadt de broncode van de main-branch uit de GitHub-repository, bouwt hieruit een image en pusht deze naar Harbor. Vervolgens wordt ArgoCD genotificeerd dat er een nieuwe sync moet plaatsvinden; Argo synchroniseert daarna de deployment op OpenShift naar de nieuwste versie.
 
-TODO: Plaatjes erbij? Of staat dit al ergens op "de nieuwe confluence"?
+### Gebruikte Tooling
 
-### Algemene SP beheer tooling
-
-| Applicatie     | URL                                                               | Beschrijving                                                                   |
-| -------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| GitLab         | https://gitlab.cicd.s15m.nl                                       | Source Code, Documentatie en pipelines                                         |
-| Harbor         | https://harbor.cicd.s15m.nl                                       | Container registry met repo's, images en charts                                |
-| Nexus          | https://nexus.cicd.s15m.nl                                        | Artefact registry met jouw artefacts                                           |
-| Kibana Test    | https://kibana-test.cicd.s15m.nl                                  | Logging dashboards en alerts TEST clusters                                     |
-| Kibana Prod    | https://kibana.cicd.s15m.nl                                       | Logging dashboards en alerts PROD clusters                                     |
-| Grafana Test   | https://grafana-test.cicd.s15m.nl/                                | Monitoring dashboards en alerts TEST clusters                                  |
-| Grafana Prod   | https://grafana-prod.cicd.s15m.nl/                                | Monitoring dashboards en alerts PROD clusters                                  |
-| OpenShift Test | https://console-openshift-console.apps.test3.gn3.sp.rijksapps.nl/ | Inzien huidige Deployment/Secrets/Certificaten van het Kubernetes TEST cluster |
-| OpenShift Prod | https://console-openshift-console.apps.prod3.gn3.sp.rijksapps.nl/ | Inzien huidige Deployment/Secrets/Certificaten van het Kubernetes PROD cluster |
+| Applicatie     | URL                                                                     | Beschrijving                                                                   |
+| -------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| GitLab         | https://gitlab.cicd.s15m.nl                                             | Infra 'Code', en Pipelines                                                     |
+| Github         | https://github.com/orgs/MinBZK/teams/mijnoverheid-zakelijk/repositories | Source Code, en Documentatie                                                   |
+| Harbor         | https://harbor.cicd.s15m.nl                                             | Container registry met repo's, images en charts                                |
+| Nexus          | https://nexus.cicd.s15m.nl                                              | Artefact registry met jouw artefacts                                           |
+| Kibana Test    | https://kibana-test.cicd.s15m.nl                                        | Logging dashboards en alerts TEST clusters                                     |
+| Grafana Test   | https://grafana-test.cicd.s15m.nl/                                      | Monitoring dashboards en alerts TEST clusters                                  |
+| OpenShift Test | https://console-openshift-console.apps.test3.gn3.sp.rijksapps.nl/       | Inzien huidige Deployment/Secrets/Certificaten van het Kubernetes TEST cluster |
 
 ### Prototype omgeving
 
@@ -39,22 +34,25 @@ De POC omgeving is te vinden op het TEST cluster van Openshift in de logius-moz-
 
 Door ons gehosten applicaties
 
-| Applicatie       | URL                                              | Beschrijving                                                                       |
-| ---------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------- |
-| Landingspagina   | https://www.mijnoverheidzakelijk.nl/             | Landingspagina voor overzicht van de applicaties                                   |
-| Voorkant         | https://voorkant.mijnoverheidzakelijk.nl/        | Voorkant voor de profiel & historie service                                        |
-| Vakapplicatie    | https://vakapplicatie.mijnoverheidzakelijk.nl/   | Mock van een vakapplicatie waar notificatie process wordt gestart                  |
-| Profiel Service  | https://profielservice.mijnoverheidzakelijk.nl/  | Hier worden email gegevens opgeslagen                                              |
-| OMC              | https://omc.mijnoverheidzakelijk.nl/             | Output management component, regelt communicatie tussenn vakapplicatie en NotifyNL |
+| Applicatie      | URL                                            | Beschrijving                                                                       |
+| --------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Landingspagina  | https://www.mijnoverheidzakelijk.nl/           | Landingspagina voor overzicht van de applicaties                                   |
+| Voorkant        | https://moza.mijnoverheidzakelijk.nl/          | Voorkant voor de profiel & historie service                                        |
+| Vakapplicatie   | https://vakapplicatie.mijnoverheidzakelijk.nl/ | Mock van een vakapplicatie waar notificatie process wordt gestart                  |
+| Profiel Service | https://profiel.mijnoverheidzakelijk.nl/       | Hier worden profiel gegevens opgeslagen                                            |
+| Structurizr     | https://docs.mijnoverheidzakelijk.nl/          | Documentatie wordt hier gehost                                                     |
+| Keycloak        | https://start.mijnoverheidzakelijk.nl/         | Wordt gebruikt voor OAuth2 login voor de front end                                 |
+| Zaken           | https://zaken.mijnoverheidzakelijk.nl/         | Mock van een zaakservice waar diverse diensten worden gesimuleerd                  |
+| OMC             | https://omc.mijnoverheidzakelijk.nl/           | Output management component, regelt communicatie tussenn vakapplicatie en NotifyNL |
 
 Extern gebruikte applicaties door prototype omgeving
 
-| Applicatie             | URL                                                                          | Beschrijving                                                     |
-| ---------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| NotifyNL               | https://admin.notifynl.nl/                                                   | Verantwoordelijk voor het versturen van email & sms notificaties |
-| Kanaalherstel Service  | ???                                                                          | Service die brieven voor ons kan versturen i.g.v. uitval         |
-| DigId                  | https://www.digid.nl/                                                        | Digidn                                                           |
-| eHerkenning            | https://www.eherkenning.nl/nl                                                | EHerkenning                                                      |
+| Applicatie            | URL                           | Beschrijving                                                     |
+| --------------------- | ----------------------------- | ---------------------------------------------------------------- |
+| NotifyNL              | https://admin.notifynl.nl/    | Verantwoordelijk voor het versturen van email & sms notificaties |
+| Kanaalherstel Service | ???                           | Service die brieven voor ons kan versturen i.g.v. uitval         |
+| DigId                 | https://www.digid.nl/         | Digidn                                                           |
+| eHerkenning           | https://www.eherkenning.nl/nl | EHerkenning                                                      |
 
 ### Uitrol naar omgeving
 

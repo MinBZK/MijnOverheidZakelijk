@@ -1,6 +1,4 @@
-## Software architectuur
-
-### Architectuur ProfielService
+## Data
 
 #### Gegevensmodel
 

@@ -1,6 +1,6 @@
 ## Data
 
-#### Gegevensmodel
+### Gegevensmodel
 
 Het gegevensmodel van de ProfielService is opgebouwd rond twee entiteiten: PARTIJ en CONTACTVOORKEUR.
 
@@ -136,7 +136,7 @@ contactvoorkeuren:
 }
 ```
 
-#### Sequentiediagrammen
+### Sequentiediagrammen
 
 De volgende diagrammen illustreren de belangrijkste interacties met de ProfielService.
 

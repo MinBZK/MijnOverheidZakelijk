@@ -2,38 +2,79 @@
 
 ### Gegevensmodel
 
-Het gegevensmodel van de ProfielService is opgebouwd rond twee entiteiten: PARTIJ en CONTACTVOORKEUR.
+Het gegevensmodel van de ProfielService is opgebouwd rond de entiteiten **PARTIJ** en **CONTACTGEGEVEN**.
 
-1. PARTIJ beschrijft een natuurlijke persoon of rechtspersoon die geïdentificeerd kan worden via verschillende identificatietypen, zoals BSN, KVK of RSIN.
+1. **PARTIJ** is de basis van een natuurlijke persoon of rechtspersoon. Een partij kan één of meerdere identificaties hebben, zoals BSN, KVK, RSIN of andere vormen van identificatie.
+2. **CONTACTGEGEVEN** legt vast hoe en via welk kanaal een partij gecontacteerd kan worden door een dienst of organisatie.
 
-2. CONTACTVOORKEUR legt vast hoe en via welk kanaal een partij gecontacteerd wil worden door een bepaalde dienst of organisatie.
+Hiermee kunnen burgers en ondernemers vastleggen hoe zij gecontacteerd willen worden, bijvoorbeeld via e-mail of telefoon.
 
-Hiermee kunnen burgers en ondernemers hun voorkeuren zelf beheren en bepalen of communicatie bijvoorbeeld via e-mail of telefoon verloopt, en of dit zakelijk of privé van toepassing is.
+Ter ondersteuning van deze kernfunctionaliteit zijn vier aanvullende entiteiten toegevoegd: **IDENTIFICATIE**, **VOORKEUR**, **DIENSTVERLENER** en **DIENSTVERLENER_AFDELING**.
 
-Hieronder een tabel van definities die wij aanhouden binnen die entiteiten.
+Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteiten.
+
+
+## PARTIJ
 
 | Attribuut           | Omschrijving                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------ |
-| PARTIJ              |                                                                                                              |
+| **PARTIJ**          |                                                                                                              |
 | Id                  | Unieke identificator van PARTIJ                                                                              |
-| IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd, te weten: BSN, KVK, RSIN of ander identificatiesysteem |
+
+
+## CONTACTGEGEVEN
+
+| Attribuut          | Omschrijving                                                                 |
+| ------------------ | ---------------------------------------------------------------------------- |
+| **CONTACTGEGEVEN** |                                                                              |
+| Id                 | Unieke identificator van CONTACTGEGEVEN                                      |
+| PartijId           | Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN           |
+| ScopeId            | Verwijzing naar DIENSTVERLENER_AFDELING waarop de scope betrekking heeft     |
+| Taal               | De taalvoorkeur voor dit CONTACTGEGEVEN                                      |
+| ContactType        | Het soort contactgegeven: e-mail of (mobiel) telefoonnummer                  |
+| Waarde             | De opgegeven contactwaarde (bijv. mailadres)                                 |
+| IsGeverifieerd     | Boolean of de contactgegeven gecontroleerd is                                |
+| GeverifieerdAt     | Datum waarop de verificatiestatus voor het laatst is bijgewerkt              |
+
+## IDENTIFICATIE
+
+| Attribuut           | Omschrijving                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **DIENSTVERLENER**  |                                                                                                              |
+| PartijId            | Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN                                           |
+| IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: BSN, KVK, RSIN of ander identificatiesysteem           |
 | IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType                       |
 
-<br/>
+## VOORKEUR
 
-| Attribuut           | Omschrijving                                                                           |
-| ------------------- | -------------------------------------------------------------------------------------- |
-| CONTACTVOORKEUR     |                                                                                        |
-| Id                  | Unieke identificator van CONTACTVOORKEUR                                               |
-| EigenaarPartijId    | Identificator van de eigenaar uit PARTIJ voor deze CONTACTVOORKEUR                     |
-| BetreffendePartijId | Identificator op welke PARTIJ deze CONTACTVOORKEUR betrekking heeft                    |
-| Scope               | Het toepassingsgebied van deze CONTACTVOORKEUR, te weten: Burger of Zakelijk           |
-| DienstType          | Het organisatie-identificatienummer (OIN) waarop dit CONTACTVOORKEUR mogelijk kan zijn |
-| Type                | Het soort CONTACTVOORKEUR, te weten: e-mail of (mobiel) telefoonnummer                 |
-| Waarde              | De door de eigenaar opgegeven waarde voor het CONTACTVOORKEUR-Type                     |
-| GeverifieerdAt      | Datum waarop IsGeverifieerd voor het laatst is ingesteld                               |
+| Attribuut        | Omschrijving                                                                |
+| ---------------- | --------------------------------------------------------------------------- |
+| **VOORKEUR**     |                                                                             |
+| PartijId         | Verwijzing naar de PARTIJ waarvoor de voorkeur geldt                        |
+| VoorkeurType     | Het type voorkeur (enum), bijvoorbeeld taal of communicatievorm             |
+| Waarde           | De waarde van de voorkeur, afhankelijk van het VoorkeurType                 |
 
-Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ en CONTACTVOORKEUR.
+
+## DIENSTVERLENER
+
+| Attribuut          | Omschrijving                               |
+| ------------------ | ------------------------------------------ |
+| **DIENSTVERLENER** |                                            |
+| Id                 | Unieke identificator van DIENSTVERLENER    |
+| Naam               | Naam van de dienstverlener                 |
+
+
+## DIENSTVERLENER_AFDELING
+
+| Attribuut                   | Omschrijving                                     |
+| --------------------------- | -------------------------------------------------|
+| **DIENSTVERLENER_AFDELING** |                                                  |
+| Id                          | Unieke identificator van de afdeling             |
+| DienstverlenerId            | Verwijzing naar DIENSTVERLENER                   |
+| Beschrijving                | Beschrijving van de afdeling                     |
+
+
+Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ, VOORKEUR, CONTACTGEGEVEN, DIENSTVERLENER, en DIENSTVERLENER_AFDELING.
 
 ![Gegevensmodel](./images/ArchitectuurProfielService/Gegevensmodel.png "Gegevensmodel")
 
@@ -43,25 +84,48 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
     erDiagram
         PARTIJ {
             int Id PK "NOT NULL"
-            enum IdentificatieType "NOT NULL"
-            text IdentificatieNummer "NOT NULL"
         }
 
-        CONTACTVOORKEUR {
+        CONTACTGEGEVEN {
             int Id PK "NOT NULL"
-            int EigenaarPartijId FK "NOT NULL"
-            int BetreffendePartijId FK ""
-            enum Scope "NOT NULL"
-            enum DienstType ""
-            enum Type "NOT NULL"
+            int PartijId FK "NOT NULL"
+            id Scope FK ""
+            enum Taal
+            enum ContactType "NOT NULL"
             text Waarde "NOT NULL"
             bool IsGeverifieerd "NOT NULL"
             date GeverifieerdAt "NOT NULL"
         }
 
+        VOORKEUR {
+            int PartijId PK,FK "NOT NULL"
+            enum VoorkeurType PK "NOT NULL"
+            text Waarde "NOT NULL"
+        }
+
+        IDENTIFICATIE {
+            int PartijId PK,FK "NOT NULL"
+            enum IdentificatieType PK "NOT NULL"
+            text IdentificatieNummer PK "NOT NULL"
+        }
+
+        DIENSTVERLENER {
+            int Id PK "NOT NULL"
+            string Naam "NOT NULL"
+        }
+
+        DIENSTVERLENER_AFDELING {
+            int Id PK "NOT NULL"
+            int DienstverlenerId FK "NOT NULL"
+            string Beschrijving ""
+        }
+
         %% Relationships
-        PARTIJ ||--o{ CONTACTVOORKEUR : "EigenaarPartijId"
-        PARTIJ |o--|{ CONTACTVOORKEUR : "BetreffendePartijId"
+        PARTIJ ||--|{ IDENTIFICATIE : "PartijId"
+        PARTIJ ||--o{ VOORKEUR : "PartijId"
+        PARTIJ ||--o{ CONTACTGEGEVEN : "PartijId"
+        DIENSTVERLENER_AFDELING ||--o{ CONTACTGEGEVEN : "ScopeId"
+        DIENSTVERLENER ||--|{ DIENSTVERLENER_AFDELING : "DienstverlenerId"
 
 </details>
 

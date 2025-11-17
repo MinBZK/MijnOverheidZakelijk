@@ -4,7 +4,7 @@ Date: 2025-11-13
 
 ## Status
 
-Proposed
+Accepted
 
 ## Context
 
@@ -126,7 +126,7 @@ _(de persoon of organisatie waar het contactmiddel betrekking op heeft is eigena
 1. Wanneer een partij mandaat verliest, wordt de contactvoorkeur ongeldig. Omdat de contactvoorkeur eigendom is van de partij die het mandaat verloor, moet die partij zelf de voorkeur aanpassen. Alternatief is dat de profielservice een seintje ontvangt van de mandaatservice (bijv. via een queue).
 2. De partij waarmee de dienstverlener contact wil opnemen, kan niet direct inzien via welke kanalen dit gebeurt. Zij hebben partij X mandaat gegeven, maar weten niet hoe partij X benaderd wil worden. _(Ze kunnen wel zichzelf of meerdere partijen als ontvanger opnemen, zodat de dienstverlener naar beide kan sturen.)_
 3. Ondersteunt scenario’s waarin één contactmiddel namens meerdere betreffende partijen wordt gebruikt, zonder dat het automatisch geldt voor alle communicatie.
-4. AVG-conform: de partij die het contactmiddel beheert, beheert ook de contactvoorkeur.
+4. AVG minder privacygevoelig omdat de persoonsgegevens harder gekoppeld zijn aan de persoon van wie deze zijn.
 5. Complexere implementatie.
 
 **Optie 2 – Betreffende Partij is eigenaar**
@@ -134,7 +134,8 @@ _(de persoon of organisatie waar het contactmiddel betrekking op heeft is eigena
 1. Persoonsgegevens kunnen opgeslagen zijn onder het ‘eigendom’ van een andere partij. Dit brengt risico’s met zich mee rond verwerking van persoonsgegevens zonder expliciete toestemming.
 2. Lastiger om één contactvoorkeur voor meerdere partijen te hergebruiken.
 3. Eenvoudigere implementatie.
+4. Realistischer in uitwerking qua hoe ondernemers & burgers zouden omgaan met de omgeving.
 
 ### Conclusie
 
-TBD
+Wij hebben ervoor gekozen om in deze fase optie 2 te implementeren, omdat wij verwachten dat deze oplossing beter aansluit bij de ondernemers en burgers die van de profielservice gebruik zullen maken. Wel geldt hierbij de kanttekening dat per contactgegeven een taalvoorkeur moet worden vastgelegd, omdat deze kan afwijken van de taalvoorkeur van de partij waaraan het contactgegeven is gekoppeld.

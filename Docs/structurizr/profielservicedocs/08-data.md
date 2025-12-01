@@ -16,65 +16,66 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 
 ## PARTIJ
 
-| Attribuut           | Omschrijving                                                                                                 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------ |
-| **PARTIJ**          |                                                                                                              |
-| Id                  | Unieke identificator van PARTIJ                                                                              |
+| Attribuut  | Omschrijving                    |
+|------------|---------------------------------|
+| **PARTIJ** |                                 |
+| Id         | Unieke identificator van PARTIJ |
 
 
 ## CONTACTGEGEVEN
 
-| Attribuut          | Omschrijving                                                                 |
-| ------------------ | ---------------------------------------------------------------------------- |
-| **CONTACTGEGEVEN** |                                                                              |
-| Id                 | Unieke identificator van CONTACTGEGEVEN                                      |
-| PartijId           | Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN           |
-| ScopeId            | Verwijzing naar DIENSTVERLENER_AFDELING waarop de scope betrekking heeft     |
-| Taal               | De taalvoorkeur voor dit CONTACTGEGEVEN                                      |
-| ContactType        | Het soort contactgegeven: e-mail of (mobiel) telefoonnummer                  |
-| Waarde             | De opgegeven contactwaarde (bijv. mailadres)                                 |
-| IsGeverifieerd     | Boolean of de contactgegeven gecontroleerd is                                |
-| GeverifieerdAt     | Datum waarop de verificatiestatus voor het laatst is bijgewerkt              |
+| Attribuut          | Omschrijving                                                          |
+|--------------------|-----------------------------------------------------------------------|
+| **CONTACTGEGEVEN** |                                                                       |
+| Id                 | Unieke identificator van contactgegeven                               |
+| PartijId           | Identificator van de PARTIJ die eigenaar is van dit contactgegeven    |
+| ScopeId            | Verwijzing naar DIENST waarop de scope betrekking heeft               |
+| Taal               | De taalvoorkeur voor dit contactgegeven                               |
+| ContactType        | Het soort contactgegeven: e-mail of (mobiel) telefoonnummer           |
+| Waarde             | De opgegeven contactwaarde (bijv. mailadres)                          |
+| TerAttentieVan     | Aanhef die gebruikt kan worden bij het gebruik van dit contactgegeven |
+| GeverifieerdAt     | Datum waarop de verificatiestatus voor het laatst is gezet            |
 
 ## IDENTIFICATIE
 
-| Attribuut           | Omschrijving                                                                                                 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------ |
-| **DIENSTVERLENER**  |                                                                                                              |
-| PartijId            | Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN                                           |
-| IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: BSN, KVK, RSIN of ander identificatiesysteem           |
-| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType                       |
+| Attribuut           | Omschrijving                                                                                       |
+|---------------------|----------------------------------------------------------------------------------------------------|
+| **DIENSTVERLENER**  |                                                                                                    |
+| PartijId            | Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN                                 |
+| IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: BSN, KVK, RSIN of ander identificatiesysteem |
+| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType             |
 
 ## VOORKEUR
 
-| Attribuut        | Omschrijving                                                                |
-| ---------------- | --------------------------------------------------------------------------- |
-| **VOORKEUR**     |                                                                             |
-| PartijId         | Verwijzing naar de PARTIJ waarvoor de voorkeur geldt                        |
-| VoorkeurType     | Het type voorkeur (enum), bijvoorbeeld taal of communicatievorm             |
-| Waarde           | De waarde van de voorkeur, afhankelijk van het VoorkeurType                 |
+| Attribuut    | Omschrijving                                                    |
+|--------------|-----------------------------------------------------------------|
+| **VOORKEUR** |                                                                 |
+| PartijId     | Verwijzing naar de PARTIJ waarvoor de voorkeur geldt            |
+| VoorkeurType | Het type voorkeur (enum), bijvoorbeeld taal of communicatievorm |
+| ScopeId      | Verwijzing naar DIENST waarop de scope betrekking heeft         |
+| Waarde       | De waarde van de voorkeur, afhankelijk van het VoorkeurType     |
 
 
 ## DIENSTVERLENER
 
-| Attribuut          | Omschrijving                               |
-| ------------------ | ------------------------------------------ |
-| **DIENSTVERLENER** |                                            |
-| Id                 | Unieke identificator van DIENSTVERLENER    |
-| Naam               | Naam van de dienstverlener                 |
+| Attribuut          | Omschrijving                            |
+|--------------------|-----------------------------------------|
+| **DIENSTVERLENER** |                                         |
+| Id                 | Unieke identificator van DIENSTVERLENER |
+| Naam               | Naam van de dienstverlener              |
 
 
-## DIENSTVERLENER_AFDELING
+## DIENST
 
-| Attribuut                   | Omschrijving                                     |
-| --------------------------- | -------------------------------------------------|
-| **DIENSTVERLENER_AFDELING** |                                                  |
-| Id                          | Unieke identificator van de afdeling             |
-| DienstverlenerId            | Verwijzing naar DIENSTVERLENER                   |
-| Beschrijving                | Beschrijving van de afdeling                     |
+| Attribuut        | Omschrijving                       |
+|------------------|------------------------------------|
+| **DIENST**       |                                    |
+| Id               | Unieke identificator van de dienst |
+| DienstverlenerId | Verwijzing naar DIENSTVERLENER     |
+| Beschrijving     | Beschrijving van de dienst         |
 
 
-Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ, VOORKEUR, CONTACTGEGEVEN, DIENSTVERLENER, en DIENSTVERLENER_AFDELING.
+Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ, VOORKEUR, CONTACTGEGEVEN, DIENSTVERLENER, en DIENST.
 
 ![Gegevensmodel](./images/ArchitectuurProfielService/Gegevensmodel.png "Gegevensmodel")
 

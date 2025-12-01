@@ -23,3 +23,6 @@ workspace.json
 # Ignore macOS Finder files
 */.DS_Store
 .DS_Store
+
+# Dependencies
+node_modules/

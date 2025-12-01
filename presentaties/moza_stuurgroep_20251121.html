@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="nl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Demo MOZa Stuurgroep</title>
+
+        <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+        <link rel="stylesheet" href="/assets/vendor/reveal.js/dist/reveal.css" />
+        <link rel="stylesheet" href="/assets/vendor/reveal.js/dist/white.css" />
+        <link rel="stylesheet" href="/assets/vendor/reveal.js/plugin/highlight/monokai.css" />
+        <link rel="stylesheet" href="/assets/vendor/rijkshuisstijl-community-font/dist/index.css" />
+        <link rel="stylesheet" href="/assets/css/rijkshuisstijl_reveal.css" />
+    </head>
+    <body>
+        <div class="reveal">
+            <img src="/assets/images/rijksoverheid.svg" alt="Logo" id="header-logo" />
+            <div class="slides">
+                <section>
+                    <h1>Demo MOZa Stuurgroep</h1>
+                    <p>21 november 2025</p>
+                </section>
+                <section class="quote-slide">
+                    <div class="quote-container">
+                        <p class="main-quote">Services verbeteren de flow van klantreizen</p>
+                        <p class="quote-source">Verkenning businesscase MijnOverheid Zakelijk - september 2025</p>
+                    </div>
+                </section>
+                <section>
+                    <h2>Fases in de MOZa klantreis</h2>
+                    <img
+                        src="content/moza_stuurgroep_20251121/moza-klantreis-fases.png"
+                        alt="Fases in de MOZa klantreis"
+                        style="margin-top: 50px !important"
+                    />
+                </section>
+                <section>
+                    <h2>Klantreis: "Ik vraag een subsidie aan"</h2>
+                    <img
+                        src="/content/moza_stuurgroep_20251121/moza-klantreis-aanvragen-subsidie.png"
+                        alt="Klantreis: Ik vraag een subsidie aan"
+                        style="max-height: 600px; margin-top: 0px"
+                    />
+                </section>
+                <section
+                    class="hide-logo"
+                    data-background-image="/content/moza_stuurgroep_20251121/moza-klantreis-fases-focus.png"
+                    data-background-size="contain"
+                ></section>
+                <section
+                    data-background-iframe="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/Px77Bmqi8hjlbiPVtJrSkw/MOZa-gebruikerstest?page-id=4511:24905&node-id=4511-31272&viewport=2773,-56,1.29&t=tvW2o7qFW7WQA6oR-8&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=4511:31272&show-proto-sidebar=1&hotspot-hints=0&hide-ui=1"
+                    data-background-interactive
+                    class="hide-logo show-controls"
+                ></section>
+                <section class="hide-logo no-logo-with-header">
+                    <h2>Gebruikersonderzoek prototype</h2>
+                    <video
+                        id="highlight-video"
+                        class="video-with-header"
+                        src="/content/moza_stuurgroep_20251121/highlight_video_MOZa_oktober_2025.mp4"
+                        data-start-time="145.45"
+                        controls
+                        poster="/content/moza_stuurgroep_20251121/moza_gebruikersonderzoek_oktober_2025.png"
+                    ></video>
+                    <img
+                        class="video-fallback"
+                        src="/content/moza_stuurgroep_20251121/moza_gebruikersonderzoek_oktober_2025.png"
+                        alt="Gebruikersonderzoek oktober 2025"
+                        style="display: none; max-height: 70vh; max-width: 95%; object-fit: contain"
+                    />
+                </section>
+                <section
+                    class="hide-logo"
+                    data-background-image="/content/moza_stuurgroep_20251121/moza-klantreis-fases-focus.png"
+                    data-background-size="contain"
+                ></section>
+                <section>
+                    <h2>Alfaversie Profiel Service</h2>
+                    <h3>Afspraken met overheidsorganisaties</h3>
+                    <pre class="mermaid">
+                        sequenceDiagram
+                            participant Dienstverlener
+                            participant Mandaat as Mandaat Service
+                            participant Profiel as Profiel Service
+
+                            Dienstverlener-->>Mandaat: Vraag gemandateerde bsn('s) op voor een activiteit
+                            activate Mandaat
+                            Mandaat-->>Dienstverlener: Gemandateerde bsn('s)
+                            deactivate Mandaat
+
+                            Dienstverlener->>Profiel: GET contactvoorkeuren bsn en/of KVK / RSIN / etc.
+                            activate Profiel
+                            Profiel-->>Dienstverlener: Contactvoorkeur(en) + bsn('s)
+                            deactivate Profiel
+                    </pre>
+                </section>
+                <section>
+                    <h2>Alfaversie Profiel Service</h2>
+                    <h3>Standaardisatie</h3>
+                    <table style="font-size: 0.8em; margin-top: 40px">
+                        <thead>
+                            <tr>
+                                <th>Attribuut</th>
+                                <th>Type</th>
+                                <th>Beschrijving</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Id</td>
+                                <td>UUID</td>
+                                <td>Unieke identificator van CONTACTGEGEVEN</td>
+                            </tr>
+                            <tr>
+                                <td>PartijId</td>
+                                <td>UUID</td>
+                                <td>Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN</td>
+                            </tr>
+                            <tr>
+                                <td>ScopeId</td>
+                                <td>UUID</td>
+                                <td>Verwijzing naar DIENSTVERLENER_AFDELING waarop de scope betrekking heeft</td>
+                            </tr>
+                            <tr>
+                                <td>Taal</td>
+                                <td>enum</td>
+                                <td>De taalvoorkeur voor deze contactinformatie</td>
+                            </tr>
+                            <tr>
+                                <td>ContactType</td>
+                                <td>enum</td>
+                                <td>Het soort contactgegeven: e-mail of (mobiel) telefoonnummer</td>
+                            </tr>
+                            <tr>
+                                <td>Waarde</td>
+                                <td>text</td>
+                                <td>De opgegeven contactwaarde (bijv. e-mailadres)</td>
+                            </tr>
+                            <tr>
+                                <td>GeverifieerdAt</td>
+                                <td>date</td>
+                                <td>Datum waarop de verificatiestatus voor het laatst is bijgewerkt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section
+                    class="hide-logo"
+                    data-background-image="/content/moza_stuurgroep_20251121/moza-bedrijfsgegevens-bijwerken.png"
+                    data-background-size="contain"
+                ></section>
+            </div>
+        </div>
+
+        <script src="/assets/vendor/reveal.js/dist/reveal.js"></script>
+        <script src="/assets/vendor/reveal.js/plugin/notes/notes.js"></script>
+        <script src="/assets/vendor/reveal.js/plugin/highlight/highlight.js"></script>
+        <script src="/assets/vendor/reveal.js-mermaid-plugin/plugin/mermaid/mermaid.js"></script>
+        <script src="/assets/js/reveal-init.js"></script>
+        <script>
+            initReveal({
+                plugins: [RevealNotes, RevealHighlight, RevealMermaid],
+                hash: true,
+                width: "95%",
+                height: "100%",
+                preloadIframes: true,
+                viewDistance: 3,
+            });
+        </script>
+    </body>
+</html>

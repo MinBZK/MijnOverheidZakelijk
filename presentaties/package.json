@@ -1,0 +1,18 @@
+{
+  "name": "slides-moza",
+  "version": "1.0.0",
+  "description": "Presentatie MOZa Pulse",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx browser-sync start --server --files '**/*.html, **/*.css, **/*.js' --port 8080 --no-open"
+  },
+  "dependencies": {
+    "reveal.js": "^5.0.4",
+    "reveal.js-mermaid-plugin": "^11.6.0"
+  },
+  "devDependencies": {
+    "@nl-rvo/design-tokens": "1.7.1",
+    "@rijkshuisstijl-community/font": "^1.1.0",
+    "http-server": "^14.1.1"
+  }
+}

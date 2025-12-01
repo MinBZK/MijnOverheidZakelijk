@@ -1,0 +1,65 @@
+# Justfile voor MOZa presentaties
+
+# Default: toon help
+default: help
+
+# Toon beschikbare commando's
+help:
+    @echo "Beschikbare commando's:"
+    @echo "  just setup        - Installeer dependencies en kopieer assets"
+    @echo "  just copy-assets  - Kopieer vendor assets van node_modules naar assets/"
+    @echo "  just slide        - Start development server op poort 8080"
+    @echo "  just help         - Toon dit helpbericht"
+
+# Kopieer assets van node_modules naar assets directory
+copy-assets:
+    @echo "Kopieer reveal.js assets..."
+    mkdir -p assets/vendor/reveal.js/dist/fonts/source-sans-pro
+    mkdir -p assets/vendor/reveal.js/plugin/highlight
+    mkdir -p assets/vendor/reveal.js/plugin/notes
+    mkdir -p assets/vendor/reveal.js-mermaid-plugin/plugin/mermaid
+    mkdir -p assets/vendor/rijkshuisstijl-community-font/dist/files
+
+    # reveal.js CSS
+    cp node_modules/reveal.js/dist/reveal.css assets/vendor/reveal.js/dist/
+    cp node_modules/reveal.js/dist/theme/white.css assets/vendor/reveal.js/dist/
+    cp node_modules/reveal.js/plugin/highlight/monokai.css assets/vendor/reveal.js/plugin/highlight/
+    # Lege source-sans-pro.css (we gebruiken Fira Sans via rijkshuisstijl)
+    touch assets/vendor/reveal.js/dist/fonts/source-sans-pro/source-sans-pro.css
+
+    # reveal.js JS
+    cp node_modules/reveal.js/dist/reveal.js assets/vendor/reveal.js/dist/
+    cp node_modules/reveal.js/plugin/notes/notes.js assets/vendor/reveal.js/plugin/notes/
+    cp node_modules/reveal.js/plugin/highlight/highlight.js assets/vendor/reveal.js/plugin/highlight/
+
+    # reveal.js mermaid plugin
+    cp node_modules/reveal.js-mermaid-plugin/plugin/mermaid/mermaid.js assets/vendor/reveal.js-mermaid-plugin/plugin/mermaid/
+
+    # Rijkshuisstijl font (alleen latin, weights 300/400/600/700)
+    cp node_modules/@rijkshuisstijl-community/font/dist/index.css assets/vendor/rijkshuisstijl-community-font/dist/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-300-italic.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-400-normal.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-400-italic.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-400-italic.woff assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-600-normal.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-700-normal.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-ext-300-italic.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-ext-400-normal.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-ext-400-italic.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-ext-400-italic.woff assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-ext-600-normal.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+    cp node_modules/@rijkshuisstijl-community/font/dist/files/fira-sans-latin-ext-700-normal.woff2 assets/vendor/rijkshuisstijl-community-font/dist/files/
+
+    @echo "Assets gekopieerd naar assets/vendor/"
+
+# Installeer dependencies en kopieer assets
+setup:
+    npm install
+    just copy-assets
+
+# Start development server
+slide:
+    npx browser-sync start --server --files '**/*.html, **/*.css, **/*.js' --port 8080 --no-open
+
+# Alias voor slide
+alias present := slide

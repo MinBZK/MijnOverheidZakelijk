@@ -13,7 +13,7 @@ Het LDV-standaard helpt hierbij door een uniforme manier te bieden om vast te le
 
 ### Fieldlab 2025 Bestaandzekerheid bij levensgebeurtenissen
 
-Bij dit fieldlab hebben wij nauw samengewerkt met het team van LDV. Hier liepen wij tegen diverse hindernissen aan in het standaard die we samen hebben kunnen oplossen. Uiteindelijk hebben wij hiervoor een open-source java package ontwikkeld waarmee wij, of andere geintereseerde, makkelijk het LDV standaard kunnen implementeren. De java package staat op [Github](https://www.google.com)
+Bij dit fieldlab hebben wij nauw samengewerkt met het team van LDV. Hier liepen wij tegen diverse hindernissen aan in het standaard die we samen hebben kunnen oplossen. Uiteindelijk hebben wij hiervoor een open-source java package ontwikkeld waarmee wij, of andere geintereseerde, makkelijk het LDV standaard kunnen implementeren. De java package staat op [Github](https://github.com/MinBZK/moza-logboekdataverwerking)
 Ook heeft LDV zelf deze package toegelicht hier: [developer.overheid.nl - jakarta](https://developer.overheid.nl/kennisbank/data/standaarden/logboek-dataverwerkingen/implementaties/jakarta)
 
 ## Decision

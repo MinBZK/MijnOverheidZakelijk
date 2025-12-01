@@ -1,0 +1,306 @@
+:root {
+    /* Rijksoverheid kleuren */
+    --rijksoverheid-blauw: #154273;
+    --rijksoverheid-oranje: #e17000;
+    --rijksoverheid-wit: #ffffff;
+    --rijksoverheid-grijs-licht: #f3f3f3;
+    --rijksoverheid-grijs: #cccccc;
+    --rijksoverheid-grijs-donker: #535353;
+    --rijksoverheid-text-donker: #1b1b1b;
+}
+
+.reveal {
+    font-family: "Fira Sans", sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--rijksoverheid-text-donker);
+    background-color: var(--rijksoverheid-wit);
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 700;
+    color: var(--rijksoverheid-blauw);
+    text-transform: none;
+    line-height: 1.2;
+    margin: 0 0 20px 0;
+}
+
+.reveal h1 {
+    font-size: 2.5em;
+}
+
+.reveal h2 {
+    font-size: 1.8em;
+}
+
+/* Fix h2 position at top of slides */
+.reveal .slides section:has(> h2) {
+    top: 0 !important;
+    display: block !important;
+    padding-top: 140px !important;
+}
+
+.reveal .slides section.hide-logo:has(> h2) {
+    padding-top: 10px !important;
+}
+
+.reveal .slides section > h2:first-child {
+    margin-top: 0 !important;
+    margin-bottom: 30px !important;
+    text-align: center;
+}
+
+/* Reduce spacing for images and divs after h2 (only if no custom margin is set) */
+.reveal .slides section > h2 + img:not([style*="margin-top"]),
+.reveal .slides section > h2 + div:not([style*="margin-top"]) {
+    margin-top: 0 !important;
+}
+
+.reveal h3 {
+    font-size: 1.5em;
+}
+
+#header-logo {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 120px;
+    z-index: 1000;
+    margin: 0 !important;
+}
+
+.logo-hidden {
+    display: none !important;
+}
+
+.reveal .controls {
+    color: var(--rijksoverheid-blauw);
+}
+
+.reveal .controls button {
+    color: var(--rijksoverheid-blauw);
+}
+
+.no-logo-with-header {
+    padding: 20px 0px !important;
+}
+
+.no-logo-with-header h2 {
+    margin-bottom: 30px !important;
+}
+
+.reveal-viewport {
+    background-image: url("/assets/images/rijksoverheid.svg");
+    background-size: 12%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.reveal .controls {
+    color: var(--rijksoverheid-blauw);
+}
+
+.block-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.block-item {
+    background: var(--rijksoverheid-blauw);
+    color: var(--rijksoverheid-wit);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 150px;
+}
+
+.block-item h3 {
+    color: var(--rijksoverheid-wit);
+    margin: 0;
+}
+
+.flow-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.flow-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.flow-block {
+    background: var(--rijksoverheid-blauw);
+    color: var(--rijksoverheid-wit);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100px;
+    min-width: 180px;
+}
+
+.flow-block h3 {
+    color: var(--rijksoverheid-wit);
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.flow-arrow {
+    font-size: 2em;
+    color: var(--rijksoverheid-blauw);
+    font-weight: bold;
+}
+
+/* Quote slide styling */
+.quote-slide {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    min-height: 100vh !important;
+}
+
+.quote-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.main-quote {
+    font-size: 2.8em;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--rijksoverheid-blauw);
+    text-align: center;
+    line-height: 1.3;
+    padding-bottom: 60px;
+    position: relative;
+}
+
+.main-quote::before,
+.main-quote::after {
+    content: "";
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 200px;
+    height: 4px;
+    background: var(--rijksoverheid-blauw);
+}
+
+.main-quote::before {
+    top: -30px;
+}
+
+.main-quote::after {
+    bottom: 20px;
+}
+
+.quote-source {
+    font-size: 0.8em;
+    color: var(--rijksoverheid-grijs-donker);
+    text-align: center;
+}
+
+.subtitle-quote {
+    font-style: italic !important;
+    width: 100vw !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 0 !important;
+}
+
+/* Mermaid diagram styling */
+.reveal .mermaid {
+    display: flex !important;
+    justify-content: center !important;
+    width: 80% !important;
+    margin-top: 40px !important;
+}
+
+.reveal .mermaid svg {
+    max-width: 100% !important;
+    max-height: 475px !important;
+    height: auto !important;
+}
+
+/* Mermaid Rijksoverheid styling */
+.reveal .mermaid .actor {
+    fill: var(--rijksoverheid-blauw) !important;
+    stroke: var(--rijksoverheid-blauw) !important;
+}
+
+.reveal .mermaid .actor-line {
+    stroke: var(--rijksoverheid-grijs) !important;
+}
+
+.reveal .mermaid .activation0,
+.reveal .mermaid .activation1,
+.reveal .mermaid .activation2 {
+    fill: var(--rijksoverheid-grijs) !important;
+    stroke: var(--rijksoverheid-grijs) !important;
+}
+
+.reveal .mermaid .messageLine0,
+.reveal .mermaid .messageLine1 {
+    stroke: var(--rijksoverheid-blauw) !important;
+}
+
+.reveal .mermaid svg text.actor tspan {
+    fill: white !important;
+}
+
+/* Video fallback image styling */
+.video-fallback {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Table styling with box and shadow */
+.reveal table {
+    border-collapse: collapse;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.reveal table thead {
+    background: var(--rijksoverheid-blauw);
+    color: white;
+}
+
+.reveal table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.reveal table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}

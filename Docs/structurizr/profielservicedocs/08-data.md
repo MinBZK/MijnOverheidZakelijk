@@ -14,7 +14,7 @@ Ter ondersteuning van deze kernfunctionaliteit zijn vier aanvullende entiteiten 
 Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteiten.
 
 
-## PARTIJ
+#### PARTIJ
 
 | Attribuut  | Omschrijving                    |
 |------------|---------------------------------|
@@ -22,7 +22,7 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | Id         | Unieke identificator van PARTIJ |
 
 
-## CONTACTGEGEVEN
+#### CONTACTGEGEVEN
 
 | Attribuut          | Omschrijving                                                          |
 |--------------------|-----------------------------------------------------------------------|
@@ -36,7 +36,7 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | TerAttentieVan     | Aanhef die gebruikt kan worden bij het gebruik van dit contactgegeven |
 | GeverifieerdAt     | Datum waarop de verificatiestatus voor het laatst is gezet            |
 
-## IDENTIFICATIE
+#### IDENTIFICATIE
 
 | Attribuut           | Omschrijving                                                                                       |
 |---------------------|----------------------------------------------------------------------------------------------------|
@@ -45,7 +45,7 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: BSN, KVK, RSIN of ander identificatiesysteem |
 | IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType             |
 
-## VOORKEUR
+#### VOORKEUR
 
 | Attribuut    | Omschrijving                                                    |
 |--------------|-----------------------------------------------------------------|
@@ -56,7 +56,7 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | Waarde       | De waarde van de voorkeur, afhankelijk van het VoorkeurType     |
 
 
-## DIENSTVERLENER
+#### DIENSTVERLENER
 
 | Attribuut          | Omschrijving                            |
 |--------------------|-----------------------------------------|
@@ -65,7 +65,7 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | Naam               | Naam van de dienstverlener              |
 
 
-## DIENST
+#### DIENST
 
 | Attribuut        | Omschrijving                       |
 |------------------|------------------------------------|

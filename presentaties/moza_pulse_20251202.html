@@ -22,12 +22,12 @@
         style="position: fixed; top: 0; left: 50%; transform: translateX(-50%); height: 120px; z-index: 1000"
       />
       <div class="slides">
-        <section class="show-controls">
+        <section>
           <h1>MOZa Pulse van 2 december</h1>
           <p>Ontdek de laatste ontwikkelingen van MijnOverheid Zakelijk</p>
         </section>
 
-        <section class="show-controls">
+        <section>
           <h2>Agenda</h2>
           <ul>
             <li>Profiel Service Architectuursessies</li>
@@ -38,7 +38,7 @@
         </section>
 
         <section>
-          <section class="show-controls">
+          <section>
             <h2>Profiel Service Architectuursessies</h2>
             <img src="/content/moza_pulse_20251202/architectuur.webp" />
           </section>
@@ -51,7 +51,7 @@
               <li>Frequentie: N.T.B.</li>
             </ul>
           </section>
-          <section class="show-controls hide-logo">
+          <section>
             <h3>Take-aways van deze sessie</h3>
             <ul>
               <li>
@@ -63,7 +63,7 @@
               <li>Eenvoudiger samenwerken aan de documentatie; bijv. aansluiten op Notion van VNG</li>
             </ul>
           </section>
-          <section class="show-controls hide-logo">
+          <section>
             <h3>Take-aways van deze sessie</h3>
             <ul>
               <li>
@@ -82,7 +82,7 @@
           </section>
         </section>
         <section>
-          <section class="show-controls" data-auto-animate data-auto-animate-unmatched="fade">
+          <section  data-auto-animate data-auto-animate-unmatched="fade">
             <h2>Fieldlab "Bestaandszekerheid bij Levensgebeurtenissen" (Digilab)</h2>
 
             <p>
@@ -120,11 +120,11 @@
               </li>
             </ul>
           </section>
-          <section class="show-controls hide-logo">
+          <section class="hide-logo">
             <h3>Federatief Datastelsel (FDS)</h3>
             <img src="/content/moza_pulse_20251202/fds-standaard.jpg" />
           </section>
-          <section class="show-controls hide-logo">
+          <section>
             <h3>Federatieve Service Connectiviteit (FSC)</h3>
             <p>
               Standaard die zorgt voor veilige gegevensuitwisseling tussen (overheids)diensten. Zorgt dat:
@@ -137,12 +137,12 @@
             Zie:
             <a href="https://fsc-standaard.nl/">https://fsc-standaard.nl/</a>
           </section>
-          <section class="show-controls hide-logo">
+          <section class="hide-logo">
             <h3>Federatieve Service Connectiviteit (FSC)</h3>
             <img src="/content/moza_pulse_20251202/fsc-standaard.png" />
             - https://simulatie.datastelsel.nl/environments
           </section>
-          <section class="show-controls">
+          <section>
             <h3>Federatieve ToegangsVerlening (FTV)</h3>
             <p>
               Zorgt dat toegangsverlening via Policy Based Acces Control (PBAC) onder de juiste voorwaarden gebeurt,
@@ -151,7 +151,7 @@
             Zie:
             <a href="https://vng-realisatie.github.io/ftv/">https://vng-realisatie.github.io/ftv/</a>
           </section>
-          <section class="show-controls">
+          <section>
             <h3>Logboek DataVerwerkingen (LDV)</h3>
             <p>
               Zorgt dat gegevensverwerkingen eenduidig worden vastgelegd en onderling - ook over organisaties heen -
@@ -165,11 +165,11 @@
           </section>
         </section>
         <section>
-          <section class="show-controls">
+          <section>
             <h2>Aansluiting Profiel Service op GDI standaarden</h2>
             <img src="/content/moza_pulse_20251202/gdi-standaard.webp" />
           </section>
-          <section class="show-controls">
+          <section>
             <h3>LDV standaard geïmplementeerd in de Profiel Service</h3>
             <ul>
               <li>Feedback op LDV standaard kunnen leveren, waarmee de standaard wordt aangescherpt</li>
@@ -182,7 +182,7 @@
               <li>Opgenomen als referentie implementatie op <a href="https://developer.overheid.nl/kennisbank/data/standaarden/logboek-dataverwerkingen/implementaties/jakarta">developer.overheid.nl</a>.</li>
             </ul>
           </section>
-          <section class="show-controls">
+          <section>
             <h3>Profiel Service via FSC beschikbaar</h3>
             <ul>
               <li>
@@ -195,15 +195,14 @@
               <li>Hiermee kunnen we pilots draaien met afnemende organisaties.</li>
             </ul>
           </section>
-          <section class="show-controls">
+          <section>
             <h3>Linda kan haar contactvoorkeuren (privé en zakelijk) opgeven in de Profiel Service</h3>
             <ul>
               <li>Zowel persoonlijk als zakelijk e-mailadres en telefoonnummer kunnen worden opgegeven</li>
             </ul>
           </section>
         </section>
-        <section class="show-controls">
-          <h2>Demo</h2>
+        <section>
           <img src="/content/moza_pulse_20251202/demo.jpg" />
           <p>Laat maar zien dan!</p>
         </section>
@@ -215,7 +214,7 @@
     <script src="/assets/vendor/reveal.js/plugin/highlight/highlight.js"></script>
     <script src="/assets/js/reveal-init.js"></script>
     <script>
-      initReveal();
+      initReveal({ controls: true });
     </script>
   </body>
 </html>

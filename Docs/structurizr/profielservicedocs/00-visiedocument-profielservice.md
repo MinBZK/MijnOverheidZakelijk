@@ -11,7 +11,7 @@ De Profiel Service stelt burgers en ondernemers in staat om op één vertrouwde 
 
 ## Wat is de Profiel Service
 
-De Profiel Service vormt een essentiële bouwsteen binnen de digitale overheid. Het biedt burgers én ondernemers één centrale plek waar zij hun contactgegevens en communicatievoorkeuren kunnen beheren. Overheidsorganisaties kunnen deze gegevens via gestandaardiseerde API’s opvragen en gebruiken om betrouwbaar, persoonlijk en efficiënt te communiceren — altijd met toestemming van de gebruiker.
+De Profiel Service vormt een bouwsteen binnen de digitale overheid. Het biedt burgers én ondernemers één centrale plek waar zij hun contactgegevens en communicatievoorkeuren kunnen beheren. Overheidsorganisaties kunnen deze gegevens via gestandaardiseerde API’s opvragen en gebruiken om betrouwbaar, persoonlijk en efficiënt te communiceren — altijd met toestemming van de gebruiker.
 
 Waar vandaag de dag veel contactgegevens versnipperd zijn opgeslagen in losse portalen en applicaties, brengt de Profiel Service dit samen in een centraal, goed beheerd register. Daarmee vormt het een solide basis voor federatieve dienstverlening: één betrouwbare bron die andere federatieve services ondersteunt met actuele en verifieerbare profielinformatie.
 

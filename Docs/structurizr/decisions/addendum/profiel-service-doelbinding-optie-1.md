@@ -1,4 +1,4 @@
-# Doelbinding voor de Profiel Service
+# Doelbinding voor de Profiel Service als centraal register
 
 > **Versie:** concept 0.1<br/>
 > **Doelgroep:** Juridische afdeling, architecten, product owners
@@ -134,5 +134,3 @@ Met de bovenstaande inrichting wordt doelbinding:
 - controleerbaar en auditeerbaar.
 
 Dit document vormt de basis voor juridische toetsing en verdere uitwerking in het architectuur- en beveiligingsdossier.
-
-TODO: Dick Bruinsma of Elmar benaderen

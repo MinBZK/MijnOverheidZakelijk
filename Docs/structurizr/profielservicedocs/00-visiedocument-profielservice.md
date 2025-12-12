@@ -110,10 +110,4 @@ Samen maken we van de Profiel Service niet alleen een technische voorziening, ma
 ## Documentatie & Bronnen
 
 - **[MijnOverheid Zakelijk startpagina](https://mijnoverheidzakelijk.nl)** - Meer informatie en documentatie over het programma MijnOverheid Zakelijk is te vinden via onze startpagina.
-- **[GitHub](https://github.com/orgs/MinBZK/teams/mijnoverheid-zakelijk)** - Onze oplossingen worden Open Source ontwikkeld en zijn te vinden op de Github van MinBZK
-
-## Contact
-
-Programma MijnOverheid Zakelijk  
-Ministerie van Binnenlandse Zaken en Koninkrijksrelaties  
-info@mijnoverheidzakelijk.nl (mailbox aanmaken?)
+- **[Profiel Service op GitHub](https://github.com/orgs/MinBZK/teams/mijnoverheid-zakelijk)** - Onze oplossingen worden Open Source ontwikkeld en zijn te vinden op de Github van MinBZK

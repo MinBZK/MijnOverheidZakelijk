@@ -101,7 +101,7 @@ Op langere termijn groeit de Profiel Service uit tot een generieke bouwsteen bin
 
 ## Oproep tot samenwerking
 
-De ontwikkeling van de Profiel Service vraagt intensieve samenwerking tussen beleidsmakers, ontwerpers, ontwikkelaars en uitvoeringsorganisaties.  
+De ontwikkeling van de Profiel Service vraagt samenwerking tussen beleidsmakers, ontwerpers, ontwikkelaars en uitvoeringsorganisaties.  
 Alleen door gezamenlijk standaarden te ontwikkelen, adoptie te stimuleren en kennis te delen ontstaat een breed gedragen voorziening die écht waarde toevoegt.
 
 Wij nodigen daarom alle overheidsorganisaties uit om mee te denken, mee te bouwen en mee te leren.  

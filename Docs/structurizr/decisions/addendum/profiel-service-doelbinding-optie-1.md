@@ -21,7 +21,19 @@ Voor de Profiel Service betekent dit dat elke verwerking van persoonsgegevens ge
 
 ## 3. Architectuuroverzicht
 
+```mermaid
+sequenceDiagram
+    participant Dienstverlener@{"type" : "collections"}
+    participant PS as Profiel Service
+    participant NS as Notificatie Service
+    actor BO as Burger of Ondernemer
 
+    Dienstverlener ->> PS: Stuurt identificatienummer
+    PS -->> Dienstverlener: Levert contactvoorkeuren
+    Dienstverlener ->> NS: Stuurt inhoud notificatiebericht + voorkeurskanaal
+    NS ->> BO: Stuurt bericht via voorkeurskanaal
+    NS -->> Dienstverlener: Status aflevering (OK/NOK)
+```
 
 ## 4. Toepassing van doelbinding binnen de Profiel Service
 

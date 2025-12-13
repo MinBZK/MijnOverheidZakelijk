@@ -61,7 +61,7 @@ sequenceDiagram
   - het bericht dat moet worden verstuurd,
   - het doel en de wettelijke grondslag voor het versturen van deze notificatie.
 - Verwerkt zelf **geen contactgegevens** (zoals e‑mail, telefoonnummer of postadres).
-- Ontvangt alleen een afleverstatus (OK/NOK). (OK/NOK).
+- Ontvangt alleen een afleverstatus (bijv. OK/NOK of meer uitgebreide). (OK/NOK).
 
 ### 4.2 Profiel Service (PS)
 

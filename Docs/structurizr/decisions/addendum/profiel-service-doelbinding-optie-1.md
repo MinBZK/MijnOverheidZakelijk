@@ -19,9 +19,13 @@ Voor de Profiel Service betekent dit dat elke verwerking van persoonsgegevens ge
 - een gerechtvaardigde grondslag (wettelijke taak of toestemming);
 - een controleerbare en auditeerbare registratie.
 
-## 3. Toepassing van doelbinding binnen de Profiel Service
+## 3. Architectuuroverzicht
 
-### 3.1 Overzicht van dataverwerkingen
+
+
+## 4. Toepassing van doelbinding binnen de Profiel Service
+
+### 4.1 Overzicht van dataverwerkingen
 
 De Profiel Service verwerkt o.a. de volgende gegevens:
 - Contactgegevens (e-mail, telefoonnummer)
@@ -30,7 +34,7 @@ De Profiel Service verwerkt o.a. de volgende gegevens:
 
 Elke verwerking is gekoppeld aan een doel. Dit wordt in de architectuur vastgelegd en afgedwongen.
 
-### 3.2 Relatie tussen instellingen, doeleinden en gegevens
+### 4.2 Relatie tussen instellingen, doeleinden en gegevens
 
 ```mermaid
 erDiagram
@@ -40,7 +44,7 @@ erDiagram
     ProfielService ||--o{ Datavelden : "beheert velden"
 ```
 
-### 3.3 Doelbinding bij API-toegang
+### 4.3 Doelbinding bij API-toegang
 
 Elke API-call naar de Profiel Service bevat:
 	•	de identiteit van de verzoekende dienst;
@@ -60,7 +64,7 @@ flowchart TD
     D --> E[Gegevens verstrekken]
 ```
 
-## 4. Doelregistratie
+## 5. Doelregistratie
 
 Elke aangesloten dienst moet vooraf:
 1.	de doeleinden registreren waarvoor zij gegevens willen verwerken;
@@ -72,7 +76,7 @@ Voorbeeld van doelen:
 - "Informeren over status van aanvragen" (wettelijke taak)
 - "Ontvangen van notificaties voor MijnOverheid Berichtenbox" (toestemming)
 
-## 5. Logging en auditing
+## 6. Logging en auditing
 
 Alle verwerkingen worden gelogd op basis van de standaard Logboek Dataverwerkingen (LDV), zie: https://logius-standaarden.github.io/logboek-dataverwerkingen/. Hiermee wordt van alle verwerkingen op een overheidsbreed uitleesbare standaard het noodzakelijke vastgelegd:
 - dienst (wie)
@@ -85,7 +89,7 @@ Auditors moeten kunnen nagaan dat:
 - de dienst correct geautoriseerd is;
 - alleen gegevens zijn verstrekt die bij dat doel horen.
 
-## 6. Borging en handhaving
+## 7. Borging en handhaving
 
 Doelbinding wordt geborgd via:
 - technische handhaving in API-gateways en services;
@@ -99,7 +103,7 @@ Bij overtreding:
 - kan het doel geschorst worden;
 - volgt melding aan de verantwoordelijke FG.
 
-## 7. Voorbeeld instellingsprofiel met doelen en toegestane velden
+## 8. Voorbeeld instellingsprofiel met doelen en toegestane velden
 
 ```mermaid
 erDiagram
@@ -125,12 +129,10 @@ Voorbeeld:
 | Versturen van besluiten   | AWB                  | e-mail, telefoon, voorkeur kanaal |
 | Notificaties MijnOverheid | Toestemming          | e-mail, telefoon                  |
 
-## 8. Conclusie
+## 9. Conclusie
 
 Met de bovenstaande inrichting wordt doelbinding:
 - transparant beschreven,
 - juridisch toetsbaar,
 - technisch afdwingbaar,
 - controleerbaar en auditeerbaar.
-
-Dit document vormt de basis voor juridische toetsing en verdere uitwerking in het architectuur- en beveiligingsdossier.

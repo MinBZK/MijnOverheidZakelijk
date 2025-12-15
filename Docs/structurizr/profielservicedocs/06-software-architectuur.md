@@ -51,7 +51,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 
 </details>
 
-## DigiD
+### DigiD
 
 | Attribuut       | Aanwezigheid  | Opmerkingen                |
 |-----------------|---------------|----------------------------|
@@ -64,7 +64,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | Adres           | Optioneel     | Van BRP                    |
 | Zekerheidniveau | **Verplicht** | Basic / Substantial / High |
 
-## eHerkenning
+### eHerkenning
 
 | Attribuut        | Aanwezigheid         | Opmerkingen                                                                      |
 |------------------|----------------------|----------------------------------------------------------------------------------|
@@ -80,8 +80,8 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | TTR-BD           | Optioneel??          | BD en Douane uitgereikt nummer aan restgroepen die niet in handelsregister staan |
 | eIDas            | Optioneel??          | eIDas loopt via eHerkenning, nog uitzoeken hoe dit precies werkt in praktijk.    |
 
-## eIDas
-### Persoon
+### eIDas
+#### Persoon
 | Attribuut        | Aanwezigheid          | Notitie                                |
 |------------------|-----------------------|----------------------------------------|
 | PersonIdentifier | **Verplicht**         | Unique identifier for a natural person |
@@ -94,7 +94,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | LPID             | **Moet afwezig zijn** | Legal-person identifier not allowed    |
 | LEI              | **Moet afwezig zijn** | Business-only identifier               |
 
-### Organisatie
+#### Organisatie
 
 | Attribuut             | Aanwezigheid          | Notitie                               |
 |-----------------------|-----------------------|---------------------------------------|
@@ -110,7 +110,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | FamilyName            | **Moet afwezig zijn** | Natural-person attribute              |
 | DateOfBirth           | **Moet afwezig zijn** | Natural-person attribute              |
 
-### Regels
+#### Regels
 
 | Regel                  | Beschrijving                                                                         |
 |------------------------|--------------------------------------------------------------------------------------|

@@ -54,7 +54,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 ## DigiD
 
 | Attribuut       | Aanwezigheid  | Opmerkingen                |
-| --------------- | ------------- | -------------------------- |
+|-----------------|---------------|----------------------------|
 | BSN             | **Verplicht** | Burgerservicenummer        |
 | Voornaam        | **Verplicht** | Van BRP                    |
 | Achternaam      | **Verplicht** | Van BRP                    |
@@ -67,7 +67,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 ## eHerkenning
 
 | Attribuut        | Aanwezigheid         | Opmerkingen                                                                      |
-| ---------------- | -------------------- | -------------------------------------------------------------------------------- |
+|------------------|----------------------|----------------------------------------------------------------------------------|
 | KvKNummer        | **Verplicht**        | Kamer van koophandel nummer                                                      |
 | WettelijkeNaam   | **Verplicht**        | Geregistreerde naam                                                              |
 | Rechtsvorm       | Optioneel            | BV, NV, Stichting, etc.                                                          |
@@ -81,45 +81,42 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | eIDas            | Optioneel??          | eIDas loopt via eHerkenning, nog uitzoeken hoe dit precies werkt in praktijk.    |
 
 ## eIDas
-
 ### Persoon
-
-| Attribuut        | Aanwezigheid       | Notitie                                |
-| ---------------- | ------------------ | -------------------------------------- |
-| PersonIdentifier | **Verplicht**      | Unique identifier for a natural person |
-| GivenName        | **Verplicht**      | First name                             |
-| FamilyName       | **Verplicht**      | Last name                              |
-| DateOfBirth      | **Verplicht**      | ISO 8601                               |
-| PlaceOfBirth     | Optioneel          | As defined by schema                   |
-| Gender           | Optioneel          | Schema-defined                         |
-| Nationality      | Optioneel          | ISO 3166-1                             |
-| LPID             | **Must be absent** | Legal-person identifier not allowed    |
-| LEI              | **Must be absent** | Business-only identifier               |
+| Attribuut        | Aanwezigheid          | Notitie                                |
+|------------------|-----------------------|----------------------------------------|
+| PersonIdentifier | **Verplicht**         | Unique identifier for a natural person |
+| GivenName        | **Verplicht**         | First name                             |
+| FamilyName       | **Verplicht**         | Last name                              |
+| DateOfBirth      | **Verplicht**         | ISO 8601                               |
+| PlaceOfBirth     | Optioneel             | As defined by schema                   |
+| Gender           | Optioneel             | Schema-defined                         |
+| Nationality      | Optioneel             | ISO 3166-1                             |
+| LPID             | **Moet afewzig zijn** | Legal-person identifier not allowed    |
+| LEI              | **Moet afewzig zijn** | Business-only identifier               |
 
 ### Organisatie
 
-| Attribuut             | Aanwezigheid       | Notitie                               |
-| --------------------- | ------------------ | ------------------------------------- |
-| LPID                  | **Verplicht**      | Legal Person Identifier               |
-| LegalName             | **Verplicht**      | Registered legal name                 |
-| LegalForm             | Optioneel          | e.g. BV, GmbH, SARL                   |
-| RegisteredAddress     | **Verplicht**      | Official registered address           |
-| CountryOfRegistration | **Verplicht**      | ISO 3166-1 alpha-2                    |
-| BusinessRegisterID    | **Verplicht**      | National business registry number     |
-| LEI                   | Optioneel          | Financial-sector use cases            |
-| PersonIdentifier      | **Must be absent** | Natural-person identifier not allowed |
-| GivenName             | **Must be absent** | Natural-person attribute              |
-| FamilyName            | **Must be absent** | Natural-person attribute              |
-| DateOfBirth           | **Must be absent** | Natural-person attribute              |
+| Attribuut             | Aanwezigheid          | Notitie                               |
+|-----------------------|-----------------------|---------------------------------------|
+| LPID                  | **Verplicht**         | Legal Person Identifier               |
+| LegalName             | **Verplicht**         | Registered legal name                 |
+| LegalForm             | Optioneel             | e.g. BV, GmbH, SARL                   |
+| RegisteredAddress     | **Verplicht**         | Official registered address           |
+| CountryOfRegistration | **Verplicht**         | ISO 3166-1 alpha-2                    |
+| BusinessRegisterID    | **Verplicht**         | National business registry number     |
+| LEI                   | Optioneel             | Financial-sector use cases            |
+| PersonIdentifier      | **Moet afewzig zijn** | Natural-person identifier not allowed |
+| GivenName             | **Moet afewzig zijn** | Natural-person attribute              |
+| FamilyName            | **Moet afewzig zijn** | Natural-person attribute              |
+| DateOfBirth           | **Moet afewzig zijn** | Natural-person attribute              |
 
 ### Regels
 
 | Regel                  | Beschrijving                                                                         |
-| ---------------------- | ------------------------------------------------------------------------------------ |
+|------------------------|--------------------------------------------------------------------------------------|
 | Subject Type           | Credentials vertegenwoordigt **ofwel** Natuurlijk Persoon **of** Rechtspersoon       |
 | Identifier Exclusivity | PersonIdentifier en LPID zijn **wederzijds uitsluitend**                             |
 | Attribute Exclusivity  | Natuurlijk persoon en rechtspersoon attributen **mogen niet gemengd worden**         |
 | Representation         | Een persoon die namens een bedrijf handelt wordt via aparte credentials teruggegeven |
 | LEI Usage              | Optioneel en nooit de enige vereiste identifier                                      |
 | Validation             | Weiger credentials met gemengde subject attributen                                   |
-

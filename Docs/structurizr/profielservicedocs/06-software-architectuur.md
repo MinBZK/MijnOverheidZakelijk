@@ -74,7 +74,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | BSN              | **Bij uitzondering** | Indien doelbinding                                                               |
 | RSIN             | **Bij uitzondering** | Indien niet zzp                                                                  |
 | PsuedoID         | **Bij uitzondering** | Indien niet gerechtigd op bsn                                                    |
-| Psuedo           | **Verplicht**        | Indien niet gerechtigd op bsn                                                    |
+| Psuedo           | **Bij uitzondering** | Indien niet gerechtigd op bsn                                                    |
 | Vestigingsnummer | **Bij uitzondering** | Indien gemachtigd op een specifieke vestiging                                    |
 | PROBAS           | Optioneel??          | BD nummer voor organisaties buiten het Handelsregister                           |
 | TTR-BD           | Optioneel??          | BD en Douane uitgereikt nummer aan restgroepen die niet in handelsregister staan |
@@ -91,8 +91,8 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | PlaceOfBirth     | Optioneel             | As defined by schema                   |
 | Gender           | Optioneel             | Schema-defined                         |
 | Nationality      | Optioneel             | ISO 3166-1                             |
-| LPID             | **Moet afewzig zijn** | Legal-person identifier not allowed    |
-| LEI              | **Moet afewzig zijn** | Business-only identifier               |
+| LPID             | **Moet afwezig zijn** | Legal-person identifier not allowed    |
+| LEI              | **Moet afwezig zijn** | Business-only identifier               |
 
 ### Organisatie
 
@@ -105,10 +105,10 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | CountryOfRegistration | **Verplicht**         | ISO 3166-1 alpha-2                    |
 | BusinessRegisterID    | **Verplicht**         | National business registry number     |
 | LEI                   | Optioneel             | Financial-sector use cases            |
-| PersonIdentifier      | **Moet afewzig zijn** | Natural-person identifier not allowed |
-| GivenName             | **Moet afewzig zijn** | Natural-person attribute              |
-| FamilyName            | **Moet afewzig zijn** | Natural-person attribute              |
-| DateOfBirth           | **Moet afewzig zijn** | Natural-person attribute              |
+| PersonIdentifier      | **Moet afwezig zijn** | Natural-person identifier not allowed |
+| GivenName             | **Moet afwezig zijn** | Natural-person attribute              |
+| FamilyName            | **Moet afwezig zijn** | Natural-person attribute              |
+| DateOfBirth           | **Moet afwezig zijn** | Natural-person attribute              |
 
 ### Regels
 

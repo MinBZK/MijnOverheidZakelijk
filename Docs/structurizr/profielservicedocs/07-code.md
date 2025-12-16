@@ -1,14 +1,100 @@
-## Software architectuur
+## Code
 
-> De Software Architectuur is de "big picture view" en beschrijft de structuur van de software.
+> Ook wel "Development View" of "Implementation View" genoemd, waarin dieper kan worden ingegaan op de implementatie van specifieke componenten van de software.
 >
-> Zie ook: [Inhoud guidelines Software Architectuur](https://structurizr.com/help/documentation/software-architecture)
+> Zie ook: [Inhoud guidelines Code](https://structurizr.com/help/documentation/code)
+
+### Profiel Beheren
+
+Hierin staan de patronen beschreven over hoe een zakelijke gebruiker zijn profiel zou beheren.
+
+#### Profiel bekijken
+
+![Profiel bekijken](./images/ArchitectuurProfielService/SeqContactgegevensBekijken.png "Profiel bekijken")
+
+<details>
+  <summary>Zie mermaid code</summary>
+  
+    sequenceDiagram
+        actor ZakelijkGebruiker
+        ZakelijkGebruiker->>MijnOverheid Zakelijk: Navigeert naar Contactgegevens
+        activate MijnOverheid Zakelijk
+        MijnOverheid Zakelijk->>Profiel service:Haalt contactgegevens op
+        deactivate MijnOverheid Zakelijk
+        activate Profiel service
+        Profiel service->>Logboek Dataverwerking: READ log wegschrijven
+        deactivate Profiel service
+        activate Logboek Dataverwerking
+        Logboek Dataverwerking-->>Profiel service: Ok
+        deactivate Logboek Dataverwerking
+        activate Profiel service
+        Profiel service-->>MijnOverheid Zakelijk: Geeft contactgegevens terug
+        deactivate Profiel service
+        activate MijnOverheid Zakelijk
+        MijnOverheid Zakelijk-->>ZakelijkGebruiker: Ziet zakelijke contactgegevens
+        deactivate MijnOverheid Zakelijk
+
+</details>
+
+#### Email updaten & verifiëren
+
+![Update Email](./images/ArchitectuurProfielService/SeqUpdateEmail.png "Update Email")
+
+<details>
+  <summary>Zie mermaid code</summary>
+  
+    sequenceDiagram
+        actor ZakelijkGebruiker
+        ZakelijkGebruiker->>MijnOverheid Zakelijk: Update email Request
+        activate MijnOverheid Zakelijk
+        MijnOverheid Zakelijk->>Profiel service: Verstuurt email update
+        deactivate MijnOverheid Zakelijk
+        activate Profiel service
+        participant AuditLog@{ "type" : "database" }
+        participant EmailVerificatieService
+        Profiel service->>AuditLog: 'Update aangevraagd'-log opslaan
+        deactivate Profiel service
+        activate AuditLog
+        AuditLog-->>Profiel service: Ok
+        deactivate AuditLog
+        activate Profiel service
+        Profiel service->>EmailVerificatieService: Start verificatieprocess
+        deactivate Profiel service
+        activate EmailVerificatieService
+        EmailVerificatieService-->>ZakelijkGebruiker: Verstuur mail met verificatiecode
+        deactivate EmailVerificatieService
+        activate ZakelijkGebruiker
+        ZakelijkGebruiker-)MijnOverheid Zakelijk: Verifieer email verificatiecode
+        deactivate ZakelijkGebruiker
+        activate MijnOverheid Zakelijk
+        MijnOverheid Zakelijk->>Profiel service: Verstuurt verificatie verzoek
+        deactivate MijnOverheid Zakelijk
+        activate Profiel service
+        Profiel service->>EmailVerificatieService:  Verifieer verificatie verzoek
+        deactivate Profiel service
+        activate EmailVerificatieService
+        EmailVerificatieService-->>Profiel service: Bevestig verificatie
+        deactivate EmailVerificatieService
+        activate Profiel service
+        Profiel service->>AuditLog: 'Update geverifieerd'-log opslaan
+        deactivate Profiel service
+        activate AuditLog
+        AuditLog-->>Profiel service: Ok
+        deactivate AuditLog
+        activate Profiel service
+        Profiel service-->>MijnOverheid Zakelijk: Profiel gegevens
+        deactivate Profiel service
+        activate MijnOverheid Zakelijk
+        MijnOverheid Zakelijk-->>ZakelijkGebruiker: Succes pagina
+        deactivate MijnOverheid Zakelijk
+
+</details>
 
 ### Authenticatie
 
-Aan het einde van dit authenticatie hoofdstuk worden de te verwachten attributen per inlogmethode beschreven, met daarbij aangegeven welke verplicht of optioneel zijn.
+Hierin staan de patronen beschreven over hoe het inlog process van een zakelijke gebruiker of organisatie zou verlopen.
+Aan het einde van dit hoofdstuk worden de te verwachten attributen per inlogmethode beschreven, met daarbij aangegeven welke verplicht of optioneel zijn.
 Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aan de hand van de inlogmethode die hij/zij gebruikt.
-
 
 ![Auth Flowchart](./images/ArchitectuurProfielService/AuthenticatieFlowChart.png "Auth Flowchart")
 
@@ -54,7 +140,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 ### DigiD
 
 | Attribuut       | Aanwezigheid  | Opmerkingen                |
-|-----------------|---------------|----------------------------|
+| --------------- | ------------- | -------------------------- |
 | BSN             | **Verplicht** | Burgerservicenummer        |
 | Voornaam        | **Verplicht** | Van BRP                    |
 | Achternaam      | **Verplicht** | Van BRP                    |
@@ -67,7 +153,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 ### eHerkenning
 
 | Attribuut        | Aanwezigheid         | Opmerkingen                                                                      |
-|------------------|----------------------|----------------------------------------------------------------------------------|
+| ---------------- | -------------------- | -------------------------------------------------------------------------------- |
 | KvKNummer        | **Verplicht**        | Kamer van koophandel nummer                                                      |
 | WettelijkeNaam   | **Verplicht**        | Geregistreerde naam                                                              |
 | Rechtsvorm       | Optioneel            | BV, NV, Stichting, etc.                                                          |
@@ -81,9 +167,11 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 | eIDas            | Optioneel??          | eIDas loopt via eHerkenning, nog uitzoeken hoe dit precies werkt in praktijk.    |
 
 ### eIDas
+
 #### Persoon
+
 | Attribuut        | Aanwezigheid          | Notitie                                |
-|------------------|-----------------------|----------------------------------------|
+| ---------------- | --------------------- | -------------------------------------- |
 | PersonIdentifier | **Verplicht**         | Unique identifier for a natural person |
 | GivenName        | **Verplicht**         | First name                             |
 | FamilyName       | **Verplicht**         | Last name                              |
@@ -97,7 +185,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 #### Organisatie
 
 | Attribuut             | Aanwezigheid          | Notitie                               |
-|-----------------------|-----------------------|---------------------------------------|
+| --------------------- | --------------------- | ------------------------------------- |
 | LPID                  | **Verplicht**         | Legal Person Identifier               |
 | LegalName             | **Verplicht**         | Registered legal name                 |
 | LegalForm             | Optioneel             | e.g. BV, GmbH, SARL                   |
@@ -113,7 +201,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 #### Regels
 
 | Regel                  | Beschrijving                                                                         |
-|------------------------|--------------------------------------------------------------------------------------|
+| ---------------------- | ------------------------------------------------------------------------------------ |
 | Subject Type           | Credentials vertegenwoordigt **ofwel** Natuurlijk Persoon **of** Rechtspersoon       |
 | Identifier Exclusivity | PersonIdentifier en LPID zijn **wederzijds uitsluitend**                             |
 | Attribute Exclusivity  | Natuurlijk persoon en rechtspersoon attributen **mogen niet gemengd worden**         |

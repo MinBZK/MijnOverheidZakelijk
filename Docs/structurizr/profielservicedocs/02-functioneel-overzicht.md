@@ -28,7 +28,7 @@ Belangrijke leveranciers zijn:
 - Profiel ophalen door dienstverleners: actuele contactgegevens en voorkeuren opvragen op basis van een partij-identificatie (bijv. KVK, BSN, RSIN), inclusief scope voor dienst/dienstverlener; inclusief verifieerbaarheidsindicatoren ontvangen.
 - Identificaties koppelen en beheren: vastleggen van BSN/KvK/RSIN/etc. en koppelen aan één partijprofiel.
 - Toegang verlenen aan dienstverleners conform afsprakenstelsel en autorisaties van het Federatieve Data Stelsel (FDS).
-- Logging en transparantie (conform LDV): registreren van relevante gebeurtenissen ten behoeve van inzage en troubleshooting.
+- Logging en transparantie (conform [LDV](https://www.logius.nl/onze-dienstverlening/gegevensuitwisseling/logboek-dataverwerkingen/wat-is-logboek-dataverwerkingen)): registreren van relevante gebeurtenissen ten behoeve van inzage en troubleshooting.
 - Audit logging voor juridische doeleinde.
 
 #### Belangrijkste processen en informatiestromen:

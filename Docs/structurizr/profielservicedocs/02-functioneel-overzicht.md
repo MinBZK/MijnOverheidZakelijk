@@ -36,5 +36,3 @@ Belangrijke leveranciers zijn:
 2. Profiel inzien en beheren – Gebruiker bekijkt bestaande gegevens en voorkeuren en voert wijzigingen door. Zie sequentie diagrammen hierover in 07-code-ProfielBeheren en 08-data-sequentiediagrammen.
 3. Profiel bevragen door dienstverlener – Vakapplicaties (of OMC/dergelijks) halen via API contactgegevens/voorkeuren op. Scoping per dienst/dienstverlener bied focus en ondersteunt dataminimalisatie. Zie 08-data-sequentiediagrammen.
 
-
-Verwijzing naar scenario 2/8 nog?

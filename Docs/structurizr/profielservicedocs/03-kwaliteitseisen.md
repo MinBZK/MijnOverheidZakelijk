@@ -15,7 +15,6 @@ De onderstaande kwaliteitseisen zijn architectonisch significant en sturen ontwe
 - Performance & Schaalbaarheid
 - Auditability & Logging (LDV)
 - Interoperabiliteit & Open Standaarden
-- Toegankelijkheid & Gebruiksvriendelijkheid
 - Observeerbaarheid (monitoring, metrics, tracing)
 - Herstelbaarheid (back-up/restore, DR)
 
@@ -28,10 +27,12 @@ Waar zaken bewust buiten scope vallen, is dit expliciet benoemd.
 - Transport & opslag: TLS 1.2+ in transit; gevoelige secrets via sealed secrets, geen gevoelige data in logs. Encryptie-at-rest verplicht indien toepasbaar.
 
 #### Beschikbaarheid & Continuïteit
+Er is nog geen baseline voor bedacht, maar denk hier aan bijvoorbeeld:
 - Doel beschikbaarheid betafase: ≥ 50% tijdens kantoortijden. Doel productie: ≥ 99,9% 24x7 (excl. gepland onderhoud). Vastgelegd als Service Level Objective (SLO) en gemonitord.
 - Onderhoud: onaangekondigd tijdens betafase.
 
 #### Performance & Schaalbaarheid
+Er is nog geen baseline voor bedacht, maar denk hier aan bijvoorbeeld:
 - Lezen (profiel opvragen door dienstverlener of gebruiker): p95 latency ≤ 150 ms binnen hetzelfde datacentrum; p99 ≤ 300 ms.
 - Schrijven (profiel wijzigen door gebruiker): p95 end-to-end ≤ 500 ms exclusief out-of-band kanaalverificatie (e-mail/SMS). Kanaalverificatie is async en beïnvloedt UI-flow, niet server-SLA.
 - Capaciteit: initieel kleine groep profielen (beta), maar schaalbaar naar 2M+ profielen. Opslag en indices ontwerpen voor lineaire schaal.
@@ -45,16 +46,13 @@ Waar zaken bewust buiten scope vallen, is dit expliciet benoemd.
 - Identiteiten en claims volgen de OIDC-standaard; authenticatie verloopt via erkende IdP’s (DigiD, eHerkenning, eIDAS).
 - Koppelingen met KvK en andere bronnen via hun officiële API-standaarden. Afstemming met Federatief Data Stelsel (FDS) en LDV-implementatie (ADR 0010).
 
-#### Toegankelijkheid & Gebruiksvriendelijkheid
-- UI-componenten voldoen aan digitoegankelijk standaard. Meetbaar via Lighthouse en handmatige toetsing.
-- Designsystemen: NL Design System conform ADR 0009. UI-teksten in het Nederlands, **OVERLEG**: en toepassing van de vertaal tooling van de Europese Commissie om alle talen van de EU te ondersteunen.
-- Browserondersteuning: laatste twee versies van Chrome, Edge, Safari, Firefox; inclusief responsiveness.
-
 #### Observeerbaarheid
+Er is nog geen baseline voor bedacht, maar denk hier aan bijvoorbeeld:
 - Metrics: minimaal request-latency (p50/p95/p99), error-rate per endpoint, throughput, resource verbruik. Dashboards gepubliceerd en gedeeld met beheer.
 - Tracing: Gedistribueerd tracing over inkomende en uitgaande calls. Log-niveau: INFO standaard, WARN/ERROR voor afwijkingen.
 
 #### Herstelbaarheid (Back-up/Restore, DR)
+Er is nog geen baseline voor bedacht, maar denk hier aan bijvoorbeeld:
 - RPO ≤ XYZ minuten
 - RTO ≤ 1? dag in pilot, ≤ XYZ minuten in productie. 
 - Back-ups getest op herstel per half jaar. 

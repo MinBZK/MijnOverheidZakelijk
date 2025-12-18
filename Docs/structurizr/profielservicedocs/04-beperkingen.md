@@ -21,7 +21,6 @@ De volgende categorieën beperkingen zijn van toepassing. Per punt noemen we wat
 - Gebruik van KvK-gegevens conform betreffende API-voorwaarden. Impact: caching/bewaren van externe gegevens is ingezet, met beperkingen, en aan voorwaarden gebonden.
 
 #### Technologiestack en standaarden
-- Voorkeurslijst open standaarden (Forum Standaardisatie) en NL Design System (ADR 0009). Opgelegd door rijksstandaarden/UX-kaders. Impact: front-end componentkeuze is beperkt; consistentie en toegankelijkheid zijn geborgd.
 - API’s in OpenAPI 3.0+, JSON over HTTPS; gebruik van standaard HTTP-protocollen. Impact: geen propriëtaire protocol keuzes.
 
 #### Integraties en afhankelijkheden

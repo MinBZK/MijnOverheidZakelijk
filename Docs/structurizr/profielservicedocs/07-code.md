@@ -1,9 +1,5 @@
 ## Code
 
-> Ook wel "Development View" of "Implementation View" genoemd, waarin dieper kan worden ingegaan op de implementatie van specifieke componenten van de software.
->
-> Zie ook: [Inhoud guidelines Code](https://structurizr.com/help/documentation/code)
-
 ### Profiel Beheren
 
 Hierin staan de patronen beschreven over hoe een zakelijke gebruiker zijn profiel zou beheren.

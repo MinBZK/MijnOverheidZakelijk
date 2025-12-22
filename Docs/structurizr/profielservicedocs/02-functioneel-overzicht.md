@@ -39,7 +39,8 @@ In deze flowchart is te zien hoe de diverse inlogopties worden gebruikt en welke
 
 <details>
   <summary>Zie mermaid code</summary>
-
+    
+    ```mermaid
         flowchart TD;
         %% Trigger
             TRIGGER([De ondernemer wilt zijn contactgegevens updaten])-->S1;
@@ -73,6 +74,7 @@ In deze flowchart is te zien hoe de diverse inlogopties worden gebruikt en welke
             SUCCESS_eHerkenning([De ondernemer kan zijn contactgegevens updaten voor zichzelf en 1 onderneming]);
             SUCCESS_eIDas_Burger([De ondernemer kan zijn contactgegevens updaten voor deze eIDas Person Identifier]);
             SUCCESS_eIDas_Organisatie([De ondernemer kan zijn contactgegevens updaten voor deze eIDas Legal Person Identifier]);
+  ```
 
 </details>
 
@@ -84,6 +86,7 @@ In de onderstaande sequentiediagram is te zien hoe een gebruiker zijn profiel ka
 <details>
   <summary>Zie mermaid code</summary>
 
+    ```mermaid
     sequenceDiagram
         actor Ondernemer
         participant MOZa as MOZa Portaal
@@ -125,6 +128,7 @@ In de onderstaande sequentiediagram is te zien hoe een gebruiker zijn profiel ka
 
         MOZa-->>Ondernemer: Toont bevestiging
         deactivate MOZa
+      ```
 
 </details>
 
@@ -137,17 +141,17 @@ Hier is te zien is een eenvoudige sequentie diagram hoe de dienstverlener de inf
 <details>
   <summary>Zie mermaid code</summary>
 
-    mermaid
+    ```mermaid
     sequenceDiagram
-    participant Dienstverlener@{"type" : "collections"}
-    participant PS as Profiel Service
-    participant NS as Notificatie Service
-    actor BO as Burger of Ondernemer
+      participant Dienstverlener@{"type" : "collections"}
+      participant PS as Profiel Service
+      participant NS as Notificatie Service
+      actor BO as Burger of Ondernemer
 
-    Dienstverlener ->> PS: Stuurt identificatienummer
-    PS -->> Dienstverlener: Levert contactvoorkeuren
-    Dienstverlener ->> NS: Stuurt inhoud notificatiebericht + voorkeurskanaal
-    NS ->> BO: Stuurt bericht via voorkeurskanaal
-    NS -->> Dienstverlener: Status aflevering (OK/NOK)
-
+      Dienstverlener ->> PS: Stuurt identificatienummer
+      PS -->> Dienstverlener: Levert contactvoorkeuren
+      Dienstverlener ->> NS: Stuurt inhoud notificatiebericht + voorkeurskanaal
+      NS ->> BO: Stuurt bericht via voorkeurskanaal
+      NS -->> Dienstverlener: Status aflevering (OK/NOK)
+   ```
 </details>

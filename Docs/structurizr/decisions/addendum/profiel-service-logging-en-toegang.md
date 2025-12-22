@@ -115,17 +115,24 @@ De drie standaarden vullen elkaar aan:
 - **FTV** borgt *dat* alleen partijen met geldige afspraken toegang krijgen;
 - **LDV** legt vast *hoe* en *waarvoor* gegevens daadwerkelijk zijn verwerkt.
 
-```mermaid
-flowchart LR
-    Contract[FSC-contract]
-    Token[FTV-token]
-    Service[Service-aanroep]
-    Log[LDV-registratie]
+![Samenhang FSC, FTV, FDS en LDV](../images/adr0011-fsc-ftv-fds-ldv.png)
 
-    Contract --> Token
-    Token --> Service
-    Service --> Log
-```
+<details>
+    <summary>Zie Mermaid code</summary>
+
+    ```mermaid
+    flowchart LR
+        Contract[FSC-contract]
+        Token[FTV-token]
+        Service[Service-aanroep]
+        Log[LDV-registratie]
+
+        Contract --> Token
+        Token --> Service
+        Service --> Log
+    ```
+
+</details>
 
 Deze samenhang is in alle architectuurvarianten gelijk ingericht.
 

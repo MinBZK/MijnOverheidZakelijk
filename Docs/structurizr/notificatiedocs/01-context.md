@@ -6,28 +6,35 @@ Op dit moment ligt de opdracht bij Logius voor de realistaie van een generieke n
 
 ![](embed:NotificatieServiceContext)
 
-## Functioneel Overzicht
+<!-- ## Functioneel Overzicht
 
-...
 
 ## Kwaliteitseisen
 
-...
 
 ## Beperkingen
 
-## Design Principles
+
+## Design Principes
+
 
 ## Software Architectuur
 
+
 ## Code
+
 
 ## Data
 
+
 ## Infrastructuur Architectuur
+
 
 ## Deployment
 
+
 ## Ontwikkelomgeving
 
+
 ## Beheer en Support
+ -->

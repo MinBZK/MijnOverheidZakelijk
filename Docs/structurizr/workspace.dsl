@@ -65,13 +65,13 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         // Relationships between containers
         MozFE -> MozBE "Gebruikt" ""
         MozBE -> IAM "Authenticeert gebruikers via" "OAUTH2"
-        MozBE -> ProfielServiceBackend "Haalt profiel informatie op" ""
+        MozBE -> ProfielServiceBackend "Leest en bewerkt profiel informatie" ""
         MozBE -> KvkHandelsregister "Haalt bedrijf informatie op" ""
         MozBE -> KvkMijnOrganisaties "Haalt organisaties op." ""
         MozBE -> DVOmcService  "Verzamelt contactmomenten" ""
 
         // ProfielService
-        ProfielServiceBackend -> profielServiceDatabase "Haalt profiel informatie op"
+        ProfielServiceBackend -> profielServiceDatabase "Leest en bewerkt profiel informatie"
 
         // DVOmcService
         DVOmcService -> NotifyNL "Verstuurt attendering via" ""

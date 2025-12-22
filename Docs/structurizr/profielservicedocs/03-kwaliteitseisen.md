@@ -67,7 +67,3 @@ Er is nog geen baseline voor bedacht, maar denk hier aan bijvoorbeeld:
 ### Meting en borging
 - Geautomatiseerde kwaliteitscontroles (linting, security scanning/CVE), contracttests op API’s, Lighthouse voor front-end, performance tests (load/stress) in CI/CD, Unit tests voor business logica.
 - SLO’s/SLA’s worden actief gemonitord en afwijkingen leiden tot incidenten en/of verbeteracties.
-
-
-TODO NOTE: Zit hier nog wat MOZA-PORTAAL specifieke aspecten in, moeten die er uit omdat ze eigenlijk niet bij de profiel service horen?
-

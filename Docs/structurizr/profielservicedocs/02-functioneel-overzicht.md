@@ -32,7 +32,122 @@ Belangrijke leveranciers zijn:
 - Audit logging voor juridische doeleinde.
 
 #### Belangrijkste processen en informatiestromen:
-1. Authenticatie en sessieopbouw – Inloggen via DigiD (burger/zzp'er), eHerkenning (ondernemer) of eIDAS (buitenlandse belanghebbende); autorisatie en scoping bepalen welk profiel en welke gegevens zichtbaar/bewerkbaar zijn. Flow verder uitgewerkt in 07-code-Aurthenticatie.
+1. Authenticatie en sessieopbouw – Inloggen via DigiD (burger/zzp'er), eHerkenning (ondernemer) of eIDas (buitenlandse belanghebbende); autorisatie en scoping bepalen welk profiel en welke gegevens zichtbaar/bewerkbaar zijn. Flow verder uitgewerkt in 07-code-Aurthenticatie.
+
+In deze flowchart is te zien hoe de diverse inlogopties worden gebruikt en welke identificerende informatie wij dan aan de gebruiker kunnen koppelen.
+![Auth Flowchart](./images/ArchitectuurProfielService/AuthenticatieFlowChart.png "Auth Flowchart")
+
+<details>
+  <summary>Zie mermaid code</summary>
+
+        flowchart TD;
+        %% Trigger
+            TRIGGER([De ondernemer wilt zijn contactgegevens updaten])-->S1;
+
+        %% DigId scenario
+            S1[Het systeem laat de inlog opties zien: 1. Digid, 2. eHerkenning, 3. eIDas als Burger 4. eIDas als Organisatie]-->S2;
+            S2[De ondernemer kiest Digid]-->S3;
+            S3[Het systeem met behulp van het BSN haalt hij de relevant KVK's op bij de KVK-BSN api.];
+            S3-->SUCCESS_DigId;
+
+        %% eHerkenning scenario
+            S1-->EXT2a1;
+            EXT2a1[De ondernemer kiest eHerkenning]-->EXT2a2;
+            EXT2a2[Het systeem haalt de KVK & BSN uit de eHerkenning. Voor BSN komt die uit NIN & NIN_TYPE.]-->EXT2a3;
+            EXT2a3[OPTIE: Het systeem gebruikt het BSN om de andere KVK's op te halen bij de KVK-BSN api??.];
+            EXT2a2-->SUCCESS_eHerkenning;
+            EXT2a3-->SUCCESS_eHerkenning;
+
+        %% eIDas scenario
+            S1-->EXT3a1;
+            EXT3a1[De ondernemer kiest eIDas Burger]-->EXT3a2;
+            EXT3a2[Het systeem haalt de Person Identifier, en optioneel Representative Person Identifier uit eIDas.];
+            EXT3a2-->SUCCESS_eIDas_Burger;
+
+            S1-->EXT4a1;
+            EXT4a1[De ondernemer kiest eIDas Organisatie]-->EXT4a2;
+            EXT4a2[Het systeem haalt de Legal Person Identifier, en optioneel Legal Entity Identifier uit eIDas.];
+            EXT4a2-->SUCCESS_eIDas_Organisatie;
+
+            SUCCESS_DigId([De ondernemer kan zijn contactgegevens updaten voor zichzelf en al zijn ondernemingen]);
+            SUCCESS_eHerkenning([De ondernemer kan zijn contactgegevens updaten voor zichzelf en 1 onderneming]);
+            SUCCESS_eIDas_Burger([De ondernemer kan zijn contactgegevens updaten voor deze eIDas Person Identifier]);
+            SUCCESS_eIDas_Organisatie([De ondernemer kan zijn contactgegevens updaten voor deze eIDas Legal Person Identifier]);
+
+</details>
+
 2. Profiel inzien en beheren – Gebruiker bekijkt bestaande gegevens en voorkeuren en voert wijzigingen door. Zie sequentie diagrammen hierover in 07-code-ProfielBeheren en 08-data-sequentiediagrammen.
+
+In de onderstaande sequentiediagram is te zien hoe een gebruiker zijn profiel kan bekijken en bijwerken als hij inlogd met DigiD.
+![Sequentiediagram ondernemer bekijkt en update contactvoorkeuren](./images/ArchitectuurProfielService/SeqOndernemerProfiel.png "Sequentiediagram ondernemer bekijkt en update contactvoorkeuren")
+
+<details>
+  <summary>Zie mermaid code</summary>
+
+    sequenceDiagram
+        actor Ondernemer
+        participant MOZa as MOZa Portaal
+        participant KvK as KvK
+        participant Profiel as Profiel Service
+
+        Ondernemer->>MOZa: Logt in
+        activate MOZa
+
+        alt Als login via DigiD
+            MOZa->>KvK: Haal ondernemingen op voor BSN
+            deactivate MOZa
+            activate KvK
+            KvK-->>MOZa: Geeft ondernemingen terug (KvK-nummers)
+            deactivate KvK
+            activate MOZa
+        end
+
+        MOZa->>Ondernemer: Toon Profiel Pagina
+        Ondernemer->>MOZa: Opent pagina 'Contactvoorkeuren'
+
+        MOZa->>Profiel: GET contactvoorkeuren (BSN + KvK)
+        deactivate MOZa
+        activate Profiel
+        Profiel-->>MOZa: Contactvoorkeuren terug
+        deactivate Profiel
+        activate MOZa
+
+        MOZa->>Ondernemer: Toon pagina 'Contactvoorkeuren'
+
+        Ondernemer->>MOZa: Past contactvoorkeur aan
+
+        MOZa->>Profiel: PATCH contactvoorkeur (BSN + KvK)
+        deactivate MOZa
+        activate Profiel
+        Profiel-->>MOZa: Ok (voorkeur bijgewerkt)
+        deactivate Profiel
+        activate MOZa
+
+        MOZa-->>Ondernemer: Toont bevestiging
+        deactivate MOZa
+
+</details>
+
 3. Profiel bevragen door dienstverlener – Vakapplicaties (of OMC/dergelijks) halen via API contactgegevens/voorkeuren op. Scoping per dienst/dienstverlener bied focus en ondersteunt dataminimalisatie. Zie 08-data-sequentiediagrammen.
 
+Hier is te zien is een eenvoudige sequentie diagram hoe de dienstverlener de informatie zou ophalen, en bijvoorbeeld gebruikt op een persoon aan de hand daarvan een notificatie te versturen.
+
+![Sequentiediagram dienstverlener bevraagd profielservice en notificeert](./images/ArchitectuurProfielService/SeqDVBevraagdPSenNotificeert.png "Sequentiediagram dienstverlener bevraagd profielservice en notificeert")
+
+<details>
+  <summary>Zie mermaid code</summary>
+
+    mermaid
+    sequenceDiagram
+    participant Dienstverlener@{"type" : "collections"}
+    participant PS as Profiel Service
+    participant NS as Notificatie Service
+    actor BO as Burger of Ondernemer
+
+    Dienstverlener ->> PS: Stuurt identificatienummer
+    PS -->> Dienstverlener: Levert contactvoorkeuren
+    Dienstverlener ->> NS: Stuurt inhoud notificatiebericht + voorkeurskanaal
+    NS ->> BO: Stuurt bericht via voorkeurskanaal
+    NS -->> Dienstverlener: Status aflevering (OK/NOK)
+
+</details>

@@ -140,7 +140,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 ### DigiD
 
 | Attribuut       | Aanwezigheid  | Opmerkingen                |
-| --------------- | ------------- | -------------------------- |
+|-----------------|---------------|----------------------------|
 | BSN             | **Verplicht** | Burgerservicenummer        |
 | Voornaam        | **Verplicht** | Van BRP                    |
 | Achternaam      | **Verplicht** | Van BRP                    |
@@ -153,7 +153,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 ### eHerkenning
 
 | Attribuut        | Aanwezigheid         | Opmerkingen                                                                      |
-| ---------------- | -------------------- | -------------------------------------------------------------------------------- |
+|------------------|----------------------|----------------------------------------------------------------------------------|
 | KvKNummer        | **Verplicht**        | Kamer van koophandel nummer                                                      |
 | WettelijkeNaam   | **Verplicht**        | Geregistreerde naam                                                              |
 | Rechtsvorm       | Optioneel            | BV, NV, Stichting, etc.                                                          |
@@ -171,7 +171,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 #### Persoon
 
 | Attribuut        | Aanwezigheid          | Notitie                                |
-| ---------------- | --------------------- | -------------------------------------- |
+|------------------|-----------------------|----------------------------------------|
 | PersonIdentifier | **Verplicht**         | Unique identifier for a natural person |
 | GivenName        | **Verplicht**         | First name                             |
 | FamilyName       | **Verplicht**         | Last name                              |
@@ -185,7 +185,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 #### Organisatie
 
 | Attribuut             | Aanwezigheid          | Notitie                               |
-| --------------------- | --------------------- | ------------------------------------- |
+|-----------------------|-----------------------|---------------------------------------|
 | LPID                  | **Verplicht**         | Legal Person Identifier               |
 | LegalName             | **Verplicht**         | Registered legal name                 |
 | LegalForm             | Optioneel             | e.g. BV, GmbH, SARL                   |
@@ -201,7 +201,7 @@ Eerst is een flow chart te zien die aangeeft wat de ondernemer kan verwachten aa
 #### Regels
 
 | Regel                  | Beschrijving                                                                         |
-| ---------------------- | ------------------------------------------------------------------------------------ |
+|------------------------|--------------------------------------------------------------------------------------|
 | Subject Type           | Credentials vertegenwoordigt **ofwel** Natuurlijk Persoon **of** Rechtspersoon       |
 | Identifier Exclusivity | PersonIdentifier en LPID zijn **wederzijds uitsluitend**                             |
 | Attribute Exclusivity  | Natuurlijk persoon en rechtspersoon attributen **mogen niet gemengd worden**         |

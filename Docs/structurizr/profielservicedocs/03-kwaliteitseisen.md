@@ -23,7 +23,8 @@ Waar zaken bewust buiten scope vallen, is dit expliciet benoemd.
 #### Beveiliging & Privacy
 - Authenticatie: Via erkende federatieve identiteiten (DigiD, eHerkenning, eIDas) conform ADR 0006. Eisen: OIDC/OAuth 2.0 flows, tokens met beperkte scopes, token TTL ≤ 60 min; refresh alleen server-to-server waar passend. Meetbaar via IDP-config en token policies.
 - Autorisatie: scope-gebaseerd mogelijkheid (per dienst/dienstverlener) met dataminimalisatie. Alleen de minimaal opgevraagde attributen worden geleverd. Verplicht ‘least privilege’ op API-niveau & ontsloten via het FDS.
-- Privacy/AVG: verwerkingsregister en grondslagregistratie op orde, volgens AVG artikel 6 en 30 respectief. Daarbij komt mee alleen noodzakelijke persoonsgegevens opslaan. Dataretentie: operationele logs max. 90 dagen, audit-logs conform bewaartermijn in ADR 0005/0007. DPIA uitgevoerd vóór productie.
+- Privacy/AVG: verwerkingsregister en grondslagregistratie op orde, volgens AVG artikel 6 en 30 respectief. Daarbij komt mee alleen noodzakelijke persoonsgegevens opslaan. 
+- Dataretentie: operationele logs max. 90 dagen, audit-logs conform bewaartermijn in ADR 0005/0007. DPIA uitgevoerd vóór productie.
 - Transport & opslag: TLS 1.2+ in transit; gevoelige secrets via sealed secrets, geen gevoelige data in logs. Encryptie-at-rest verplicht indien toepasbaar.
 
 #### Beschikbaarheid & Continuïteit

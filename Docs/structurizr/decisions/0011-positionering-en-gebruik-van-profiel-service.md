@@ -80,7 +80,6 @@ Beide opties hebben plus- en minpunten. Hieronder zetten we deze uiteen;
 #### Voordelen
 
 - Aangesloten organisaties kunnen de contactvoorkeuren en -gegevens gebruiken in hun bestaande systemen
-- 
 
 #### Nadelen
 

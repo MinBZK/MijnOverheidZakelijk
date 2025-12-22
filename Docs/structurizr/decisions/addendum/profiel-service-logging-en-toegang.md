@@ -1,6 +1,6 @@
 # Bijlage – Logging, Toegang en Doelbinding
 
-**Onderwerp:** Logboek Dataverwerkingen (LDV), Federatief Service Contracteren (FSC) en Federatieve Toegangsverlening (FTV)  \
+**Onderwerp:** Federatief Datastelsel (FDS), Logboek Dataverwerkingen (LDV), Federatief Service Contracteren (FSC) en Federatieve Toegangsverlening (FTV)  \
 **Doel:** Beschrijvend kader voor juridische toetsing  \
 **Doelgroep:** Juridische afdeling, privacy officers, auditors  \
 **Status:** concept
@@ -9,13 +9,17 @@
 
 ## 1. Doel en positionering van deze bijlage
 
-Deze bijlage beschrijft de wijze waarop **toegang tot services** en **logging van dataverwerkingen** zijn ingericht binnen het stelsel, onafhankelijk van de gekozen architectuurvariant voor de Profiel Service, Output Management Component (OMC) en eventuele andere ketencomponenten.
+Deze bijlage beschrijft de wijze waarop **toegang tot services** en **logging van dataverwerkingen** zijn ingericht binnen het Federatief Datastelsel (FDS), onafhankelijk van de gekozen architectuurvariant voor de Profiel Service, Output Management Component (OMC) en eventuele andere ketencomponenten.
 
 De beschreven inrichting is **variant-onafhankelijk** en wordt in alle scenario’s toegepast.
 
 Deze bijlage is bedoeld om door juristen te worden beoordeeld op toereikendheid ten aanzien van doelbinding, proportionaliteit en accountability.
 
 ---
+
+## 2. Federatief Datastelsel (FDS)
+
+Het Federatief Datatselsel is een stelsel van afspraken
 
 ## 2. Logboek Dataverwerkingen (LDV)
 
@@ -30,17 +34,8 @@ Het LDV heeft als doel om:
 
 ### 2.2 Vastgelegde elementen
 
-Per dataverwerking worden, conform de LDV-standaard, onder andere de volgende elementen vastgelegd:
+Alle dataverwerkingen worden conform de LDV-standaard vastgelegd. Meer over de wijze van vastlegging is te vinden in [paragraaf 3.2 Component: Logboek](https://logius-standaarden.github.io/logboek-dataverwerkingen/#component-logboek) in de beschrijving van de LDV standaard van Logius.
 
-- verwerkingsverantwoordelijke organisatie;
-- betrokken systeem of component;
-- doel van de verwerking;
-- wettelijke grondslag;
-- categorieën persoonsgegevens;
-- betrokken actoren;
-- tijdstip van verwerking.
-
-De logging vindt plaats op ketenniveau, zodat samenhang tussen opeenvolgende verwerkingen inzichtelijk blijft.
 
 ### 2.3 Relatie tot doelbinding
 
@@ -107,9 +102,9 @@ FTV maakt het mogelijk om:
 
 ---
 
-## 5. Samenhang tussen LDV, FSC en FTV
+## 5. Samenhang tussen FDS, LDV, FSC en FTV
 
-De drie standaarden vullen elkaar aan:
+De drie standaarden vallen onder het Federatieve Datastelsel en vullen elkaar aan:
 
 - **FSC** beschrijft *wat* is afgesproken tussen organisaties;
 - **FTV** borgt *dat* alleen partijen met geldige afspraken toegang krijgen;
@@ -121,15 +116,19 @@ De drie standaarden vullen elkaar aan:
     <summary>Zie Mermaid code</summary>
 
     ```mermaid
-    flowchart LR
-        Contract[FSC-contract]
-        Token[FTV-token]
-        Service[Service-aanroep]
-        Log[LDV-registratie]
+    flowchart
+        subgraph FDS["Federatief Datastelsel"]
+            direction LR
 
-        Contract --> Token
-        Token --> Service
-        Service --> Log
+            Contract[FSC-contract]
+            Token[FTV-token]
+            Service[Service-aanroep]
+            Log[LDV-registratie]
+
+            Contract --> Token
+            Token --> Service
+            Service --> Log
+        end
     ```
 
 </details>

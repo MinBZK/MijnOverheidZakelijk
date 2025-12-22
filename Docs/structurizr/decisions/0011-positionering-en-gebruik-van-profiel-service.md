@@ -14,25 +14,32 @@ We hebben twee variaties waarop de Profiel Service beschikbaar gesteld kan worde
 
 ### Optie 1: Profiel Service als centraal register
 
-Wanneer we de Profiel Service beschikbaar stellen als centraal register waar overheidsorganisaties op aansluiten, is er sprake van het verstrekken van persoonsgegevens. Dit zou kunnen als de burger of ondernemer zijn of haar gegevens zelf in de Profiel Service heeft ingevuld, met als doel via deze contactvoorkeuren te kunnen worden benaderd door overheidsorganisaties.
+Wanneer we de Profiel Service beschikbaar stellen als centraal register binnen het Federatief Datastelsel zodat overheidsorganisaties hierop kunnen aansluiten, is er sprake van het verstrekken van persoonsgegevens. Dit zou kunnen als de burger of ondernemer zijn of haar gegevens zelf in de Profiel Service heeft ingevuld, met als doel via deze contactvoorkeuren te kunnen worden benaderd door overheidsorganisaties.
 
 Hierbij is het doel of de grondslag van het contact leggen per organisatie mogelijk verschillend. Wel zijn deze vooraf vastgelegd in het contract tussen dienstverlener en de Profiel Service.
 
 #### Diagram 1: Profiel Service als centraal register
 
-```mermaid
-sequenceDiagram
-    participant Dienstverlener@{"type" : "collections"}
-    participant PS as Profiel Service
-    participant NS as Notificatie Service
-    actor BO as Burger of Ondernemer
+![Profiel service centraal register](./images/adr0011-profielservice-register.png)
 
-    Dienstverlener ->> PS: Stuurt identificatienummer
-    PS -->> Dienstverlener: Levert contactvoorkeuren
-    Dienstverlener ->> NS: Stuurt inhoud notificatiebericht + voorkeurskanaal
-    NS ->> BO: Stuurt bericht via voorkeurskanaal
-    NS -->> Dienstverlener: Status aflevering (OK/NOK)
-```
+<details>
+    <summary>Zie Mermaid code</summary>
+
+    ```mermaid
+    sequenceDiagram
+        participant Dienstverlener@{"type" : "collections"}
+        participant PS as Profiel Service
+        participant NS as Notificatie Service
+        actor BO as Burger of Ondernemer
+
+        Dienstverlener ->> PS: Stuurt identificatienummer
+        PS -->> Dienstverlener: Levert contactvoorkeuren
+        Dienstverlener ->> NS: Stuurt inhoud notificatiebericht + voorkeurskanaal
+        NS ->> BO: Stuurt bericht via voorkeurskanaal
+        NS -->> Dienstverlener: Status aflevering (OK/NOK)
+    ```
+
+</details>
 
 ### Optie 2: Profiel Service als onderdeel van de Overheidsbrede Notificatie Dienst (OND)
 
@@ -42,22 +49,31 @@ Hierbij is het doel en de grondslag altijd hetzelfde, namelijk: "het afleveren v
 
 #### Diagram 2: Profiel Service als onderdeel van Overheidsbrede Notificatie Dienst (OND)
 
-```mermaid
-sequenceDiagram
-    participant Dienstverlener@{"type" : "collections"}
-    participant OMC as Output Management Component
-    participant PS as Profiel Service
-    participant NS as Notificatie Service
-    actor BO as Burger of Ondernemer
+![Profiel service onderdeel van overheidsbrede notificatie dienst](./images/adr0011-profielservice-OBND.png)
 
-    Dienstverlener ->> OMC: Stuurt notificatiebericht + identificatienummer
-    OMC ->> PS: Stuurt identificatienummer
-    PS -->> OMC: Levert contactvoorkeuren
-    OMC ->> NS: Stuurt notificatiebericht + voorkeurskanaal
-    NS ->> BO: Stuurt bericht via voorkeurskanaal
-    NS -->> OMC: Status aflevering (OK/NOK)
-    OMC -->> Dienstverlener: Status aflevering (OK/NOK)
-```
+<details>
+    <summary>Zie Mermaid code</summary>
+
+    ```mermaid
+    sequenceDiagram
+        participant Dienstverlener@{"type" : "collections"}
+        participant OMC as Output Management Component
+        participant PS as Profiel Service
+        participant NS as Notificatie Service
+        actor BO as Burger of Ondernemer
+
+        Dienstverlener ->> OMC: Stuurt notificatiebericht + identificatienummer
+        OMC ->> PS: Stuurt identificatienummer
+        PS -->> OMC: Levert contactvoorkeuren
+        OMC ->> NS: Stuurt notificatiebericht + voorkeurskanaal
+        NS ->> BO: Stuurt bericht via voorkeurskanaal
+        NS -->> OMC: Status aflevering (OK/NOK)
+        OMC -->> Dienstverlener: Status aflevering (OK/NOK)
+    ```
+
+</details>
+
+
 
 ### Doelbinding
 

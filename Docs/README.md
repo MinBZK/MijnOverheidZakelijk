@@ -5,22 +5,18 @@ Dit is de Software Architectuur Documentatie en bestaat uit documentatie in Mark
 en architectuur diagrammen als code, volgens het C4 model
 m.b.v. Structurizr: https://structurizr.com/.
 
-De documentatie is momenteel nog niet online beschikbaar.  
-Structurizr heeft een betaalde optie om de documentatie ook online - in een eigen docker image - beschikbaar te stellen. Momenteel hebben we deze optie echter niet.
+De documentatie is ook online beschikbaar via: https://docs.mijnoverheidzakelijk.nl.
 
 ## Getting Started
 
 De documentatie bestaat uit een markdown bestand per hoofdstuk, welke automatisch samengevoegd worden tot 1 document.
 De diagrammen worden gedefinieerd in het bestand: 'workspace.dsl'.
 
-Kies hiervoor een editor naar keuze. Dit kan van alles zijn, maar wij
-gebruiken hiervoor VSCode of IntelliJ.
+Kies hiervoor een editor naar keuze. Dit kan van alles zijn, maar wij gebruiken hiervoor VSCode of IntelliJ.
 
 ### Structurizr Lite Docker Image
 
-Er is een Docker-image beschikbaar genaamd Structurizr Lite, waarmee je
-lokaal een gratis versie van Structurizr kunt draaien. Hiervoor heb je
-een lokale installatie van Docker nodig.
+Er is een Docker-image beschikbaar genaamd Structurizr Lite, waarmee je lokaal een gratis versie van Structurizr kunt draaien. Hiervoor heb je een lokale installatie van Docker nodig.
 
 Voor een nieuwe installatie, volg de instructies op [Getting Started With Structurizr Lite](https://dev.to/simonbrown/getting-started-with-structurizr-lite-27d0).
 

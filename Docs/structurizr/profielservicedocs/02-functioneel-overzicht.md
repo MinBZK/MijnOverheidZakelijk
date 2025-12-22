@@ -41,7 +41,7 @@ In deze flowchart is te zien hoe de diverse inlogopties worden gebruikt en welke
   <summary>Zie mermaid code</summary>
     
     ```mermaid
-        flowchart TD;
+    flowchart TD;
         %% Trigger
             TRIGGER([De ondernemer wilt zijn contactgegevens updaten])-->S1;
 

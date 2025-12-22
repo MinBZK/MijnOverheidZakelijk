@@ -40,9 +40,7 @@
 
 De Notificatie Service is onderzocht in fase 1 en de conclusies en aanbevelingen zijn daarbij in het eindrapport van fase 1 opgenomen.
 
-De voorlopige conclusie is dat Logius de verdere ontwikkeling van de notificatie service oppakt en daarmee is het voor MijnOverheid Zakelijk op dit moment buiten scope geplaatst.
-
-Wanneer dit in de toekomst verandert, zal deze documentatie verder aangevuld worden.
+Op dit moment ligt de opdracht bij Logius voor de realistaie van een generieke notificatieservice. Als team van MijnOverheid Zakelijk bieden wij ondersteuning. Waarschijnlijk vinden we een andere plek om een en ander te documenteren. Zodra hier meer over bekend is, zullen we deze documentatie bijwerken.
 
 ![](embed:NotificatieServiceContext)
 

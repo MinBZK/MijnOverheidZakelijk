@@ -1,7 +1,5 @@
 ## Design Principes
 
-> Deze sectie vat de ontwerpprincipes samen die we hanteren bij het ontwerpen en bouwen van de Profielservice binnen MijnOverheid Zakelijk. Waar mogelijk verwijzen we naar Architecture Decision Records (ADR's) of andere documentatie in deze repository.
-
 ### Inleiding
 
 Het doel van dit hoofdstuk is om expliciet te maken welke principes we volgen, zodat ontwerp- en implementatiekeuzes consistent en uitlegbaar zijn voor alle betrokkenen.

@@ -1,9 +1,5 @@
 ## Design Principles
 
-> Deze sectie beschrijft de Design Principles die we hanteren tijdens de ontwikkeling van het systeem.
-> 
-> Zie ook: [Inhoud guidelines Design Principles](https://structurizr.com/help/documentation/principles)
-
 ### Principes
 
 - Toegankelijkheid en UX-conventies (productbreed)  

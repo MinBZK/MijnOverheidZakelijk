@@ -3,60 +3,38 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
     !adrs decisions
     model {
         zakelijkeGebruiker = person "Zakelijke Gebruiker" ""
-        RVOMedewerker = person "Medewerker bij RVO" ""
-        UWVMedewerker = person "Medewerker bij UWV" ""
-        BDMedewerker = person "Medewerker bij BD" ""
-        
-        group "Belasting Dienst (BD)" {
-            BD = softwareSystem "Belastingdienst" "Vakapplicatie (mockup) van een organisatie voor uitwerking van scenario #9"  {
-                BdOmcService = container "Output management component" "Routeren van de output van processen naar de juiste kanalen" "C#"
-                BDService = container "Belastingdienst Service" "Een vakapplicatie of service bij de BD die processen start waarbij notificaties verstuurd moeten worden" "" {
-                }
-                
-                group "Datastores" {
-                    DbOMCDatabase = container "Output management component Database" "Bevat status & geschiedenis van contactmomenten" "PostgreSQL" "Database"
-                }
-            }
-        }
+        DVMedewerker = person "Medewerker bij een Dienstverlener" ""
 
         group "KVK" {
             KvkHandelsregister = softwareSystem "Handelsregister" "De handelsregister api bij de KVK, bevat informatie over organisaties" "Existing System"
             KvkMijnOrganisaties = softwareSystem "Organisatiesregister" "Organisatieregister api bij de kvk, vertaalt bsn naar kvk's" "Existing System"
         }
 
-        group "RVO" {
-            RVO = softwareSystem "RVO" "Vakapplicatie (mockup) van een organisatie voor uitwerking van scenario #2"  {
-                RVOService = container "RVO Service" "Een vakapplicatie of service bij de RVO die processen start waarbij notificaties verstuurd moeten worden" "" {
+        group "DI" {
+            DV = softwareSystem "Dienstverlener" "Vakapplicatie (mockup) van een organisatie voor uitwerking van scenario #2"  {
+                DVOmcService = container "Output management component" "Routeren van de output van processen naar de juiste kanalen" ""
+                DVService = container "Dienstverlener Service" "Een vakapplicatie of service bij een DV die processen start waarbij notificaties verstuurd moeten worden" "" {
+                }
+                group "Datastores" {
+                    DVOMCDatabase = container "Output management component Database" "Bevat status & geschiedenis van contactmomenten" "PostgreSQL" "Database"
                 }
             }
         }
 
-        group "UWV" {
-            UWV = softwareSystem "UWV" "Vakapplicatie (mockup) van een organisatie voor uitwerking van scenario #8"  {
-                UwvOmcService = container "Output management component" "Routeren van de output van processen naar de juiste kanalen" "C#"
-                UWVService = container "UWV Service" "Een vakapplicatie of service bij het UWV die processen start waarbij notificaties verstuurd moeten worden" "" {
-                }
-                
-                group "Datastores" {
-                    UwvOMCDatabase = container "Output management component Database" "Bevat status & geschiedenis van contactmomenten" "PostgreSQL" "Database"
-                }
-            }
-        }
-        
         group "Logius" {
-            KanaalHerstelDienst = softwareSystem "Kanaalhersteldienst " "Verstuurt brieven t.b.v. het kaneelherstel met burgers of ondernemingen" "Existing System" 
+            KanaalHerstelDienst = softwareSystem "Kanaalhersteldienst " "Verstuurt brieven t.b.v. het kaneelherstel met burgers of ondernemingen" "Existing System"
             Berichtenbox = softwareSystem "BBO" "De Berichtenbox voor Burgers en Ondernemers" "Existing System"
             NotificatieService = softwareSystem "Notificatie service" "Verstuurt emails & sms naar gebruikers"  {
                 !docs notificatiedocs
                 KennisgevingService = container "Kennisgeving service" "Regelt communicatie naar NotifyNL en Kanaalherstel" "" "Kennisgeving Service"
                 NotifyNL = container "NotifyNL" "Verstuurt emails & sms naar gebruikers" "" "Notificatie Service"
-            }    
+            }
         }
 
         group "MOZA" {
             MOZA = softwareSystem "Mijn Overheid Zakelijk" "De Mijn Overheid omgeving voor zakelijke gebruikers" {
                 MozFE = container "MOZA Frontend" "Portaal voor de NextJS applicatie" "React" "Front-End"
-                MozBE = container "MOZA Backend" "Webapplicatie waar een zakelijke gebruiker zijn contactvoorkeuren kan beheren" "NextJS" 
+                MozBE = container "MOZA Backend" "Webapplicatie waar een zakelijke gebruiker zijn contactvoorkeuren kan beheren" "NextJS"
             }
             ProfielService = softwareSystem "Profiel Service" "Bevat contactvoorkeuren en contactgegevens van een identificeerbaar persoon"  {
                 !docs profielservicedocs
@@ -81,80 +59,63 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         iamService -> iamDatabase "Slaat gegevens op in"
 
         // Relationships between people and software systems
-        UWVMedewerker -> UWVService "Start notificatie process"
+        DVMedewerker -> DVService "Start notificatie process"
         zakelijkeGebruiker -> MozFE "Beheert profiel via"
-        RVOMedewerker -> RVOService "Start notificatie process"
-        BDMedewerker -> BdService "Start notificatie process"
-
-        // RVO Service
-        RVOService -> NotifyNL "Verstuurt notificaties via" "API call"
 
         // Relationships between containers
         MozFE -> MozBE "Gebruikt" ""
         MozBE -> IAM "Authenticeert gebruikers via" "OAUTH2"
-        MozBE -> ProfielServiceBackend "Haalt profiel informatie op uit." ""
-        MozBE -> KvkHandelsregister "Haalt bedrijfs informatie op uit." ""
+        MozBE -> ProfielServiceBackend "Leest en bewerkt profiel informatie" ""
+        MozBE -> KvkHandelsregister "Haalt bedrijf informatie op" ""
         MozBE -> KvkMijnOrganisaties "Haalt organisaties op." ""
-        MozBE -> UwvOmcService  "Verzamelt contactmomenten" ""
-        MozBE -> BdOmcService  "Verzamelt contactmomenten" ""
+        MozBE -> DVOmcService  "Verzamelt contactmomenten" ""
 
         // ProfielService
-        ProfielServiceBackend -> profielServiceDatabase "Haalt profiel informatie op" 
+        ProfielServiceBackend -> profielServiceDatabase "Leest en bewerkt profiel informatie"
 
-        // UwvOmcService
-        UwvOmcService -> NotifyNL "Geeft notificatie info aan" ""
-        UwvOmcService -> ProfielServiceBackend "Haalt profiel informatie op" ""
-        UwvOmcService -> UwvOMCDatabase "Slaat gegevens op in" ""
-        
-        // BdOmcService
-        BdService -> BdOmcService "Start notificatie process" ""
+        // DVOmcService
+        DVOmcService -> NotifyNL "Verstuurt attendering via" ""
+        DVOmcService -> ProfielServiceBackend "Haalt profiel informatie op" ""
+        DVOmcService -> DVOMCDatabase "Slaat gegevens op in" ""
+        // DVOmcService Scenario 9
+        DVOmcService -> Berichtenbox "Verstuurt kennisgeving via" ""
+        DVOmcService -> KennisgevingService "Verstuurt kennisgeving via" ""
 
-        // BdOmcService
-        BdOmcService -> Berichtenbox "Verstuurt kennisgeving naar" ""
-        BdOmcService -> ProfielServiceBackend "Haalt profiel informatie op" ""
-        BdOmcService -> DbOMCDatabase "Slaat gegevens op in" ""
-        BdOmcService -> KennisgevingService "Verstuur direct kennisgeving" ""
+        // Scenario 2v
+        DVService -> NotifyNL "Verstuurt attendering via" ""
+
+        // Scenario 8 & 9
+        DVService ->  DVOmcService "Start notificatie" ""
+
 
         // Berichtenbox
-        Berichtenbox -> KennisgevingService "Verstuurt notificaties via" "API call"
+        Berichtenbox -> KennisgevingService "Verstuurt kennisgeving via" ""
         Berichtenbox -> ProfielServiceBackend "Haalt profiel informatie op" ""
 
-        // UWV Service
-        UWVService ->  UwvOmcService "Start notificatie" "API call"
 
         // KennisgevingService
-        KennisgevingService -> KanaalHerstelDienst "Verstuurt kanaal herstel" ""
-        KennisgevingService -> NotifyNL "Verstuurt notificatie via" ""
-        KennisgevingService -> KvkHandelsregister "Adresgegevens ophalen" ""
+        KennisgevingService -> KanaalHerstelDienst "Kanaal herstel request" ""
+        KennisgevingService -> NotifyNL "Verstuurt kennisgeving via" ""
+        KennisgevingService -> KvkHandelsregister "Adresgegevens request" ""
 
         // Deployment groups
-        deploymentEnvironment "Ontwikkelomgeving" {            
+        deploymentEnvironment "Ontwikkelomgeving" {
             deploymentNode "LOGIUS-O-ENVIRONMENT" "" "Ergens" {
                 deploymentNode "Logius" "" "iets:latest" {
                     softwareSystemInstance KanaalHerstelDienst
                     softwareSystemInstance Berichtenbox
                     containerInstance NotifyNL
                     containerInstance ProfielServiceBackend
+                    containerInstance KennisgevingService
                 }
             }
-            deploymentNode "BD-O-ENVIRONMENT" "" "Ergens" {
-                deploymentNode "BD" "" "iets:latest" {
-                    containerInstance BdOmcService
-                    containerInstance BDService
-                }
-            }          
-            deploymentNode "RVO-O-ENVIRONMENT" "" "Ergens" {
-                deploymentNode "RVO" "" "iets:latest" {
-                    containerInstance RVOService
+            deploymentNode "DV-O-ENVIRONMENT" "" "Ergens" {
+                deploymentNode "DV" "" "iets:latest" {
+                    containerInstance DVOmcService
+                    containerInstance DVService
                 }
             }
-            deploymentNode "UWV-O-ENVIRONMENT" "" "Ergens" {
-                deploymentNode "UWV" "" "iets:latest" {
-                    containerInstance UwvOmcService
-                    containerInstance UWVService
-                }
-            }
-            deploymentNode "LOGIUS-MOZ-ONT" "" "ODCN" {     
+            deploymentNode "LOGIUS-MOZ-ONT" "" "ODCN" {
                 deploymentNode "client-zakelijk" "" "nodejs/react" {
                     containerInstance MozBE
                 }
@@ -170,7 +131,18 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                 }
             }
         }
+        deploymentEnvironment "Profielservicedeployment" {
+                deploymentNode "LOGIUS-O-ENVIRONMENT" "" "Ergens" {
+                    deploymentNode "Logius" "" "iets:latest" {
+                        containerInstance ProfielServiceDatabase
+                        containerInstance ProfielServiceBackend
+                    }
+                }
+        }
     }
+
+
+
 
     views {
         systemLandscape "SysteemLandschap" "Systeem Landschap diagram" {
@@ -200,23 +172,13 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             include *
             autoLayout
         }
-        
+
         container MOZA "MOZAContainer" {
             include *
             autoLayout
         }
 
-        container UWV "UWVContainer" {
-            include *
-            autoLayout
-        }
-
-        container RVO "RVOContainer" {
-            include *
-            autoLayout
-        }
-                
-        container BD "BDContainer" {
+        container DV "DVContainer" {
             include *
             autoLayout
         }
@@ -232,6 +194,11 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         }
 
         deployment * "Ontwikkelomgeving" "Ontwikkelomgeving" "Omgeving voor MOZ"  {
+            include *
+            autoLayout
+        }
+
+        deployment ProfielService "Profielservicedeployment" "ProfielServiceDeployment" "Omgeving voor MOZ"  {
             include *
             autoLayout
         }

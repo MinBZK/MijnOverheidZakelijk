@@ -104,7 +104,7 @@ Beide opties hebben plus- en minpunten. Hieronder zetten we deze uiteen;
 ### Optie 2: Profiel Service als onderdeel van OND
 
 #### Voordelen
-- Doel en wettelijke grondslag zijn strak afgekaderd, waardoor dit juridisch eenvoudiger valt te verantwoorden
+- Doel en wettelijke grondslag zijn strak afgekaderd
 - Het kunnen notificeren van burgers en ondernemers is hiermee opgelost
 
 #### Nadelen

@@ -1,9 +1,5 @@
 ## Beheer en Support
 
-> Hoe wordt de software beheerd, gemonitord en gemanaged.
->
-> Zie ook: [Inhoud guidelines Beheer en support](https://structurizr.com/help/documentation/operation-and-support)
-
 ### Gezamenlijke War-Room
 
 Er is momenteel geen fysieke, gezamenlijke "special operation"-room, aangezien we ons nog in de POC-fase bevinden.

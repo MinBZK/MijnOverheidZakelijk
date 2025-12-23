@@ -1,9 +1,5 @@
 ## Ontwikkelomgeving
 
-> Hoe zet je een nieuwe ontwikkelomgeving op, welke tools heb je nodig etc.
-> 
-> Zie ook: [Inhoud guidelines Ontwikkelomgeving](https://structurizr.com/help/documentation/development-environment)
-
 ### Ontwikkel werkplek
 
 Als DevOps-medewerker dien je de beschikking te hebben over een unmanaged laptop, of BYOD. Beter gezegd; een laptop

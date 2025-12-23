@@ -1,9 +1,5 @@
 ## Kwaliteitseisen
 
-> Waar het [Functioneel Overzicht](#2) de functionaliteit samenvat, worden hier de niet-functionele / kwaliteitseisen vastgesteld.
->
-> Zie ook: [Inhoud guidelines Kwaliteitseisen](https://structurizr.com/help/documentation/quality-attributes)
-
 Onderwerpen zijn:
 
 - Performance (e.g. latency and throughput)

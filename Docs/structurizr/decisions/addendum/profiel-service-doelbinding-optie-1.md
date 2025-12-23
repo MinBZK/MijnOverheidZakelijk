@@ -5,7 +5,7 @@
 
 ## 1. Inleiding
 
-De Profiel Service is een centrale voorziening waar burgers en ondernemers hun contactgegevens en communicatievoorkeuren voor de gehele overheid kunnen beheren. Deze dienst wordt door verschillende overheidsinstellingen bevraagd om berichten en notificaties op de juiste manier bij de burger te kunnen afleveren.
+De Profiel Service is een centrale voorziening waar burgers en ondernemers hun contactgegevens en communicatievoorkeuren voor de gehele overheid kunnen beheren. Het voordeel voor de burger en ondernemer is dat ze slechts op één plek hun contactgegevens en voorkeuren hoeven op te geven. De Profiel Service wordt door verschillende overheidsorganisaties gebruikt om contactvoorkeuren en contactgegevens van burgers en ondernemers op te halen. De overheidsorganisatie kan deze informatie gebruiken in hun contact met burgers en ondernemers. Denk aan het versturen van een notificatie, maar ook op het moment dat ergens telefonisch contact over nodig is.
 
 Omdat de Profiel Service persoonsgegevens verwerkt, is doelbinding een kernprincipe. Dit document beschrijft hoe doelbinding wordt toegepast, geborgd en afgedwongen binnen de Profiel Service.
 

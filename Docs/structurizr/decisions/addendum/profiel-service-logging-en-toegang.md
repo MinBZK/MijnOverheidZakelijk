@@ -19,11 +19,13 @@ Deze bijlage is bedoeld om door juristen te worden beoordeeld op toereikendheid 
 
 ## 2. Federatief Datastelsel (FDS)
 
-Het Federatief Datatselsel is een stelsel van afspraken
+Het Federatief Datatselsel is een stelsel van afspraken voor het veilig en betrouwbaar delen van data binnen overheidsorganisaties. Hieronder vallen standaarden zoals Logboek Dataverwerkingen, Federatieve Service Connectiviteit en Federatieve Toegangsverlening.
 
-## 2. Logboek Dataverwerkingen (LDV)
+Zie voor meer informatie over het Federatief Datastelsel: [Realisatie IBDS - Wat is het Federatief Datastelsel](https://realisatieibds.nl/groups/view/0056c9ef-5c2e-44f9-a998-e735f1e9ccaa/federatief-datastelsel/wiki/view/6eb23feb-22b9-4d0a-abf1-512cc86c2d19/wat-is-het-federatief-datastelsel)
 
-### 2.1 Doel van het LDV
+## 3. Logboek Dataverwerkingen (LDV)
+
+### 3.1 Doel van het LDV
 
 Het Logboek Dataverwerkingen (LDV) is een stelselvoorziening waarmee verwerkingen van persoonsgegevens **gestructureerd, uniform en ketenbreed** worden vastgelegd.
 
@@ -32,20 +34,21 @@ Het LDV heeft als doel om:
 - transparantie te bieden richting toezicht en audits;
 - achteraf controle mogelijk te maken op rechtmatigheid en doelgebruik.
 
-### 2.2 Vastgelegde elementen
+Zie voor meer informatie over de LDV standaard: [Logius Standaarden - Logboek Dataverwerkingen](https://logius-standaarden.github.io/logboek-dataverwerkingen/)
+
+### 3.2 Vastgelegde elementen
 
 Alle dataverwerkingen worden conform de LDV-standaard vastgelegd. Meer over de wijze van vastlegging is te vinden in [paragraaf 3.2 Component: Logboek](https://logius-standaarden.github.io/logboek-dataverwerkingen/#component-logboek) in de beschrijving van de LDV standaard van Logius.
 
-
-### 2.3 Relatie tot doelbinding
+### 3.3 Relatie tot doelbinding
 
 Het LDV legt vast **welk doel is opgegeven bij een verwerking** en **welke gegevens daarbij zijn gebruikt**. Het LDV zelf stuurt of beperkt de verwerking niet, maar maakt deze **controleerbaar en toetsbaar**.
 
 ---
 
-## 3. Federatieve Service Connectiviteit (FSC)
+## 4. Federatieve Service Connectiviteit (FSC)
 
-### 3.1 Doel van FSC
+### 4.1 Doel van FSC
 
 De FSC-standaard beschrijft hoe organisaties binnen een federatief stelsel diensten bij elkaar afnemen op basis van **contractuele afspraken**.
 
@@ -54,7 +57,9 @@ Toegang tot een service is uitsluitend mogelijk wanneer:
 - de afnemende organisatie is geïdentificeerd;
 - de afgesproken dienstverlening expliciet is vastgelegd.
 
-### 3.2 Vastlegging van doelen in contracten
+Zie voor meer informatie over de FSC standaard: [https://fsc-standaard.nl/](https://fsc-standaard.nl/)
+
+### 4.2 Vastlegging van doelen in contracten
 
 Binnen FSC kunnen contracten onder andere vastleggen:
 
@@ -65,15 +70,15 @@ Binnen FSC kunnen contracten onder andere vastleggen:
 
 Deze contracten vormen het **organisatorische en juridische kader** waarbinnen technische toegang wordt verleend.
 
-### 3.3 Relatie tot gegevensverwerking
+### 4.3 Relatie tot gegevensverwerking
 
 FSC bepaalt **wie** een dienst mag gebruiken en **onder welke voorwaarden**. Het contract fungeert daarmee als expliciete context waarbinnen gegevensverwerkingen plaatsvinden.
 
 ---
 
-## 4. Federatieve Toegangsverlening (FTV)
+## 5. Federatieve Toegangsverlening (FTV)
 
-### 4.1 Doel van FTV
+### 5.1 Doel van FTV
 
 Federatieve Toegangsverlening (FTV) beschrijft de methodiek waarmee organisaties binnen een federatief stelsel:
 - elkaar herkennen;
@@ -82,7 +87,9 @@ Federatieve Toegangsverlening (FTV) beschrijft de methodiek waarmee organisaties
 
 FTV sluit aan op bestaande standaarden zoals OAuth2, OpenID Connect en SAML.
 
-### 4.2 Autorisatie op basis van context
+Zie voor meer informatie over de FTV standaard: [https://vng-realisatie.github.io/ftv/](https://vng-realisatie.github.io/ftv/)
+
+### 5.2 Autorisatie op basis van context
 
 Bij service-aanroepen worden tokens gebruikt die context bevatten, zoals:
 
@@ -93,7 +100,7 @@ Bij service-aanroepen worden tokens gebruikt die context bevatten, zoals:
 
 De ontvangende service valideert deze context voordat toegang wordt verleend.
 
-### 4.3 Relatie tot doelbinding
+### 5.3 Relatie tot doelbinding
 
 FTV maakt het mogelijk om:
 - toegang tot services te koppelen aan vooraf vastgelegde afspraken;
@@ -102,7 +109,7 @@ FTV maakt het mogelijk om:
 
 ---
 
-## 5. Samenhang tussen FDS, LDV, FSC en FTV
+## 6. Samenhang tussen FDS, LDV, FSC en FTV
 
 De drie standaarden vallen onder het Federatieve Datastelsel en vullen elkaar aan:
 
@@ -137,7 +144,7 @@ Deze samenhang is in alle architectuurvarianten gelijk ingericht.
 
 ---
 
-## 6. Afbakening van deze bijlage
+## 7. Afbakening van deze bijlage
 
 Deze bijlage:
 - beschrijft **niet** de interne logica van specifieke services;
@@ -148,7 +155,7 @@ De beoordeling of deze combinatie van maatregelen **toereikend is voor doelbindi
 
 ---
 
-## 7. Gebruik als bijlage
+## 8. Gebruik als bijlage
 
 Deze tekst is bedoeld als:
 - vaste bijlage bij architectuur- en ontwerpdocumenten;

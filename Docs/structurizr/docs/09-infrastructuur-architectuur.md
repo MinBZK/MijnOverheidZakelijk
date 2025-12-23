@@ -1,8 +1,5 @@
 ## Infrastructuur Architectuur
 
-> De meeste documentatie gaat over de software zelf, maar hier kan de infrastructuur beschreven worden.  
-> Zie ook: [Inhoud guidelines Infrastructuur Architectuur](https://structurizr.com/help/documentation/infrastructure-architecture)
-
 ### Infrasctuctuur Standaard Platform
 
 Alle software systemen binnen het landschap Vertegenwoordigen draaien op het Standaard Platform van Logius. Dit is een door Logius gehoste container infrastructuur op basis van Kubernetes. Meer informatie hierover is te vinden op de website van Logius: https://logius.nl/diensten/standaard-platform.

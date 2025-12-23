@@ -1,9 +1,5 @@
 ## Kwaliteitseisen
 
-> Waar het [Functioneel Overzicht](#2) de functionaliteit samenvat, worden hier de niet-functionele / kwaliteitseisen vastgesteld.
->
-> Zie ook: [Inhoud guidelines Kwaliteitseisen](https://structurizr.com/help/documentation/quality-attributes)
-
 Onderwerpen zijn:
 
 - Performance (e.g. latency and throughput)
@@ -27,7 +23,7 @@ Onderwerpen zijn:
 
 Alle webapplicaties van de overheid dienen te voldoen aan de [WCAG 2.1 A + AA standaarden](https://www.w3.org/standards/webdesign/accessibility). Zie hiervoor de wet- en regelgeving op [digitoegankelijkheid.nl](https://www.digitoegankelijk.nl/wetgeving/wat-verplicht).
 
-Tijdens de Pilot zullen de volgende browsers ondersteunt worden:
+Tijdens de Pilot zullen de volgende browsers ondersteund worden:
 
 - Chrome
 - Edge
@@ -35,6 +31,11 @@ Tijdens de Pilot zullen de volgende browsers ondersteunt worden:
 - Firefox
 
 Hiervan worden de _laatste twee versies_ ondersteund. Ook wordt de _Responsive_ versie van deze browsers ondersteund. Motivatie: de gekozen browsers worden het meest gebruikt op het Internet. De keuze om de laatste twee versies van elke browser te ondersteunen is volgens het beleid van de Rijksoverheid,bij de Overheid, zoals bij Algemene Zaken. Uiteraard moet ook mobiel ondersteund worden. Vandaar de 'Responsive'-eis.
+
+### Design systemen
+
+NL Design System conform ADR 0009. UI-teksten in het Nederlands, 
+**TODO**: en toepassing van de vertaal tooling van de Europese Commissie om alle talen van de EU te ondersteunen.
 
 ### Lighthouse
 

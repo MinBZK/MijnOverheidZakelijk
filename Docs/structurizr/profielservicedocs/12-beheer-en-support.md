@@ -1,5 +1,12 @@
 ## Beheer en Support
 
+> Hoe wordt de software beheerd, gemonitord en gemanaged.
+>
+> Zie ook: [Inhoud guidelines Beheer en support](https://structurizr.com/help/documentation/operation-and-support)
+
+De kans is momenteel aannemelijk dat de hosting hiervan uiteindelijk bij Logius terecht komt, 
+daardoor hebben wij besloten de Profiel Service in Java/Quarkus op te zetten wat aansluit bij hun tech stack.
+
 ### Gezamenlijke War-Room
 
 Er is momenteel geen fysieke, gezamenlijke "special operation"-room, aangezien we ons nog in de POC-fase bevinden.
@@ -49,7 +56,7 @@ kubectl port-forward service/postgres-service 5432:5432
 
 ### Certificaten
 
-Voor de omgevingen van MOZ hebben we nog geen certificaten aangevraagd.
+Voor de PoC omgeving gebruiken wij een LetsEncrypt certificaat.
 
 ### Secrets
 

@@ -23,6 +23,8 @@ Het Federatief Datatselsel is een stelsel van afspraken voor het veilig en betro
 
 Zie voor meer informatie over het Federatief Datastelsel: [Realisatie IBDS - Wat is het Federatief Datastelsel](https://realisatieibds.nl/groups/view/0056c9ef-5c2e-44f9-a998-e735f1e9ccaa/federatief-datastelsel/wiki/view/6eb23feb-22b9-4d0a-abf1-512cc86c2d19/wat-is-het-federatief-datastelsel)
 
+---
+
 ## 3. Logboek Dataverwerkingen (LDV)
 
 ### 3.1 Doel van het LDV

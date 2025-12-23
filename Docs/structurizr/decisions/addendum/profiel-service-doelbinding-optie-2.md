@@ -14,7 +14,7 @@ Deze variant beschrijft een alternatieve inrichting van doelbinding binnen het n
 2. **Output Management Component (OMC)** – de *postkamer* die verantwoordelijk is voor het ophalen van contactgegevens en het routeren van berichten.
 3. **Notificatie Service (NS)** – de *postbode* die uitsluitend verantwoordelijk is voor het afleveren van berichten via e-mail, sms of fysieke post.
 
-In deze architectuur hebben dienstverleners **geen toegang** tot contactgegevens en ontvangen zij deze ook nooit. Zij sturen uitsluitend een notificatie-opdracht met een identificatienummer. Hiermee verschuift de doelbinding: de dienstverlener verwerkt geen persoonsgegevens, terwijl de OMC en PS dit namens de overheid uitvoeren binnen een strikt afgebakend, controleerbaar doel.
+In deze architectuur hebben dienstverleners **geen toegang** tot contactgegevens en ontvangen zij deze ook nooit. Zij sturen uitsluitend een notificatie-opdracht met een (combinatie van) identificatienummer(s). Hiermee verschuift de doelbinding: de dienstverlener verwerkt geen persoonsgegevens, terwijl de OMC en PS dit namens de overheid uitvoeren binnen een strikt afgebakend, controleerbaar doel.
 
 ---
 
@@ -111,9 +111,9 @@ sequenceDiagram
 **Wettelijke grondslag:** Verwerking onder verantwoordelijkheid van de overheid die de notificatie initieert.\
 **Gegevensgebruik:**
 
-- identificatie → ophalen profiel,
-- contactgegevens → doorgeven aan NS,
-- notificatiebericht → afleveren.
+- identificatie -> ophalen profiel,
+- contactgegevens -> doorgeven aan NS,
+- notificatiebericht -> afleveren.
 
 ### 5.4 Notificatie Service (NS)
 
@@ -157,16 +157,17 @@ De dienstverlener hoeft geen contactgegevens te verwerken → dit reduceert priv
 
 ## 8. Logging en auditing
 
-De keten logt minimaal:
+De keten logt volgens de LDV standaard minimaal:
 
-- doel van verzending
+- doel
+- grondslag
 - identificatienummer (pseudoniem waar mogelijk)
 - betrokken componenten
 - tijdstip
 - afleverkanaal
-- status (OK/NOK)
+- status
 
-Geen enkel log bevat volledige persoonsgegevens buiten de OMC en NS.
+Geen enkel log bevat onversleutelde persoonsgegevens.
 
 Auditors kunnen toetsen dat:
 

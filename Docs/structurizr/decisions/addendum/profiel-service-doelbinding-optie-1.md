@@ -21,60 +21,81 @@ Voor de Profiel Service betekent dit dat elke verwerking van persoonsgegevens ge
 
 ## 3. Architectuuroverzicht
 
-```mermaid
-sequenceDiagram
-    participant Dienstverlener@{"type" : "collections"}
-    participant PS as Profiel Service
-    participant NS as Notificatie Service
-    actor BO as Burger of Ondernemer
+![Profiel Service register](../images/adr0011-profielservice-register.png)
 
-    Dienstverlener ->> PS: Stuurt identificatienummer
-    PS -->> Dienstverlener: Levert contactvoorkeuren
-    Dienstverlener ->> NS: Stuurt inhoud notificatiebericht + voorkeurskanaal
-    NS ->> BO: Stuurt bericht via voorkeurskanaal
-    NS -->> Dienstverlener: Status aflevering (OK/NOK)
-```
+<details>
+    <summary>Zie Mermaid code</summary>
+
+    ```mermaid
+    sequenceDiagram
+        participant Dienstverlener@{"type" : "collections"}
+        participant PS as Profiel Service
+        participant NS as Notificatie Service
+        actor BO as Burger of Ondernemer
+
+        Dienstverlener ->> PS: Stuurt identificatienummer
+        PS -->> Dienstverlener: Levert contactvoorkeuren
+        Dienstverlener ->> NS: Stuurt inhoud notificatiebericht + voorkeurskanaal
+        NS ->> BO: Stuurt bericht via voorkeurskanaal
+        NS -->> Dienstverlener: Status aflevering (OK/NOK)
+    ```
+
+</details>
 
 ## 4. Toepassing van doelbinding binnen de Profiel Service
 
 ### 4.1 Overzicht van dataverwerkingen
 
 De Profiel Service verwerkt o.a. de volgende gegevens:
-- Contactgegevens (e-mail, telefoonnummer)
+- Contactgegevens (naam, e-mail, telefoonnummer)
 - Communicatievoorkeuren (voorkeurskanaal, notificatie-instellingen)
 - Opt-in/opt-out gegevens (toestemming)
 
-Elke verwerking is gekoppeld aan een doel. Dit wordt in de architectuur vastgelegd en afgedwongen.
+Elke verwerking is gekoppeld aan een doel. Dit wordt in de architectuur vastgelegd en afgedwongen met behulp van de standaarden van het Federatief Datastelsel. Zie ook [Profiel Service logging en toegang](./profiel-service-logging-en-toegang.md).
 
 ### 4.2 Relatie tussen instellingen, doeleinden en gegevens
 
-```mermaid
-erDiagram
-    Dienstverlener ||--o{ Doelen : "heeft doelen"
-    Doelen ||--o{ DataAccessRule : "bevat regels"
-    DataAccessRule ||--o{ Datavelden : "mag lezen"
-    ProfielService ||--o{ Datavelden : "beheert velden"
-```
+![Doelen en gegevens](../images/adr0011-doelen-en-gegevens.png)
+
+<details>
+    <summary>Zie Mermaid code</summary>
+
+    ```mermaid
+    erDiagram
+        Dienstverlener ||--o{ Doelen : "heeft doelen"
+        Doelen ||--o{ DataAccessRule : "bevat regels"
+        DataAccessRule ||--o{ Datavelden : "mag lezen"
+        ProfielService ||--o{ Datavelden : "beheert velden"
+    ```
+
+</details>
 
 ### 4.3 Doelbinding bij API-toegang
 
 Elke API-call naar de Profiel Service bevat:
-	•	de identiteit van de verzoekende dienst;
-	•	het doel waarvoor de aanvraag wordt gedaan (purposeId);
-	•	expliciete autorisatiekoppeling tussen dienst en doel;
-	•	toegestane gegevensvelden per doel.
+- de identiteit van de verzoekende dienst;
+- het doel waarvoor de aanvraag wordt gedaan (purposeId);
+- expliciete autorisatiekoppeling tussen dienst en doel;
+- toegestane gegevensvelden per doel.
 
 De Profiel Service voert per request een Doelbinding Check uit:
 
-```mermaid
-flowchart TD
-    A[Verzoek van dienst] --> B[Bevat doelId?]
-    B -- Nee --> X[Weiger: doel ontbreekt]
-    B -- Ja --> C[Controleer of dienst dit doel mag uitvoeren]
-    C -- Nee --> Y[Weiger: dienst niet geautoriseerd]
-    C -- Ja --> D[Controleer welke gegevens bij dit doel horen]
-    D --> E[Gegevens verstrekken]
-```
+![Doelbinding check](../images/adr0011-doelbinding-check.png)
+
+<details>
+    <summary>Zie Mermaid code</summary>
+
+    ```mermaid
+    flowchart TD
+        A[Verzoek van dienst] --> B[Bevat doelId?]
+        B -- Nee --> X[Weiger: doel ontbreekt]
+        B -- Ja --> C[Controleer of dienst dit doel mag uitvoeren]
+        C -- Nee --> Y[Weiger: dienst niet geautoriseerd]
+        C -- Ja --> D[Controleer welke gegevens bij dit doel horen]
+        D --> E[Gegevens verstrekken]
+    ```
+
+</details>
 
 ## 5. Doelregistratie
 
@@ -113,7 +134,7 @@ Doelbinding wordt geborgd via:
 Bij overtreding:
 - kan de dienst geblokkeerd worden;
 - kan het doel geschorst worden;
-- volgt melding aan de verantwoordelijke FG.
+- volgt melding aan de verantwoordelijke Funtionaris Gegevensbescherming (FG).
 
 ## 8. Voorbeeld instellingsprofiel met doelen en toegestane velden
 
@@ -139,7 +160,8 @@ Voorbeeld:
 | Doel                      | Wettelijke grondslag | Toegestane velden                 |
 | ------------------------- | -------------------- | --------------------------------- |
 | Versturen van besluiten   | AWB                  | e-mail, telefoon, voorkeur kanaal |
-| Notificaties MijnOverheid | Toestemming          | e-mail, telefoon                  |
+| Notificaties MijnOverheid | Toestemming          | e-mail, telefoon, voorkeur kanaal |
+| Nieuwsbrieven             | Toestemming          | e-mail                            |
 
 ## 9. Conclusie
 

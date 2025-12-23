@@ -99,7 +99,7 @@ Beide opties hebben plus- en minpunten. Hieronder zetten we deze uiteen;
 
 #### Nadelen
 
-- Doel en wettelijke grondslag van het ophalen van gegevens kunnen per organisatie verschillend zijn, waardoor dit juridisch misschien ingewikkelder valt te verantwoorden
+- Doel en wettelijke grondslag van het ophalen van gegevens kunnen per organisatie verschillend zijn
 
 ### Optie 2: Profiel Service als onderdeel van OND
 

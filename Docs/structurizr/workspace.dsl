@@ -11,7 +11,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         }
 
         group "DI" {
-            DV = softwareSystem "Dienstverlener" "Vakapplicatie (mockup) van een organisatie voor uitwerking van scenario #2"  {
+            DV = softwareSystem "Dienstverlener" "Vakapplicatie (mockup) van een organisatie voor uitwerking voor scenario 2, 8 & 9"  {
                 DVOmcService = container "Output management component" "Routeren van de output van processen naar de juiste kanalen" ""
                 DVService = container "Dienstverlener Service" "Een vakapplicatie of service bij een DV die processen start waarbij notificaties verstuurd moeten worden" "" {
                 }

@@ -35,7 +35,7 @@ Belangrijke leveranciers zijn:
 1. Authenticatie en sessieopbouw – Inloggen via DigiD (burger/zzp'er), eHerkenning (ondernemer) of eIDas (buitenlandse belanghebbende); autorisatie en scoping bepalen welk profiel en welke gegevens zichtbaar/bewerkbaar zijn. Flow verder uitgewerkt in 07-code-Aurthenticatie.
 
 In deze flowchart is te zien hoe de diverse inlogopties worden gebruikt en welke identificerende informatie wij dan aan de gebruiker kunnen koppelen.
-![Auth Flowchart](./images/ArchitectuurProfielService/AuthenticatieFlowChart.png "Auth Flowchart")
+![Auth Flowchart](./images/ArchitectuurProfielService/AuthenticatieFlowchart.png "Auth Flowchart")
 
 <details>
   <summary>Zie mermaid code</summary>

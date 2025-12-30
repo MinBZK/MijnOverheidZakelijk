@@ -79,9 +79,10 @@ Hierbij is het doel en de grondslag altijd hetzelfde, namelijk: "het afleveren v
 
 Om dit te toetsen, dienen we deze opties voor te leggen bij juridisch adviseurs. Hiervoor zijn bijgevoegde doelbinding documenten opgesteld, waarin is beschreven wie, welke gegevens met welk doel kan raadplegen en hoe we ervoor zorgen dat dit veilig gebeurt.
 
-- [Doelbinding - Profiel Service als centraal register](./addendum/profiel-service-doelbinding-optie-1.md)
-- [Doelbinding - Profiel Service als onderdeel van Overheidsbrede Notificatie Dienst](./addendum/profiel-service-doelbinding-optie-2.md)
-- [Doelbinding - Logging en toegang](./addendum/profiel-service-logging-en-toegang.md)
+
+- [Doelbinding - Profiel Service als centraal register](https://github.com/MinBZK/MijnOverheidZakelijk/tree/main/Docs/structurizr/decisions/addendum/profiel-service-doelbinding-optie-1.md)
+- [Doelbinding - Profiel Service als onderdeel van Overheidsbrede Notificatie Dienst](https://github.com/MinBZK/MijnOverheidZakelijk/tree/main/Docs/structurizr/decisions/addendum/profiel-service-doelbinding-optie-2.md)
+- [Doelbinding - Logging en toegang](https://github.com/MinBZK/MijnOverheidZakelijk/tree/main/Docs/structurizr/decisions/addendum/profiel-service-logging-en-toegang.md)
 
 ## Decision
 
@@ -95,7 +96,7 @@ Beide opties hebben plus- en minpunten. Hieronder zetten we deze uiteen;
 
 #### Voordelen
 
-- Aangesloten organisaties kunnen de contactvoorkeuren en -gegevens gebruiken in hun bestaande CRM systemen
+- Aangesloten organisaties kunnen de contactvoorkeuren en -gegevens gebruiken in hun bestaande systemen
 
 #### Nadelen
 

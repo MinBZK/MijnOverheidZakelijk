@@ -51,7 +51,7 @@ De Profiel Service verwerkt o.a. de volgende gegevens:
 - Communicatievoorkeuren (voorkeurskanaal, notificatie-instellingen)
 - Opt-in/opt-out gegevens (toestemming)
 
-Elke verwerking is gekoppeld aan een doel. Dit wordt in de architectuur vastgelegd en afgedwongen met behulp van de standaarden van het Federatief Datastelsel. Zie ook [Profiel Service logging en toegang](./profiel-service-logging-en-toegang.md).
+Elke verwerking is gekoppeld aan een doel. Dit wordt in de architectuur vastgelegd en afgedwongen met behulp van de standaarden van het Federatief Datastelsel. Zie ook [Profiel Service logging en toegang](profiel-service-logging-en-toegang.md).
 
 ### 4.2 Relatie tussen instellingen, doeleinden en gegevens
 

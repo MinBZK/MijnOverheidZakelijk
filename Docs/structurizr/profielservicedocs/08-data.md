@@ -209,19 +209,14 @@ De volgende diagrammen illustreren de belangrijkste interacties met de ProfielSe
    In dit scenario vraagt een dienstverlener de contactvoorkeuren op van een ondernemer of onderneming.  
    Deze informatie kan de dienstverlener dan gebruiken om kennisgevingen en/of attenderingen correct af te kunnen leveren.
 
-![Sequentiediagram dienstverlener bevraagd profielservice](./images/ArchitectuurProfielService/SeqDienstverlenerBevraagdProfiel.png "Sequentiediagram dienstverlener bevraagd profielservice")
+![Sequentiediagram dienstverlener bevraagd profielservice](images/ArchitectuurProfielService/SeqDVBevraagdPS.png "Sequentiediagram dienstverlener bevraagd profielservice")
+
 
 <details>
   <summary>Zie mermaid code</summary>
   
     sequenceDiagram
         participant Dienstverlener
-
-        Dienstverlener-->>Mandaat Service: Vraag gemandateerde bsn(s) op
-        activate Mandaat Service
-        Mandaat Service-->>Dienstverlener: Ok
-        deactivate Mandaat Service
-
         participant Profiel as Profiel Service
 
         Dienstverlener->>Profiel: GET contactvoorkeuren Bsn en/of KvK

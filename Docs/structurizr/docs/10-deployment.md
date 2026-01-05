@@ -1,9 +1,5 @@
 ## Deployment
 
-> De koppeling tussen software architectuur en infrastructuur architectuur. (waar draait wat)
->
-> Zie ook: [Inhoud guidelines Deployment](https://structurizr.com/help/documentation/deployment)
-
 ### Branching strategie
 
 We maken gebruik van de GitFlow branching strategie. Dat wil zeggen dat er elke feature in zijn eigen feature-branch wordt

@@ -1,9 +1,5 @@
 ## Functioneel overzicht
 
-> Het is niet de bedoeling om de gehele functionaliteit tot in detail in dit overzicht te beschrijven, maar wel om de [context](Context) aan te vullen en samen te vatten wat de belangrijkste functies van de software zijn.
->
-> Zie ook: [Inhoud guidelines Functioneel Overzicht](https://structurizr.com/help/documentation/functional-overview)
-
 Wat hebben wij onderzocht en uitgewerkt?
 
 ### Voorkant

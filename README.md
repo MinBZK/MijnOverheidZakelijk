@@ -4,15 +4,12 @@
 
 MijnOverheid Zakelijk biedt zakelijke gebruikers een centraal portaal waar zij al hun gegevens en interacties met de overheid op één plek kunnen terugvinden.
 
-Deze repository is groeiende.
+In deze repository is de documentatie voor MOZa te vinden, de code staat verspreid over diverse andere repositories binnen de organisatie.
+Deze zijn te vinden door te zoeken naar de moza- prefix.
 
 Voor meer informatie kunt u terecht op [mijnoverheidzakelijk.nl](https://www.mijnoverheidzakelijk.nl).
 
-1. Voorkant; dit is de front-end applicatie, ontwikkeld met React en Next.js, waarmee zakelijke gebruikers kunnen inloggen. Deze applicatie communiceert met diverse back-end applicaties. De ‘live’ versie hiervan is te vinden op [moza.mijnoverheidzakelijk.nl/](https://moza.mijnoverheidzakelijk.nl/).
-
 ## ⚠️ Let op!
-
-Deze repository is momenteel een upstream van een interne GitLab omgeving. Deze kan dus achter lopen.
 
 Dit is een eerste ruwe opzet van het project. Deze repository zal worden uitgebreid met verschillende dingen om het gemakkelijker te maken om deze lokaal te draaien:
 

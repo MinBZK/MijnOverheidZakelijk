@@ -26,3 +26,6 @@ workspace.json
 
 # Dependencies
 node_modules/
+
+# Generated PDFs
+presentaties/pdf/

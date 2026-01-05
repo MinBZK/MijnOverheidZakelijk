@@ -47,7 +47,6 @@ just slide       # Start development server
 just present     # Alias voor slide
 just copy-assets # Kopieer vendor assets opnieuw (na npm update)
 just pdf         # Toon keuzemenu voor PDF export
-just pdf --all   # Exporteer alle presentaties naar PDF
 just pdf <naam>  # Exporteer specifieke presentatie naar PDF
 ```
 
@@ -70,11 +69,8 @@ De eenvoudigste manier om PDFs te genereren is met Playwright:
 # Eenmalig: installeer Chromium browser voor Playwright
 npx playwright install chromium
 
-# Interactief keuzemenu
+# Interactief keuzemenu (of exporteer alles)
 just pdf
-
-# Exporteer alle presentaties
-just pdf --all
 
 # Exporteer specifieke presentatie
 just pdf moza_pulse_20251202

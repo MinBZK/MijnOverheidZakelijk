@@ -9,6 +9,8 @@ help:
     @echo "  just setup        - Installeer dependencies en kopieer assets"
     @echo "  just copy-assets  - Kopieer vendor assets van node_modules naar assets/"
     @echo "  just slide        - Start development server op poort 8080"
+    @echo "  just pdf          - Toon keuzemenu voor PDF export"
+    @echo "  just pdf <naam>   - Exporteer specifieke presentatie naar PDF"
     @echo "  just help         - Toon dit helpbericht"
 
 # Kopieer assets van node_modules naar assets directory
@@ -63,3 +65,8 @@ slide:
 
 # Alias voor slide
 alias present := slide
+
+# Exporteer presentaties naar PDF (vereist: npx playwright install chromium)
+# Gebruik: just pdf (keuzemenu), just pdf --all (alles), just pdf <naam> (specifiek)
+pdf *args:
+    node scripts/export-pdf.js {{args}}

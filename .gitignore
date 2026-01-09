@@ -27,3 +27,6 @@ workspace.json
 # Dependencies
 node_modules/
 Docs/structurizr/index
+
+# Generated PDFs
+presentaties/pdf/

@@ -62,10 +62,6 @@
     margin-top: 0 !important;
 }
 
-.reveal h3 {
-    font-size: 1.5em;
-}
-
 #header-logo {
     position: fixed;
     top: 0;
@@ -303,4 +299,104 @@
 .reveal table td {
     padding: 10px 15px;
     border-bottom: 1px solid #e0e0e0;
+}
+
+/* ===========================================
+   PRINT PDF MODE STYLES
+   =========================================== */
+
+/* Verberg achtergrond logo en header logo */
+.print-pdf .reveal-viewport {
+    background-image: none !important;
+}
+
+.print-pdf #header-logo,
+.print-pdf #__bs_notify__ {
+    display: none !important;
+}
+
+/* PDF page wrapper moet relative zijn voor logo positioning */
+.print-pdf .reveal .slides .pdf-page {
+    position: relative !important;
+}
+
+/* Logo bovenaan elke pdf-page */
+.print-pdf .reveal .slides .pdf-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    background-image: url("/assets/images/rijksoverheid.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 100;
+}
+
+/* Verberg logo op slides met hide-logo class */
+.print-pdf .reveal .slides .pdf-page:has(.hide-logo)::before {
+    display: none !important;
+}
+
+/* Reset Reveal's default section styling in print mode */
+.print-pdf .reveal .slides section,
+.print-pdf .reveal .slides section:has(> h2) {
+    padding: 100px 20px 20px 20px !important;
+    top: auto !important;
+    display: block !important;
+}
+
+/* Afbeeldingen centreren en max hoogte/breedte in print mode */
+.print-pdf .reveal .slides section img {
+    display: block !important;
+    margin: 0 auto !important;
+    max-height: 400px !important;
+    max-width: 90% !important;
+    width: auto !important;
+}
+
+/* Stack sections (containers voor verticale slides) */
+.print-pdf .reveal .slides section.stack {
+    padding: 0 !important;
+}
+
+/* Hide-logo slides: geen extra top padding */
+.print-pdf .reveal .slides section.hide-logo {
+    padding: 20px !important;
+}
+
+/* H1 (titelslide): kleiner font zodat het op één regel past */
+.print-pdf .reveal h1 {
+    font-size: 1.6em !important;
+    white-space: nowrap;
+}
+
+.print-pdf .reveal h2 {
+    font-size: 1.5em !important;
+}
+
+.print-pdf .reveal {
+    font-size: 1.6em !important;
+}
+
+/* Titelslide: groter logo */
+.print-pdf .reveal .slides .pdf-page:has(.title-slide)::before {
+    width: 120px;
+    height: 120px;
+}
+
+/* Titelslide: gecentreerd met meer padding voor groter logo */
+.print-pdf .reveal .slides section.title-slide {
+    padding: 160px 20px 20px 20px !important;
+    top: auto !important;
+    transform: none !important;
+    text-align: center;
+}
+
+/* Titelslide met h1 (zonder afbeelding): content meer naar beneden */
+.print-pdf .reveal .slides section.title-slide:has(> h1) {
+    padding-top: 280px !important;
 }

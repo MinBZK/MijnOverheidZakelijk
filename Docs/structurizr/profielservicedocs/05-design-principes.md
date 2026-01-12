@@ -7,7 +7,7 @@ Indien een principe is vastgelegd in een ADR of elders, is een verwijzing opgeno
 
 ### Principes
 
-De onderstaande principes ondersteunen de kwaliteitseisen in profielservicedocs/03-kwaliteitseisen.md 
+De onderstaande principes ondersteunen de kwaliteitseisen in het kwaliteitseisen hoofdstuk 
 en vormen samen met de ADR’s de basis voor ontwerpkeuzes in de software-architectuur.
 
 - Open standaarden, tenzij  

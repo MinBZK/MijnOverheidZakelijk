@@ -44,7 +44,7 @@ Waar zaken bewust buiten scope vallen, is dit expliciet benoemd.
 #### Betrouwbaarheid & Afleverzekerheid
 - Retries: Exponentiële back‑off per kanaal; max retry‑duur configureerbaar. Niet‑afleverbare berichten gaan naar DLQ met reden.
 - Ordering: Geen harde ordering‑garantie over kanalen, wel best‑effort ordering.
-- Statusmodellering: eenduidige statussen (Accepted, Enqueued, Sent, Delivered, Failed, Expired). Overgangen zijn audit‑baar en herleidbaar.
+- Statusmodellering: eenduidige statussen (Geaccepteerd, In de wachtrij geplaatst, Verzonden, Geleverd, Mislukt, Verlopen). Overgangen zijn audit‑baar en herleidbaar.
 
 #### Auditability & Logging (LDV)
 - Audit log: conform ADR 0005 en ADR 0007. Mutaties en externe afleverresultaten worden gelogd.

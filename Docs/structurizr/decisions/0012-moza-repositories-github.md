@@ -37,8 +37,6 @@ de pagina's op GitHub van de repository. Dit gaat om:
 Controleer of deze richtlijnen toepasselijk en volledig zijn. Mocht dit niet zo zijn, dan kan er een eigen bestand in de
 hoofdfolder geplaatst worden, respectievelijk genaamd `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md` en `SECURITY.md`.
 
-
-
 #### GitHub Community Standards checklist
 
 Om aan de checklist op Github te voldoen zijn de volgende bestanden nodig: 

@@ -80,6 +80,10 @@ Daarnaast is het mogelijk om hier enkele toevoegingen op te doen. Ga na of deze 
   opgesteld worden.
 
 ### Security
-
-* Overweeg om [OpenSSF scorecard](https://securityscorecards.dev/#what-is-openssf-scorecard) toe te voegen aan het
-  project. Hiermee worden veel best practices gecontroleerd.
+De volgende zaken zijn goed om aan publieke open source projecten toe te voegen:
+* [OpenSSF scorecard](https://securityscorecards.dev/#what-is-openssf-scorecard). Controle op veel best practices.
+* [Depency Graph](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/configuring-the-dependency-graph). Geeft inzicht in de afhankelijkheden van het project en de veiligheid daarvan.
+* [Build and test code](https://docs.github.com/en/actions/tutorials/build-and-test-code). Controleer of de code van een PR goed gebouwd en getest wordt. Dit voedt ook de dependency graph en daarmee dependabot.
+* [Dependabot](https://docs.github.com/en/code-security/tutorials/secure-your-dependencies/dependabot-quickstart-guide). Automatische pull requests voor dependency updates.
+* [Code quality scanning met CodeQL](https://docs.github.com/en/code-security/tutorials/improve-code-quality/quickstart). Kwaliteit van code scannen bij elk Pull Request.
+* [Secrets scanning](https://docs.github.com/en/code-security/responsible-use/responsible-ai-generic-secrets). Voorkom dat secrets online komen te staan.

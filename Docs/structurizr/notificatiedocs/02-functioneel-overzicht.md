@@ -76,31 +76,31 @@ Scenario 9 staat hier nog niet, maar is idem aan scenario 8, met de toevoeging v
     mermaid
     sequenceDiagram
         actor Medewerker
-        Medewerker->>Vakapplicatie:
+        Medewerker->>Vakapplicatie:'
         activate Vakapplicatie
         Vakapplicatie->>OMC:Verstuur verzoek tot notificatie
         deactivate Vakapplicatie
         activate OMC
         OMC->>Profiel service:Haal contact inforamtie op o.b.v. kvknummer
         activate Profiel service
-        Profiel service-->>OMC:
+        Profiel service-->>OMC:'
         deactivate Profiel service
         OMC->>Notificatie service:Verstuur verzoek tot notificatie
         activate Notificatie service
         deactivate OMC
-
+        
         Notificatie service-->>OMC:Notificatie status update callback
         deactivate Notificatie service
         activate OMC
         alt status = mislukt
-            OMC->>Profiel service:Haal adres gegevens op o.b.v. kvknummer
-            activate Profiel service
-            Profiel service-->>OMC:
-            deactivate Profiel service
-            OMC->>Notificatie service:Stuur verzoek tot brief
-            activate Notificatie service
-            Notificatie service-->>OMC:Brief callback
-            deactivate Notificatie service
+        OMC->>Profiel service:Haal adres gegevens op o.b.v. kvknummer
+        activate Profiel service
+        Profiel service-->>OMC:'
+        deactivate Profiel service
+        OMC->>Notificatie service:Stuur verzoek tot brief
+        activate Notificatie service
+        Notificatie service-->>OMC:Brief callback
+        deactivate Notificatie service
         end
         deactivate OMC
         OMC-->>Vakapplicatie:Optionele callback

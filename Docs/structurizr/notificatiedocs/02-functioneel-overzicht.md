@@ -46,7 +46,8 @@ Dit zijn de welbekende scenario's over hoe overheidsdiensten zouden kunnen inter
 Scenario 9 staat hier nog niet, maar is idem aan scenario 8, met de toevoeging van kanaalherstel.
 
 ##### Scenario 2 — Vakapplicatie belt direct de Notificatie Service
-![Scenario 2 uitgetekend](../notificatiedocs/images/Scenario2.png "Scenario 2 uitgetekend")
+
+![Scenario 2 uitgetekend](images/Scenario2.png "Scenario 2 uitgetekend")
 
 <details>
   <summary>Zie mermaid code</summary>
@@ -68,7 +69,8 @@ Scenario 9 staat hier nog niet, maar is idem aan scenario 8, met de toevoeging v
 </details>
 
 ##### Scenario 8 — Vakapplicatie via OMC met profielverrijking en fallback
-![Scenario 8 uitgetekend](../notificatiedocs/images/Scenario8.png "Scenario 8 uitgetekend")
+
+![Scenario 8 uitgetekend](images/Scenario8GeenLDV.png "Scenario 8 uitgetekend")
 
 <details>
   <summary>Zie mermaid code</summary>

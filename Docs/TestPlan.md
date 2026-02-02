@@ -25,7 +25,7 @@ Niet in scope: uitgebreide end‑to‑end ketentesten met systemen buiten dit pr
 
 ## 3. Procesoverzicht
 1) Voorbereiding PR
-   - Belicht de changes duidelijk: doel, impact, risico’s, en migraties.
+   - Belicht de changes duidelijk: doel, impact, risico’s en migraties.
    - Update of voeg unit tests toe voor gewijzigde logica.
    - Lokale checks: build, unit tests.
 

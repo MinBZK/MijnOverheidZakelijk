@@ -1,0 +1,39 @@
+name: "Bugrapport (NL)"
+description: Maak een rapport aan om ons te helpen verbeteren
+title: "[BUG] "
+labels: ["bug"]
+assignees: []
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Beschrijf de bug
+      description: Een duidelijke en beknopte beschrijving van de bug.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Te reproduceren
+      description: "Stappen om het gedrag te reproduceren:"
+      value: |
+        1. Ga naar '...'
+        2. Klik op '...'
+        3. Scroll naar beneden naar '...'
+        4. Zie fout
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Verwacht gedrag
+      description: Een duidelijke en beknopte beschrijving van wat je verwachtte dat er zou gebeuren.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Aanvullende context
+      description: Voeg hier eventuele andere context over het probleem toe. Bijvoorbeeld screenshots, of je op een mobiel apparaat testte, browser, etc.
+    validations:
+      required: false

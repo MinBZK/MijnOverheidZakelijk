@@ -34,6 +34,6 @@ body:
     id: context
     attributes:
       label: Aanvullende context
-      description: Voeg hier eventuele andere context over het probleem toe. Bijvoorbeeld screenshots, of je op een mobiel apparaat testte, browser, etc.
+      description: Voeg hier eventuele andere context over het probleem toe, bijvoorbeeld screenshots.
     validations:
       required: false

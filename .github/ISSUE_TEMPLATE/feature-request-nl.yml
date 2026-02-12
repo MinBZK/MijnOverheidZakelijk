@@ -4,6 +4,17 @@ title: ""
 labels: ["feature", "refine"]
 assignees: []
 body:
+  - type: dropdown
+    id: role
+    attributes:
+      label: Wat is je rol?
+      options:
+        - Ondernemer
+        - Dienstverlener
+        - Ontwikkelaar
+        - Anders
+    validations:
+      required: false
   - type: textarea
     id: problem
     attributes:

@@ -1,1 +1,8 @@
 blank_issues_enabled: true
+contact_links:
+  - name: Vragen en discussies / Questions and discussions
+    url: https://github.com/MinBZK/MijnOverheidZakelijk/discussions
+    about: Stel hier je vraag / Ask your question here
+  - name: Beveiligingsproblemen / Security issues
+    url: https://github.com/MinBZK/MijnOverheidZakelijk/security/policy
+    about: Meld beveiligingsproblemen niet via issues / Do not report security issues here

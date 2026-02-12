@@ -34,6 +34,6 @@ body:
     id: context
     attributes:
       label: Additional context
-      description: Add any other context about the problem here. For instance screenshots, whether you were testing on a mobile device, browser, etc.
+      description: Add any other context about the problem here, for instance screenshots.
     validations:
       required: false

@@ -63,6 +63,7 @@ maintenance:
   type: internal
   contacts:
     - name: MijnOverheid Zakelijk Team
+      email: moza@minbzk.nl
       affiliation: Ministerie van Binnenlandse Zaken en Koninkrijksrelaties
 localisation:
   localisationReady: false

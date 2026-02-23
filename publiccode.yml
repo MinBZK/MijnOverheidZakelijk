@@ -1,0 +1,71 @@
+publiccodeYmlVersion: "0.5"
+name: MijnOverheid Zakelijk
+url: https://github.com/MinBZK/MijnOverheidZakelijk
+landingURL: https://www.mijnoverheidzakelijk.nl
+platforms:
+  - web
+categories:
+  - digital-citizenship
+organisation:
+  uri: https://www.rijksoverheid.nl/ministeries/ministerie-van-binnenlandse-zaken-en-koninkrijksrelaties
+  name: Ministerie van Binnenlandse Zaken en Koninkrijksrelaties
+fundedBy:
+  - name: Ministerie van Binnenlandse Zaken en Koninkrijksrelaties
+    uri: https://www.rijksoverheid.nl/ministeries/ministerie-van-binnenlandse-zaken-en-koninkrijksrelaties
+developmentStatus: development
+softwareType: standalone/web
+intendedAudience:
+  countries:
+    - NL
+  scope:
+    - government
+description:
+  nl:
+    localisedName: MijnOverheid Zakelijk
+    shortDescription: >-
+      Documentatie en centrale repository voor MijnOverheid Zakelijk (MOZa),
+      een portaal voor zakelijke gebruikers van de overheid.
+    longDescription: >
+      MijnOverheid Zakelijk biedt zakelijke gebruikers een centraal portaal
+      waar zij al hun gegevens en interacties met de overheid op één plek
+      kunnen terugvinden. Het project is momenteel in prototype fase.
+
+
+      In deze repository is de documentatie voor MOZa te vinden. De code staat
+      verspreid over diverse andere repositories binnen de MinBZK organisatie,
+      te herkennen aan de moza- prefix of het topic mijnoverheidzakelijk.
+    features:
+      - Documentatie voor het MijnOverheid Zakelijk project
+      - Centraal overzicht van gegevens bij de overheid voor zakelijke gebruikers
+      - Interacties met de overheid op één plek
+  en:
+    shortDescription: >-
+      Documentation and central repository for "MijnOverheid Zakelijk" (MOZa),
+      a portal for business users of the government.
+    longDescription: >
+      "MijnOverheid Zakelijk" (My Government Business) provides business users
+      with a central portal where they can find all their data and interactions
+      with the government in one place. The project is currently in prototype
+      phase.
+
+
+      This repository contains the documentation for MOZa. The code is spread
+      across several other repositories within the MinBZK organisation,
+      identifiable by the moza- prefix or the mijnoverheidzakelijk topic.
+    features:
+      - Documentation for the "MijnOverheid Zakelijk" project
+      - Central overview of government-held data for business users
+      - Government interactions in one place
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Ministerie van Binnenlandse Zaken en Koninkrijksrelaties
+maintenance:
+  type: internal
+  contacts:
+    - name: MijnOverheid Zakelijk Team
+      email: moza@minbzk.nl
+      affiliation: Ministerie van Binnenlandse Zaken en Koninkrijksrelaties
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - nl

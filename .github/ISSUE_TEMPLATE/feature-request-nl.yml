@@ -1,0 +1,45 @@
+name: "Feature request (NL)"
+description: Stel een idee voor dit project voor
+title: ""
+labels: ["feature", "refine"]
+assignees: []
+body:
+  - type: dropdown
+    id: role
+    attributes:
+      label: Wat is je rol?
+      options:
+        - Ondernemer
+        - Dienstverlener
+        - Ontwikkelaar
+        - Anders
+    validations:
+      required: false
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is je functieverzoek gerelateerd aan een probleem? Beschrijf het.
+      description: Een duidelijke en beknopte beschrijving van het probleem. Bijv. Ik ben altijd gefrustreerd wanneer [...]
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Beschrijf de gewenste oplossing
+      description: Een duidelijke en beknopte beschrijving van wat je wilt dat er gebeurt.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Beschrijf alternatieven die je hebt overwogen
+      description: Een duidelijke en beknopte beschrijving van alternatieve oplossingen of functies die je hebt overwogen.
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Aanvullende context
+      description: Voeg hier eventuele andere context of screenshots over het functieverzoek toe.
+    validations:
+      required: false

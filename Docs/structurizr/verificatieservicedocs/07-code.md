@@ -10,7 +10,7 @@ Onderstaande sectie geeft voorbeeldcontracten (API) en berichtschema’s (queue)
 
 ### Verification Service Sequence Diagrams
 
-#### 1. Verification Request Flow
+#### Verification Request Flow
 
 Deze flow beschrijft hoe een verificatie verzoek wordt aangemaakt en asynchroon wordt verstuurd.
 
@@ -62,7 +62,7 @@ Deze flow beschrijft hoe een verificatie verzoek wordt aangemaakt en asynchroon 
         
 </details>
 
-#### 2. Verification Completion Flow
+#### Verification Completion Flow
 
 Deze flow beschrijft hoe een gebruiker zijn email verifieërt met de ontvangen code.
 
@@ -98,7 +98,7 @@ Deze flow beschrijft hoe een gebruiker zijn email verifieërt met de ontvangen c
 
 </details>
 
-#### 3. Admin Statistics Flow
+#### Admin Statistics Flow
 
 Deze flow is hoe een admin de statistieken kan ophalen van de verificatie service.
 

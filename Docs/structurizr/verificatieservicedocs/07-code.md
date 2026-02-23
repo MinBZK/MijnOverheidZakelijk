@@ -20,18 +20,18 @@ Deze flow beschrijft hoe een verificatie verzoek wordt aangemaakt en asynchroon 
   <summary>Zie mermaid code</summary>
     
     sequenceDiagram
-        participant User
+        participant AanroependeDienst
         participant VC as VerificationController
         participant DB as Database
         participant RMQ as RabbitMQ
         participant VRH as VerificationRequestHandler
         participant NNL as NotifyNLService
     
-        User->>VC: POST /request {email}
+        AanroependeDienst->>VC: POST /request {email}
         activate VC
         VC->>DB: Create & Persist VerificationCode
         VC->>RMQ: Send Code ID to 'verification-requests'
-        VC-->>User: 200 OK (Reference ID)
+        VC-->>AanroependeDienst: 200 OK (Reference ID)
         deactivate VC
     
         Note over RMQ, VRH: Asynchronous Processing with Retry & Fallback
@@ -72,26 +72,26 @@ Deze flow beschrijft hoe een gebruiker zijn email verifieërt met de ontvangen c
   <summary>Zie mermaid code</summary>
 
         sequenceDiagram
-            participant User
+            participant AanroependeDienst
             participant VC as VerificationController
             participant DB as Database
         
-            User->>VC: POST /verify {referenceId, email, code}
+            AanroependeDienst->>VC: POST /verify {referenceId, email, code}
             activate VC
             VC->>DB: Find VerificationCode by referenceId and email
             
             alt Code Not Found
-                VC-->>User: 200 OK {success: false, reasonId: 1, reasonMessage: "..."}
+                VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 1, reasonMessage: "..."}
             else Code Found
                 alt Code Expired
-                    VC-->>User: 200 OK {success: false, reasonId: 2, reasonMessage: "..."}
+                    VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 2, reasonMessage: "..."}
                 else Code Already Used
-                    VC-->>User: 200 OK {success: false, reasonId: 3, reasonMessage: "..."}
+                    VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 3, reasonMessage: "..."}
                 else Incorrect Code
-                    VC-->>User: 200 OK {success: false, reasonId: 4, reasonMessage: "..."}
+                    VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 4, reasonMessage: "..."}
                 else Valid Code
                     VC->>DB: Update verifiedAt & Persist
-                    VC-->>User: 200 OK {success: true}
+                    VC-->>AanroependeDienst: 200 OK {success: true}
                 end
             end
             deactivate VC

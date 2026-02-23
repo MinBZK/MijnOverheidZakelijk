@@ -46,17 +46,17 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                 iamService = container "IAM Service" "Service inclusief management portaal voor IAM" "Keycloak" "Front-End"
                 iamDatabase = container "IAM Database" "Bevat de authenticatie en autorisatie gegevens" "PostgreSQL" "Database"
             }
+            VerificatieService = softwareSystem "Verificatie Service" "Verifieert gebruikers email" {
+                !docs verificatieservicedocs
+                VerificatieServiceBackend = container "Verificatie Service" "Verantwoordelijk voor het verwerken voor verificatie verzoeken" "Quarkus"
+                MessageQueue = container "MessageQueue" "Message Broker t.b.v. het verwerken van verificatie verzoeken" "RabbitMQ"
+                VerifiecatieServiceDatabase = container "Verificatie Service Database" "Bevat de verificatie gegevens" "PostgreSQL" "Database"
+            }
         }
 
         eHerkenning = softwareSystem "eHerkenning" "Identity Provider voor bedrijven" "Existing System"
         DigiD = softwareSystem "DigiD" "Identity Provider voor burgers en ZZP-ers" "Existing System"
         EIDAS = softwareSystem "EIDAS" "Identity Provider voor Europese bedrijven" "Existing System"
-
-        // IAM
-        IAM -> eHerkenning "Gebruikt als IDP" "OAUTH2"
-        IAM -> DigiD "Gebruikt als IDP" "OAUTH2"
-        IAM -> EIDAS "Gebruikt als IDP" "OAUTH2"
-        iamService -> iamDatabase "Slaat gegevens op in"
 
         // Relationships between people and software systems
         DVMedewerker -> DVService "Start notificatie process"
@@ -72,6 +72,19 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
 
         // ProfielService
         ProfielServiceBackend -> profielServiceDatabase "Leest en bewerkt profiel informatie"
+        ProfielServiceBackend -> VerificatieServiceBackend "verifieert email adressen via"
+
+        // VerificatieService
+        VerificatieServiceBackend -> VerifiecatieServiceDatabase "Slaat gegevens op in" ""
+        VerificatieServiceBackend -> MessageQueue "Zet verificatie verzoeken op de Message Queue" ""
+        VerificatieServiceBackend -> MessageQueue "Haalt verificatie verzoeken op" ""
+        VerificatieServiceBackend -> NotifyNL "Verstuurd notificatie via" ""
+
+        // IAM
+        IAM -> eHerkenning "Gebruikt als IDP" "OAUTH2"
+        IAM -> DigiD "Gebruikt als IDP" "OAUTH2"
+        IAM -> EIDAS "Gebruikt als IDP" "OAUTH2"
+        iamService -> iamDatabase "Slaat gegevens op in"
 
         // DVOmcService
         DVOmcService -> NotifyNL "Verstuurt attendering via" ""
@@ -162,7 +175,10 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             include *
             autoLayout
         }
-
+        systemContext VerificatieService "VerificatieServiceContext" {
+            include *
+            autoLayout
+        }
         systemContext Berichtenbox "BerichtenboxContext" {
             include *
             autoLayout
@@ -189,6 +205,11 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         }
 
         container NotificatieService "NotificatieServiceContainer" {
+            include *
+            autoLayout
+        }
+
+        container VerificatieService "VerificatieServiceContainer" {
             include *
             autoLayout
         }

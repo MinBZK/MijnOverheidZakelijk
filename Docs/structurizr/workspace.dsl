@@ -49,7 +49,6 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             VerificatieService = softwareSystem "Verificatie Service" "Verifieert gebruikers email" {
                 !docs verificatieservicedocs
                 VerificatieServiceBackend = container "Verificatie Service" "Verantwoordelijk voor het verwerken voor verificatie verzoeken" "Quarkus"
-                MessageQueue = container "MessageQueue" "Message Broker t.b.v. het verwerken van verificatie verzoeken" "RabbitMQ"
                 VerifiecatieServiceDatabase = container "Verificatie Service Database" "Bevat de verificatie gegevens" "PostgreSQL" "Database"
             }
         }
@@ -76,8 +75,6 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
 
         // VerificatieService
         VerificatieServiceBackend -> VerifiecatieServiceDatabase "Slaat gegevens op in" ""
-        VerificatieServiceBackend -> MessageQueue "Zet verificatie verzoeken op de Message Queue" ""
-        VerificatieServiceBackend -> MessageQueue "Haalt verificatie verzoeken op" ""
         VerificatieServiceBackend -> NotifyNL "Verstuurd notificatie via" ""
 
         // IAM

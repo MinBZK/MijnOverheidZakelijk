@@ -1,7 +1,7 @@
 ## Software architectuur
 
-De Verificatie Service bestaat uit een lichte API voor het starten en valideren van verificaties, een messagequeue voor ontkoppeling,
-en worker(s) die de Notificatie Service aanroepen om e‑mails te versturen. Alle statusinformatie opgeslagen in een datastore.
+De Verificatie Service bestaat uit een lichte API voor het starten en valideren van verificaties en roept de Notificatie Service
+rechtstreeks aan om e‑mails te versturen. Alle noodzakelijke statusinformatie wordt opgeslagen in een datastore.
 
 ### Systeem Container diagram
 
@@ -10,10 +10,7 @@ en worker(s) die de Notificatie Service aanroepen om e‑mails te versturen. All
 ### Componenten
 - API component
   - Eindpunten om een verificatie te starten en te valideren.
-  - Schrijft opdrachten naar de queue; slaat minimale status op.
-- Worker component
-  - Leest opdrachten uit de queue en roept de Notificatie Service aan met de e‑mail en templategegevens.
-  - Markeert statusovergangen en hanteert retries/backoff.
+  - Roept de Notificatie Service direct aan; slaat minimale status op (ReferenceId + VerificationCode).
 - Datastore
   - Tabellen/collecties voor Verification en Attempt (zie Data hoofdstuk).
-- Message Queue
+  - Geen opslag van e‑mailadressen; TTL/opschoning op codes.

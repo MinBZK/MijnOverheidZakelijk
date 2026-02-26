@@ -2,7 +2,7 @@
 
 ### Email verifiëren
 
-Onderstaande sectie geeft voorbeeldcontracten (API) en berichtschema’s (queue) en schetst de basislogica. Dit is geen implementatie, maar richtinggevend voor teams.
+Onderstaande sectie geeft voorbeeldcontracten (API) en schetst de basislogica. Dit is geen implementatie, maar richtinggevend voor teams.
 
 #### HTTP API
 *Link naar swagger*
@@ -12,53 +12,28 @@ Onderstaande sectie geeft voorbeeldcontracten (API) en berichtschema’s (queue)
 
 #### Verification Request Flow
 
-Deze flow beschrijft hoe een verificatie verzoek wordt aangemaakt en asynchroon wordt verstuurd.
+Deze flow beschrijft hoe een verificatieverzoek wordt aangemaakt en direct via de Notificatie Service wordt verstuurd.
 
 ![Verification Request Flow](./images/SequentieVerificationRequestFlow.png "Verification Request Flow")
 
 <details>
   <summary>Zie mermaid code</summary>
     
-    sequenceDiagram
-        participant AanroependeDienst
-        participant VC as VerificationController
-        participant DB as Database
-        participant RMQ as RabbitMQ
-        participant VRH as VerificationRequestHandler
-        participant NNL as NotifyNLService
-    
-        AanroependeDienst->>VC: POST /request {email}
-        activate VC
-        VC->>DB: Create & Persist VerificationCode
-        VC->>RMQ: Send Code ID to 'verification-requests'
-        VC-->>AanroependeDienst: 200 OK (Reference ID)
-        deactivate VC
-    
-        Note over RMQ, VRH: Asynchronous Processing with Retry & Fallback
-        RMQ->>VRH: Consume Message (Code ID)
-        activate VRH
-        
-        loop Up to 6 attempts (1 initial + 5 retries)
-            VRH->>DB: Find VerificationCode by ID
-            VRH->>NNL: sendVerificationEmail(code)
+        sequenceDiagram
+            participant AanroependeDienst
+            participant VC as VerificationController
+            participant DB as Database
+            participant NNL as NotificatieService
+
+            AanroependeDienst->>VC: POST /request {email}
+            activate VC
+            VC->>DB: Create {referenceId, verificationCode}
+            VC->>NNL: sendVerificationEmail(email, verificationCode)
             activate NNL
-            NNL-->>VRH: Success / Exception
+            NNL-->>VC: 200 OK
             deactivate NNL
-            
-            alt Success
-                VRH->>DB: Update verifyEmailSentAt & Persist
-                VRH-->>RMQ: Ack Message
-                Note over VRH: Stop Loop
-            else Exception
-                Note over VRH: Exponential Backoff
-            end
-        end
-        
-        alt All retries failed
-            VRH->>VRH: onMaxRetriesReached (Fallback)
-            VRH-->>RMQ: Ack Message (Graceful Delete)
-        end
-        deactivate VRH
+            VC-->>AanroependeDienst: 200 OK (referenceId)
+            deactivate VC
         
 </details>
 
@@ -71,30 +46,31 @@ Deze flow beschrijft hoe een gebruiker zijn email verifieërt met de ontvangen c
 <details>
   <summary>Zie mermaid code</summary>
 
-        sequenceDiagram
-            participant AanroependeDienst
-            participant VC as VerificationController
-            participant DB as Database
-        
-            AanroependeDienst->>VC: POST /verify {referenceId, email, code}
-            activate VC
-            VC->>DB: Find VerificationCode by referenceId and email
-            
-            alt Code Not Found
-                VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 1, reasonMessage: "..."}
-            else Code Found
-                alt Code Expired
-                    VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 2, reasonMessage: "..."}
-                else Code Already Used
-                    VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 3, reasonMessage: "..."}
-                else Incorrect Code
-                    VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 4, reasonMessage: "..."}
-                else Valid Code
-                    VC->>DB: Update verifiedAt & Persist
-                    VC-->>AanroependeDienst: 200 OK {success: true}
-                end
+    sequenceDiagram
+        participant AanroependeDienst
+        participant VC as VerificationController
+        participant DB as Database
+
+        AanroependeDienst->>VC: POST /verify {referenceId, code}
+        activate VC
+        VC->>DB: Find by referenceId
+
+        alt Code Expired
+            VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 2, reasonMessage: "..."}
+        else Code Already Used
+            VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 3, reasonMessage: "..."}
+        else Code Not Found
+            VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 1, reasonMessage: "..."}
+        else Code Found
+            alt Incorrect Code
+                VC-->>AanroependeDienst: 200 OK {success: false, reasonId: 4, reasonMessage: "..."}
+            else Valid Code
+                VC->>DB: Delete record & Save statistics
+                VC-->>AanroependeDienst: 200 OK {success: true}
             end
-            deactivate VC
+        end
+
+        deactivate VC
 
 </details>
 

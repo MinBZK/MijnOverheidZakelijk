@@ -11,15 +11,14 @@
 
 | Attribuut           | Omschrijving                                                          |
 |---------------------|-----------------------------------------------------------------------|
-| **VERIFICATIECODE** |                                                                       |
+| **VERIFICATIECODE** | Minimalistische opslag voor het kunnen verifiëren van een code        |
+| ReferenceId         | Referentie ID die de aanvrager gebruikt om de code te verifiëren      |
+| Code                | De verificatiecode                                                    |
 | CreatedAt           | Tijdstip wanneer de verificatie is aangevraagd                        |
 | UpdatedAt           | Tijdstip wanneer de tabel voor het laatst is geupdatet                |
 | ValidUntil          | Tijdstip tot wanneer de verificatiecode geldig is                     |
 | VerifiedAt          | Tijdstip wanneer de verificatie is geverifieerd                       |
 | VerifyEmailSentAt   | Tijdstip wanneer de verificatie email is verstuurd                    |
-| Code                | De verificatiecode                                                    |
-| Email               | Het email adres                                                       |
-| ReferenceId         | Referentie ID die de aanvrager kan gebruiker om de code te verifieren |
 
 #### VERIFICATIESTATISTIEKEN
 

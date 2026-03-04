@@ -1,37 +1,37 @@
-# Support
+# Ondersteuning
 
-Thank you for your interest in MijnOverheid Zakelijk (MOZa). This document explains how and where you can get help.
+Bedankt voor je interesse in MijnOverheid Zakelijk (MOZa). Dit document beschrijft hoe en waar je hulp kunt krijgen.
 
-> **Please note:** MijnOverheid Zakelijk is currently in the prototype phase. Documentation, features and support channels are still being developed. We appreciate your patience and welcome your input as we grow.
+> **Let op:** MijnOverheid Zakelijk is momenteel in de ontwikkelfase. Documentatie, functionaliteiten en ondersteuningskanalen zijn volop in ontwikkeling en nog niet op het niveau van productiesoftware die al in gebruik is genomen. We waarderen je geduld terwijl we met elkaar hier aan werken. Heb je ideeën, feedback, suggesties, etc. dan ontvangen we die graag.
 
-## Where to get help
+## Hulp krijgen
 
-### Questions and discussions
+### Vragen en discussies
 
-For general questions, ideas or conversations about the project, please use [GitHub Discussions](https://github.com/MinBZK/MijnOverheidZakelijk/discussions). This is the best place to:
+Voor algemene vragen, ideeën of gesprekken over het project kun je terecht bij [MOZa GitHub Discussions](https://github.com/MinBZK/MijnOverheidZakelijk/discussions). Dit is de beste plek om:
 
-- Ask questions about the project or its architecture
-- Share ideas or suggestions
-- Connect with the team and other contributors
+- Vragen te stellen over het project of de architectuur
+- Ideeën of suggesties te delen
+- In contact te komen met het team en andere bijdragers
 
-### Bug reports and feature requests
+### Bugs melden en feature requests
 
-If you've found a bug or want to request a feature, please [open an issue](https://github.com/MinBZK/MijnOverheidZakelijk/issues). Before opening a new issue, we recommend checking whether a similar issue already exists.
+Heb je een bug gevonden of wil je een feature aanvragen? [Open dan een issue](https://github.com/MinBZK/MijnOverheidZakelijk/issues). We zijn je dankbaar als je vooraf even controleert of er al een vergelijkbaar issue bestaat.
 
-### Security issues
+### Beveiligingsproblemen
 
-If you've found a security vulnerability, please **do not** open a public issue. Instead, follow the process described in our [Security Policy](https://github.com/MinBZK/MijnOverheidZakelijk?tab=security-ov-file).
+Heb je een beveiligingsprobleem gevonden? Open dan **geen** publiek issue, maar volg de procedure in ons [Beveiligingsbeleid](https://github.com/MinBZK/MijnOverheidZakelijk?tab=security-ov-file).
 
-## Related repositories
+## Gerelateerde repositories
 
-MijnOverheid Zakelijk consists of multiple repositories. You can find them by looking for the [`moza-` prefix](https://github.com/MinBZK?q=moza-) or the [`mijnoverheidzakelijk` topic](https://github.com/topics/mijnoverheidzakelijk) on GitHub. If your question relates to a specific component, consider opening your issue or discussion in the relevant repository.
+MijnOverheid Zakelijk bestaat uit meerdere repositories. Deze zijn te vinden door te zoeken naar [de `moza-` prefix](https://github.com/MinBZK?q=moza-) of het topic [`mijnoverheidzakelijk`](https://github.com/topics/mijnoverheidzakelijk) op GitHub. Als je vraag betrekking heeft op een specifiek onderdeel, overweeg dan om je issue of discussie in de betreffende repository te openen.
 
 ## Contact
 
-For more information about the project, visit [mijnoverheidzakelijk.nl](https://mijnoverheidzakelijk.nl). You'll find our contact details on the [contact page](https://mijnoverheidzakelijk.nl/contact/).
+Voor meer informatie over het project kun je terecht op [mijnoverheidzakelijk.nl](https://mijnoverheidzakelijk.nl). Onze contactgegevens vind je op de [contactpagina](https://mijnoverheidzakelijk.nl/contact/).
 
-For general questions about MinBZK open source projects, you can reach us at <opensource@minbzk.nl>.
+Voor algemene vragen over open source projecten van MinBZK kun je een bericht sturen naar <opensource@minbzk.nl>.
 
-## Contributing
+## Bijdragen
 
-Interested in contributing? Please read our [Contributing guidelines](https://github.com/MinBZK/MijnOverheidZakelijk?tab=contributing-ov-file) and [Code of Conduct](https://github.com/MinBZK/MijnOverheidZakelijk?tab=coc-ov-file).
+Wil je bijdragen? Lees dan onze [Bijdragerichtlijnen](https://github.com/MinBZK/MijnOverheidZakelijk?tab=contributing-ov-file) en [Gedragscode](https://github.com/MinBZK/MijnOverheidZakelijk?tab=coc-ov-file).

@@ -1,27 +1,27 @@
-## Type of change / Type wijziging
+## Type wijziging / Type of change
 
 - [ ] Bug fix
-- [ ] New feature / Nieuwe functionaliteit
+- [ ] Nieuwe functionaliteit / New feature
 - [ ] Refactoring
-- [ ] Documentation / Documentatie
-- [ ] Other / Anders
+- [ ] Documentatie / Documentation
+- [ ] Anders / Other
 
-## Summary / Samenvatting
+## Samenvatting / Summary
 
-<!-- Briefly describe what this PR does / Beschrijf kort wat deze PR doet -->
+<!-- Beschrijf kort wat deze PR doet / Briefly describe what this PR does -->
 
-## Changes / Wijzigingen
+## Wijzigingen / Changes
 
-<!-- List the key changes / Som de belangrijkste wijzigingen op -->
+<!-- Som de belangrijkste wijzigingen op / List the key changes -->
 
 -
 
-## Related issues / Gerelateerde issues
+## Gerelateerde issues / Related issues
 
-<!-- Link related issues, e.g. Closes #123 / Link gerelateerde issues, bijv. Closes MinBZK/MijnOverheidZakelijk#123 -->
+<!-- Link gerelateerde issues, bijv. Closes MinBZK/MijnOverheidZakelijk#123 / Link related issues, e.g. Closes #123 -->
 
 ## Checklist
 
-- [ ] Code has been tested locally / Code is lokaal getest
-- [ ] Documentation has been updated (if applicable) / Documentatie is bijgewerkt (indien van toepassing)
-- [ ] No new warnings or errors introduced / Geen nieuwe waarschuwingen of fouten geïntroduceerd
+- [ ] Code is lokaal getest / Code has been tested locally
+- [ ] Documentatie is bijgewerkt (indien van toepassing) / Documentation has been updated (if applicable)
+- [ ] Geen nieuwe waarschuwingen of fouten geïntroduceerd / No new warnings or errors introduced

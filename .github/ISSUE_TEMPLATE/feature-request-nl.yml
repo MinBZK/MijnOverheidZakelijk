@@ -9,7 +9,7 @@ body:
     attributes:
       label: Wat is je rol?
       options:
-        - Ondernemer
+        - Ondernemer / Zakelijke gebruiker
         - Dienstverlener
         - Ontwikkelaar
         - Anders

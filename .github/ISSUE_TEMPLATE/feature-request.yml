@@ -9,7 +9,7 @@ body:
     attributes:
       label: What is your role?
       options:
-        - Entrepreneur
+        - Entrepreneur / Business user
         - Service provider
         - Developer
         - Other

@@ -1,7 +1,7 @@
 publiccodeYmlVersion: "0.5"
 name: MijnOverheid Zakelijk
 url: https://github.com/MinBZK/MijnOverheidZakelijk
-landingURL: https://www.mijnoverheidzakelijk.nl
+landingURL: https://mijnoverheidzakelijk.nl
 platforms:
   - web
 categories:
@@ -30,12 +30,14 @@ description:
       waar zij al hun gegevens en interacties met de overheid op één plek
       kunnen terugvinden. Het project is momenteel in prototype fase.
 
-
-      In deze repository is de documentatie voor MOZa te vinden. De code staat
-      verspreid over diverse andere repositories binnen de MinBZK organisatie,
-      te herkennen aan de moza- prefix of het topic mijnoverheidzakelijk.
+      In deze repository is de documentatie voor MOZa te vinden. De code die
+      wordt ontwikkeld ten behoeve van zakelijke dienstverlening staat verspreid
+      over diverse andere repositories binnen de MinBZK organisatie, te herkennen
+      aan de moza- prefix of het topic mijnoverheidzakelijk
+      (https://github.com/topics/mijnoverheidzakelijk).
     features:
       - Documentatie voor het MijnOverheid Zakelijk project
+      - Makkelijk zakendoen met de overheid
       - Centraal overzicht van gegevens bij de overheid voor zakelijke gebruikers
       - Interacties met de overheid op één plek
   en:
@@ -48,12 +50,14 @@ description:
       with the government in one place. The project is currently in prototype
       phase.
 
-
-      This repository contains the documentation for MOZa. The code is spread
-      across several other repositories within the MinBZK organisation,
-      identifiable by the moza- prefix or the mijnoverheidzakelijk topic.
+      This repository contains the documentation for MOZa. The code developed
+      for business services is spread across several other repositories within
+      the MinBZK organisation, identifiable by the moza- prefix or the
+      mijnoverheidzakelijk topic
+      (https://github.com/topics/mijnoverheidzakelijk).
     features:
       - Documentation for the "MijnOverheid Zakelijk" project
+      - Easy business interactions with the government
       - Central overview of government-held data for business users
       - Government interactions in one place
 legal:

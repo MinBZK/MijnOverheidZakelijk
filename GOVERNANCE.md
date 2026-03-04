@@ -97,5 +97,5 @@ Heb je een beveiligingsprobleem gevonden? Open dan **geen** publiek issue, maar 
 
 ## Meer informatie
 
-- [mijnoverheidzakelijk.nl](https://www.mijnoverheidzakelijk.nl/)
-- [Handboek MOZa](https://www.mijnoverheidzakelijk.nl/handboek/)
+- [mijnoverheidzakelijk.nl](https://mijnoverheidzakelijk.nl/)
+- [Handboek MOZa](https://mijnoverheidzakelijk.nl/handboek/)

@@ -28,7 +28,7 @@ MijnOverheid Zakelijk consists of multiple repositories. You can find them by lo
 
 ## Contact
 
-For more information about the project, visit [mijnoverheidzakelijk.nl](https://www.mijnoverheidzakelijk.nl). You'll find our contact details on the [contact page](https://www.mijnoverheidzakelijk.nl/contact/).
+For more information about the project, visit [mijnoverheidzakelijk.nl](https://mijnoverheidzakelijk.nl). You'll find our contact details on the [contact page](https://mijnoverheidzakelijk.nl/contact/).
 
 For general questions about MinBZK open source projects, you can reach us at <opensource@minbzk.nl>.
 

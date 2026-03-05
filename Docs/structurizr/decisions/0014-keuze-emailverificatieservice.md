@@ -14,13 +14,13 @@ Voor de Profielservice is een e‑mailverificatieservice nodig, zodat we e‑mai
 
 ### Huidige situatie
 Er bestaat al een e‑mailverificatieservice, ontwikkeld door Worth Systems in opdracht van de gemeente Amsterdam. 
-De huidige flow werkt, maar verandert doordat Logius de Notificatieservice vervangt door NotifyRO.
+De huidige flow werkt, maar verandert doordat Logius een eigen notificatieservice (NotifyRO) ontwikkelt — al dan niet als fork van NotifyNL.
 
 ![adr0014-huidige-vs-situatie.png](images/adr0014-huidige-vs-situatie.png)
 
 ### Nieuwe situatie
 In de nieuwe situatie gebruikt de Profielservice NotifyRO om e‑mails te versturen. 
-Als we daarnaast de verificatieservice van Worth blijven gebruiken, ontstaat een keten waarin die service via NotifyNL verstuurt, terwijl NotifyNL juist wordt vervangen door NotifyRO. Dit introduceert extra afhankelijkheden en complexiteit.
+Als we daarnaast de verificatieservice van Worth blijven gebruiken, ontstaat een keten waarin die service via NotifyNL verstuurt, terwijl Logius overstapt op een eigen notificatieservice (NotifyRO). Dit introduceert extra afhankelijkheden en complexiteit.
 
 ![adr0014-worth-vs-situatie.png](images/adr0014-worth-vs-situatie.png)
 
@@ -41,7 +41,7 @@ Deze service kan in potentie hergebruikt worden door andere overheidsorganisatie
 
 | Alternatief | Voordelen | Nadelen |
 |---|---|---|
-| **Worth-verificatieservice behouden via NotifyNL** | Geen ontwikkelwerk nodig | NotifyNL wordt uitgefaseerd; creëert dubbele afhankelijkheid |
+| **Worth-verificatieservice behouden via NotifyNL** | Geen ontwikkelwerk nodig | Logius stapt over op NotifyRO; creëert dubbele afhankelijkheid |
 | **Worth-verificatieservice forken en zelf onderhouden** | Bewezen implementatie; geen afhankelijkheid van Worth | TypeScript/Node wijkt af van platformstack; onderhoud van externe codebase |
 | **Eigen verificatieservice bouwen (gekozen)** | Eén tech-stack (Quarkus/Java); geen externe afhankelijkheden; directe integratie met NotifyRO | Vergt eigen ontwikkeling en onderhoud |
 

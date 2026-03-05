@@ -24,12 +24,12 @@ Als we daarnaast de verificatieservice van Worth blijven gebruiken, ontstaat een
 
 ![adr0014-worth-vs-situatie.png](images/adr0014-worth-vs-situatie.png)
 
-### Waarom niet verder met de verificatieservice van Worth Systems?
-Naast de bovengenoemde architectuurcomplexiteit zijn er aanvullende redenen om niet verder te gaan met de bestaande verificatieservice:
+### Waarom een eigen verificatieservice?
+Naast de bovengenoemde architectuurcomplexiteit zijn er aanvullende redenen om een eigen verificatieservice te bouwen:
 
 1. **Andere technologiestack dan de rest van het platform.** De verificatieservice van Worth Systems is geschreven in TypeScript/Node. De beoogde beheerpartij, Logius, heeft een voorkeur voor Quarkus/Java. Een eigen service in een bekende stack voor logius verlaagt de drempel voor beheer en doorontwikkeling.
 
-2. **Afhankelijkheid van een externe partij.** Bij doorgebruik van de Worth-verificatieservice blijven we afhankelijk van Worth Systems voor onderhoud en doorontwikkeling. De service is beschikbaar als open source, maar forken betekent dat we zelf een TypeScript/Node-codebase moeten onderhouden — wat hetzelfde tech-stack-vraagstuk introduceert als hierboven beschreven.
+2. **Beheer in eigen hand.** Bij doorgebruik van de bestaande verificatieservice blijven we afhankelijk van een externe partij voor onderhoud en doorontwikkeling. De service is beschikbaar als open source, maar forken betekent dat we zelf een TypeScript/Node-codebase moeten onderhouden — wat hetzelfde tech-stack-vraagstuk introduceert als hierboven beschreven.
 
 ### Nieuwe situatie met eigen verificatieservice
 In dit scenario bouwen we een eigen e‑mailverificatieservice die direct via NotifyRO verstuurt.
@@ -42,7 +42,7 @@ Deze service kan in potentie hergebruikt worden door andere overheidsorganisatie
 | Alternatief | Voordelen | Nadelen |
 |---|---|---|
 | **Worth-verificatieservice behouden via NotifyNL** | Geen ontwikkelwerk nodig | Logius stapt over op NotifyRO; creëert dubbele afhankelijkheid |
-| **Worth-verificatieservice forken en zelf onderhouden** | Bewezen implementatie; geen afhankelijkheid van Worth | TypeScript/Node wijkt af van platformstack; onderhoud van externe codebase |
+| **Bestaande verificatieservice forken en zelf onderhouden** | Bewezen implementatie; volledig eigen beheer | TypeScript/Node wijkt af van platformstack; onderhoud van externe codebase |
 | **Eigen verificatieservice bouwen (gekozen)** | Eén tech-stack (Quarkus/Java); geen externe afhankelijkheden; directe integratie met NotifyRO | Vergt eigen ontwikkeling en onderhoud |
 
 ## Decision

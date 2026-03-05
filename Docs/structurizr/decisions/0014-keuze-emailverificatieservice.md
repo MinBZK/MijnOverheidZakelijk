@@ -25,11 +25,11 @@ Als we daarnaast de verificatieservice van Worth blijven gebruiken, ontstaat een
 ![adr0014-worth-vs-situatie.png](images/adr0014-worth-vs-situatie.png)
 
 ### Waarom niet verder met de verificatieservice van Worth Systems?
-Naast de bovengenoemde architectuur complexiteit zijn er twee aanvullende redenen om niet verder te gaan met de bestaande verificatieservice:
+Naast de bovengenoemde architectuurcomplexiteit zijn er aanvullende redenen om niet verder te gaan met de bestaande verificatieservice:
 
 1. **Andere technologiestack dan de rest van het platform.** De verificatieservice van Worth Systems is geschreven in TypeScript/Node. De beoogde beheerpartij, Logius, heeft een voorkeur voor Quarkus/Java. Een eigen service in dezelfde stack als de rest van het MijnOverheidZakelijk-platform verlaagt de drempel voor beheer en doorontwikkeling.
 
-2. **Geen strategisch product van Worth Systems.** De verificatieservice is door Worth Systems ontwikkeld in opdracht van de gemeente Amsterdam en is beschikbaar als open source. Hoewel we de service zouden kunnen forken, betekent dit dat we zelf een TypeScript/Node-codebase moeten onderhouden — wat hetzelfde tech-stack-vraagstuk introduceert als hierboven beschreven.
+2. **Afhankelijkheid van een externe partij.** Bij doorgebruik van de Worth-verificatieservice blijven we afhankelijk van Worth Systems voor onderhoud en doorontwikkeling. De service is beschikbaar als open source, maar forken betekent dat we zelf een TypeScript/Node-codebase moeten onderhouden — wat hetzelfde tech-stack-vraagstuk introduceert als hierboven beschreven.
 
 ### Nieuwe situatie met eigen verificatieservice
 In dit scenario bouwen we een eigen e‑mailverificatieservice die direct via NotifyRO verstuurt.
@@ -51,7 +51,7 @@ We bouwen een eigen e‑mailverificatieservice die via NotifyRO verstuurt.
 
 ## Consequences
 - We zijn verantwoordelijk voor ontwerp, ontwikkeling en onderhoud van de verificatieservice.
-- We elimineren de afhankelijkheid van Worth Systems en NotifyNL.
+- De afhankelijkheid van NotifyNL vervalt; alle e‑mailcommunicatie loopt via NotifyRO.
 - De service wordt gebouwd in Quarkus/Java, dezelfde stack als het MijnOverheidZakelijk-platform, wat beheer door Logius vereenvoudigt.
 - De service kan in potentie hergebruikt worden door andere overheidsorganisaties.
 - We introduceren een afhankelijkheid van NotifyRO voor het versturen van verificatie-e‑mails. NotifyRO wordt, net als het MijnOverheidZakelijk-platform, beheerd door Logius.

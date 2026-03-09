@@ -39,13 +39,64 @@ Om te onderzoeken wat het kost om een eigen verificatieservice te bouwen is een 
 
 ![adr0014-eigen-vs-situatie.png](images/adr0014-eigen-vs-situatie.png)
 
+#### Sequentiediagram prototype
+
+Hieronder is een sequentiediagram van het verificatieproces in ons prototype.
+
+![adr0014-verificatie-email-process](images/adr0014-verificatie-email-process.png)
+
+
+<details>
+  <summary>Zie mermaid code</summary>
+
+```mermaid
+sequenceDiagram
+    actor Gebruiker
+    participant Portaal as MOZa Portaal
+    participant Profiel as Profiel Service
+    participant Verificatie as Verificatie Service
+    participant Notificatie as Notificatie Service
+
+    Gebruiker->>Portaal: Voert e-mailadres in
+    activate Portaal
+    Portaal->>Profiel: Verstuur e-mailadres
+    activate Profiel
+    Profiel->>Verificatie: Verstuur e-mailadres
+    activate Verificatie
+    Verificatie-->>Profiel: Referentiecode
+    deactivate Profiel
+    Verificatie->>Verificatie: Sla referentiecode op en genereer verificatiecode
+    Verificatie->>Notificatie: Verstuur verificatiecode + e-mailadres
+    activate Notificatie
+    Notificatie->>Gebruiker: E-mail met verificatiecode
+    deactivate Notificatie
+    deactivate Verificatie
+    deactivate Portaal
+
+    Gebruiker->>Portaal: Voert verificatiecode in
+    activate Portaal
+    Portaal->>Profiel: Verificatiecode
+    activate Profiel
+    Profiel->>Verificatie: Referentiecode + verificatiecode
+    activate Verificatie
+    Verificatie-->>Profiel: Match: ja/nee
+    deactivate Verificatie
+    Profiel-->>Portaal: Resultaat
+    deactivate Profiel
+    Portaal-->>Gebruiker: E-mailadres geverifieerd / niet geverifieerd
+    deactivate Portaal
+```
+
+</details>
+
 ## Overwogen scenario's
 
-| Alternatief                                                 | Voordelen                                                                                                                       | Nadelen                                                                                                                                                   |
-|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Bestaande verificatieservice behouden via NotifyNL**      | Geen ontwikkelwerk nodig                                                                                                        | Logius stapt over op NotifyRO; creëert dubbele afhankelijkheid; e‑mailadressen worden extern opgeslagen                                                   |
-| **Bestaande verificatieservice forken en zelf onderhouden** | Bewezen implementatie; volledig eigen beheer                                                                                    | TypeScript/Node wijkt af van platformstack; onderhoud van externe codebase; e‑mailopslag vereist aanpassing voor AVG-compliance of verwerkersovereenkomst |
-| **Eigen verificatieservice bouwen (gekozen)**               | Zelf gekozen tech-stack; geen externe afhankelijkheden; directe integratie met NotifyRO; volledige controle over AVG-compliance | Vergt eigen ontwikkeling en onderhoud                                                                                                                     |
+| Alternatief                                                 | Voordelen                                                                                                                         | Nadelen                                                                                                                                                   |
+|-------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Bestaande verificatieservice behouden via NotifyNL**      | Geen ontwikkelwerk nodig                                                                                                          | Logius stapt over op NotifyRO; creëert dubbele afhankelijkheid; e‑mailadressen worden extern opgeslagen                                                   |
+| **Bestaande verificatieservice forken en zelf onderhouden** | Bewezen implementatie; volledig eigen beheer                                                                                      | TypeScript/Node wijkt af van platformstack; onderhoud van externe codebase; e‑mailopslag vereist aanpassing voor AVG-compliance of verwerkersovereenkomst |
+| **Eigen verificatieservice bouwen (gekozen)**               | Zelf gekozen tech-stack; geen externe afhankelijkheden; directe integratie met NotifyRO; volledige controle over AVG-compliance   | Vergt eigen ontwikkeling en onderhoud                                                                                                                     |
+| **Eigen service met orchestratie in Profiel Service**       | Sterkere dataminimalisatie: verificatieservice ziet nooit het e-mailadres; Profiel Service stuurt zelf de Notificatie Service aan | Wijkt te veel af van de flow van de huidige verificatieservice; bemoeilijkt adoptie en vervanging doordat afnemers hun integratiepatroon moeten aanpassen |
 
 ## Decision
 Op basis van het onderzoek naar de bestaande verificatieservice en de resultaten van het prototype bouwen we een eigen e‑mailverificatieservice die via NotifyRO verstuurt.

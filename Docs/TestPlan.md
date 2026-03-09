@@ -90,8 +90,13 @@ Niet in scope:
     - End-to-end validatie over de betrokken services.
     - Bevindingen worden teruggekoppeld en opgevolgd conform defectbeheer.
 
-9) Performance en fuzzing tests (indien van toepassing)
-    - Uitgevoerd bij wijzigingen met mogelijke impact op prestaties, stabiliteit of beveiliging.
+9) Performance en load tests (indien van toepassing)
+    - Uitgevoerd bij wijzigingen met mogelijke impact op prestaties of schaalbaarheid.
+    - Resultaten worden beoordeeld en eventuele bevindingen opgevolgd conform defectbeheer.
+
+10) Fuzzing tests
+    - Automatisch uitgevoerd in de CI/CD-pipeline via GitHub Actions.
+    - Gericht op het detecteren van crashes, security issues en onjuiste foutafhandeling.
     - Resultaten worden beoordeeld en eventuele bevindingen opgevolgd conform defectbeheer.
 
 
@@ -141,8 +146,6 @@ Niet alle testsoorten zijn verplicht voor elke wijziging; inzet van testtypen is
     - Testen de robuustheid en foutafhandeling van de service door het aanbieden van ongeldige, onverwachte of gemanipuleerde input.
     - Gericht op het vroegtijdig detecteren van crashes, security issues en onjuiste foutafhandeling.
     - Met name van toepassing bij wijzigingen aan API’s, inputvalidatie of parsing logica.
-
-
 
 ---
 

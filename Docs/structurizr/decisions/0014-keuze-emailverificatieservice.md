@@ -32,7 +32,7 @@ We hebben de bestaande verificatieservice van Worth Systems onderzocht en de vol
 
 3. **Afhankelijkheid van externe partij.** Bij doorgebruik blijven we afhankelijk van een externe partij voor onderhoud en doorontwikkeling. De service is beschikbaar als open source, maar forken betekent dat we zelf een TypeScript/Node-codebase moeten onderhouden — wat hetzelfde tech-stack-vraagstuk introduceert.
 
-4. **AVG-aandachtspunt.** De bestaande verificatieservice slaat e‑mailadressen op om deze daarna te verifieren met email deels als key. Dit is op te lossen met een verwerkersovereenkomst, maar met een eigen service hebben we gekeken hoe reeel het is alleen met referentie te werken, waardoor de e-mail nooit hoeft op te worden geslagen.
+4. **AVG-aandachtspunt.** De bestaande verificatieservice slaat e‑mailadressen op om deze daarna te verifiëren met email deels als key. Dit is op te lossen met een verwerkersovereenkomst, maar met een eigen service hebben we gekeken hoe reëel het is alleen met referentie te werken, waardoor de e-mail nooit opgeslagen hoeft te worden.
 
 ### Prototype eigen verificatieservice
 Om te onderzoeken wat het kost om een eigen verificatieservice te bouwen is een volledig werkend prototype neergezet in Quarkus/Java, inclusief code-verificatie, versturen via e-mail en opslag zonder e‑mailadressen. Het prototype is nog niet productierijp, maar toont aan dat een AVG-conforme verificatieservice met beperkte inspanning gerealiseerd kan worden.
@@ -99,11 +99,11 @@ sequenceDiagram
 | **Eigen service met orchestratie in Profiel Service**       | Sterkere dataminimalisatie: verificatieservice ziet nooit het e-mailadres; Profiel Service stuurt zelf de Notificatie Service aan | Wijkt te veel af van de flow van de huidige verificatieservice; bemoeilijkt adoptie en vervanging doordat afnemers hun integratiepatroon moeten aanpassen |
 
 ## Decision
-Op basis van het onderzoek naar de bestaande verificatieservice en de resultaten van het prototype bouwen we een eigen e‑mailverificatieservice die via NotifyRO verstuurt.
+Op basis van het onderzoek naar de bestaande verificatieservice en de resultaten van het prototype bouwen we een eigen e‑mailverificatieservice die via de Notificatie Service verstuurt.
 
 ## Consequences
 - We zijn verantwoordelijk voor ontwerp, ontwikkeling en onderhoud van de verificatieservice.
-- De afhankelijkheid van NotifyNL vervalt; alle e‑mailcommunicatie loopt via NotifyRO.
+- De afhankelijkheid van NotifyNL vervalt; alle e‑mailcommunicatie loopt via de Notificatie Service.
 - De service wordt gebouwd in Quarkus/Java, wat beheer door Logius vereenvoudigt.
 - We hebben volledige controle over de opslag en verwerking van persoonsgegevens.
 - De service kan in potentie hergebruikt worden door andere overheidsorganisaties.

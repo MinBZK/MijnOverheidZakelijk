@@ -2,17 +2,17 @@
 
 ### Datastore typen
 
-De Notificatie Service maakt gebruik van twee datastores die aansluiten bij het type data dat wordt opgeslagen:
+De Notificatie Service zou gebruik maken van twee datastores, gekozen op basis van het type data dat opgeslagen wordt:
 
 - **PostgreSQL**
-  Relationele datastore voor het opslaan van notificaties, events, templates en afbeeldingen. PostgreSQL is de operationele bron van waarheid; alle statusovergangen en berichtverwerking zijn gebaseerd op de database-state.
+  Relationele datastore voor het opslaan van notificaties, events, templates en afbeeldingen. PostgreSQL zou dienen als de operationele bron van waarheid; alle statusovergangen en berichtverwerking zouden gebaseerd worden op de database-state.
 
 - **ClickHouse**
-  Kolom-georiënteerde datastore voor het Logboek Dataverwerking (LDV). Auditgebeurtenissen worden hierin vastgelegd conform [ADR 0005](/workspace/decisions#5) en [ADR 0010](/workspace/decisions#10). ClickHouse is geoptimaliseerd voor schrijfintensieve, append-only workloads.
+  Kolom-georiënteerde datastore voor het Logboek Dataverwerking (LDV). Auditgebeurtenissen zouden hierin vastgelegd worden conform [ADR 0005](/workspace/decisions#5) en [ADR 0010](/workspace/decisions#10). ClickHouse is gekozen vanwege de optimalisatie voor schrijfintensieve, append-only workloads.
 
 ### Datamodel
 
-Het datamodel bestaat uit vijf hoofdentiteiten. Alle entiteiten zijn voorzien van Hibernate Envers audit-trails (`@Audited`), waarmee elke mutatie op entiteitniveau wordt bijgehouden in revisietabellen.
+Het datamodel zou bestaan uit vijf hoofdentiteiten. Alle entiteiten zouden voorzien worden van Hibernate Envers audit-trails (`@Audited`), waarmee elke mutatie op entiteitniveau bijgehouden zou worden in revisietabellen.
 
 #### Notificatie
 
@@ -103,7 +103,7 @@ EmailTemplate *──0..1 TemplateAfbeelding  (footer)
 
 ### Statusmodel
 
-Notificaties doorlopen een gedefinieerd statusmodel. Overgangen worden afgedwongen door `NotificatieStatus.kanOvergaanNaar()`:
+Notificaties zouden een gedefinieerd statusmodel doorlopen. Overgangen zouden afgedwongen worden via een state machine (`NotificatieStatus.kanOvergaanNaar()`):
 
 | Status | Beschrijving | Toegestane externe overgangen |
 |--------|-------------|-------------------------------|
@@ -124,11 +124,11 @@ Notificaties doorlopen een gedefinieerd statusmodel. Overgangen worden afgedwong
 
 ### Dataretentie en privacy
 
-- **Persoonsgegevens in logs**: Geen PII in INFO-level logs. KVK-nummers worden gepseudonimiseerd via HMAC-SHA256 met een configureerbare sleutel voordat ze naar het LDV worden geschreven.
-- **Audit trail**: Hibernate Envers houdt revisiehistorie bij van alle entiteitmutaties in `_AUD`-tabellen.
-- **LDV**: Auditgebeurtenissen worden naar ClickHouse geschreven conform de LDV-specificatie. De LDV-logging is uitschakelbaar via `logboekdataverwerking.enabled`.
-- **Bewaartermijnen**: Operationele data volgt de retentie-eisen uit de kwaliteitseisen. Exacte termijnen worden nader bepaald met de beheerpartij.
+- **Persoonsgegevens in logs**: Geen PII in INFO-level logs. KVK-nummers zouden gepseudonimiseerd worden via HMAC-SHA256 met een configureerbare sleutel voordat ze naar het LDV geschreven worden.
+- **Audit trail**: Hibernate Envers zou revisiehistorie bijhouden van alle entiteitmutaties in `_AUD`-tabellen.
+- **LDV**: Auditgebeurtenissen zouden naar ClickHouse geschreven worden conform de LDV-specificatie. De LDV-logging zou uitschakelbaar zijn via `logboekdataverwerking.enabled`.
+- **Bewaartermijnen**: Operationele data zou de retentie-eisen uit de kwaliteitseisen volgen. Exacte termijnen worden nader bepaald met de beheerpartij.
 
 ### Messaging-data
 
-RabbitMQ-berichten bevatten uitsluitend het notificatie-ID (Long). De database is de bron van waarheid; de consumer laadt de volledige entiteit bij verwerking. Dit voorkomt dat gevoelige gegevens in de berichtenwachtrij terechtkomen en maakt idempotente verwerking mogelijk.
+RabbitMQ-berichten zouden uitsluitend het notificatie-ID (Long) bevatten. De database zou dienen als bron van waarheid; de consumer zou de volledige entiteit laden bij verwerking. Dit voorkomt dat gevoelige gegevens in de berichtenwachtrij terechtkomen en maakt idempotente verwerking mogelijk.

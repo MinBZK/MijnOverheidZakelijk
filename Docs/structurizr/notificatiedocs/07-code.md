@@ -2,46 +2,46 @@
 
 ### Technologiestack
 
-De Notificatie Service is gebouwd met de volgende technologiestack:
+De Notificatie Service zou gebouwd worden met de volgende technologiestack:
 
-| Component | Technologie | Versie |
-|-----------|------------|--------|
-| Runtime | Java | 21 |
-| Framework | Quarkus | 3.31.1 |
-| Build tool | Maven | - |
-| ORM | Hibernate ORM met Panache (Active Record) | - |
-| Audit trail | Hibernate Envers | - |
-| Messaging | SmallRye Reactive Messaging (RabbitMQ) | - |
-| Email | Quarkus Mailer (SMTP) | - |
-| API-documentatie | SmallRye OpenAPI | - |
-| Fault tolerance | MicroProfile Fault Tolerance | - |
-| REST clients | Quarkus REST Client (OpenAPI Generator) | - |
-| Authenticatie | Quarkus OIDC (Keycloak) | - |
+| Component        | Technologie                               | Versie |
+|------------------|-------------------------------------------|--------|
+| Runtime          | Java                                      | 21     |
+| Framework        | Quarkus                                   | 3.31.1 |
+| Build tool       | Maven                                     | -      |
+| ORM              | Hibernate ORM met Panache (Active Record) | -      |
+| Audit trail      | Hibernate Envers                          | -      |
+| Messaging        | SmallRye Reactive Messaging (RabbitMQ)    | -      |
+| Email            | Quarkus Mailer (SMTP)                     | -      |
+| API-documentatie | SmallRye OpenAPI                          | -      |
+| Fault tolerance  | MicroProfile Fault Tolerance              | -      |
+| REST clients     | Quarkus REST Client (OpenAPI Generator)   | -      |
+| Authenticatie    | Quarkus OIDC (Keycloak)                   | -      |
 
 ### Pakketstructuur
 
-De broncode volgt een gelaagde pakketstructuur onder `nl.rijksoverheid.moz.notificatie`:
+De broncode zou een gelaagde pakketstructuur volgen onder `nl.rijksoverheid.moz.notificatie`:
 
-| Pakket | Verantwoordelijkheid |
-|--------|---------------------|
-| `controller` | JAX-RS REST-endpoints (NotificatieController, DlqController, EmailTemplateController, AfbeeldingController) |
-| `services` | Bedrijfslogica (NotificatieService, EmailTemplateService, KanaalherstelService, CallbackService) |
-| `services.channel` | Kanaaladapters per notificatietype (EmailKanaalAdapter, SmsKanaalAdapter, BriefKanaalAdapter) |
-| `entity` | JPA-entiteiten met Panache Active Record patroon (Notificatie, NotificatieEvent, EmailTemplate, etc.) |
-| `dto.request` | Inkomende request-objecten |
-| `dto.response` | Uitgaande response-objecten |
-| `mapper` | Mapping tussen entiteiten en DTO's |
-| `messaging` | RabbitMQ-producers en -consumers (NotificatieProducer, NotificatieConsumer) |
-| `auth` | API key authenticatie (ApiKeyFilter) |
-| `config` | Configuratieklassen (RabbitMQ-topologie, SSRF-validatie, DNS-cache) |
-| `helper` | Hulpklassen (HashHelper voor PII-pseudonimisering) |
-| `common` | Gedeelde enumeraties (NotificatieStatus, NotificatieType, KanaalStatus) |
+| Pakket             | Verantwoordelijkheid                                                                                        |
+|--------------------|-------------------------------------------------------------------------------------------------------------|
+| `controller`       | JAX-RS REST-endpoints (NotificatieController, DlqController, EmailTemplateController, AfbeeldingController) |
+| `services`         | Bedrijfslogica (NotificatieService, EmailTemplateService, KanaalherstelService, CallbackService)            |
+| `services.channel` | Kanaaladapters per notificatietype (EmailKanaalAdapter, SmsKanaalAdapter, BriefKanaalAdapter)               |
+| `entity`           | JPA-entiteiten met Panache Active Record patroon (Notificatie, NotificatieEvent, EmailTemplate, etc.)       |
+| `dto.request`      | Inkomende request-objecten                                                                                  |
+| `dto.response`     | Uitgaande response-objecten                                                                                 |
+| `mapper`           | Mapping tussen entiteiten en DTO's                                                                          |
+| `messaging`        | RabbitMQ-producers en -consumers (NotificatieProducer, NotificatieConsumer)                                 |
+| `auth`             | API key authenticatie (ApiKeyFilter)                                                                        |
+| `config`           | Configuratieklassen (RabbitMQ-topologie, SSRF-validatie, DNS-cache)                                         |
+| `helper`           | Hulpklassen (HashHelper voor PII-pseudonimisering)                                                          |
+| `common`           | Gedeelde enumeraties (NotificatieStatus, NotificatieType, KanaalStatus)                                     |
 
 ### Ontwikkelprincipes
 
 #### Active Record patroon (Panache)
 
-Alle entiteiten extenden `PanacheEntity` en bevatten naast velden ook querymethoden. Dit maakt de code compacter doordat repository-klassen overbodig worden:
+Alle entiteiten zouden `PanacheEntity` extenden en naast velden ook querymethoden bevatten. Dit maakt de code compacter doordat repository-klassen overbodig worden. Voorbeeld:
 
 ```java
 Notificatie notificatie = Notificatie.findById(id);
@@ -50,19 +50,19 @@ List<Notificatie> mislukt = Notificatie.findByStatus(NotificatieStatus.MISLUKT);
 
 #### Ports & Adapters voor kanalen
 
-Kanaalspecifieke logica is geabstraheerd achter de `NotificatieKanaal`-interface. Elke adapter implementeert `verstuur(Notificatie)` en is voorzien van MicroProfile Fault Tolerance-annotaties (`@CircuitBreaker`, `@Retry`). Nieuwe kanalen worden toegevoegd door een nieuwe adapter te implementeren zonder wijzigingen aan bestaande code.
+Kanaalspecifieke logica zou geabstraheerd worden achter een `NotificatieKanaal`-interface. Elke adapter zou `verstuur(Notificatie)` implementeren en voorzien worden van MicroProfile Fault Tolerance-annotaties (`@CircuitBreaker`, `@Retry`). Nieuwe kanalen zouden toegevoegd worden door een nieuwe adapter te implementeren zonder wijzigingen aan bestaande code.
 
 #### Transactiegrenzen
 
-Database-operaties en externe I/O (callbacks, kanaalverzending) zijn gescheiden om databaseconnecties niet te blokkeren tijdens netwerkverkeer. De `NotificatieConsumer` splitst verwerking in een `@Transactional` methode voor databasewerk en een aparte stap voor callback-aflevering na commit.
+Database-operaties en externe I/O (callbacks, kanaalverzending) zouden gescheiden worden om databaseconnecties niet te blokkeren tijdens netwerkverkeer. De `NotificatieConsumer` zou verwerking splitsen in een `@Transactional` methode voor databasewerk en een aparte stap voor callback-aflevering na commit.
 
 #### OpenAPI-gegenereerde clients
 
-Externe service-integraties (Profiel Service, Handelsregister, Kanaalhersteldienst) worden gegenereerd uit OpenAPI-specificaties in `src/main/openapi/`. De gegenereerde clients worden geconfigureerd via `application.properties` en zijn type-safe.
+Externe service-integraties (Profiel Service, Handelsregister, Kanaalhersteldienst) zouden gegenereerd worden uit OpenAPI-specificaties in `src/main/openapi/`. De gegenereerde clients zouden geconfigureerd worden via `application.properties` en type-safe zijn. Dit borgt dat integraties altijd in lijn zijn met de contracten.
 
 ### Testen
 
-De testopzet maakt gebruik van de volgende strategie:
+Voor het testen zouden wij de volgende strategie hanteren:
 
 | Aspect | Aanpak |
 |--------|--------|
@@ -73,7 +73,7 @@ De testopzet maakt gebruik van de volgende strategie:
 | Authenticatie | `@TestSecurity` annotaties (OIDC uitgeschakeld) |
 | Externe services | Mockito `@InjectMock` |
 
-Tests zijn georganiseerd per laag:
+Tests zouden georganiseerd worden per laag:
 
 | Testklasse | Scope |
 |-----------|-------|

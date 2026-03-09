@@ -9,6 +9,10 @@ Proposed
 - [ADR 0002 — Notify Onderzoek](0002-notify-onderzoek.md): achtergrond bij de keuze voor NotifyNL/NotifyRO als notificatiekanaal.
 - [ADR 0011 — Positionering en gebruik van Profiel Service](0011-positionering-en-gebruik-van-profiel-service.md): de Profielservice die e‑mailverificatie nodig heeft.
 
+## Termen
+NotifyNL: De notificatie service ontwikkeld en gehost door Worth systems.
+NotifyRO: De notificatie service (door)ontwikkeld en gehost door Logius.
+
 ## Context
 Voor de Profielservice is een e‑mailverificatieservice nodig, zodat we e‑mailadressen kunnen valideren vóórdat ze worden gebruikt. We hebben onderzocht welke opties er zijn en wat de beste route is.
 
@@ -28,20 +32,20 @@ We hebben de bestaande verificatieservice van Worth Systems onderzocht en de vol
 
 3. **Afhankelijkheid van externe partij.** Bij doorgebruik blijven we afhankelijk van een externe partij voor onderhoud en doorontwikkeling. De service is beschikbaar als open source, maar forken betekent dat we zelf een TypeScript/Node-codebase moeten onderhouden — wat hetzelfde tech-stack-vraagstuk introduceert.
 
-4. **AVG-aandachtspunt.** De bestaande verificatieservice slaat e‑mailadressen op buiten ons eigen beheer. Dit is op te lossen met een verwerkersovereenkomst, maar met een eigen service hebben we volledige controle over de opslag en verwerking van persoonsgegevens en kunnen we deze AVG-conform inrichten.
+4. **AVG-aandachtspunt.** De bestaande verificatieservice slaat e‑mailadressen op om deze daarna te verifieren met email deels als key. Dit is op te lossen met een verwerkersovereenkomst, maar met een eigen service hebben we gekeken hoe reeel het is alleen met referentie te werken, waardoor de e-mail nooit hoeft op te worden geslagen.
 
 ### Prototype eigen verificatieservice
-Om te onderzoeken wat het kost om een eigen verificatieservice te bouwen is een volledig werkend prototype neergezet in Quarkus/Java, inclusief code-verificatie, versturen via NotifyRO en opslag zonder e‑mailadressen. Het prototype is nog niet productierijp, maar toont aan dat een AVG-conforme verificatieservice met beperkte inspanning gerealiseerd kan worden.
+Om te onderzoeken wat het kost om een eigen verificatieservice te bouwen is een volledig werkend prototype neergezet in Quarkus/Java, inclusief code-verificatie, versturen via e-mail en opslag zonder e‑mailadressen. Het prototype is nog niet productierijp, maar toont aan dat een AVG-conforme verificatieservice met beperkte inspanning gerealiseerd kan worden.
 
 ![adr0014-eigen-vs-situatie.png](images/adr0014-eigen-vs-situatie.png)
 
-## Overwogen alternatieven
+## Overwogen scenario's
 
-| Alternatief | Voordelen | Nadelen |
-|---|---|---|
-| **Bestaande verificatieservice behouden via NotifyNL** | Geen ontwikkelwerk nodig | Logius stapt over op NotifyRO; creëert dubbele afhankelijkheid; e‑mailadressen worden extern opgeslagen |
-| **Bestaande verificatieservice forken en zelf onderhouden** | Bewezen implementatie; volledig eigen beheer | TypeScript/Node wijkt af van platformstack; onderhoud van externe codebase; e‑mailopslag vereist aanpassing voor AVG-compliance |
-| **Eigen verificatieservice bouwen (gekozen)** | Eén tech-stack (Quarkus/Java); geen externe afhankelijkheden; directe integratie met NotifyRO; volledige controle over AVG-compliance | Vergt eigen ontwikkeling en onderhoud |
+| Alternatief                                                 | Voordelen                                                                                                                       | Nadelen                                                                                                                                                   |
+|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Bestaande verificatieservice behouden via NotifyNL**      | Geen ontwikkelwerk nodig                                                                                                        | Logius stapt over op NotifyRO; creëert dubbele afhankelijkheid; e‑mailadressen worden extern opgeslagen                                                   |
+| **Bestaande verificatieservice forken en zelf onderhouden** | Bewezen implementatie; volledig eigen beheer                                                                                    | TypeScript/Node wijkt af van platformstack; onderhoud van externe codebase; e‑mailopslag vereist aanpassing voor AVG-compliance of verwerkersovereenkomst |
+| **Eigen verificatieservice bouwen (gekozen)**               | Zelf gekozen tech-stack; geen externe afhankelijkheden; directe integratie met NotifyRO; volledige controle over AVG-compliance | Vergt eigen ontwikkeling en onderhoud                                                                                                                     |
 
 ## Decision
 Op basis van het onderzoek naar de bestaande verificatieservice en de resultaten van het prototype bouwen we een eigen e‑mailverificatieservice die via NotifyRO verstuurt.

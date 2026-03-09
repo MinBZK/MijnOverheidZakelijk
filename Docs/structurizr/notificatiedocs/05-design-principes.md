@@ -20,7 +20,7 @@ en vormen samen met de ADR’s de basis voor ontwerpkeuzes in de software‑arch
 
 - Kanaal‑agnostische interfaces, adapters per provider
   Het domeinmodel en de publieke API abstraheren kanaalspecifieke details.
-  Integraties met providers (bijv. NotifyNL/OMC) gebeuren via adapters/ports, zodat providers vervangbaar zijn zonder breaking changes voor afnemers.
+  Integraties met providers (bijv. OMC, externe verzendproviders) gebeuren via adapters/ports, zodat providers vervangbaar zijn zonder breaking changes voor afnemers.
 
 - Beveiliging en privacy by design
   Alleen noodzakelijke gegevens, least‑privilege scopes, encryptie in transit, geen persoonsgegevens in logs.

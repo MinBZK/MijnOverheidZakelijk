@@ -26,7 +26,7 @@ De volgende categorieën beperkingen zijn van toepassing. Per punt noemen we wat
 - Java in combinatie met Quarkus. Opgelegd door beoogde beheerpartij. Impact: minimaal.
 
 #### Integraties en afhankelijkheden
-- Afhankelijkheid van kanaalproviders/voorzieningen (bijv. NotifyNL). Opgelegd door functionele doelstelling en bestaande voorzieningen. Impact: beschikbaarheid/performance mede bepaald door externe SLA’s; timeouts, retries, circuit breakers en back‑pressure noodzakelijk.
+- Afhankelijkheid van externe kanaalproviders en verzendvoorzieningen. Opgelegd door functionele doelstelling. Impact: beschikbaarheid/performance mede bepaald door externe SLA’s; timeouts, retries, circuit breakers en back‑pressure noodzakelijk.
 - Callbackmechanismen zijn provider‑gedreven en niet uniform. Impact: normalisatielaag/adapters nodig; idempotente event‑verwerking en DLQ verplicht.
 
 #### Deploy- en hostingkader

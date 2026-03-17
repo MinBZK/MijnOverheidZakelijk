@@ -13,7 +13,7 @@ De service schermt kanaalspecifieke verschillen af, respecteert voorkeuren en do
 Wat het systeem feitelijk doet, is notificatieverzoeken betrouwbaar aannemen, verrijken, en afleveren, met observatie op status en foutafhandeling. 
 Belangrijke gebruikers en hun behoeften zijn:
 - Dienstverlener/Vakapplicaties: via API een notificatie kunnen aanmaken, met feedback over (tussen)status en eindresultaat.
-- Kanaalproviders/voorzieningen (bijv. NotifyNL): gestandaardiseerde aansturing en terugmeldingen via uniforme contracten.
+- Kanaalproviders/voorzieningen: gestandaardiseerde aansturing en terugmeldingen via uniforme contracten.
 
 
 #### Kernfunctionaliteiten in het kort:
@@ -31,7 +31,7 @@ Belangrijke gebruikers en hun behoeften zijn:
 2. Kanaalkeuze en voorkeursverwerking – De aannamen is dat de vakapplicatie de kanaal en voorkeur al heeft vastgelegd.
    - In sommige van de scenario's is de notificatie service wel verantwoordelijk voor kanaalherstel & het ophalen van adresgegevens.
 
-3. Aflevering en status – De service biedt het bericht aan bij de gekozen provider (bijv. NotifyNL) en registreert tussenstappen (Enqueued, Sent, Delivered/Failed).
+3. Aflevering en status – De service biedt het bericht aan bij het gekozen kanaal en registreert tussenstappen (Enqueued, Sent, Delivered/Failed).
    - Callbacks vanaf de provider worden verwerkt en beschikbaar gesteld aan de aanroeper.
 
 4. Retries, failover en fallback – Bij tijdelijke fouten worden retries toegepast met circuit-breaker 'back‑off''.

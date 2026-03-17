@@ -4,7 +4,7 @@
 
 Het eerste onderwerp van het programma om te verkennen is een Rijksbrede voorziening voor het notificeren, waarbij een kanaalherstel functionaliteit een vereiste is om te kunnen voldoen aan de [Wet Modernisering Elektronisch Bestuurlijk Verkeer (MEBV)](https://www.digitaleoverheid.nl/overzicht-van-alle-onderwerpen/wetgeving/wet-modernisering-elektronisch-bestuurlijk-verkeer/).
 
-Daarvoor zijn door Paul Janssen, architect bij de VNG, een aantal scenario's geschetst die verschillende situaties oplossen in verschillende evoluties van het notificatie proces. Wij hebben daaruit een selectie van 2 scenarios uitgewerkt in prototypes, namelijk #2 en #8. Naar aanleiding van verder onderzoek is gebleken dat er nog een extra scenario nodig is, welke we tot scenario #9 hebben benoemd, waarbij ook het kanaalherstel wordt gefasciliteerd.
+Daarvoor zijn door Paul Janssen, architect bij de VNG, een aantal scenario's geschetst die verschillende situaties oplossen in verschillende evoluties van het notificatieproces. Van deze scenario's zijn #2 en #8 relevant voor onze context. Naar aanleiding van verder onderzoek is gebleken dat er nog een extra scenario nodig is, welke we tot scenario #9 hebben benoemd, waarbij ook het kanaalherstel wordt gefaciliteerd.
 
 ![Notificatie Context](embed:NotificatieServiceContext)
 
@@ -12,7 +12,7 @@ In het Notificatie Service context diagram is de Notificatie Service uitgewerkt 
 
 ![](embed:NotificatieServiceContainer)
 
-In het Notificatie Service Container Diagram wordt verder ingezoomd op de onderdelen van de Notificatie Service. Deze bestaat uit twee componenten: NotifyNL en de Kennisgeving Service.
+In het Notificatie Service Container Diagram wordt verder ingezoomd op de onderdelen van de Notificatie Service. Deze bestaat uit de Kennisgeving Service en de bijbehorende verzendinfrastructuur.
 
 Daarnaast zijn ook de Kanaalhersteldienst en de Profiel Service opgenomen. Deze twee componenten zijn bepalend voor de onderlinge verschillen tussen de drie scenario’s: de BD maakt gebruik van zowel de Profiel Service als de Kanaalhersteldienst, het UWV raadpleegt enkel de Profiel Service, en de DV maakt van geen van beide gebruik.  
 Meer over dit onderscheid wordt zichtbaar in het scenario onder het kopje _Belastingdienst_, waarin beide componenten actief worden ingezet.
@@ -21,17 +21,17 @@ De drie scenario’s illustreren verschillende vormen van notificaties. Scenario
 
 #### Scenario 2
 
-Dit is nog steeds het eenvoudigste scenario: de DV roept hierbij rechtstreeks NotifyNL aan, die vervolgens de notificatie verstuurt naar de zakelijke gebruiker. De Profiel Service wordt hierbij niet gebruikt, wat betekent dat DV zelf de contactgegevens moet aanleveren. Ook wordt de Kanaalhersteldienst niet aangeroepen; bij een kanaalstoring zou DV dit dus zelf moeten afhandelen.
+Dit is nog steeds het eenvoudigste scenario: de DV roept hierbij rechtstreeks de Notificatie Service aan, die vervolgens de notificatie verstuurt naar de zakelijke gebruiker. De Profiel Service wordt hierbij niet gebruikt, wat betekent dat DV zelf de contactgegevens moet aanleveren. Ook wordt de Kanaalhersteldienst niet aangeroepen; bij een kanaalstoring zou DV dit dus zelf moeten afhandelen.
 
 #### Scenario 8
 
-In scenario 8, vertegenwoordigd door het DV, wordt eerst de contactinformatie opgehaald bij de Profiel Service voordat NotifyNL wordt aangeroepen om de notificatie te versturen. Dit betekent dat er in geval van kanaaluitval geen kanaalherstel plaatsvindt vanuit de Notificatie Service.
+In scenario 8, vertegenwoordigd door het DV, wordt eerst de contactinformatie opgehaald bij de Profiel Service voordat de Notificatie Service wordt aangeroepen om de notificatie te versturen. Dit betekent dat er in geval van kanaaluitval geen kanaalherstel plaatsvindt vanuit de Notificatie Service.
 
 #### Scenario 9
 
-In dit scenario roept de BD de Berichtenbox voor Burgers en Ondernemers (BBO) aan, die vervolgens het notificatieproces namens hen uitvoert. De BBO haalt de profielinformatie op bij de Profiel Service en geeft deze door aan de Kennisgeving Service. Deze is vervolgens verantwoordelijk voor het versturen van de notificatie naar NotifyNL.
+In dit scenario roept de BD de Berichtenbox voor Burgers en Ondernemers (BBO) aan, die vervolgens het notificatieproces namens hen uitvoert. De BBO haalt de profielinformatie op bij de Profiel Service en geeft deze door aan de Kennisgeving Service. Deze is vervolgens verantwoordelijk voor het versturen van de notificatie.
 
-Belangrijk om te vermelden is dat de BD ook de mogelijkheid heeft om het notificatieproces niet via de BBO, maar rechtstreeks te initiëren via de Kennisgeving Service. In dat geval slaat de BD de BBO over en levert zelf de benodigde gegevens aan. De verdere afhandeling, waaronder het ophalen van profielinformatie en het versturen van de notificatie naar NotifyNL, verloopt vervolgens identiek.
+Belangrijk om te vermelden is dat de BD ook de mogelijkheid heeft om het notificatieproces niet via de BBO, maar rechtstreeks te initiëren via de Kennisgeving Service. In dat geval slaat de BD de BBO over en levert zelf de benodigde gegevens aan. De verdere afhandeling, waaronder het ophalen van profielinformatie en het versturen van de notificatie, verloopt vervolgens identiek.
 
 Indien het afleveren van de notificatie mislukt door kanaaluitval, start de Kennisgeving Service automatisch het kanaalherstelproces. Hierbij worden opnieuw de adresgegevens opgehaald bij het handelsregister, waarna deze worden doorgegeven aan de Kanaalhersteldienst voor verdere afhandeling.
 

@@ -28,11 +28,11 @@ We hebben de bestaande verificatieservice van Worth Systems onderzocht en de vol
 
    ![adr0014-worth-vs-situatie.png](images/adr0014-worth-vs-situatie.png)
 
-2**AVG-aandachtspunt.** De bestaande verificatieservice slaat e‑mailadressen op om deze daarna te verifiëren met email deels als key. Dit is op te lossen met een verwerkersovereenkomst, maar met een eigen service hebben we gekeken hoe reëel het is alleen met referentie te werken, waardoor de e-mail nooit opgeslagen hoeft te worden.
+2. **AVG-aandachtspunt.** De bestaande verificatieservice slaat e‑mailadressen op om deze daarna te verifiëren met email deels als key. Dit is op te lossen met een verwerkersovereenkomst, maar met een eigen service hebben we gekeken hoe reëel het is alleen met referentie te werken, waardoor de e-mail nooit opgeslagen hoeft te worden.
 
-3**Andere technologiestack.** De bestaande verificatieservice is geschreven in TypeScript/Node. De beoogde beheerpartij, Logius, heeft een voorkeur voor Quarkus/Java. Een service in een bekende stack voor Logius verlaagt de drempel voor beheer en doorontwikkeling.
+3. **Andere technologiestack.** De bestaande verificatieservice is geschreven in TypeScript/Node. De beoogde beheerpartij, Logius, heeft een voorkeur voor Quarkus/Java. Een service in een bekende stack voor Logius verlaagt de drempel voor beheer en doorontwikkeling.
 
-4**Afhankelijkheid van externe partij.** Bij doorgebruik blijven we afhankelijk van een externe partij voor onderhoud en doorontwikkeling. De service is beschikbaar als open source, maar forken betekent dat we zelf een TypeScript/Node-codebase moeten onderhouden, wat hetzelfde tech-stack-vraagstuk introduceert.
+4. **Afhankelijkheid van externe partij.** Bij doorgebruik blijven we afhankelijk van een externe partij voor onderhoud en doorontwikkeling. De service is beschikbaar als open source, maar forken betekent dat we zelf een TypeScript/Node-codebase moeten onderhouden, wat hetzelfde tech-stack-vraagstuk introduceert.
 
 
 ### Prototype eigen verificatieservice

@@ -29,11 +29,6 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                 KennisgevingService = container "Kennisgeving service" "Regelt communicatie naar NotifyNL en Kanaalherstel" "" "Kennisgeving Service"
                 NotifyNL = container "NotifyNL" "Verstuurt emails & sms naar gebruikers" "" "Notificatie Service"
             }
-            VerificatieService = softwareSystem "Verificatie Service" "Verifieert gebruikers email" {
-                !docs verificatieservicedocs
-                VerificatieServiceBackend = container "Verificatie Service" "Verantwoordelijk voor het verwerken voor verificatie verzoeken" "Quarkus"
-                VerifiecatieServiceDatabase = container "Verificatie Service Database" "Bevat de verificatie gegevens" "PostgreSQL" "Database"
-            }
         }
 
         group "MOZA" {
@@ -50,6 +45,11 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                 !docs iamdocs
                 iamService = container "IAM Service" "Service inclusief management portaal voor IAM" "Keycloak" "Front-End"
                 iamDatabase = container "IAM Database" "Bevat de authenticatie en autorisatie gegevens" "PostgreSQL" "Database"
+            }
+            VerificatieService = softwareSystem "Verificatie Service" "Verifieert gebruikers email" {
+                !docs verificatieservicedocs
+                VerificatieServiceBackend = container "Verificatie Service" "Verantwoordelijk voor het verwerken voor verificatie verzoeken" "Quarkus"
+                VerifiecatieServiceDatabase = container "Verificatie Service Database" "Bevat de verificatie gegevens" "PostgreSQL" "Database"
             }
         }
 

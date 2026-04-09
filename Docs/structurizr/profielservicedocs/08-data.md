@@ -77,7 +77,7 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 
 #### Logboek Dataverwerkingen (LDV)
 
-Naast de hierboven beschreven entiteiten slaat de Profiel Service logregels op conform de [Logboek Dataverwerkingen standaard](https://logius-standaarden.github.io/logboek-dataverwerkingen/#interface). Wanneer een trace bij de Profiel Service begint (de Profiel Service is de initiërende dienst), wordt een identificerend nummer van de betrokkene opgeslagen in de LDV-attributen. Dit kan een plain BSN zijn of een gepseudonimiseerde variant. De volgende attributen worden per logregel vastgelegd:
+Naast de hierboven beschreven entiteiten slaat de Profiel Service logregels op conform de [Logboek Dataverwerkingen standaard](https://logius-standaarden.github.io/logboek-dataverwerkingen/#interface). Wanneer een trace bij de Profiel Service begint (de Profiel Service is de initiërende dienst), wordt een identificerend nummer van de betrokkene opgeslagen in de LDV-attributen. De volgende attributen worden per logregel vastgelegd:
 
 | Attribuut | Omschrijving |
 |-----------|-------------|

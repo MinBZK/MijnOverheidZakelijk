@@ -1,5 +1,10 @@
 # Notificatie Service
 
+> | **Status**     | Conceptversie                                                                   |
+> |----------------|---------------------------------------------------------------------------------|
+> | Laatste update | 23-02-2026                                                                      |
+
+
 ## Context
 
 Binnen MijnOverheid Zakelijk is betrouwbare, tijdige en kanaalonafhankelijke communicatie richting burgers en ondernemers essentieel om te voldoen aan de Wet MEBV. Waar de `Profiel Service` voorziet in het vastleggen van contactgegevens en voorkeuren, faciliteert de Notificatie Service het daadwerkelijk versturen van berichten en attenderingen via verschillende kanalen (zoals e‑mail, sms, push of toekomstige kanalen) en het registreren van de afleversstatus.

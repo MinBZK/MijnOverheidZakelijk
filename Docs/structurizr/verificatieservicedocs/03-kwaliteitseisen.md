@@ -1,7 +1,7 @@
 ## Kwaliteitseisen
 
 ### Inleiding
-Deze sectie beschrijft de belangrijkste niet-functionele eisen (NFR’s) voor de Verificatie Service.
+Deze sectie beschrijft de belangrijkste niet-functionele eisen (NFR’s) voor de Email Verificatie Service.
 
 ### Overzicht
 - Beveiliging & privacy (AVG):
@@ -14,12 +14,13 @@ Deze sectie beschrijft de belangrijkste niet-functionele eisen (NFR’s) voor de
   - Consistentie: onmiddellijk waar mogelijk; tijdelijke fouten worden gesignaleerd aan de aanroepende dienst.
 - Performance & Error handling:
   - De verificatie service moet minimaal _nader te bepalen_ aantal aanvragen per uur kunnen verwerken.
-  - Als een code twee keer wordt ingevoerd, krijgt de tweede een 'Code Already Used' foutmelding. (Zie #7.2.2)
+  - HTTP client: connect-timeout 10s, request-timeout 30s.
+  - Als een code twee keer wordt ingevoerd, krijgt de tweede een 'Code Already Used' foutmelding (409 Conflict).
 - Rate limiting & misbruikpreventie:
   - Maximaal aantal verificatieverzoeken per aanroepende dienst per tijdseenheid: _nader te bepalen_.
   - Maximaal aantal validatiepogingen per referenceId: _nader te bepalen_.
   - Bij overschrijding retourneert de service HTTP 429 Too Many Requests.
 - Authenticatie & autorisatie:
-  - Aanroepende diensten authenticeren zich bij de Email Verificatie Service via _nader te bepalen (bijv. mTLS, OAuth2 client credentials)_.
+  - Communicatie met de Notificatie Service (NotifyNL) verloopt via JWT Bearer Token authenticatie.
   - Het admin-endpoint (`GET /api/v1/admin/statistics`) is alleen toegankelijk voor geautoriseerde beheerders.
 

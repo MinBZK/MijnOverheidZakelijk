@@ -1,7 +1,7 @@
 ## Beperkingen
 
 ### Inleiding
-Dit hoofdstuk beschrijft randvoorwaarden en bewuste keuzes/uitsluitingen die het ontwerp van de Verificatie Service begrenzen.
+Dit hoofdstuk beschrijft randvoorwaarden en bewuste keuzes/uitsluitingen die het ontwerp van de Email Verificatie Service begrenzen.
 
 ### Overzicht
 - Geen gebruik van een message queue

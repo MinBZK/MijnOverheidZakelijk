@@ -1,7 +1,7 @@
 ## Design Principes
 
 ### Inleiding
-De Verificatie Service volgt onderstaande ontwerpprincipes om eenvoud, betrouwbaarheid en privacy te borgen.
+De Email Verificatie Service volgt onderstaande ontwerpprincipes om eenvoud, betrouwbaarheid en privacy te borgen.
 
 ### Principes
 - Eenvoudig en direct gekoppeld

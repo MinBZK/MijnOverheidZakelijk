@@ -6,7 +6,7 @@ Onderstaande sectie geeft voorbeeldcontracten (API) en schetst de basislogica. D
 
 #### HTTP API
 
-De volledige OpenAPI-specificatie is beschikbaar in de repository: _link naar OpenAPI spec toevoegen_.
+De volledige OpenAPI-specificatie is momenteel niet publiek beschikbaar, maar op te vragen bij het team.
 
 ##### Endpoints overzicht
 

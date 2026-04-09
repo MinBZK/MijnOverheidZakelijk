@@ -20,7 +20,7 @@
 | VerifiedAt          | Tijdstip wanneer de verificatie is geverifieerd                       |
 | VerifyEmailSentAt   | Tijdstip wanneer de verificatie email is verstuurd                    |
 | Attempts            | Aantal validatiepogingen voor deze verificatiecode                    |
-| MaxAttempts         | Maximaal toegestane pogingen voordat de code ongeldig wordt (_nader te bepalen_, bijv. 5) |
+| MaxAttempts         | Maximaal toegestane pogingen voordat de code ongeldig wordt (5) |
 
 #### VERIFICATIESTATISTIEKEN
 

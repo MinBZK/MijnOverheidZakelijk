@@ -13,12 +13,12 @@ Deze sectie beschrijft de belangrijkste niet-functionele eisen (NFR’s) voor de
   - Rechtstreekse aanroep naar de Notificatie Service; timeouts, retries en idempotency aan client‑zijde van die aanroep.
   - Consistentie: onmiddellijk waar mogelijk; tijdelijke fouten worden gesignaleerd aan de aanroepende dienst.
 - Performance & Error handling:
-  - De verificatie service moet minimaal _nader te bepalen_ aantal aanvragen per uur kunnen verwerken.
+  - De verificatie service moet minimaal _TODO_Bepalen_Throughput_ aantal aanvragen per uur kunnen verwerken.
   - HTTP client: connect-timeout 10s, request-timeout 30s.
   - Als een code twee keer wordt ingevoerd, krijgt de tweede een 'Code Already Used' foutmelding (409 Conflict).
 - Rate limiting & misbruikpreventie:
-  - Maximaal aantal verificatieverzoeken per aanroepende dienst per tijdseenheid: _nader te bepalen_.
-  - Maximaal aantal validatiepogingen per referenceId: _nader te bepalen_.
+  - Maximaal aantal verificatieverzoeken per aanroepende dienst per tijdseenheid: _TODO_Bepalen_RateLimit_.
+  - Maximaal aantal validatiepogingen per referenceId: _TODO_Bepalen_MaxValidatiePogingen_.
   - Bij overschrijding retourneert de service HTTP 429 Too Many Requests.
 - Authenticatie & autorisatie:
   - Communicatie met de Notificatie Service (NotifyNL) verloopt via JWT Bearer Token authenticatie.

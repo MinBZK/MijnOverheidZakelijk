@@ -1,4 +1,4 @@
-# 16. Testplan MOZa
+# 16. Testplan
 
 Datum: 2026-04-09
 
@@ -8,21 +8,20 @@ Proposed
 
 ## Context
 
-Wijzigingen aan MOZa-services moeten gevalideerd worden vóór en na het mergen naar `main`. Er was geen vastgelegd testbeleid: het was onduidelijk welke testsoorten wanneer worden ingezet, wie waarvoor verantwoordelijk is en hoe bevindingen worden opgepakt. Dit leidde tot inconsistentie in de manier waarop wijzigingen worden gevalideerd.
+Bij softwareprojecten met meerdere services en teams is een eenduidig testbeleid nodig om kwaliteit en consistentie te borgen. Zonder vastgelegd testbeleid is het onduidelijk welke testsoorten wanneer worden ingezet, wie waarvoor verantwoordelijk is en hoe bevindingen worden opgepakt.
 
-Dit testplan dekt:
+Dit testplan biedt een herbruikbaar kader dat per project kan worden geconcretiseerd. Het is toepasbaar ongeacht de projectfase (pre-alpha, alpha, beta, productie), waarbij de intensiteit en het type tests meegroeit met de volwassenheid van het project.
+
+Het plan dekt:
 - Review vóór merge (inclusief een korte functionele check door de reviewer).
 - Geautomatiseerde unit- en integratietests in de CI/CD-pipeline.
-- Post-deploy validatie in de doelomgeving (smoke- en regressietests).
+- Post-deploy validatie op de acceptatieomgeving (smoke- en regressietests).
 - User Acceptance Tests (UAT) bij wijzigingen met functionele impact.
 - Ketentests bij wijzigingen aan integratiepunten of API-contracten.
 - Performance- en loadtests bij wijzigingen met mogelijke impact op prestaties.
 - Fuzzing tests in de CI/CD-pipeline bij wijzigingen aan inputverwerking of API-interfaces.
 
-Scope: alle wijzigingen die via Pull Requests (PR's) richting `main` gaan, inclusief code, configuratie en documentatie.
-
-Niet in scope:
-- De werkwijze voor meerdere omgevingen; momenteel is er één gedeelde omgeving die dev/test/prod combineert.
+Scope: alle wijzigingen die via Pull Requests (PR's) richting de hoofdbranch gaan, inclusief code, configuratie en documentatie.
 
 ## Decision
 
@@ -30,14 +29,20 @@ Niet in scope:
 
 Niet alle testsoorten zijn verplicht voor elke wijziging; inzet van testtypen is risicogedreven en afhankelijk van de aard van de wijziging.
 
-- **Unit tests** — Dekken businesslogica, datamapping, foutafhandeling en validatie. Minimale dekking: projectnorm _nader te bepalen_ % coverage.
-- **Integratietests** — Valideren endpoints of repositories via het testframework van de betreffende service (bijv. Quarkus-testframework met in-memory database).
+- **Unit tests** — Dekken businesslogica, datamapping, foutafhandeling en validatie. Minimale dekking: 80% coverage.
+- **Integratietests** — Valideren endpoints of repositories via het testframework van de betreffende service.
 - **Ketentests** — Valideren dat de service correct samenwerkt met afhankelijke en consumerende systemen. Gericht op end-to-end scenario's over meerdere systemen. Uitgevoerd bij wijzigingen aan API-contracten, datamodellen of integratiegedrag, in samenwerking met betrokken teams. Niet standaard onderdeel van elke wijziging; inzet is risicogedreven.
 - **Smoke tests** — Korte, snelle tests om te verifiëren dat de applicatie functioneel beschikbaar is in de doelomgeving. Gericht op kernfunctionaliteit.
 - **Regressietests** — Controleren dat bestaande functionaliteit correct blijft functioneren na een wijziging. Gericht op kernscenario's en bekende risicogebieden. Uitgevoerd na deployment, handmatig en/of met automatisering. Regressietests groeien op basis van risico en eerdere defecten, niet op basis van elke wijziging.
 - **User Acceptance Tests (UAT)** — Valideren dat functionele wijzigingen voldoen aan acceptatiecriteria en businessverwachtingen. Alleen bij wijzigingen met zichtbare functionele impact. Uitgevoerd door Product Owner of business stakeholder, gefaciliteerd door Tester.
 - **Performance- en loadtests** — Valideren dat de service voldoet aan prestatieeisen. Niet standaard; inzet is risicogedreven.
-- **Fuzzing tests** — Testen de robuustheid door het aanbieden van ongeldige, onverwachte of gemanipuleerde input. Geautomatiseerd uitgevoerd in de CI/CD-pipeline via GitHub Actions.
+- **Fuzzing tests** — Testen de robuustheid door het aanbieden van ongeldige, onverwachte of gemanipuleerde input. Geautomatiseerd uitgevoerd in de CI/CD-pipeline.
+
+### Omgevingen
+
+Het plan gaat uit van minimaal een **acceptatieomgeving** waarop post-deploy validatie plaatsvindt vóór uitrol naar productie. De exacte omgevingsinrichting (bijv. development, acceptatie, productie) wordt per project bepaald.
+
+> **Opmerking:** In vroege projectfasen kan de acceptatieomgeving samenvallen met de productieomgeving. Naarmate het project volwassener wordt, is scheiding van omgevingen aan te bevelen.
 
 ### Rollen en verantwoordelijkheden
 
@@ -75,19 +80,19 @@ Niet alle testsoorten zijn verplicht voor elke wijziging; inzet van testtypen is
 3. **CI/CD-pipeline**
     - Trigger: openen of bijwerken van een PR.
     - Stappen: build en dependency resolution, unit tests met rapportage en coverage, integratietests, fuzzing tests, linting, security- en dependency-scan.
-    - Kwaliteitspoorten: build slaagt, alle unit-/integratie-/fuzzing tests slagen, coverage ≥ _nader te bepalen_ %.
+    - Kwaliteitspoorten: build slaagt, alle unit-/integratie-/fuzzing tests slagen, coverage ≥ 80%.
 
-4. **Merge naar `main`**
+4. **Merge naar hoofdbranch**
     - Voorwaarden: minimaal één reviewer approval en een geslaagde CI/CD-pipeline.
 
-5. **Deployment naar doelomgeving**
-    - Automatische deployment naar de gedeelde omgeving.
+5. **Deployment naar acceptatieomgeving**
+    - Automatische deployment naar de acceptatieomgeving.
 
 6. **Post-deploy validatie**
-    - CI/CD voert smoke tests uit op 2–5 kernscenario's.
+    - CI/CD voert smoke tests uit op kernscenario's.
     - CI/CD voert een regressietest uit op relevante kernfunctionaliteit.
     - Bevindingen worden teruggekoppeld aan de ontwikkelaar: direct oplossen, of registreren als issue met referentie naar PR/commit en omgeving.
-    - Bij blockers: rollback of hotfix conform afgesproken releaseproces (_releasebeleid nader vast te stellen_).
+    - Bij blockers: rollback of hotfix conform het releasebeleid van het project.
 
 7. **User Acceptance Test** (indien van toepassing)
     - Uitgevoerd bij functionele wijzigingen met gebruikers- of businessimpact.
@@ -101,10 +106,6 @@ Niet alle testsoorten zijn verplicht voor elke wijziging; inzet van testtypen is
 
 9. **Performance- en loadtests** (indien van toepassing)
     - Uitgevoerd bij wijzigingen met mogelijke impact op prestaties of schaalbaarheid.
-    - Resultaten worden beoordeeld en eventuele bevindingen opgevolgd via issue-tracking.
-
-10. **Fuzzing tests**
-    - Geautomatiseerd uitgevoerd in de CI/CD-pipeline via GitHub Actions.
     - Resultaten worden beoordeeld en eventuele bevindingen opgevolgd via issue-tracking.
 
 ### Acceptatiecriteria per fase
@@ -129,13 +130,11 @@ Niet alle testsoorten zijn verplicht voor elke wijziging; inzet van testtypen is
 ### Versiebeheer en wijzigingsbeheer
 
 - Elke wijziging verloopt via een PR met referentie naar een issue of ticket.
-- Merge naar `main` alleen na het voldoen aan de acceptatiecriteria.
+- Merge naar de hoofdbranch alleen na het voldoen aan de acceptatiecriteria.
 
 ## Consequences
 
 - Alle teamleden volgen hetzelfde testproces bij wijzigingen, wat consistentie en kwaliteit bevordert.
 - Ontwikkelaars zijn verantwoordelijk voor volledige testdekking, niet alleen basisdekking.
 - Smoke-, regressie- en fuzzing tests draaien geautomatiseerd in CI/CD, waardoor handmatige testlast afneemt.
-- De tester-rol verschuift naar het faciliteren van ketentests, UAT en performance-/loadtests.
-- Bij opschaling kan dit plan worden uitgebreid met meerdere omgevingen (development, staging, productie) en feature branch deployments.
-- Releasebeleid is nog nader vast te stellen; dit ADR verwijst ernaar maar definieert het niet.
+- De tester faciliteert ketentests, UAT en performance-/loadtests.

@@ -24,7 +24,7 @@ De beveiligingsinstellingen centraal en audit-proof inrichten, zodat:
 
 ---
 
-## Beslissing
+## Decision
 
 Beveiliging is centraal ingericht op twee niveaus:
 
@@ -104,12 +104,12 @@ metadata:
 
 ---
 
-## Content-Security-Policy uitleg
+### Content-Security-Policy uitleg
 
 De ingestelde CSP bevat:
 
 | Directive                | Doel                                        |
-|:-------------------------|:--------------------------------------------|
+| :----------------------- | :------------------------------------------ |
 | `default-src 'self'`     | Alleen resources van eigen domein           |
 | `script-src 'self'`      | Geen inline of externe scripts              |
 | `style-src 'self'`       | Geen inline CSS                             |
@@ -125,7 +125,7 @@ De ingestelde CSP bevat:
 
 ---
 
-## Architectuuroverzicht
+### Architectuuroverzicht
 
 ```text
 Browser
@@ -141,7 +141,7 @@ DNS-beveiliging staat los van Kubernetes en geldt op domeinniveau.
 
 ---
 
-## Gevolgen
+## Consequences
 
 ### Positief
 - Internet.nl compliant
@@ -157,7 +157,7 @@ DNS-beveiliging staat los van Kubernetes en geldt op domeinniveau.
 
 ---
 
-## Validatie
+### Validatie
 
 Na wijziging wordt gecontroleerd met:
 
@@ -170,7 +170,7 @@ En periodiek via:
 
 ---
 
-## Conclusie
+### Conclusie
 
 De beveiliging van het domein en de webtoegang is centraal ingericht:
 - DNS voorkomt e-mailmisbruik en ongeautoriseerde certificaatuitgifte.

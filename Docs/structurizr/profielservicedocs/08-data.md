@@ -4,12 +4,12 @@
 
 Het gegevensmodel van de ProfielService is opgebouwd rond de entiteiten **PARTIJ** en **CONTACTGEGEVEN**.
 
-1. **PARTIJ** is de basis van een natuurlijke persoon of rechtspersoon. Een partij kan één of meerdere identificaties hebben, zoals BSN, KVK, RSIN of andere vormen van identificatie.
-2. **CONTACTGEGEVEN** legt vast hoe en via welk kanaal een partij gecontacteerd kan worden door een dienst of organisatie.
+1. **PARTIJ** is de basis van een natuurlijke persoon of rechtspersoon. Een partij kan één of meerdere identificaties hebben, zoals BSN, KVK, RSIN of andere vormen van identificatie. Zowel personen als ondernemingen zijn een PARTIJ.
+2. **CONTACTGEGEVEN** legt vast hoe en via welk kanaal een partij gecontacteerd kan worden door een dienst of organisatie. Een contactgegeven kan optioneel gekoppeld worden aan een **SCOPE**, waarmee wordt vastgelegd voor welke onderneming (PARTIJ) en/of welke dienst van een dienstverlener (DIENST) het contactgegeven geldt.
 
-Hiermee kunnen burgers en ondernemers vastleggen hoe zij gecontacteerd willen worden, bijvoorbeeld via e-mail of telefoon.
+Hiermee kunnen burgers en ondernemers vastleggen hoe zij gecontacteerd willen worden, bijvoorbeeld via e-mail of telefoon. Een ondernemer die meerdere bedrijven beheert kan per bedrijf verschillende contactgegevens en voorkeuren opslaan, terwijl het bedrijf (als PARTIJ) slechts één keer in de database voorkomt.
 
-Ter ondersteuning van deze kernfunctionaliteit zijn vier aanvullende entiteiten toegevoegd: **IDENTIFICATIE**, **VOORKEUR**, **DIENSTVERLENER** en **DIENSTVERLENER_AFDELING**.
+Ter ondersteuning van deze kernfunctionaliteit zijn vijf aanvullende entiteiten toegevoegd: **IDENTIFICATIE**, **VOORKEUR**, **SCOPE**, **DIENSTVERLENER** en **DIENST**.
 
 Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteiten.
 
@@ -24,37 +24,75 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 
 #### CONTACTGEGEVEN
 
-| Attribuut          | Omschrijving                                                          |
-|--------------------|-----------------------------------------------------------------------|
-| **CONTACTGEGEVEN** |                                                                       |
-| Id                 | Unieke identificator van contactgegeven                               |
-| PartijId           | Identificator van de PARTIJ die eigenaar is van dit contactgegeven    |
-| ScopeId            | Verwijzing naar DIENST waarop de scope betrekking heeft               |
-| Taal               | De taalvoorkeur voor dit contactgegeven                               |
-| ContactType        | Het soort contactgegeven: e-mail of (mobiel) telefoonnummer           |
-| Waarde             | De opgegeven contactwaarde (bijv. mailadres)                          |
-| TerAttentieVan     | Aanhef die gebruikt kan worden bij het gebruik van dit contactgegeven |
-| GeverifieerdAt     | Datum waarop de verificatiestatus voor het laatst is gezet            |
+| Attribuut          | Omschrijving                                                               |
+|--------------------|----------------------------------------------------------------------------|
+| **CONTACTGEGEVEN** |                                                                            |
+| Id                 | Unieke identificator van contactgegeven                                    |
+| PartijId           | Identificator van de PARTIJ die eigenaar is van dit contactgegeven         |
+| ScopeId            | Optionele verwijzing naar SCOPE waarop dit contactgegeven betrekking heeft |
+| Taal               | De taalvoorkeur voor dit contactgegeven                                    |
+| ContactType        | Het soort contactgegeven: e-mail of (mobiel) telefoonnummer                |
+| Waarde             | De opgegeven contactwaarde (bijv. mailadres)                               |
+| TerAttentieVan     | Optionele override van de aanhef specifiek voor dit contactgegeven. Indien niet ingevuld wordt de standaard Aanhef voorkeur (VoorkeurType=Aanhef) gebruikt |
+| GeverifieerdAt     | Datum waarop de verificatiestatus voor het laatst is gezet                 |
 
 #### IDENTIFICATIE
 
 | Attribuut           | Omschrijving                                                                                       |
 |---------------------|----------------------------------------------------------------------------------------------------|
-| **DIENSTVERLENER**  |                                                                                                    |
+| **IDENTIFICATIE**   |                                                                                                    |
 | PartijId            | Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN                                 |
 | IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: BSN, KVK, RSIN of ander identificatiesysteem |
 | IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType             |
 
 #### VOORKEUR
 
-| Attribuut    | Omschrijving                                                    |
-|--------------|-----------------------------------------------------------------|
-| **VOORKEUR** |                                                                 |
-| PartijId     | Verwijzing naar de PARTIJ waarvoor de voorkeur geldt            |
-| VoorkeurType | Het type voorkeur (enum), bijvoorbeeld taal of communicatievorm |
-| ScopeId      | Verwijzing naar DIENST waarop de scope betrekking heeft         |
-| Waarde       | De waarde van de voorkeur, afhankelijk van het VoorkeurType     |
+| Attribuut     | Omschrijving                                                                                              |
+|---------------|-----------------------------------------------------------------------------------------------------------|
+| **VOORKEUR** |                                                                            |
+| PartijId     | Verwijzing naar de PARTIJ waarvoor de voorkeur geldt                        |
+| VoorkeurType | Het type voorkeur (enum), bijvoorbeeld taal of communicatievorm             |
+| ScopeId      | Optionele verwijzing naar SCOPE waarop deze voorkeur betrekking heeft       |
+| Waarde       | De waarde van de voorkeur, afhankelijk van het VoorkeurType                 |
 
+##### VoorkeurTypes
+
+| VoorkeurType              | Omschrijving                                                        |
+|---------------------------|---------------------------------------------------------------------|
+| WebsiteTaal               | Standaard taalvoorkeur voor communicatie (bijv. "Nederlands")       |
+| MagGebeldWorden           | Of de partij gebeld mag worden                                      |
+| WebsiteThema              | Thema/weergavevoorkeur voor de website                              |
+| PostcodeInUwBuurt         | Postcode voor "berichten in uw buurt"                               |
+| ActueleOnderwerpVoorkeur  | Voorkeur voor actuele onderwerpen (bijv. subsidies, wetswijzigingen)|
+| Aanhef                    | Standaard aanhef voor de partij (bijv. "Dhr. Jansen")              |
+
+##### Voorkeuren met fallback naar contactgegeven
+
+Sommige voorkeuren dienen als standaardwaarde, die per contactgegeven overridden kan worden:
+
+| Voorkeur (standaard)      | Override op CONTACTGEGEVEN | Omschrijving                                                    |
+|---------------------------|----------------------------|-----------------------------------------------------------------|
+| Aanhef                    | TerAttentieVan             | Hoe de partij aangesproken wil worden                           |
+| WebsiteTaal               | Taal                       | In welke taal de partij gecontacteerd wil worden                |
+
+De fallback-logica voor dienstverleners:
+
+1. Als een **CONTACTGEGEVEN** een override-waarde heeft (`TerAttentieVan` of `Taal`), wordt die gebruikt voor dat specifieke contactgegeven.
+2. Als de override leeg is, wordt de standaard **voorkeur** van de partij gebruikt.
+
+Dit stelt dienstverleners in staat om standaardwaarden op te halen, terwijl de gebruiker per contactgegeven een afwijkende instelling kan maken.
+
+
+#### SCOPE
+
+| Attribuut   | Omschrijving                                                                                 |
+|-------------|----------------------------------------------------------------------------------------------|
+| **SCOPE**   |                                                                                              |
+| Id          | Unieke identificator van de scope                                                            |
+| PartijId    | Optionele verwijzing naar een PARTIJ (bijv. een onderneming) waarop de scope betrekking heeft |
+| DienstId  | Optionele verwijzing naar een DIENST waarop de scope betrekking heeft                         |
+
+Een SCOPE combineert de twee dimensies waarop een contactgegeven of voorkeur betrekking kan hebben: een onderneming (PARTIJ) en/of een dienst van een dienstverlener (DIENST). Beide velden zijn optioneel — een scope kan alleen een onderneming bevatten, alleen een dienst, of beide.
 
 #### DIENSTVERLENER
 
@@ -69,13 +107,13 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 
 | Attribuut        | Omschrijving                       |
 |------------------|------------------------------------|
-| **DIENST**       |                                    |
-| Id               | Unieke identificator van de dienst |
-| DienstverlenerId | Verwijzing naar DIENSTVERLENER     |
-| Beschrijving     | Beschrijving van de dienst         |
+| **DIENST**       |                                        |
+| Id               | Unieke identificator van de dienst     |
+| DienstverlenerId | Verwijzing naar DIENSTVERLENER           |
+| Beschrijving     | Beschrijving van de dienst             |
 
 
-Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ, VOORKEUR, CONTACTGEGEVEN, DIENSTVERLENER, en DIENST.
+Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ, VOORKEUR, CONTACTGEGEVEN, SCOPE, DIENSTVERLENER en DIENST.
 
 ![Gegevensmodel](./images/ArchitectuurProfielService/Gegevensmodel.png "Gegevensmodel")
 
@@ -87,27 +125,34 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
             int Id PK "NOT NULL"
         }
 
+        IDENTIFICATIE {
+            int PartijId PK,FK "NOT NULL"
+            enum IdentificatieType PK "NOT NULL"
+            text IdentificatieNummer PK "NOT NULL"
+        }
+
         CONTACTGEGEVEN {
             int Id PK "NOT NULL"
             int PartijId FK "NOT NULL"
-            id Scope FK ""
+            int ScopeId FK ""
             enum Taal
             enum ContactType "NOT NULL"
             text Waarde "NOT NULL"
-            bool IsGeverifieerd "NOT NULL"
-            date GeverifieerdAt "NOT NULL"
+            text TerAttentieVan
+            date GeverifieerdAt
         }
 
         VOORKEUR {
             int PartijId PK,FK "NOT NULL"
             enum VoorkeurType PK "NOT NULL"
+            int ScopeId FK ""
             text Waarde "NOT NULL"
         }
 
-        IDENTIFICATIE {
-            int PartijId PK,FK "NOT NULL"
-            enum IdentificatieType PK "NOT NULL"
-            text IdentificatieNummer PK "NOT NULL"
+        SCOPE {
+            int Id PK "NOT NULL"
+            int PartijId FK ""
+            int DienstId FK ""
         }
 
         DIENSTVERLENER {
@@ -115,7 +160,7 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
             string Naam "NOT NULL"
         }
 
-        DIENSTVERLENER_AFDELING {
+        DIENST {
             int Id PK "NOT NULL"
             int DienstverlenerId FK "NOT NULL"
             string Beschrijving ""
@@ -123,10 +168,13 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
 
         %% Relationships
         PARTIJ ||--|{ IDENTIFICATIE : "PartijId"
-        PARTIJ ||--o{ VOORKEUR : "PartijId"
         PARTIJ ||--o{ CONTACTGEGEVEN : "PartijId"
-        DIENSTVERLENER_AFDELING ||--o{ CONTACTGEGEVEN : "ScopeId"
-        DIENSTVERLENER ||--|{ DIENSTVERLENER_AFDELING : "DienstverlenerId"
+        PARTIJ ||--o{ VOORKEUR : "PartijId"
+        CONTACTGEGEVEN ||--o| SCOPE : "ScopeId"
+        VOORKEUR ||--o| SCOPE : "ScopeId"
+        SCOPE ||--o| PARTIJ : "PartijId"
+        SCOPE ||--o| DIENST : "DienstId"
+        DIENSTVERLENER ||--|{ DIENST : "DienstverlenerId"
 
 </details>
 
@@ -137,65 +185,112 @@ Wanneer de profiel-service wordt bevraagd, kan onderstaand DTO als response word
 **YAML**
 
 ```yaml
-id: 1
-identifier_type: BSN
-identifier_id: "123456789"
-contactvoorkeuren:
+partijId: 1
+identificaties:
+  - identificatieType: BSN
+    identificatieNummer: "123456789"
+contactgegevens:
   - id: 101
-    type: EMAIL
-    waarde: rvo-afdeling@bedrijf.nl
-    scope: ZAKELIJK
-    voor_partij_id: 1001
-    dienst_type: "0000000123"
-    geverifieerd_at: "2025-11-03T12:00:00Z"
+    type: Email
+    waarde: rvo-dienst@bedrijf.nl
+    taal: Nederlands
+    terAttentieVan: null
+    isGeverifieerd: true
+    scope:
+      partij:
+        identificatieType: KVK
+        identificatieNummer: "12345678"
+      dienst:
+        id: 10
+        beschrijving: "Belastingen"
 
   - id: 102
-    type: POST
-    waarde:
-      ter_attentie_van: "Robbert"
-      straat: Wilhelminastraat
-      huisnummer: 52
-      postcode: "2215PA"
-      plaats: Den Haag
-      land: Nederland
-    scope: ZAKELIJK
-    voor_partij_id: 1001
-    dienst_type: "0000000456"
-    geverifieerd_at: "2025-11-03T12:00:00Z"
+    type: Email
+    waarde: info@anderbedrijf.nl
+    taal: Engels
+    terAttentieVan: "Robbert"
+    isGeverifieerd: false
+    scope:
+      partij:
+        identificatieType: KVK
+        identificatieNummer: "87654321"
+      dienst: null
+
+  - id: 103
+    type: Telefoonnummer
+    waarde: "+31612345678"
+    taal: null
+    terAttentieVan: null
+    isGeverifieerd: false
+    scope: null
+voorkeuren:
+  - id: 201
+    voorkeurType: WebsiteTaal
+    waarde: "Nederlands"
+    scope: null
 ```
 
 **JSON**
 
 ```json
 {
-  "id": 1,
-  "identifier_type": "BSN",
-  "identifier_id": "123456789",
-  "contactvoorkeuren": [
+  "partijId": 1,
+  "identificaties": [
+    {
+      "identificatieType": "BSN",
+      "identificatieNummer": "123456789"
+    }
+  ],
+  "contactgegevens": [
     {
       "id": 101,
-      "type": "EMAIL",
-      "waarde": "rvo-afdeling@bedrijf.nl",
-      "scope": "ZAKELIJK",
-      "voor_partij_id": 1001,
-      "dienst_type": "0000000123",
-      "geverifieerd_at": "2025-11-03T12:00:00Z"
+      "type": "Email",
+      "waarde": "rvo-dienst@bedrijf.nl",
+      "taal": "Nederlands",
+      "terAttentieVan": null,
+      "isGeverifieerd": true,
+      "scope": {
+        "partij": {
+          "identificatieType": "KVK",
+          "identificatieNummer": "12345678"
+        },
+        "dienst": {
+          "id": 10,
+          "beschrijving": "Belastingen"
+        }
+      }
     },
     {
       "id": 102,
-      "type": "POST",
-      "waarde": {
-        "ter_attentie_van": "Robbert",
-        "straat": "Wilhelminastraat",
-        "huisnummer": 52,
-        "postcode": "2215PA",
-        "plaats": "Den Haag",
-        "land": "Nederland"
-      },
-      "scope": "ZAKELIJK",
-      "voor_partij_id": 1001,
-      "dienst_type": "0000000456",
-      "geverifieerd_at": "2025-11-03T12:00:00Z"
+      "type": "Email",
+      "waarde": "info@anderbedrijf.nl",
+      "taal": "Engels",
+      "terAttentieVan": "Robbert",
+      "isGeverifieerd": false,
+      "scope": {
+        "partij": {
+          "identificatieType": "KVK",
+          "identificatieNummer": "87654321"
+        },
+        "dienst": null
+      }
+    },
+    {
+      "id": 103,
+      "type": "Telefoonnummer",
+      "waarde": "+31612345678",
+      "taal": null,
+      "terAttentieVan": null,
+      "isGeverifieerd": false,
+      "scope": null
+    }
+  ],
+  "voorkeuren": [
+    {
+      "id": 201,
+      "voorkeurType": "WebsiteTaal",
+      "waarde": "Nederlands",
+      "scope": null
     }
   ]
 }

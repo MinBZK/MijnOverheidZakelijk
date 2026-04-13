@@ -41,7 +41,7 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | Attribuut           | Omschrijving                                                                                       |
 |---------------------|----------------------------------------------------------------------------------------------------|
 | **IDENTIFICATIE**   |                                                                                                    |
-| PartijId            | Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN                                 |
+| PartijId            | Verwijzing naar de PARTIJ aan wie deze IDENTIFICATIE toebehoort                                    |
 | IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: BSN, KVK, RSIN of ander identificatiesysteem |
 | IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType             |
 
@@ -143,8 +143,9 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
         }
 
         VOORKEUR {
-            int PartijId PK,FK "NOT NULL"
-            enum VoorkeurType PK "NOT NULL"
+            int Id PK "NOT NULL"
+            int PartijId FK "NOT NULL"
+            enum VoorkeurType "NOT NULL"
             int ScopeId FK ""
             text Waarde "NOT NULL"
         }
@@ -163,24 +164,24 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
         DIENST {
             int Id PK "NOT NULL"
             int DienstverlenerId FK "NOT NULL"
-            string Beschrijving ""
+            string Beschrijving "NOT NULL"
         }
 
         %% Relationships
         PARTIJ ||--|{ IDENTIFICATIE : "PartijId"
         PARTIJ ||--o{ CONTACTGEGEVEN : "PartijId"
         PARTIJ ||--o{ VOORKEUR : "PartijId"
-        CONTACTGEGEVEN ||--o| SCOPE : "ScopeId"
-        VOORKEUR ||--o| SCOPE : "ScopeId"
-        SCOPE ||--o| PARTIJ : "PartijId"
-        SCOPE ||--o| DIENST : "DienstId"
+        CONTACTGEGEVEN }o--o| SCOPE : "ScopeId"
+        VOORKEUR }o--o| SCOPE : "ScopeId"
+        SCOPE }o--o| PARTIJ : "PartijId"
+        SCOPE }o--o| DIENST : "DienstId"
         DIENSTVERLENER ||--|{ DIENST : "DienstverlenerId"
 
 </details>
 
 #### Data Transfer Object (DTO)
 
-Wanneer de profiel-service wordt bevraagd, kan onderstaand DTO als response worden verwacht:
+Wanneer de profiel-service wordt bevraagd, kan onderstaand DTO als response worden verwacht. Let op: het response-DTO levert `isGeverifieerd` (boolean) af, afgeleid van het entity-veld `GeverifieerdAt` (niet-leeg = geverifieerd).
 
 **YAML**
 

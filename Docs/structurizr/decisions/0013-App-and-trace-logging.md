@@ -43,7 +43,6 @@ Gerichte eisen vanuit team/veld:
 3. Applicatie logging
    - Formaat: gestructureerde logging (JSON) met vaste velden: `timestamp`, `level`, `message`, `properties` (key‑value).
    - Uniekheid: iedere logregel is identificeerbaar via combinatie van `timestamp` + bron + optionele `eventId`.
-   - Wanneer: Toepassen wanneer developer of reviewer dit nodig vindt.
    - Geen lijsten/arrays: log primitives en korte key‑value properties; grote collecties niet loggen.
    - Geen string‑concatenatie:
      - Gebruik message templates met placeholders: `"Bestand {fileName} verwerkt in {durationMs} ms"`.

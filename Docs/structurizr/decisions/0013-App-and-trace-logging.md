@@ -56,7 +56,24 @@ Gerichte eisen vanuit team/veld:
      - Debug – uitsluitend voor lokaal/development/diagnostische gebruik; in productie standaard uitgeschakeld.
 
 ## Wat loggen we
-Standaard loggen we uitsluitend errors: exceptions waarbij de verwerking niet kan worden voortgezet.
+Wat loggen we waar in tabelvorm:
+
+| Behoefte | Oplossing |
+| --------- | ---------- |
+| Requests vastleggen | Access logging op infrastructuurniveai (API Gateway, reverse proxy, ingress) |
+| Latency, throughput, foutpercentages | Metrics (Prometheus / OpenTelemetry tellers en grafieken) |
+| Request tracing | LDV keten-tracing |
+| Diagnostiek bij een specifiek probleem | Internet trace logging (on-demand, niet standaard aan in productie) |
+
+In de service loggen we uitsluitend ERRORs (exceptions waarbij de verwerking niet kan worden voortgezet) en WARNINGs (validatie- of authorisatiefouten).
+Een HTTP 500-response gaat altijd gepaard met een ERROR-logregel inclusief exception. De access logging op infrastructuurniveau registreert aanvullend de statuscode en latency van elk request.
+
+| Situatie | Infrastructuur | Applicatie |
+| ------- | -------------- | ---------- |
+| 200 - gewone aanroep | access log | niet loggen |
+| 400/422 - validatiefout | access log | WARNING als zinvol |
+| 401/401 - autorisatie geweigerd | access log | WARNING bij verdacht patroon |
+| 500 - onverwachte fout | access log | ERROR met exception |
 Warning‑ en info‑logs worden alleen toegevoegd wanneer de ontwikkelaar of reviewer dit zinvol acht.
 - Voorbeeld Warning: een controller wordt aangeroepen met ongeldige parameters (validatie faalt) maar is afgehandeld.
 - Interne trace logging is standaard aan in niet‑productie om performance‑knelpunten op te sporen; in productie beperken we detailniveau en retentie.

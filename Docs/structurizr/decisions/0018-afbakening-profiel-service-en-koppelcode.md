@@ -1,4 +1,4 @@
-# 16. Opslag van Actualiteiten Service-gegevens en identificatie via subject claim
+# 18. Opslag van Actualiteiten Service-gegevens en identificatie via subject claim
 
 Datum: 2026-04-22
 

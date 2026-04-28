@@ -59,10 +59,10 @@ Het plan gaat uit van minimaal een **acceptatieomgeving** waarop post-deploy val
     - Voert geautomatiseerde checks uit en bewaakt kwaliteitspoorten (build, linting, tests, coverage).
     - Voert smoke- en regressietests uit na deployment.
     - Voert fuzzing tests uit gericht op robuustheid en security.
+    - Voert performance- en loadtests uit.
 - **Tester:**
     - Faciliteert en coördineert ketentests met betrokken teams.
     - Faciliteert User Acceptance Tests (UAT).
-    - Voert performance- en loadtests uit.
 
 ### Procesoverzicht
 

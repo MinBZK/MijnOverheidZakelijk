@@ -32,7 +32,7 @@ Niet alle testsoorten zijn verplicht voor elke wijziging; inzet van testtypen is
 - **Unit tests** — Dekken businesslogica, datamapping, foutafhandeling en validatie. Minimale dekking: 80% coverage.
 - **Integratietests** — Valideren endpoints of repositories via het testframework van de betreffende service.
 - **Ketentests** — Valideren dat de service correct samenwerkt met afhankelijke en consumerende systemen. Gericht op end-to-end scenario's over meerdere systemen. Uitgevoerd bij wijzigingen aan API-contracten, datamodellen of integratiegedrag, in samenwerking met betrokken teams. Niet standaard onderdeel van elke wijziging; inzet is risicogedreven.
-- **Smoke tests** — Korte, snelle tests om te verifiëren dat de applicatie functioneel beschikbaar is in de doelomgeving. Gericht op kernfunctionaliteit.
+- **Smoke tests** — Korte, snelle tests om te verifiëren dat de applicatie functioneel beschikbaar is in de development & test omgeving. Gericht op kernfunctionaliteit.
 - **Regressietests** — Controleren dat bestaande functionaliteit correct blijft functioneren na een wijziging. Gericht op kernscenario's en bekende risicogebieden. Uitgevoerd na deployment, handmatig en/of met automatisering. Regressietests groeien op basis van risico en eerdere defecten, niet op basis van elke wijziging.
 - **User Acceptance Tests (UAT)** — Valideren dat functionele wijzigingen voldoen aan acceptatiecriteria en businessverwachtingen. Alleen bij wijzigingen met zichtbare functionele impact. Uitgevoerd door Product Owner of business stakeholder, gefaciliteerd door Tester.
 - **Performance- en loadtests** — Valideren dat de service voldoet aan prestatieeisen. Niet standaard; inzet is risicogedreven.
@@ -49,7 +49,7 @@ Het plan gaat uit van minimaal een **acceptatieomgeving** waarop post-deploy val
 - **Ontwikkelaar:**
     - Maakt de PR en beschrijft wijziging, risico's en testnotities.
     - Is verantwoordelijk voor volledige testdekking met unit-, integratie-, regressie- en fuzzing tests.
-    - Is verantwoordelijk voor deployment naar de doelomgeving.
+    - Is verantwoordelijk voor deployment naar de development & test omgeving.
     - Verifieert technisch dat de uitrol correct is verlopen.
 - **Reviewer:**
     - Voert code review uit (kwaliteit, security, performance, onderhoudbaarheid).
@@ -57,9 +57,9 @@ Het plan gaat uit van minimaal een **acceptatieomgeving** waarop post-deploy val
     - Keurt goed of vraagt aanpassingen.
 - **CI/CD:**
     - Voert geautomatiseerde checks uit en bewaakt kwaliteitspoorten (build, linting, tests, coverage).
-    - Voert smoke- en regressietests uit na deployment.
     - Voert fuzzing tests uit gericht op robuustheid en security.
     - Voert performance- en loadtests uit.
+    - Voert smoke- en regressietests uit na deployment.
 - **Tester:**
     - Faciliteert en coördineert ketentests met betrokken teams.
     - Faciliteert User Acceptance Tests (UAT).
@@ -92,7 +92,7 @@ Het plan gaat uit van minimaal een **acceptatieomgeving** waarop post-deploy val
     - CI/CD voert smoke tests uit op kernscenario's.
     - CI/CD voert een regressietest uit op relevante kernfunctionaliteit.
     - Bevindingen worden teruggekoppeld aan de ontwikkelaar: direct oplossen, of registreren als issue met referentie naar PR/commit en omgeving.
-    - Bij blockers: rollback of hotfix conform het releasebeleid van het project.
+    - Bij blockers: rollback of hotfix in overleg met PO.
 
 7. **User Acceptance Test** (indien van toepassing)
     - Uitgevoerd bij functionele wijzigingen met gebruikers- of businessimpact.

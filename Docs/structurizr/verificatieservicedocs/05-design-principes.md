@@ -9,7 +9,8 @@ De Email Verificatie Service volgt onderstaande ontwerpprincipes om eenvoud, bet
 - Privacy by design
   - Minimaliseer PII; geen PII in logs of traces; bewaartermijnen strikt.
 - Fouttolerantie en herstelbaarheid
-  - Retries met backoff op de rechtstreekse notificatie‑aanroep.
+  - Circuit breaker met fallback rond de aanroep naar de Notificatie Service om bij uitval snel te falen.
+  - Rate limiting per e-mailadres ter voorkoming van misbruik.
 - Meetbaarheid en observability
   - Gestructureerde logging metrics voor throughput/latency/fouten.
 - Simpele, duidelijke contracten

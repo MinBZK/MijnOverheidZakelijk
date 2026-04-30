@@ -10,14 +10,15 @@ Deze sectie beschrijft de belangrijkste niet-functionele eisen (NFR’s) voor de
   - Encryptie at‑rest en in‑transit (TLS 1.2+).
   - OPTIE: Ontsluiten via FSC zodat het lastiger is via onze service massa emails te versturen door kwaadwillende partijen.
 - Betrouwbaarheid & levering:
-  - Rechtstreekse aanroep naar de Notificatie Service; timeouts, retries en idempotency aan client‑zijde van die aanroep.
+  - Rechtstreekse aanroep naar de Notificatie Service met timeouts en idempotency aan client‑zijde van die aanroep.
+  - Circuit breaker rond de NotifyNL-aanroep om bij uitval snel te falen in plaats van vast te lopen op een trage of niet-reagerende externe dienst.
   - Consistentie: onmiddellijk waar mogelijk; tijdelijke fouten worden gesignaleerd aan de aanroepende dienst.
 - Performance & Error handling:
   - De verificatie service moet minimaal _TODO_Bepalen_Throughput_ aantal aanvragen per uur kunnen verwerken.
   - HTTP client: connect-timeout 10s, request-timeout 30s.
   - Als een code twee keer wordt ingevoerd, krijgt de tweede een 'Code Already Used' foutmelding (409 Conflict).
 - Rate limiting & misbruikpreventie:
-  - Maximaal aantal verificatieverzoeken per aanroepende dienst per tijdseenheid: _TODO_Bepalen_RateLimit_.
+  - Maximaal 5 verzendpogingen per e-mailadres binnen een tijdvenster van 15 minuten (configureerbaar). Verzoeken boven dit maximum worden geweigerd zonder dat NotifyNL wordt aangeroepen.
   - Maximaal aantal validatiepogingen per referenceId: _TODO_Bepalen_MaxValidatiePogingen_.
   - Bij overschrijding retourneert de service HTTP 429 Too Many Requests.
 - Authenticatie & autorisatie:

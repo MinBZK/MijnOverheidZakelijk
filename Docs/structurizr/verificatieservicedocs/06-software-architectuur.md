@@ -40,3 +40,10 @@ Lokale ontwikkeling draait via Docker Compose (inclusief PostgreSQL).
   - Connection pool: max 16 verbindingen.
 - Scheduled job
   - Opschoningstaak draait elke 60 seconden; verwijdert verlopen en afgeronde verificatiecodes en verplaatst relevante gegevens naar de statistiekentabel.
+
+### Fouttolerantie en misbruikpreventie
+
+Rondom de aanroep naar NotifyNL zijn twee patronen toegepast:
+
+- **Rate limiter** — een in-memory teller per e-mailadres bewaakt het aantal verzendpogingen binnen een tijdvenster (standaard 5 per 15 minuten, configureerbaar). Verzoeken boven het maximum worden geweigerd zonder dat NotifyNL wordt aangeroepen. Een geplande taak schoont verlopen entries op.
+- **Circuit breaker** — `@CircuitBreaker` (SmallRye Fault Tolerance) op de verzendmethode. Na een drempel mislukte aanroepen gaat het circuit open en worden vervolgverzoeken direct doorgestuurd naar een fallback. Na een wachttijd schakelt het circuit naar half-open om herstel van NotifyNL te detecteren. Drempel, wachttijd en hersteldrempel zijn configureerbaar.

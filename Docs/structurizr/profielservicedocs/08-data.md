@@ -86,6 +86,8 @@ Naast de hierboven beschreven entiteiten slaat de Profiel Service logregels op c
 | `dpl.core.data_subject_id_type` | Type identificatiecode |
 | `dpl.core.foreign_operation.processor` | URL naar externe applicatie |
 
+Daarnaast worden de overige door de LDV-standaard vereiste velden (zoals `trace_id`, `span_id`, `start_time` en `end_time`) automatisch door de tracing-infrastructuur gevuld; de tabel hierboven beschrijft de attributen die de Profiel Service zelf invult.
+
 Hiermee is elke verwerking van persoonsgegevens herleidbaar naar de betrokken persoon.
 
 Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ, VOORKEUR, CONTACTGEGEVEN, DIENSTVERLENER, en DIENST.

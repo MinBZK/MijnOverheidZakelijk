@@ -75,6 +75,21 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | Beschrijving     | Beschrijving van de dienst         |
 
 
+#### Logboek Dataverwerkingen (LDV)
+
+Naast de hierboven beschreven entiteiten slaat de Profiel Service logregels op conform de [Logboek Dataverwerkingen standaard](https://logius-standaarden.github.io/logboek-dataverwerkingen/#interface). Wanneer een trace bij de Profiel Service begint (de Profiel Service is de initiërende dienst), wordt een identificerend nummer van de betrokkene opgeslagen in de LDV-attributen. De volgende attributen worden per logregel vastgelegd:
+
+| Attribuut | Omschrijving |
+|-----------|-------------|
+| `dpl.core.processing_activity_id` | URI naar het verwerkingsactiviteitenregister met informatie over de verwerking |
+| `dpl.core.data_subject_id` | Identificerend nummer van de betrokkene |
+| `dpl.core.data_subject_id_type` | Type identificatiecode |
+| `dpl.core.foreign_operation.processor` | URL naar externe applicatie |
+
+Daarnaast worden de overige door de LDV-standaard vereiste velden (zoals `trace_id`, `span_id`, `start_time` en `end_time`) automatisch door de tracing-infrastructuur gevuld; de tabel hierboven beschrijft de attributen die de Profiel Service zelf invult.
+
+Hiermee is elke verwerking van persoonsgegevens herleidbaar naar de betrokken persoon.
+
 Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusief de relaties tussen PARTIJ, VOORKEUR, CONTACTGEGEVEN, DIENSTVERLENER, en DIENST.
 
 ![Gegevensmodel](./images/ArchitectuurProfielService/Gegevensmodel.png "Gegevensmodel")

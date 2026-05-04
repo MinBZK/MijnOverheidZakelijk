@@ -13,12 +13,14 @@
 |---------------------|-----------------------------------------------------------------------|
 | **VERIFICATIECODE** | Minimalistische opslag voor het kunnen verifiëren van een code        |
 | ReferenceId         | Referentie ID die de aanvrager gebruikt om de code te verifiëren      |
-| Code                | De verificatiecode                                                    |
+| Code                | De verificatiecode (6 cijfers)                                        |
 | CreatedAt           | Tijdstip wanneer de verificatie is aangevraagd                        |
 | UpdatedAt           | Tijdstip wanneer de tabel voor het laatst is geupdatet                |
 | ValidUntil          | Tijdstip tot wanneer de verificatiecode geldig is                     |
 | VerifiedAt          | Tijdstip wanneer de verificatie is geverifieerd                       |
 | VerifyEmailSentAt   | Tijdstip wanneer de verificatie email is verstuurd                    |
+| Attempts            | Aantal validatiepogingen voor deze verificatiecode                    |
+| MaxAttempts         | Maximaal toegestane pogingen voordat de code ongeldig wordt (5) |
 
 #### VERIFICATIESTATISTIEKEN
 
@@ -28,4 +30,4 @@
 | CreatedAt                   | Tijdstip wanneer de verificatie is aangevraagd                                     |
 | VerifiedAt                  | Tijdstip wanneer de verificatie is geverifieerd                                    |
 | VerifyEmailSentAt           | Tijdstip wanneer de verificatie email is verstuurd                                 |
-| FailureReason               | Waarom de verificatie is gefaald, Enum momenteel met optie NOT_SENT & NOT_VERIFIED |
+| FailureResult               | Uitkomst bij een mislukte verificatie. Enum met opties: `NOT_SENT`, `NOT_VERIFIED` |

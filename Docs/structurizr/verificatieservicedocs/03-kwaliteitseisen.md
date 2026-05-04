@@ -8,7 +8,7 @@ Deze sectie beschrijft de belangrijkste niet-functionele eisen (NFR’s) voor de
   - Minimaliseer PII: bewaar uitsluitend ReferenceId en VerificationCode; het e‑mailadres wordt niet opgeslagen.
   - Geen PII in logs of trace‑attributen.
   - Encryptie at‑rest en in‑transit (TLS 1.2+).
-  - OPTIE: Ontsluiten via FSC zodat het lastiger is via onze service massa emails te versturen door kwaadwillende partijen.
+  - OPTIE: Ontsluiten via de Federatieve Service Connectiviteit (FSC) zodat het lastiger is via onze service massa emails te versturen door kwaadwillende partijen.
 - Betrouwbaarheid & levering:
   - Rechtstreekse aanroep naar de Notificatie Service met timeouts en idempotency aan client‑zijde van die aanroep.
   - Circuit breaker rond de NotifyNL-aanroep om bij uitval snel te falen in plaats van vast te lopen op een trage of niet-reagerende externe dienst.

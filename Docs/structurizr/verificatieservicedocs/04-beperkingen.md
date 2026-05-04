@@ -17,7 +17,6 @@ Dit hoofdstuk beschrijft randvoorwaarden en bewuste keuzes/uitsluitingen die het
   - Alleen noodzakelijke data worden opgeslagen: ReferenceId en VerificationCode (geen e‑mailadres).
   - TTL voor codes (standaard 10 minuten) en opschoning van afgeronde/verlopen verzoeken zijn verplicht.
   - Opschoning van verlopen verificatiecodes vindt plaats via een scheduled job (cron) die periodiek records verwijdert waarvan `ValidUntil` is verstreken.
-  - Bewaartermijn voor VERIFICATIESTATISTIEKEN: 90 dagen, waarna records automatisch worden verwijderd.
 - Functionele beperkingen (v1)
   - Alleen e‑mail als kanaal.
 - Technische kaders

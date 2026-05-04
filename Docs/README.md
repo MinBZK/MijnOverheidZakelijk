@@ -34,7 +34,7 @@ docker/podman run -it --rm -p 8080:8080 -v <Path-To-Folder>/MijnOverheidZakelijk
 Voorbeeld:
 
 ```bash
-docker/podman run -it --rm -p 8080:8080 -v /Users/Robin/MijnOverheidZakelijk/Docs/structurizr:/usr/local/structurizr structurizr/lite
+docker/podman run -it --rm -p 8080:8080 -v /Users/user/MijnOverheidZakelijk/Docs/structurizr:/usr/local/structurizr structurizr/lite
 ```
 
 ### Alternatief / Quick View & Edit

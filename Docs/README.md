@@ -26,15 +26,15 @@ Ervan uitgaande dat je Docker hebt geinstalleerd, kun je nu Structurizr Lite sta
 
 ```bash
 docker/podman pull structurizr/lite
-docker/podman run -it --rm -p 8080:8080 -v [PATH]
+docker/podman run -it --rm -p 8080:8080 -v <Path-To-Folder>/MijnOverheidZakelijk/Docs/structurizr:/usr/local/structurizr structurizr/lite
 ```
 
-| Note: vervang `[PATH]` met het volledige, lokale pad naar de solution, bijv.: `/Users/User/software-architectuur/structurizr`.
+> **Note:** vervang `<Path-To-Folder>` met het volledige, lokale pad naar de repository.
 
-Het volledige commando zou dan zijn:
+Voorbeeld:
 
 ```bash
-docker/podman run -it --rm -p 8080:8080 -v /Users/User/software-architectuur/structurizr:/usr/local/structurizr structurizr/lite
+docker/podman run -it --rm -p 8080:8080 -v /Users/user/MijnOverheidZakelijk/Docs/structurizr:/usr/local/structurizr structurizr/lite
 ```
 
 ### Alternatief / Quick View & Edit

@@ -117,7 +117,7 @@ In de onderstaande sequentiediagram is te zien hoe een gebruiker zijn profiel ka
 
         Ondernemer->>MOZa: Past contactvoorkeur aan
 
-        MOZa->>Profiel: PATCH contactvoorkeur (BSN + KvK)
+        MOZa->>Profiel: PUT contactgegeven (BSN + KvK)
         deactivate MOZa
         activate Profiel
         Profiel-->>MOZa: Ok (voorkeur bijgewerkt)

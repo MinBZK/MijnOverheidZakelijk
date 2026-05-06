@@ -1,21 +1,21 @@
-# Profiel Service
+## Appendix: Visie document Profiel Service
 
 > | **Status**     | Conceptversie      |
 > | -------------- | ------------------ |
 > | Laatste update | 21-11-2025         |
 > | Auteur         | Robin Alderliesten |
 
-## Visie
+### Visie
 
 De Profiel Service stelt burgers en ondernemers in staat om op één vertrouwde plek hun contactgegevens en communicatievoorkeuren te beheren, en biedt overheidsinstanties via federatieve koppelingen veilige, actuele en herbruikbare profielinformatie voor persoonlijke en efficiënte dienstverlening.
 
-## Wat is de Profiel Service
+### Wat is de Profiel Service
 
 De Profiel Service vormt een bouwsteen binnen de digitale overheid. Het biedt burgers én ondernemers één centrale plek waar zij hun contactgegevens en communicatievoorkeuren kunnen beheren. Overheidsorganisaties kunnen deze gegevens via gestandaardiseerde API’s opvragen en gebruiken om betrouwbaar, persoonlijk en efficiënt te communiceren — altijd met toestemming van de gebruiker.
 
 Waar vandaag de dag veel contactgegevens versnipperd zijn opgeslagen in losse portalen en applicaties, brengt de Profiel Service dit samen in een centraal, goed beheerd register. Daarmee vormt het een solide basis voor federatieve dienstverlening: één betrouwbare bron die andere federatieve services ondersteunt met actuele en verifieerbare profielinformatie.
 
-## Waarom een Profiel Service
+### Waarom een Profiel Service
 
 Voor burgers bestaat al de mogelijkheid om bepaalde gegevens te beheren via MijnOverheid, maar ondernemers vallen grotendeels buiten de boot. Zij moeten hun contactinformatie nog te vaak handmatig herhalen bij elke overheidsdienst. Ook is er geen centrale plek waar communicatievoorkeuren kunnen worden vastgelegd — zoals de voorkeur voor digitaal of post.
 
@@ -25,7 +25,7 @@ De Profiel Service lost dit op door:
 - overheidsbreed hergebruik mogelijk te maken,
 - burgers en ondernemers de regie te geven over hoe zij met de overheid communiceren.
 
-## Doel en waarde
+### Doel en waarde
 
 De Profiel Service is bedoeld om:
 
@@ -33,7 +33,7 @@ De Profiel Service is bedoeld om:
 - **Overheidsorganisaties** te voorzien van actuele en verifieerbare gegevens, rechtstreeks uit een centrale bron.
 - **De digitale overheid** te versterken met een herbruikbare bouwsteen die past binnen de Generieke Digitale Infrastructuur (GDI).
 
-### Functionele doelstellingen
+#### Functionele doelstellingen
 
 - Beheer van profielgegevens: e-mailadres, telefoonnummer, postadres etc. op een centrale plek
 - Instellen van contactvoorkeuren: bijvoorbeeld voorkeur voor digitaal of post, notificatiekanalen, etc.
@@ -42,7 +42,7 @@ De Profiel Service is bedoeld om:
 - Koppeling met registers: KVK, BRP, BAG, gegevens bij de bron opvragen
 - Federatief delen: gegevens worden centraal opgeslagen en beschikbaar gesteld aan verifieerbare dienstverleners
 
-### Strategische doelstellingen
+#### Strategische doelstellingen
 
 - Versterken van vertrouwen in digitale dienstverlening (conform de Generieke Digitale Infrastructuur (GDI))
 - Verlagen van administratieve lasten voor ondernemers
@@ -50,13 +50,13 @@ De Profiel Service is bedoeld om:
 - Herbruikbaarheid van profieldata over meerdere overheidsdomeinen heen
 - Incrementele groei: klein beginnen en iteratief uitbreiden
 
-## Benodigde afspraken
+### Benodigde afspraken
 
 Om een centrale Profiel Service voor burgers en ondernemers neer te zetten is het noodzakelijk dat dienstverleners deze adopteren in hun eigen ecosystemen en MijnOmgevingen. Hiervoor werken we volgens de principes van het programma Generieke Digitale Infrastructuur (GDI). Dit betekent dat afspraken en standaarden worden neergezet en de Profiel Service als voorziening beschikbaar wordt gemaakt.
 
 In de komende periode werken we aan het verzamelen van informatie en het beantwoorden van vragen die hierover onstaan bij de uitwerking.
 
-## Gefaseerde ontwikkelstrategie
+### Gefaseerde ontwikkelstrategie
 
 De Profiel Service wordt stapsgewijs gerealiseerd, met een nadruk op eenvoud, hergebruik en federatieve samenwerking.
 
@@ -67,7 +67,7 @@ De Profiel Service wordt stapsgewijs gerealiseerd, met een nadruk op eenvoud, he
 | 3. Federatieve integratie | Integratie met bronregisters zoals KvK, BRP en BAG                                     | Actuele, verifieerbare gegevens direct bij de bron opgehaald |
 | 4. Ecosysteemontwikkeling | Overheidsorganisaties sluiten aan via standaarden en API’s.                            | Overheidsbreed gedragen profielservice binnen de GDI         |
 
-## Architectuur en uitgangspunten
+### Architectuur en uitgangspunten
 
 - **Centraal profielregister:** één betrouwbare bron van waarheid voor contact- en voorkeursgegevens.
 - **Ondersteuning voor federatieve diensten:** de Profiel Service zelf is centraal, maar stelt gegevens beschikbaar aan federatieve toepassingen.
@@ -77,7 +77,7 @@ De Profiel Service wordt stapsgewijs gerealiseerd, met een nadruk op eenvoud, he
 - **Privacy by design:** minimale dataverwerking, transparantie en logging conform LDV.
 - **Data bij de bron:** de Profiel Service als basisregister voor contactvoorkeuren
 
-## Lange termijn visie
+### Lange termijn visie
 
 Op langere termijn groeit de Profiel Service uit tot een generieke bouwsteen binnen de GDI — een betrouwbare voorziening waarop iedere overheidsorganisatie kan aansluiten.
 
@@ -90,7 +90,7 @@ Op langere termijn groeit de Profiel Service uit tot een generieke bouwsteen bin
   - Notificatie- en berichtenservices (NotifyNL, BBO)
   - Alle MijnOmgevingen van overheidsdienstverleners.
 
-## Positionering voor stakeholders
+### Positionering voor stakeholders
 
 | Stakeholder                    | Waarde                                       |
 | ------------------------------ | -------------------------------------------- |
@@ -99,7 +99,7 @@ Op langere termijn groeit de Profiel Service uit tot een generieke bouwsteen bin
 | Architecten en beleidsmakers   | GDI Bouwsteen en toekomstbestendig component |
 | Ontwikkelaars en leveranciers  | Eenduidige API's, herbruikbaar component     |
 
-## Oproep tot samenwerking
+### Oproep tot samenwerking
 
 De ontwikkeling van de Profiel Service vraagt samenwerking tussen beleidsmakers, ontwerpers, ontwikkelaars en uitvoeringsorganisaties.  
 Alleen door gezamenlijk standaarden te ontwikkelen, adoptie te stimuleren en kennis te delen ontstaat een breed gedragen voorziening die écht waarde toevoegt.
@@ -107,7 +107,7 @@ Alleen door gezamenlijk standaarden te ontwikkelen, adoptie te stimuleren en ken
 Wij nodigen daarom alle overheidsorganisaties uit om mee te denken, mee te bouwen en mee te leren.  
 Samen maken we van de Profiel Service niet alleen een technische voorziening, maar een fundament voor betrouwbare, toegankelijke en toekomstbestendige digitale dienstverlening.
 
-## Documentatie & Bronnen
+### Documentatie & Bronnen
 
 - **[MijnOverheid Zakelijk startpagina](https://mijnoverheidzakelijk.nl)** - Meer informatie en documentatie over het programma MijnOverheid Zakelijk is te vinden via onze startpagina.
 - **[Profiel Service op GitHub](https://github.com/orgs/MinBZK/teams/mijnoverheid-zakelijk)** - Onze oplossingen worden Open Source ontwikkeld en zijn te vinden op de Github van MinBZK

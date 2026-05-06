@@ -1,5 +1,9 @@
 # Profiel Service
 
+> | **Status**     | Conceptversie        |
+> |----------------|----------------------|
+> | Laatste update | 24-04-2026           |
+
 ## Context
 
 Er bestaan al voorzieningen waarmee burgers gegevens kunnen beheren (zoals de MijnOverheid-instellingen), maar ondernemers vallen daar grotendeels buiten. Bovendien is de huidige inrichting vaak monolithisch en niet federatief; data wordt decentraal en niet herbruikbaar opgeslagen bij de dienstverleners.

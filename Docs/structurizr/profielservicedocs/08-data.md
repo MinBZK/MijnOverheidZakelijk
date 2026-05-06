@@ -4,12 +4,14 @@
 
 Het gegevensmodel van de ProfielService is opgebouwd rond de entiteiten **PARTIJ** en **CONTACTGEGEVEN**.
 
-1. **PARTIJ** is de basis van een natuurlijke persoon of rechtspersoon. Een partij kan één of meerdere identificaties hebben, zoals BSN, KVK, RSIN of andere vormen van identificatie.
-2. **CONTACTGEGEVEN** legt vast hoe en via welk kanaal een partij gecontacteerd kan worden door een dienst of organisatie.
+1. **PARTIJ** is de basis van een natuurlijke persoon of rechtspersoon. Een partij kan één of meerdere identificaties hebben, zoals BSN, KVK, RSIN of andere vormen van identificatie. Zowel personen als ondernemingen zijn een PARTIJ.
+2. **CONTACTGEGEVEN** legt vast hoe en via welk kanaal een partij gecontacteerd kan worden door een dienst of organisatie. Een contactgegeven kan optioneel gekoppeld worden aan een **SCOPE**, waarmee wordt vastgelegd voor welke onderneming (PARTIJ) en/of welke dienst van een dienstverlener (DIENST) het contactgegeven geldt.
 
-Hiermee kunnen burgers en ondernemers vastleggen hoe zij gecontacteerd willen worden, bijvoorbeeld via e-mail of telefoon.
+Hiermee kunnen burgers en ondernemers vastleggen hoe zij gecontacteerd willen worden, bijvoorbeeld via e-mail of telefoon. Een ondernemer die meerdere bedrijven beheert kan per bedrijf verschillende contactgegevens en voorkeuren opslaan, terwijl het bedrijf (als PARTIJ) slechts één keer in de database voorkomt.
 
-Ter ondersteuning van deze kernfunctionaliteit zijn vier aanvullende entiteiten toegevoegd: **IDENTIFICATIE**, **VOORKEUR**, **DIENSTVERLENER** en **DIENSTVERLENER_AFDELING**.
+Ter ondersteuning van deze kernfunctionaliteit zijn vijf aanvullende entiteiten toegevoegd: **IDENTIFICATIE**, **VOORKEUR**, **SCOPE**, **DIENSTVERLENER** en **DIENST**.
+
+Een **CONTACTGEGEVEN** of **VOORKEUR** kan nul of meer **SCOPE**s hebben. Een scope bakent af voor welke dienst en/of partij het contactgegeven of de voorkeur geldt; ontbreekt een scope, dan geldt het contactgegeven of de voorkeur als standaard voor alle diensten. Hierdoor kan eenzelfde waarde (bijvoorbeeld een e-mailadres) één keer worden vastgelegd en aan meerdere diensten worden gekoppeld zonder duplicatie.
 
 Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteiten.
 
@@ -24,36 +26,66 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 
 #### CONTACTGEGEVEN
 
-| Attribuut          | Omschrijving                                                          |
-|--------------------|-----------------------------------------------------------------------|
-| **CONTACTGEGEVEN** |                                                                       |
-| Id                 | Unieke identificator van contactgegeven                               |
-| PartijId           | Identificator van de PARTIJ die eigenaar is van dit contactgegeven    |
-| ScopeId            | Verwijzing naar DIENST waarop de scope betrekking heeft               |
-| Taal               | De taalvoorkeur voor dit contactgegeven                               |
-| ContactType        | Het soort contactgegeven: e-mail of (mobiel) telefoonnummer           |
-| Waarde             | De opgegeven contactwaarde (bijv. mailadres)                          |
-| TerAttentieVan     | Aanhef die gebruikt kan worden bij het gebruik van dit contactgegeven |
-| GeverifieerdAt     | Datum waarop de verificatiestatus voor het laatst is gezet            |
+| Attribuut               | Omschrijving                                                                 |
+|-------------------------|------------------------------------------------------------------------------|
+| **CONTACTGEGEVEN**      |                                                                              |
+| Id                      | Unieke identificator van contactgegeven                                      |
+| PartijId                | Identificator van de PARTIJ die eigenaar is van dit contactgegeven           |
+| ContactType             | Het soort contactgegeven: `Email`, `Telefoonnummer`, `Adres` of `AppId`      |
+| Waarde                  | De opgegeven contactwaarde (bijv. mailadres of telefoonnummer)               |
+| IsValid                 | Of het contactgegeven syntactisch geldig is bevonden                         |
+| GeverifieerdAt          | Tijdstip waarop het contactgegeven is geverifieerd; leeg als nog niet geverifieerd |
+| VerificatieReferentieId | Referentie naar de lopende verificatieaanvraag (alleen relevant voor Email)  |
+| CreatedAt               | Tijdstip van aanmaken                                                        |
+| LastUpdated             | Tijdstip van laatste wijziging                                               |
+| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald              |
 
 #### IDENTIFICATIE
 
 | Attribuut           | Omschrijving                                                                                       |
 |---------------------|----------------------------------------------------------------------------------------------------|
-| **DIENSTVERLENER**  |                                                                                                    |
-| PartijId            | Identificator van de PARTIJ die eigenaar is van dit CONTACTGEGEVEN                                 |
+| **IDENTIFICATIE**   |                                                                                                    |
+| PartijId            | Verwijzing naar de PARTIJ aan wie deze IDENTIFICATIE toebehoort                                    |
 | IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: BSN, KVK, RSIN of ander identificatiesysteem |
 | IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType             |
 
 #### VOORKEUR
 
-| Attribuut    | Omschrijving                                                    |
-|--------------|-----------------------------------------------------------------|
-| **VOORKEUR** |                                                                 |
-| PartijId     | Verwijzing naar de PARTIJ waarvoor de voorkeur geldt            |
-| VoorkeurType | Het type voorkeur (enum), bijvoorbeeld taal of communicatievorm |
-| ScopeId      | Verwijzing naar DIENST waarop de scope betrekking heeft         |
-| Waarde       | De waarde van de voorkeur, afhankelijk van het VoorkeurType     |
+| Attribuut    | Omschrijving                                                                                                |
+|--------------|-------------------------------------------------------------------------------------------------------------|
+| **VOORKEUR** |                                                                                                             |
+| Id           | Unieke identificator van voorkeur                                                                           |
+| PartijId     | Verwijzing naar de PARTIJ waarvoor de voorkeur geldt                                                        |
+| VoorkeurType | Het type voorkeur (enum): `WebsiteTaal`, `MagGebeldWorden`, `WebsiteThema`, `Aanhef`, `OntvangViaBerichtenbox` |
+| Waarde       | De waarde van de voorkeur, afhankelijk van het VoorkeurType                                                 |
+| CreatedAt    | Tijdstip van aanmaken                                                                                       |
+| LastUpdated  | Tijdstip van laatste wijziging                                                                              |
+| LastUsedAt   | Tijdstip waarop de voorkeur voor het laatst is opgehaald                                                    |
+
+##### VoorkeurTypes
+
+| VoorkeurType            | Omschrijving                                                                                  |
+|-------------------------|-----------------------------------------------------------------------------------------------|
+| WebsiteTaal             | Taalvoorkeur voor communicatie en weergave (bijv. `nl`, `en`)                                 |
+| MagGebeldWorden         | Of de partij gebeld mag worden                                                                |
+| WebsiteThema            | Thema/weergavevoorkeur voor de website                                                        |
+| Aanhef                  | Aanhef die gebruikt mag worden bij contact met de partij (bijv. "Dhr. Jansen")                |
+| OntvangViaBerichtenbox  | Of de partij berichten via de Berichtenbox wil ontvangen                                      |
+
+#### SCOPE
+
+Een SCOPE bakent af voor welke DIENST en/of PARTIJ een CONTACTGEGEVEN of VOORKEUR geldt. Een scope hoort bij precies één CONTACTGEGEVEN óf één VOORKEUR (XOR). Een CONTACTGEGEVEN of VOORKEUR zonder scopes geldt als standaard voor alle diensten.
+
+Twee scopes met dezelfde DienstId en PartijId-combinatie worden binnen één CONTACTGEGEVEN of VOORKEUR niet dubbel opgeslagen; bij een dubbele toevoeging wordt de bestaande scope hergebruikt.
+
+| Attribuut         | Omschrijving                                                                                |
+|-------------------|---------------------------------------------------------------------------------------------|
+| **SCOPE**         |                                                                                             |
+| Id                | Unieke identificator van scope                                                              |
+| ContactgegevenId  | Verwijzing naar het CONTACTGEGEVEN waar deze scope bij hoort (XOR met VoorkeurId)           |
+| VoorkeurId        | Verwijzing naar de VOORKEUR waar deze scope bij hoort (XOR met ContactgegevenId)            |
+| DienstId          | Optionele verwijzing naar de DIENST waarop de scope betrekking heeft                        |
+| PartijId          | Optionele verwijzing naar de PARTIJ waarvoor de scope geldt (bijvoorbeeld een organisatie)  |
 
 
 #### DIENSTVERLENER
@@ -105,18 +137,32 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
         CONTACTGEGEVEN {
             int Id PK "NOT NULL"
             int PartijId FK "NOT NULL"
-            id Scope FK ""
-            enum Taal
             enum ContactType "NOT NULL"
             text Waarde "NOT NULL"
-            bool IsGeverifieerd "NOT NULL"
-            date GeverifieerdAt "NOT NULL"
+            bool IsValid "NOT NULL"
+            datetime GeverifieerdAt ""
+            text VerificatieReferentieId ""
+            datetime CreatedAt "NOT NULL"
+            datetime LastUpdated "NOT NULL"
+            datetime LastUsedAt ""
         }
 
         VOORKEUR {
-            int PartijId PK,FK "NOT NULL"
-            enum VoorkeurType PK "NOT NULL"
+            int Id PK "NOT NULL"
+            int PartijId FK "NOT NULL"
+            enum VoorkeurType "NOT NULL"
             text Waarde "NOT NULL"
+            datetime CreatedAt "NOT NULL"
+            datetime LastUpdated "NOT NULL"
+            datetime LastUsedAt ""
+        }
+
+        SCOPE {
+            int Id PK "NOT NULL"
+            int ContactgegevenId FK "XOR met VoorkeurId"
+            int VoorkeurId FK "XOR met ContactgegevenId"
+            int DienstId FK ""
+            int PartijId FK ""
         }
 
         IDENTIFICATIE {
@@ -130,7 +176,7 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
             string Naam "NOT NULL"
         }
 
-        DIENSTVERLENER_AFDELING {
+        DIENST {
             int Id PK "NOT NULL"
             int DienstverlenerId FK "NOT NULL"
             string Beschrijving ""
@@ -140,77 +186,113 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
         PARTIJ ||--|{ IDENTIFICATIE : "PartijId"
         PARTIJ ||--o{ VOORKEUR : "PartijId"
         PARTIJ ||--o{ CONTACTGEGEVEN : "PartijId"
-        DIENSTVERLENER_AFDELING ||--o{ CONTACTGEGEVEN : "ScopeId"
-        DIENSTVERLENER ||--|{ DIENSTVERLENER_AFDELING : "DienstverlenerId"
+        CONTACTGEGEVEN ||--o{ SCOPE : "ContactgegevenId"
+        VOORKEUR ||--o{ SCOPE : "VoorkeurId"
+        DIENST ||--o{ SCOPE : "DienstId"
+        PARTIJ ||--o{ SCOPE : "PartijId"
+        DIENSTVERLENER ||--|{ DIENST : "DienstverlenerId"
 
 </details>
 
 #### Data Transfer Object (DTO)
 
-Wanneer de profiel-service wordt bevraagd, kan onderstaand DTO als response worden verwacht:
+Wanneer de profiel-service wordt bevraagd op een partij (`GET /api/profielservice/v1/{identificatieType}/{identificatieNummer}`), levert de response onderstaande structuur. Iedere `contactgegeven` en `voorkeur` bevat een `scopes`-lijst; een lege lijst betekent dat het contactgegeven of de voorkeur als standaard geldt voor alle diensten.
 
 **YAML**
 
 ```yaml
-id: 1
-identifier_type: BSN
-identifier_id: "123456789"
-contactvoorkeuren:
+partijId: 1
+identificaties:
+  - identificatieType: KVK
+    identificatieNummer: "12345678"
+contactgegevens:
   - id: 101
-    type: EMAIL
-    waarde: rvo-afdeling@bedrijf.nl
-    scope: ZAKELIJK
-    voor_partij_id: 1001
-    dienst_type: "0000000123"
-    geverifieerd_at: "2025-11-03T12:00:00Z"
-
+    type: Email
+    waarde: contact@bedrijf.nl
+    isGeverifieerd: true
+    isValid: true
+    createdAt: "2026-04-01T09:15:00"
+    lastUpdated: "2026-04-01T09:15:00"
+    scopes: []
   - id: 102
-    type: POST
-    waarde:
-      ter_attentie_van: "Robbert"
-      straat: Wilhelminastraat
-      huisnummer: 52
-      postcode: "2215PA"
-      plaats: Den Haag
-      land: Nederland
-    scope: ZAKELIJK
-    voor_partij_id: 1001
-    dienst_type: "0000000456"
-    geverifieerd_at: "2025-11-03T12:00:00Z"
+    type: Telefoonnummer
+    waarde: "0612345678"
+    isGeverifieerd: false
+    isValid: true
+    createdAt: "2026-04-02T10:00:00"
+    lastUpdated: "2026-04-02T10:00:00"
+    scopes:
+      - dienst:
+          id: 7
+          beschrijving: "Subsidieaanvraag"
+voorkeuren:
+  - id: 201
+    voorkeurType: WebsiteTaal
+    waarde: "nl"
+    createdAt: "2026-04-01T09:15:00"
+    lastUpdated: "2026-04-01T09:15:00"
+    scopes: []
+  - id: 202
+    voorkeurType: OntvangViaBerichtenbox
+    waarde: "true"
+    createdAt: "2026-04-03T14:20:00"
+    lastUpdated: "2026-04-03T14:20:00"
+    scopes:
+      - dienst:
+          id: 7
+          beschrijving: "Subsidieaanvraag"
 ```
 
 **JSON**
 
 ```json
 {
-  "id": 1,
-  "identifier_type": "BSN",
-  "identifier_id": "123456789",
-  "contactvoorkeuren": [
+  "partijId": 1,
+  "identificaties": [
+    { "identificatieType": "KVK", "identificatieNummer": "12345678" }
+  ],
+  "contactgegevens": [
     {
       "id": 101,
-      "type": "EMAIL",
-      "waarde": "rvo-afdeling@bedrijf.nl",
-      "scope": "ZAKELIJK",
-      "voor_partij_id": 1001,
-      "dienst_type": "0000000123",
-      "geverifieerd_at": "2025-11-03T12:00:00Z"
+      "type": "Email",
+      "waarde": "contact@bedrijf.nl",
+      "isGeverifieerd": true,
+      "isValid": true,
+      "createdAt": "2026-04-01T09:15:00",
+      "lastUpdated": "2026-04-01T09:15:00",
+      "scopes": []
     },
     {
       "id": 102,
-      "type": "POST",
-      "waarde": {
-        "ter_attentie_van": "Robbert",
-        "straat": "Wilhelminastraat",
-        "huisnummer": 52,
-        "postcode": "2215PA",
-        "plaats": "Den Haag",
-        "land": "Nederland"
-      },
-      "scope": "ZAKELIJK",
-      "voor_partij_id": 1001,
-      "dienst_type": "0000000456",
-      "geverifieerd_at": "2025-11-03T12:00:00Z"
+      "type": "Telefoonnummer",
+      "waarde": "0612345678",
+      "isGeverifieerd": false,
+      "isValid": true,
+      "createdAt": "2026-04-02T10:00:00",
+      "lastUpdated": "2026-04-02T10:00:00",
+      "scopes": [
+        { "dienst": { "id": 7, "beschrijving": "Subsidieaanvraag" } }
+      ]
+    }
+  ],
+  "voorkeuren": [
+    {
+      "id": 201,
+      "voorkeurType": "WebsiteTaal",
+      "waarde": "nl",
+      "createdAt": "2026-04-01T09:15:00",
+      "lastUpdated": "2026-04-01T09:15:00",
+      "scopes": []
+    },
+    {
+      "id": 202,
+      "voorkeurType": "OntvangViaBerichtenbox",
+      "waarde": "true",
+      "createdAt": "2026-04-03T14:20:00",
+      "lastUpdated": "2026-04-03T14:20:00",
+      "scopes": [
+        { "dienst": { "id": 7, "beschrijving": "Subsidieaanvraag" } }
+      ]
     }
   ]
 }
@@ -283,7 +365,7 @@ De volgende diagrammen illustreren de belangrijkste interacties met de ProfielSe
 
         Ondernemer->>MOZa: Past contactvoorkeur aan
 
-        MOZa->>Profiel: PATCH contactvoorkeur (BSN + KvK)
+        MOZa->>Profiel: PUT contactgegeven (BSN + KvK)
         deactivate MOZa
         activate Profiel
         Profiel-->>MOZa: Ok (voorkeur bijgewerkt)

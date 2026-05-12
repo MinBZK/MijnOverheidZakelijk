@@ -5,13 +5,13 @@
 Het gegevensmodel van de ProfielService is opgebouwd rond de entiteiten **PARTIJ** en **CONTACTGEGEVEN**.
 
 1. **PARTIJ** is de basis van een natuurlijke persoon of rechtspersoon. Een partij kan één of meerdere identificaties hebben, zoals BSN, KVK, RSIN of andere vormen van identificatie. Zowel personen als ondernemingen zijn een PARTIJ.
-2. **CONTACTGEGEVEN** legt vast hoe en via welk kanaal een partij gecontacteerd kan worden door een dienst of organisatie. Een contactgegeven kan optioneel gekoppeld worden aan een **SCOPE**, waarmee wordt vastgelegd voor welke onderneming (PARTIJ) en/of welke dienst van een dienstverlener (DIENST) het contactgegeven geldt.
+2. **CONTACTGEGEVEN** legt vast hoe en via welk kanaal een partij gecontacteerd kan worden door een dienst of organisatie. Een contactgegeven kan optioneel afgebakend worden via een **SCOPE_CONTACTGEGEVEN**, waarmee wordt vastgelegd voor welke dienst van welke dienstverlener het contactgegeven geldt.
 
 Hiermee kunnen burgers en ondernemers vastleggen hoe zij gecontacteerd willen worden, bijvoorbeeld via e-mail of telefoon. Een ondernemer die meerdere bedrijven beheert kan per bedrijf verschillende contactgegevens en voorkeuren opslaan, terwijl het bedrijf (als PARTIJ) slechts één keer in de database voorkomt.
 
-Ter ondersteuning van deze kernfunctionaliteit zijn vijf aanvullende entiteiten toegevoegd: **IDENTIFICATIE**, **VOORKEUR**, **SCOPE**, **DIENSTVERLENER** en **DIENST**.
+Ter ondersteuning van deze kernfunctionaliteit zijn aanvullende entiteiten toegevoegd: **IDENTIFICATIE**, **VOORKEUR**, **SCOPE_CONTACTGEGEVEN**, **SCOPE_VOORKEUR**, **DIENSTVERLENER**, **DIENST** en de koppeltabel **DIENSTVERLENER_DIENST**.
 
-Een **CONTACTGEGEVEN** of **VOORKEUR** kan nul of meer **SCOPE**s hebben. Een scope bakent af voor welke dienst en/of partij het contactgegeven of de voorkeur geldt; ontbreekt een scope, dan geldt het contactgegeven of de voorkeur als standaard voor alle diensten. Hierdoor kan eenzelfde waarde (bijvoorbeeld een e-mailadres) één keer worden vastgelegd en aan meerdere diensten worden gekoppeld zonder duplicatie.
+Een **CONTACTGEGEVEN** kan nul of meer **SCOPE_CONTACTGEGEVEN**s hebben; een **VOORKEUR** kan nul of meer **SCOPE_VOORKEUR**s hebben. Een scope bakent af voor welke combinatie van dienstverlener en dienst (via **DIENSTVERLENER_DIENST**) het contactgegeven of de voorkeur geldt; ontbreekt een scope, dan geldt het contactgegeven of de voorkeur als standaard voor alle diensten. Hierdoor kan eenzelfde waarde (bijvoorbeeld een e-mailadres) één keer worden vastgelegd en aan meerdere dienstverlener-dienst-combinaties worden gekoppeld zonder duplicatie. De afbakening per onderneming is niet meer onderdeel van de scope zelf, maar volgt indirect uit de PARTIJ waaraan het CONTACTGEGEVEN of de VOORKEUR is gekoppeld.
 
 Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteiten.
 
@@ -26,19 +26,25 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 
 #### CONTACTGEGEVEN
 
-| Attribuut               | Omschrijving                                                                 |
-|-------------------------|------------------------------------------------------------------------------|
-| **CONTACTGEGEVEN**      |                                                                              |
-| Id                      | Unieke identificator van contactgegeven                                      |
-| PartijId                | Identificator van de PARTIJ die eigenaar is van dit contactgegeven           |
-| ContactType             | Het soort contactgegeven: `Email`, `Telefoonnummer`, `Adres` of `AppId`      |
-| Waarde                  | De opgegeven contactwaarde (bijv. mailadres of telefoonnummer)               |
-| IsValid                 | Of het contactgegeven syntactisch geldig is bevonden                         |
-| GeverifieerdAt          | Tijdstip waarop het contactgegeven is geverifieerd; leeg als nog niet geverifieerd |
-| VerificatieReferentieId | Referentie naar de lopende verificatieaanvraag (alleen relevant voor Email)  |
-| CreatedAt               | Tijdstip van aanmaken                                                        |
-| LastUpdated             | Tijdstip van laatste wijziging                                               |
-| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald              |
+| Attribuut               | Omschrijving                                                                                                  |
+|-------------------------|---------------------------------------------------------------------------------------------------------------|
+| **CONTACTGEGEVEN**      |                                                                                                               |
+| Id                      | Unieke identificator van contactgegeven                                                                       |
+| PartijId                | Identificator van de PARTIJ die eigenaar is van dit contactgegeven                                            |
+| ContactType             | Het soort contactgegeven: `Email`, `Telefoonnummer` of `AppId`                                                |
+| Waarde                  | De opgegeven contactwaarde (bijv. mailadres of telefoonnummer)                                                |
+| IsGeverifieerd          | Of het contactgegeven is geverifieerd                                                                         |
+| GeverifieerdAt          | Tijdstip waarop het contactgegeven is geverifieerd; leeg als nog niet geverifieerd                            |
+| VerificatieReferentieId | Referentie naar de lopende verificatieaanvraag (alleen relevant voor Email)                                   |
+| CreatedAt               | Tijdstip van aanmaken                                                                                         |
+| LastUpdated             | Tijdstip van laatste wijziging                                                                                |
+| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald                                               |
+| IsDefault               | Markeert dit contactgegeven als de standaard voor de combinatie (PARTIJ, ContactType). Per (PARTIJ, ContactType) is maximaal één contactgegeven `IsDefault = true`; een partij kan dus bijvoorbeeld één standaard `Email` én één standaard `Telefoonnummer` hebben |
+
+**Constraints**
+
+- `UNIQUE(PartijId, ContactType, Waarde)` — dezelfde waarde (bijv. een e-mailadres) wordt per partij + type slechts één keer opgeslagen. Een POST met een bestaande combinatie wordt afgehandeld als een update op de bestaande rij.
+- `UNIQUE(PartijId, ContactType) WHERE IsDefault = true` — partial unique index die garandeert dat er per (PARTIJ, ContactType) maximaal één standaard is.
 
 #### IDENTIFICATIE
 
@@ -62,6 +68,15 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | LastUpdated  | Tijdstip van laatste wijziging                                                                              |
 | LastUsedAt   | Tijdstip waarop de voorkeur voor het laatst is opgehaald                                                    |
 
+**Constraints**
+
+Een partij kan meerdere VOORKEUR-rijen hebben voor hetzelfde `VoorkeurType` (bijvoorbeeld een andere `WebsiteTaal` per dienst), mits de scopes elkaar niet overlappen. Concreet:
+
+- Per (PartijId, VoorkeurType) bestaat maximaal één VOORKEUR-rij **zonder** scopes (de default voor alle diensten).
+- Voor (PartijId, VoorkeurType) gekoppeld aan een specifieke DIENSTVERLENER_DIENST bestaat maximaal één VOORKEUR-rij die via SCOPE_VOORKEUR naar diezelfde DIENSTVERLENER_DIENST verwijst.
+
+Omdat deze regel zich uitstrekt over VOORKEUR en SCOPE_VOORKEUR is hij niet als één SQL `UNIQUE` af te dwingen en wordt hij op applicatieniveau bewaakt.
+
 ##### VoorkeurTypes
 
 | VoorkeurType            | Omschrijving                                                                                  |
@@ -72,39 +87,80 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | Aanhef                  | Aanhef die gebruikt mag worden bij contact met de partij (bijv. "Dhr. Jansen")                |
 | OntvangViaBerichtenbox  | Of de partij berichten via de Berichtenbox wil ontvangen                                      |
 
-#### SCOPE
+#### SCOPE_CONTACTGEGEVEN
 
-Een SCOPE bakent af voor welke DIENST en/of PARTIJ een CONTACTGEGEVEN of VOORKEUR geldt. Een scope hoort bij precies één CONTACTGEGEVEN óf één VOORKEUR (XOR). Een CONTACTGEGEVEN of VOORKEUR zonder scopes geldt als standaard voor alle diensten.
+Een SCOPE_CONTACTGEGEVEN bakent af voor welke combinatie van dienstverlener en dienst een CONTACTGEGEVEN geldt. Een CONTACTGEGEVEN zonder scopes geldt als standaard voor alle diensten. De afbakening per onderneming (PARTIJ) zit niet in de scope zelf maar in het CONTACTGEGEVEN.
 
-Twee scopes met dezelfde DienstId en PartijId-combinatie worden binnen één CONTACTGEGEVEN of VOORKEUR niet dubbel opgeslagen; bij een dubbele toevoeging wordt de bestaande scope hergebruikt.
+| Attribuut               | Omschrijving                                                                                    |
+|-------------------------|-------------------------------------------------------------------------------------------------|
+| **SCOPE_CONTACTGEGEVEN** |                                                                                                |
+| Id                      | Unieke identificator van scope                                                                  |
+| ContactgegevenId        | Verwijzing naar het CONTACTGEGEVEN waar deze scope bij hoort (verplicht)                        |
+| DienstverlenerDienstId  | Verwijzing naar de DIENSTVERLENER_DIENST-combinatie waarop de scope betrekking heeft (verplicht) |
 
-| Attribuut         | Omschrijving                                                                                |
-|-------------------|---------------------------------------------------------------------------------------------|
-| **SCOPE**         |                                                                                             |
-| Id                | Unieke identificator van scope                                                              |
-| ContactgegevenId  | Verwijzing naar het CONTACTGEGEVEN waar deze scope bij hoort (XOR met VoorkeurId)           |
-| VoorkeurId        | Verwijzing naar de VOORKEUR waar deze scope bij hoort (XOR met ContactgegevenId)            |
-| DienstId          | Optionele verwijzing naar de DIENST waarop de scope betrekking heeft                        |
-| PartijId          | Optionele verwijzing naar de PARTIJ waarvoor de scope geldt (bijvoorbeeld een organisatie)  |
+**Constraints**
+
+- `UNIQUE(ContactgegevenId, DienstverlenerDienstId)` — een combinatie wordt per contactgegeven maximaal één keer opgeslagen; bij een dubbele toevoeging wordt de bestaande scope hergebruikt.
+
+
+#### SCOPE_VOORKEUR
+
+Een SCOPE_VOORKEUR bakent af voor welke combinatie van dienstverlener en dienst een VOORKEUR geldt. Een VOORKEUR zonder scopes geldt als standaard voor alle diensten. De afbakening per onderneming (PARTIJ) zit niet in de scope zelf maar in de VOORKEUR.
+
+| Attribuut               | Omschrijving                                                                                    |
+|-------------------------|-------------------------------------------------------------------------------------------------|
+| **SCOPE_VOORKEUR**      |                                                                                                 |
+| Id                      | Unieke identificator van scope                                                                  |
+| VoorkeurId              | Verwijzing naar de VOORKEUR waar deze scope bij hoort (verplicht)                               |
+| DienstverlenerDienstId  | Verwijzing naar de DIENSTVERLENER_DIENST-combinatie waarop de scope betrekking heeft (verplicht) |
+
+**Constraints**
+
+- `UNIQUE(VoorkeurId, DienstverlenerDienstId)` — een combinatie wordt per voorkeur maximaal één keer opgeslagen; bij een dubbele toevoeging wordt de bestaande scope hergebruikt.
 
 
 #### DIENSTVERLENER
 
-| Attribuut          | Omschrijving                            |
-|--------------------|-----------------------------------------|
-| **DIENSTVERLENER** |                                         |
-| Id                 | Unieke identificator van DIENSTVERLENER |
-| Naam               | Naam van de dienstverlener              |
+| Attribuut          | Omschrijving                                |
+|--------------------|---------------------------------------------|
+| **DIENSTVERLENER** |                                             |
+| Id                 | Unieke identificator van DIENSTVERLENER     |
+| Naam               | Naam van de dienstverlener (uniek)          |
+| Beschrijving       | Optionele beschrijving van de dienstverlener |
+
+**Constraints**
+
+- `UNIQUE(Naam)` — dienstverleners hebben een globaal unieke naam.
 
 
 #### DIENST
 
-| Attribuut        | Omschrijving                       |
-|------------------|------------------------------------|
-| **DIENST**       |                                    |
-| Id               | Unieke identificator van de dienst |
-| DienstverlenerId | Verwijzing naar DIENSTVERLENER     |
-| Beschrijving     | Beschrijving van de dienst         |
+| Attribuut    | Omschrijving                       |
+|--------------|------------------------------------|
+| **DIENST**   |                                    |
+| Id           | Unieke identificator van de dienst |
+| Naam         | Naam van de dienst (uniek)         |
+| Beschrijving | Optionele beschrijving van de dienst |
+
+**Constraints**
+
+- `UNIQUE(Naam)` — diensten hebben een globaal unieke naam.
+
+
+#### DIENSTVERLENER_DIENST
+
+Koppeltabel tussen DIENSTVERLENER en DIENST. Hiermee kan dezelfde DIENST door meerdere dienstverleners worden aangeboden, en kan een dienstverlener bestaan zonder dat er al een dienst aan gekoppeld is. Een scope verwijst altijd naar een rij in deze tabel, zodat duidelijk is om welke dienstverlener-dienst-combinatie het gaat. Een rij met alleen een DienstverlenerId (DienstId leeg) bakent de scope af tot de dienstverlener als geheel, zonder een specifieke dienst.
+
+| Attribuut             | Omschrijving                                              |
+|-----------------------|-----------------------------------------------------------|
+| **DIENSTVERLENER_DIENST** |                                                       |
+| Id                    | Unieke identificator van de combinatie                    |
+| DienstverlenerId      | Verwijzing naar DIENSTVERLENER (verplicht)                |
+| DienstId              | Optionele verwijzing naar DIENST                          |
+
+**Constraints**
+
+- `UNIQUE(DienstverlenerId, DienstId)` — dezelfde dienstverlener-dienst-combinatie komt maximaal één keer voor.
 
 
 #### Logboek Dataverwerkingen (LDV)
@@ -134,17 +190,24 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
             int Id PK "NOT NULL"
         }
 
+        IDENTIFICATIE {
+            int PartijId PK,FK "NOT NULL"
+            enum IdentificatieType PK "NOT NULL"
+            text IdentificatieNummer PK "NOT NULL"
+        }
+
         CONTACTGEGEVEN {
             int Id PK "NOT NULL"
             int PartijId FK "NOT NULL"
             enum ContactType "NOT NULL"
             text Waarde "NOT NULL"
-            bool IsValid "NOT NULL"
+            bool IsGeverifieerd "NOT NULL"
             datetime GeverifieerdAt ""
             text VerificatieReferentieId ""
             datetime CreatedAt "NOT NULL"
             datetime LastUpdated "NOT NULL"
             datetime LastUsedAt ""
+            bool IsDefault ""
         }
 
         VOORKEUR {
@@ -157,28 +220,33 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
             datetime LastUsedAt ""
         }
 
-        SCOPE {
+        SCOPE_VOORKEUR {
             int Id PK "NOT NULL"
-            int ContactgegevenId FK "XOR met VoorkeurId"
-            int VoorkeurId FK "XOR met ContactgegevenId"
-            int DienstId FK ""
-            int PartijId FK ""
+            int VoorkeurId FK "NOT NULL"
+            int DienstverlenerDienstId FK "NOT NULL"
         }
 
-        IDENTIFICATIE {
-            int PartijId PK,FK "NOT NULL"
-            enum IdentificatieType PK "NOT NULL"
-            text IdentificatieNummer PK "NOT NULL"
+        SCOPE_CONTACTGEGEVEN {
+            int Id PK "NOT NULL"
+            int ContactgegevenId FK "NOT NULL"
+            int DienstverlenerDienstId FK "NOT NULL"
+        }
+
+        DIENSTVERLENER_DIENST {
+            int Id PK "NOT NULL"
+            int DienstId FK ""
+            int DienstverlenerId FK "NOT NULL"
         }
 
         DIENSTVERLENER {
             int Id PK "NOT NULL"
-            string Naam "NOT NULL"
+            string Naam "NOT NULL, UNIQUE"
+            string Beschrijving ""
         }
 
         DIENST {
             int Id PK "NOT NULL"
-            int DienstverlenerId FK "NOT NULL"
+            string Naam "NOT NULL, UNIQUE"
             string Beschrijving ""
         }
 
@@ -186,17 +254,18 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
         PARTIJ ||--|{ IDENTIFICATIE : "PartijId"
         PARTIJ ||--o{ VOORKEUR : "PartijId"
         PARTIJ ||--o{ CONTACTGEGEVEN : "PartijId"
-        CONTACTGEGEVEN ||--o{ SCOPE : "ContactgegevenId"
-        VOORKEUR ||--o{ SCOPE : "VoorkeurId"
-        DIENST ||--o{ SCOPE : "DienstId"
-        PARTIJ ||--o{ SCOPE : "PartijId"
-        DIENSTVERLENER ||--|{ DIENST : "DienstverlenerId"
+        CONTACTGEGEVEN ||--o{ SCOPE_CONTACTGEGEVEN : "ContactgegevenId"
+        DIENSTVERLENER_DIENST ||--o{ SCOPE_CONTACTGEGEVEN : "DienstverlenerDienstId"
+        VOORKEUR ||--o{ SCOPE_VOORKEUR : "VoorkeurId"
+        DIENSTVERLENER_DIENST ||--o{ SCOPE_VOORKEUR : "DienstverlenerDienstId"
+        DIENSTVERLENER ||--o{ DIENSTVERLENER_DIENST : "DienstverlenerId"
+        DIENST ||--o{ DIENSTVERLENER_DIENST : "DienstId"
 
 </details>
 
 #### Data Transfer Object (DTO)
 
-Wanneer de profiel-service wordt bevraagd op een partij (`GET /api/profielservice/v1/{identificatieType}/{identificatieNummer}`), levert de response onderstaande structuur. Iedere `contactgegeven` en `voorkeur` bevat een `scopes`-lijst; een lege lijst betekent dat het contactgegeven of de voorkeur als standaard geldt voor alle diensten.
+Wanneer de profiel-service wordt bevraagd op een partij (`GET /api/profielservice/v1/{identificatieType}/{identificatieNummer}`), levert de response onderstaande structuur. Iedere `contactgegeven` en `voorkeur` bevat een `scopes`-lijst; een lege lijst betekent dat het contactgegeven of de voorkeur als standaard geldt voor alle diensten. Elke scope verwijst naar een dienstverlener-dienst-combinatie; ontbreekt `dienst`, dan geldt de scope voor de dienstverlener als geheel.
 
 **YAML**
 
@@ -210,7 +279,7 @@ contactgegevens:
     type: Email
     waarde: contact@bedrijf.nl
     isGeverifieerd: true
-    isValid: true
+    isDefault: true
     createdAt: "2026-04-01T09:15:00"
     lastUpdated: "2026-04-01T09:15:00"
     scopes: []
@@ -218,13 +287,17 @@ contactgegevens:
     type: Telefoonnummer
     waarde: "0612345678"
     isGeverifieerd: false
-    isValid: true
+    isDefault: true
     createdAt: "2026-04-02T10:00:00"
     lastUpdated: "2026-04-02T10:00:00"
     scopes:
-      - dienst:
+      - dienstverlenerDienstId: 42
+        dienstverlener:
+          id: 3
+          naam: "RVO"
+        dienst:
           id: 7
-          beschrijving: "Subsidieaanvraag"
+          naam: "Subsidieaanvraag"
 voorkeuren:
   - id: 201
     voorkeurType: WebsiteTaal
@@ -238,9 +311,13 @@ voorkeuren:
     createdAt: "2026-04-03T14:20:00"
     lastUpdated: "2026-04-03T14:20:00"
     scopes:
-      - dienst:
+      - dienstverlenerDienstId: 42
+        dienstverlener:
+          id: 3
+          naam: "RVO"
+        dienst:
           id: 7
-          beschrijving: "Subsidieaanvraag"
+          naam: "Subsidieaanvraag"
 ```
 
 **JSON**
@@ -257,7 +334,7 @@ voorkeuren:
       "type": "Email",
       "waarde": "contact@bedrijf.nl",
       "isGeverifieerd": true,
-      "isValid": true,
+      "isDefault": true,
       "createdAt": "2026-04-01T09:15:00",
       "lastUpdated": "2026-04-01T09:15:00",
       "scopes": []
@@ -267,11 +344,15 @@ voorkeuren:
       "type": "Telefoonnummer",
       "waarde": "0612345678",
       "isGeverifieerd": false,
-      "isValid": true,
+      "isDefault": true,
       "createdAt": "2026-04-02T10:00:00",
       "lastUpdated": "2026-04-02T10:00:00",
       "scopes": [
-        { "dienst": { "id": 7, "beschrijving": "Subsidieaanvraag" } }
+        {
+          "dienstverlenerDienstId": 42,
+          "dienstverlener": { "id": 3, "naam": "RVO" },
+          "dienst": { "id": 7, "naam": "Subsidieaanvraag" }
+        }
       ]
     }
   ],
@@ -291,7 +372,11 @@ voorkeuren:
       "createdAt": "2026-04-03T14:20:00",
       "lastUpdated": "2026-04-03T14:20:00",
       "scopes": [
-        { "dienst": { "id": 7, "beschrijving": "Subsidieaanvraag" } }
+        {
+          "dienstverlenerDienstId": 42,
+          "dienstverlener": { "id": 3, "naam": "RVO" },
+          "dienst": { "id": 7, "naam": "Subsidieaanvraag" }
+        }
       ]
     }
   ]

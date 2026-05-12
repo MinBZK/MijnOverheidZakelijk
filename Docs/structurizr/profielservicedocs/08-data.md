@@ -13,15 +13,45 @@ Ter ondersteuning van deze kernfunctionaliteit zijn aanvullende entiteiten toege
 
 Een **CONTACTGEGEVEN** kan nul of meer **SCOPE_CONTACTGEGEVEN**s hebben; een **VOORKEUR** kan nul of meer **SCOPE_VOORKEUR**s hebben. Een scope bakent af voor welke combinatie van dienstverlener en dienst (via **DIENSTVERLENER_DIENST**) het contactgegeven of de voorkeur geldt; ontbreekt een scope, dan geldt het contactgegeven of de voorkeur als standaard voor alle diensten. Hierdoor kan eenzelfde waarde (bijvoorbeeld een e-mailadres) één keer worden vastgelegd en aan meerdere dienstverlener-dienst-combinaties worden gekoppeld zonder duplicatie. De afbakening per onderneming is niet meer onderdeel van de scope zelf, maar volgt indirect uit de PARTIJ waaraan het CONTACTGEGEVEN of de VOORKEUR is gekoppeld.
 
-Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteiten.
+Hieronder volgen eerst enkele overkoepelende ontwerpkeuzes, en daarna een tabel met de definities die wij hanteren voor deze entiteiten.
+
+#### Ontwerpkeuzes
+
+##### Doelbinding en grondslag
+
+Het centraal opslaan van een BSN of KVK valt onder de AVG en, voor BSN, onder de Wet algemene bepalingen burgerservicenummer (Wabb). De grondslag per verwerking is vastgelegd in het verwerkingsregister waar `dpl.core.processing_activity_id` naar verwijst. Aanvullend beschrijft [ADR 0011: Positionering en gebruik van de Profiel Service](../decisions/0011-positionering-en-gebruik-van-profiel-service.md) welk gebruik wel en niet binnen de doelbinding valt. Op dit gegevensmodel wordt een DPIA uitgevoerd; de uitkomsten daarvan worden bij het verwerkingsregister gepubliceerd.
+
+##### Identifiers
+
+Alle entiteit-`Id`'s in dit model zijn UUID's en worden in API's en logs als opaque strings behandeld. Auto-increment integers gebruiken we niet: ze geven de omvang van de dataset prijs en maken enumeration van records mogelijk.
+
+##### Encryptie en opslag
+
+`IdentificatieNummer` (BSN/KVK/RSIN) en Contactgegeven `Waarde` (e-mailadres, telefoonnummer, applicatie-id) worden versleuteld opgeslagen via column-level encryption. Voor BSN geldt aanvullend dat de waarde eerst wordt gepseudonimiseerd via de BSNk-module (BSN-koppelnummer) van Logius en pas daarna versleuteld opgeslagen. De Profiel Service bewaart dus geen ruw BSN. Voor andere identificatienummers (KVK, RSIN, etc) wordt onderzocht in welke mate dezelfde pseudonimisering-aanpak toepasbaar is. De sleutelmanagement-keuzes en de exacte BIO-classificatie staan beschreven in [§09 Infrastructuurarchitectuur](09-infrastructuur-architectuur.md).
+
+##### Logging en redactie
+
+Persoonsgegevens komen niet voor in applicatielogs. Identificatie van de betrokkene voor traceability gebeurt uitsluitend via LDV-attributen (zie [Logboek Dataverwerkingen (LDV)](#logboek-dataverwerkingen-ldv) hieronder). Applicatielogs hanteren een redactie-regel die deze velden vervangt door een vaste placeholder.
+
+##### Data bij de bron
+
+IDENTIFICATIE is bedoeld als opzoek-sleutel naar een PARTIJ, niet als bronsysteem. De authoritative bron voor BSN is de Basisregistratie Personen (BRP); voor KVK het Handelsregister; voor RSIN de Basisregistratie Ondernemingen. De Profiel Service valideert deze nummers syntactisch (elf-proef, lengte) maar leidt geen materiële wijzigingen door wijzigingen volgen uit het bronsysteem.
+
+##### Bewaartermijnen en verwijdering
+
+Op verzoek van de betrokkene, conform met AVG (Art. 17), wordt een PARTIJ inclusief gekoppelde IDENTIFICATIE-, CONTACTGEGEVEN-, VOORKEUR- en scope-rijen fysiek verwijderd, met een bijbehorende LDV-regel die de verwijdering vastlegt. De concrete bewaartermijnen per verwerking volgen uit het verwerkingsregister.
+
+##### `LastUsedAt` en profilering
+
+`LastUsedAt` wordt uitsluitend gebruikt voor onderhoud, zoals opschoning van inactieve contactgegevens en voorkeuren. Het veld is niet bedoeld voor analytics, rapportage of profilering en wordt niet via de publieke API uitgeleverd.
 
 
 #### PARTIJ
 
-| Attribuut  | Omschrijving                    |
-|------------|---------------------------------|
-| **PARTIJ** |                                 |
-| Id         | Unieke identificator van PARTIJ |
+| Attribuut    | Omschrijving                                                                                      |
+|--------------|---------------------------------------------------------------------------------------------------|
+| **PARTIJ**   |                                                                                                   |
+| Id           | Unieke identificator van PARTIJ (UUID)                                                            |
 
 
 #### CONTACTGEGEVEN
@@ -29,16 +59,16 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 | Attribuut               | Omschrijving                                                                                                  |
 |-------------------------|---------------------------------------------------------------------------------------------------------------|
 | **CONTACTGEGEVEN**      |                                                                                                               |
-| Id                      | Unieke identificator van contactgegeven                                                                       |
-| PartijId                | Identificator van de PARTIJ die eigenaar is van dit contactgegeven                                            |
-| ContactType             | Het soort contactgegeven: `Email`, `Telefoonnummer` of `AppId`                                                |
-| Waarde                  | De opgegeven contactwaarde (bijv. mailadres of telefoonnummer)                                                |
+| Id                      | Unieke identificator van contactgegeven (UUID)                                                                |
+| PartijId                | UUID van de PARTIJ die eigenaar is van dit contactgegeven                                                     |
+| ContactType             | Het soort contactgegeven: `Email`, `Telefoonnummer` of `ApplicatieId`                                         |
+| Waarde                  | De opgegeven contactwaarde (bijv. mailadres of telefoonnummer); versleuteld opgeslagen                        |
 | IsGeverifieerd          | Of het contactgegeven is geverifieerd                                                                         |
 | GeverifieerdAt          | Tijdstip waarop het contactgegeven is geverifieerd; leeg als nog niet geverifieerd                            |
 | VerificatieReferentieId | Referentie naar de lopende verificatieaanvraag (alleen relevant voor Email)                                   |
 | CreatedAt               | Tijdstip van aanmaken                                                                                         |
 | LastUpdated             | Tijdstip van laatste wijziging                                                                                |
-| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald                                               |
+| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie [Ontwerpkeuzes](#lastusedat-en-profilering)) |
 | IsDefault               | Markeert dit contactgegeven als de standaard voor de combinatie (PARTIJ, ContactType). Per (PARTIJ, ContactType) is maximaal één contactgegeven `IsDefault = true`; een partij kan dus bijvoorbeeld één standaard `Email` én één standaard `Telefoonnummer` hebben |
 
 **Constraints**
@@ -48,25 +78,30 @@ Hieronder volgt een tabel met de definities die wij hanteren voor deze entiteite
 
 #### IDENTIFICATIE
 
-| Attribuut           | Omschrijving                                                                                       |
-|---------------------|----------------------------------------------------------------------------------------------------|
-| **IDENTIFICATIE**   |                                                                                                    |
-| PartijId            | Verwijzing naar de PARTIJ aan wie deze IDENTIFICATIE toebehoort                                    |
-| IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: BSN, KVK, RSIN of ander identificatiesysteem |
-| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType             |
+| Attribuut           | Omschrijving                                                                                                                                                                                                                       |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **IDENTIFICATIE**   |                                                                                                                                                                                                                                    |
+| Id                  | Unieke identificator van deze identificatie (UUID)                                                                                                                                                                                 |
+| PartijId            | UUID van de PARTIJ aan wie deze IDENTIFICATIE toebehoort                                                                                                                                                                           |
+| IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: `BSN`, `KVK`, `RSIN` of ander identificatiesysteem                                                                                                                            |
+| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType; versleuteld opgeslagen. Syntactische validatie (zoals elf-proef voor BSN, lengte voor KVK) gebeurt bij invoer; voor authoritative waarden geldt het [bronsysteem](#data-bij-de-bron) |
+
+**Constraints**
+
+- `UNIQUE(IdentificatieType, IdentificatieNummer)`: eenzelfde nummer-binnen-type wijst altijd naar dezelfde PARTIJ; een BSN of KVK komt nooit aan twee partijen toe.
 
 #### VOORKEUR
 
-| Attribuut    | Omschrijving                                                                                                |
-|--------------|-------------------------------------------------------------------------------------------------------------|
-| **VOORKEUR** |                                                                                                             |
-| Id           | Unieke identificator van voorkeur                                                                           |
-| PartijId     | Verwijzing naar de PARTIJ waarvoor de voorkeur geldt                                                        |
-| VoorkeurType | Het type voorkeur (enum): `WebsiteTaal`, `MagGebeldWorden`, `WebsiteThema`, `Aanhef`, `OntvangViaBerichtenbox` |
-| Waarde       | De waarde van de voorkeur, afhankelijk van het VoorkeurType                                                 |
-| CreatedAt    | Tijdstip van aanmaken                                                                                       |
-| LastUpdated  | Tijdstip van laatste wijziging                                                                              |
-| LastUsedAt   | Tijdstip waarop de voorkeur voor het laatst is opgehaald                                                    |
+| Attribuut    | Omschrijving                                                                                                                                                                                                                                       |
+|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **VOORKEUR** |                                                                                                                                                                                                                                                    |
+| Id           | Unieke identificator van voorkeur (UUID)                                                                                                                                                                                                           |
+| PartijId     | UUID van de PARTIJ waarvoor de voorkeur geldt                                                                                                                                                                                                      |
+| VoorkeurType | Het type voorkeur (enum): `WebsiteTaal`, `MagGebeldWorden`, `WebsiteThema`, `Aanhef`, `OntvangViaBerichtenbox`                                                                                                                                      |
+| Waarde       | De waarde van de voorkeur, getypeerd per `VoorkeurType` (zie [VoorkeurTypes](#voorkeurtypes) voor toegestane vormen)                                                                                                              |
+| CreatedAt    | Tijdstip van aanmaken                                                                                                                                                                                                                              |
+| LastUpdated  | Tijdstip van laatste wijziging                                                                                                                                                                                                                     |
+| LastUsedAt   | Tijdstip waarop de voorkeur voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie [Ontwerpkeuzes](#lastusedat-en-profilering))                          |
 
 **Constraints**
 
@@ -79,13 +114,15 @@ Omdat deze regel zich uitstrekt over VOORKEUR en SCOPE_VOORKEUR is hij niet als 
 
 ##### VoorkeurTypes
 
-| VoorkeurType            | Omschrijving                                                                                  |
-|-------------------------|-----------------------------------------------------------------------------------------------|
-| WebsiteTaal             | Taalvoorkeur voor communicatie en weergave (bijv. `nl`, `en`)                                 |
-| MagGebeldWorden         | Of de partij gebeld mag worden                                                                |
-| WebsiteThema            | Thema/weergavevoorkeur voor de website                                                        |
-| Aanhef                  | Aanhef die gebruikt mag worden bij contact met de partij (bijv. "Dhr. Jansen")                |
-| OntvangViaBerichtenbox  | Of de partij berichten via de Berichtenbox wil ontvangen                                      |
+Iedere `VoorkeurType` heeft een bijbehorende vorm voor `Waarde`.
+
+| VoorkeurType            | Omschrijving                                                                                  | Toegestane vorm voor `Waarde`                                           |
+|-------------------------|-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| WebsiteTaal             | Taalvoorkeur voor communicatie en weergave (bijv. `nl`, `en`)                                 | `string`, ISO 639-1 code uit een vaste lijst van ondersteunde talen     |
+| MagGebeldWorden         | Of de partij gebeld mag worden                                                                | `boolean`                                                               |
+| WebsiteThema            | Thema/weergavevoorkeur voor de website                                                        | `string`, code uit een vaste lijst van beschikbare thema's              |
+| Aanhef                  | Aanhef die gebruikt mag worden bij contact met de partij (bijv. "Dhr. Jansen")                | `string`, vrije tekst met maximumlengte                                 |
+| OntvangViaBerichtenbox  | Of de partij berichten via de Berichtenbox wil ontvangen                                      | `boolean`                                                               |
 
 #### SCOPE_CONTACTGEGEVEN
 
@@ -187,20 +224,21 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
   
     erDiagram
         PARTIJ {
-            int Id PK "NOT NULL"
+            uuid Id PK "NOT NULL"
         }
 
         IDENTIFICATIE {
-            int PartijId PK,FK "NOT NULL"
-            enum IdentificatieType PK "NOT NULL"
-            text IdentificatieNummer PK "NOT NULL"
+            uuid Id PK "NOT NULL"
+            uuid PartijId FK "NOT NULL"
+            enum IdentificatieType "NOT NULL"
+            text IdentificatieNummer "NOT NULL, ENCRYPTED"
         }
 
         CONTACTGEGEVEN {
-            int Id PK "NOT NULL"
-            int PartijId FK "NOT NULL"
+            uuid Id PK "NOT NULL"
+            uuid PartijId FK "NOT NULL"
             enum ContactType "NOT NULL"
-            text Waarde "NOT NULL"
+            text Waarde "NOT NULL, ENCRYPTED"
             bool IsGeverifieerd "NOT NULL"
             datetime GeverifieerdAt ""
             text VerificatieReferentieId ""
@@ -211,8 +249,8 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
         }
 
         VOORKEUR {
-            int Id PK "NOT NULL"
-            int PartijId FK "NOT NULL"
+            uuid Id PK "NOT NULL"
+            uuid PartijId FK "NOT NULL"
             enum VoorkeurType "NOT NULL"
             text Waarde "NOT NULL"
             datetime CreatedAt "NOT NULL"
@@ -221,31 +259,31 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
         }
 
         SCOPE_VOORKEUR {
-            int Id PK "NOT NULL"
-            int VoorkeurId FK "NOT NULL"
-            int DienstverlenerDienstId FK "NOT NULL"
+            uuid Id PK "NOT NULL"
+            uuid VoorkeurId FK "NOT NULL"
+            uuid DienstverlenerDienstId FK "NOT NULL"
         }
 
         SCOPE_CONTACTGEGEVEN {
-            int Id PK "NOT NULL"
-            int ContactgegevenId FK "NOT NULL"
-            int DienstverlenerDienstId FK "NOT NULL"
+            uuid Id PK "NOT NULL"
+            uuid ContactgegevenId FK "NOT NULL"
+            uuid DienstverlenerDienstId FK "NOT NULL"
         }
 
         DIENSTVERLENER_DIENST {
-            int Id PK "NOT NULL"
-            int DienstId FK ""
-            int DienstverlenerId FK "NOT NULL"
+            uuid Id PK "NOT NULL"
+            uuid DienstId FK ""
+            uuid DienstverlenerId FK "NOT NULL"
         }
 
         DIENSTVERLENER {
-            int Id PK "NOT NULL"
+            uuid Id PK "NOT NULL"
             string Naam "NOT NULL, UNIQUE"
             string Beschrijving ""
         }
 
         DIENST {
-            int Id PK "NOT NULL"
+            uuid Id PK "NOT NULL"
             string Naam "NOT NULL, UNIQUE"
             string Beschrijving ""
         }
@@ -265,25 +303,71 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
 
 #### Data Transfer Object (DTO)
 
-Wanneer de profiel-service wordt bevraagd op een partij (`GET /api/profielservice/v1/{identificatieType}/{identificatieNummer}`), levert de response onderstaande structuur. Iedere `contactgegeven` en `voorkeur` bevat een `scopes`-lijst; een lege lijst betekent dat het contactgegeven of de voorkeur als standaard geldt voor alle diensten. Elke scope verwijst naar een dienstverlener-dienst-combinatie; ontbreekt `dienst`, dan geldt de scope voor de dienstverlener als geheel.
+Het bevragen van de Profiel Service verloopt in twee stappen, zodat identificerende nummers zoals BSN en KVK niet in URL's, toegangslogs, proxy-caches of browserhistorie terechtkomen:
+
+1. **Identificatie opzoeken.** `POST /api/profielservice/v1/partijen:zoek` met body `{ "identificatieType": "KVK", "identificatieNummer": "12345678" }` levert het opaque `partijId` van de PARTIJ. Het identificerende nummer staat in de request-body en niet in het pad of de query-string, en wordt daarmee niet door tussenliggende infrastructuur gelogd.
+2. **Partij ophalen.** `GET /api/profielservice/v1/partijen/{partijId}` levert onderstaande structuur. Het `partijId` is een opaque identifier en zegt op zichzelf niets over de betrokkene.
+
+##### Endpoints
+
+Naast de gebundelde partij-resource zijn de onderliggende deelresources individueel benaderbaar. Dat past bij de [NL GOV API Design Rules](https://gitdocumentatie.logius.nl/publicatie/api/adr/) (resource-georiënteerd) en voorkomt dat een client die alleen contactgegevens nodig heeft ook altijd voorkeuren en identificaties moet ophalen.
+
+| Endpoint                                                            | Doel                                                                                       |
+|---------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+| `POST /api/profielservice/v1/partijen:zoek`                         | PartijId opzoeken op basis van identificatieType + identificatieNummer                     |
+| `GET /api/profielservice/v1/partijen/{partijId}`                    | Volledige partij ophalen (gebundelde DTO; standaard zonder deelresources, uitbreidbaar met `?include=contactgegevens,voorkeuren,identificaties`) |
+| `GET /api/profielservice/v1/partijen/{partijId}/identificaties`     | Alle identificaties van een partij                                                         |
+| `GET /api/profielservice/v1/partijen/{partijId}/contactgegevens`    | Alle contactgegevens van een partij                                                        |
+| `POST /api/profielservice/v1/partijen/{partijId}/contactgegevens`   | Nieuw contactgegeven toevoegen                                                             |
+| `PUT /api/profielservice/v1/contactgegevens/{contactgegevenId}`     | Contactgegeven bijwerken                                                                   |
+| `DELETE /api/profielservice/v1/contactgegevens/{contactgegevenId}`  | Contactgegeven verwijderen                                                                 |
+| `GET /api/profielservice/v1/partijen/{partijId}/voorkeuren`         | Alle voorkeuren van een partij                                                             |
+| `POST /api/profielservice/v1/partijen/{partijId}/voorkeuren`        | Nieuwe voorkeur toevoegen                                                                  |
+| `PUT /api/profielservice/v1/voorkeuren/{voorkeurId}`                | Voorkeur bijwerken                                                                         |
+| `DELETE /api/profielservice/v1/voorkeuren/{voorkeurId}`             | Voorkeur verwijderen                                                                       |
+
+##### Response-structuur
+
+Iedere `contactgegeven` en `voorkeur` bevat een `scopes`-lijst; een lege lijst betekent dat het contactgegeven of de voorkeur als standaard geldt voor alle diensten. Elke scope verwijst naar een dienstverlener-dienst-combinatie; ontbreekt `dienst`, dan geldt de scope voor de dienstverlener als geheel.
+
+##### Caching
+
+Responses van partij-, contactgegeven-, voorkeur- en identificatie-endpoints bevatten persoonsgegevens en worden uitgeleverd met `Cache-Control: no-store`. Tussenliggende caches (proxies, browsers, CDN's) bewaren deze responses dus niet.
+
+##### Foutafhandeling
+
+Fouten worden teruggegeven volgens [RFC 9457 `application/problem+json`](https://datatracker.ietf.org/doc/html/rfc9457), conform de NL GOV API Design Rules. Een voorbeeldrespons voor een onbekende partij:
+
+```json
+{
+  "type": "https://api.profielservice.mijnoverheidzakelijk.nl/problems/partij-niet-gevonden",
+  "title": "Partij niet gevonden",
+  "status": 404,
+  "detail": "Er bestaat geen actieve PARTIJ met partijId 01934c4f-7e2f-7d00-8000-00000000ffff.",
+  "instance": "/api/profielservice/v1/partijen/01934c4f-7e2f-7d00-8000-00000000ffff"
+}
+```
+
 
 **YAML**
 
 ```yaml
-partijId: 1
+partijId: "01934c4f-7e2f-7d00-8000-000000000001"
 identificaties:
-  - identificatieType: KVK
+  - id: "01934c4f-7e2f-7d00-8000-0000000000a1"
+    identificatieType: KVK
     identificatieNummer: "12345678"
 contactgegevens:
-  - id: 101
+  - id: "01934c4f-7e2f-7d00-8000-000000000101"
     type: Email
     waarde: contact@bedrijf.nl
     isGeverifieerd: true
+    geverifieerdAt: "2026-04-01T09:20:00"
     isDefault: true
     createdAt: "2026-04-01T09:15:00"
     lastUpdated: "2026-04-01T09:15:00"
     scopes: []
-  - id: 102
+  - id: "01934c4f-7e2f-7d00-8000-000000000102"
     type: Telefoonnummer
     waarde: "0612345678"
     isGeverifieerd: false
@@ -291,32 +375,32 @@ contactgegevens:
     createdAt: "2026-04-02T10:00:00"
     lastUpdated: "2026-04-02T10:00:00"
     scopes:
-      - dienstverlenerDienstId: 42
+      - dienstverlenerDienstId: "01934c4f-7e2f-7d00-8000-0000000002a0"
         dienstverlener:
-          id: 3
+          id: "01934c4f-7e2f-7d00-8000-000000000301"
           naam: "RVO"
         dienst:
-          id: 7
+          id: "01934c4f-7e2f-7d00-8000-000000000701"
           naam: "Subsidieaanvraag"
 voorkeuren:
-  - id: 201
+  - id: "01934c4f-7e2f-7d00-8000-000000000201"
     voorkeurType: WebsiteTaal
     waarde: "nl"
     createdAt: "2026-04-01T09:15:00"
     lastUpdated: "2026-04-01T09:15:00"
     scopes: []
-  - id: 202
+  - id: "01934c4f-7e2f-7d00-8000-000000000202"
     voorkeurType: OntvangViaBerichtenbox
-    waarde: "true"
+    waarde: true
     createdAt: "2026-04-03T14:20:00"
     lastUpdated: "2026-04-03T14:20:00"
     scopes:
-      - dienstverlenerDienstId: 42
+      - dienstverlenerDienstId: "01934c4f-7e2f-7d00-8000-0000000002a0"
         dienstverlener:
-          id: 3
+          id: "01934c4f-7e2f-7d00-8000-000000000301"
           naam: "RVO"
         dienst:
-          id: 7
+          id: "01934c4f-7e2f-7d00-8000-000000000701"
           naam: "Subsidieaanvraag"
 ```
 
@@ -324,23 +408,28 @@ voorkeuren:
 
 ```json
 {
-  "partijId": 1,
+  "partijId": "01934c4f-7e2f-7d00-8000-000000000001",
   "identificaties": [
-    { "identificatieType": "KVK", "identificatieNummer": "12345678" }
+    {
+      "id": "01934c4f-7e2f-7d00-8000-0000000000a1",
+      "identificatieType": "KVK",
+      "identificatieNummer": "12345678"
+    }
   ],
   "contactgegevens": [
     {
-      "id": 101,
+      "id": "01934c4f-7e2f-7d00-8000-000000000101",
       "type": "Email",
       "waarde": "contact@bedrijf.nl",
       "isGeverifieerd": true,
+      "geverifieerdAt": "2026-04-01T09:20:00",
       "isDefault": true,
       "createdAt": "2026-04-01T09:15:00",
       "lastUpdated": "2026-04-01T09:15:00",
       "scopes": []
     },
     {
-      "id": 102,
+      "id": "01934c4f-7e2f-7d00-8000-000000000102",
       "type": "Telefoonnummer",
       "waarde": "0612345678",
       "isGeverifieerd": false,
@@ -349,16 +438,16 @@ voorkeuren:
       "lastUpdated": "2026-04-02T10:00:00",
       "scopes": [
         {
-          "dienstverlenerDienstId": 42,
-          "dienstverlener": { "id": 3, "naam": "RVO" },
-          "dienst": { "id": 7, "naam": "Subsidieaanvraag" }
+          "dienstverlenerDienstId": "01934c4f-7e2f-7d00-8000-0000000002a0",
+          "dienstverlener": { "id": "01934c4f-7e2f-7d00-8000-000000000301", "naam": "RVO" },
+          "dienst": { "id": "01934c4f-7e2f-7d00-8000-000000000701", "naam": "Subsidieaanvraag" }
         }
       ]
     }
   ],
   "voorkeuren": [
     {
-      "id": 201,
+      "id": "01934c4f-7e2f-7d00-8000-000000000201",
       "voorkeurType": "WebsiteTaal",
       "waarde": "nl",
       "createdAt": "2026-04-01T09:15:00",
@@ -366,16 +455,16 @@ voorkeuren:
       "scopes": []
     },
     {
-      "id": 202,
+      "id": "01934c4f-7e2f-7d00-8000-000000000202",
       "voorkeurType": "OntvangViaBerichtenbox",
-      "waarde": "true",
+      "waarde": true,
       "createdAt": "2026-04-03T14:20:00",
       "lastUpdated": "2026-04-03T14:20:00",
       "scopes": [
         {
-          "dienstverlenerDienstId": 42,
-          "dienstverlener": { "id": 3, "naam": "RVO" },
-          "dienst": { "id": 7, "naam": "Subsidieaanvraag" }
+          "dienstverlenerDienstId": "01934c4f-7e2f-7d00-8000-0000000002a0",
+          "dienstverlener": { "id": "01934c4f-7e2f-7d00-8000-000000000301", "naam": "RVO" },
+          "dienst": { "id": "01934c4f-7e2f-7d00-8000-000000000701", "naam": "Subsidieaanvraag" }
         }
       ]
     }
@@ -401,9 +490,14 @@ De volgende diagrammen illustreren de belangrijkste interacties met de ProfielSe
         participant Dienstverlener
         participant Profiel as Profiel Service
 
-        Dienstverlener->>Profiel: GET contactvoorkeuren Bsn en/of KvK
+        Dienstverlener->>Profiel: POST /partijen:zoek (identificatieType + identificatieNummer)
         activate Profiel
-        Profiel-->>Dienstverlener: Contactvoorkeur(en) + Bsn
+        Profiel-->>Dienstverlener: partijId
+        deactivate Profiel
+
+        Dienstverlener->>Profiel: GET /partijen/{partijId}
+        activate Profiel
+        Profiel-->>Dienstverlener: Contactvoorkeur(en) + identificaties
         deactivate Profiel
 
 </details>
@@ -439,7 +533,14 @@ De volgende diagrammen illustreren de belangrijkste interacties met de ProfielSe
         MOZa->>Ondernemer: Toon Profiel Pagina
         Ondernemer->>MOZa: Opent pagina 'Contactvoorkeuren'
 
-        MOZa->>Profiel: GET contactvoorkeuren (BSN + KvK)
+        MOZa->>Profiel: POST /partijen:zoek (identificatieType + identificatieNummer)
+        deactivate MOZa
+        activate Profiel
+        Profiel-->>MOZa: partijId
+        deactivate Profiel
+        activate MOZa
+
+        MOZa->>Profiel: GET /partijen/{partijId}
         deactivate MOZa
         activate Profiel
         Profiel-->>MOZa: Contactvoorkeuren terug
@@ -450,7 +551,7 @@ De volgende diagrammen illustreren de belangrijkste interacties met de ProfielSe
 
         Ondernemer->>MOZa: Past contactvoorkeur aan
 
-        MOZa->>Profiel: PUT contactgegeven (BSN + KvK)
+        MOZa->>Profiel: PUT /contactgegevens/{contactgegevenId}
         deactivate MOZa
         activate Profiel
         Profiel-->>MOZa: Ok (voorkeur bijgewerkt)

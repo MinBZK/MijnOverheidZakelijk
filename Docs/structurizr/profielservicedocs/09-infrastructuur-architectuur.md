@@ -10,8 +10,8 @@ De Profiel Service draait op het Standaard Platform van Logius. Concrete cluster
 
 De Profiel Service slaat een aantal velden versleuteld op via column-level encryption (zie [§08 Data, Encryptie en opslag](08-data.md#encryptie-en-opslag)):
 
-- `IDENTIFICATIE.IdentificatieNummer` (KVK, RSIN, en de BSNk-pseudoniem voor BSN)
-- `CONTACTGEGEVEN.Waarde` (e-mailadres, telefoonnummer, applicatie-id)
+- `IDENTIFICATIE.IdentificatieNummer`
+- `CONTACTGEGEVEN.Waarde`
 
 De versleutelingssleutels worden gedeployed als [Sealed Secrets](https://sealed-secrets.netlify.app/) binnen het Standaard Platform. De sealed secret dat in git staat bevat de sleutel uitsluitend in versleutelde vorm; de Sealed Secrets-controller in het cluster ontsleutelt het manifest naar een reguliere Kubernetes `Secret`, die vervolgens als environment variable of mounted volume aan de Profiel Service-pod beschikbaar komt.
 
@@ -21,11 +21,9 @@ Implicaties van deze keuze:
 - Per cluster werkt een eigen Sealed Secrets-controller met een eigen sleutelpaar. Dezelfde versleutelde manifesten zijn daardoor niet zonder hercodering bruikbaar in een ander cluster (test versus productie).
 - Rotatie van een versleutelingssleutel betekent het uitrollen van een nieuwe Sealed Secret met de nieuwe waarde en het opnieuw deployen van de Profiel Service.
 
-**TBD:** strategie voor meerdere actieve sleutelversies tegelijk, zodat bestaande rijen leesbaar blijven na rotatie. Een gangbare aanpak is een sleutel-versie-indicator per versleutelde kolom plus meerdere sleutels parallel beschikbaar in de pod; de definitieve keuze wordt vastgelegd in een ADR.
-
 ### Pseudonimisering van BSN (BSNk)
 
-Een ruw BSN komt niet voor in de database. De Profiel Service ontvangt of haalt een BSN op, stuurt deze direct door naar de BSNk-module (BSN-koppelnummer) van Logius, en bewaart vervolgens uitsluitend het sectorale pseudoniem dat BSNk teruggeeft.
+Een ruw BSN komt niet voor in de database. De Profiel Service ontvangt of haalt een BSN op, pseudonimiseerde deze met behulp van de BSNk-module (BSN-koppelnummer), en bewaart vervolgens uitsluitend het sectorale pseudoniem.
 
 ```mermaid
 sequenceDiagram
@@ -46,14 +44,12 @@ sequenceDiagram
 
 Voor andere identificatienummers (KVK, RSIN, ...) wordt onderzocht in welke mate dezelfde aanpak toepasbaar is. Tot die beslissing genomen is, worden deze nummers wel versleuteld maar niet gepseudonimiseerd opgeslagen.
 
-**TBD:** koppelvlak met BSNk. De Profiel Service gebruikt vermoedelijk BSNk-PP (Polymorphic Pseudonyms), maar het exacte BSNk-koppelprofiel (PP, IP, EI) en de sectorindeling worden in afstemming met Logius vastgesteld.
-
 ### BIO-classificatie
 
-De Profiel Service verwerkt persoonsgegevens (BSN-pseudoniem, contactgegevens, voorkeuren) en valt daarmee onder de [Baseline Informatiebeveiliging Overheid (BIO)](https://www.bio-overheid.nl/). Voor zowel beschikbaarheid (B), integriteit (I) als vertrouwelijkheid (V) wordt een BBN-classificatie (Basis Beveiligingsniveau) bepaald.
+De Profiel Service verwerkt persoonsgegevens en valt daarmee onder de [Baseline Informatiebeveiliging Overheid (BIO)](https://www.bio-overheid.nl/). Voor zowel beschikbaarheid (B), integriteit (I) als vertrouwelijkheid (V) wordt een BBN-classificatie (Basis Beveiligingsniveau) bepaald.
 
 | Aspect            | Indicatieve BBN | Toelichting                                                                                         |
-| ----------------- | --------------- | --------------------------------------------------------------------------------------------------- |
+|-------------------|-----------------|-----------------------------------------------------------------------------------------------------|
 | Beschikbaarheid   | TBD             | Afhankelijk van de SLA-afspraken met aangesloten dienstverleners; richtinggevend BBN 1 of BBN 2.    |
 | Integriteit       | TBD             | Foutieve contactgegevens leiden tot foutieve afhandeling bij dienstverleners; richtinggevend BBN 2. |
 | Vertrouwelijkheid | TBD             | BSN en contactgegevens zijn persoonsgegevens met verhoogd risicoprofiel; richtinggevend BBN 2.      |

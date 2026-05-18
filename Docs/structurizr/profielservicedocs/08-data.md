@@ -176,12 +176,8 @@ Een SCOPE_VOORKEUR bakent af voor welke combinatie van dienstverlener en dienst 
 |--------------|------------------------------------|
 | **DIENST**   |                                    |
 | Id           | Unieke identificator van de dienst |
-| Naam         | Naam van de dienst (uniek)         |
+| Naam         | Naam van de dienst                 |
 | Beschrijving | Optionele beschrijving van de dienst |
-
-**Constraints**
-
-- `UNIQUE(Naam)` — diensten hebben een globaal unieke naam.
 
 
 #### DIENSTVERLENER_DIENST
@@ -284,7 +280,7 @@ Het onderstaande diagram geeft de structuur van het gegevensmodel weer, inclusie
 
         DIENST {
             uuid Id PK "NOT NULL"
-            string Naam "NOT NULL, UNIQUE"
+            string Naam "NOT NULL"
             string Beschrijving ""
         }
 

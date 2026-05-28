@@ -21,8 +21,9 @@ De onderstaande kwaliteitseisen zijn architectonisch significant en sturen ontwe
 Waar zaken bewust buiten scope vallen, is dit expliciet benoemd.
 
 #### Beveiliging & Privacy
-- Authenticatie: Via erkende federatieve identiteiten (DigiD, eHerkenning, eIDas) conform ADR 0006. Eisen: OIDC/OAuth 2.0 flows, tokens met beperkte scopes, token TTL ≤ 60 min; refresh alleen server-to-server waar passend. Meetbaar via IDP-config en token policies.
-- Autorisatie: scope-gebaseerd mogelijkheid (per dienst/dienstverlener) met dataminimalisatie. Alleen de minimaal opgevraagde attributen worden geleverd. Verplicht ‘least privilege’ op API-niveau & ontsloten via het FDS.
+- Eindgebruikersauthenticatie: gebeurt in het portaal of de vakapplicatie via erkende federatieve identiteiten (DigiD, eHerkenning, eIDAS) conform ADR 0006. Het portaal stuurt de resulterende identificaties (BSN, KvK, RSIN) mee als context wanneer het namens de gebruiker de Profiel Service aanroept. Zie ook [§09 Infrastructuur, Authenticatie en autorisatie](09-infrastructuur-architectuur.md#authenticatie-en-autorisatie).
+- Toegang tot de Profiel Service: elke aanroep, ook die vanuit het portaal, verloopt als service-to-service-verkeer via de API-gateway. De gateway dwingt FSC-contracten af en valideert FTV-tokens. De Profiel Service zelf voert geen tokenvalidatie of scope-mapping uit. Achtergrond: [bijlage Logging, Toegang en Doelbinding](../decisions/addendum/profiel-service-logging-en-toegang.md).
+- Autorisatie: scope-gebaseerd per dienst en dienstverlener met dataminimalisatie. Alleen de minimaal opgevraagde attributen worden geleverd; het principe van 'least privilege' is op contractniveau (FSC) vastgelegd.
 - Privacy/AVG: verwerkingsregister en grondslagregistratie op orde, volgens AVG artikel 6 en 30 respectief. Daarbij komt mee alleen noodzakelijke persoonsgegevens opslaan. 
 - Dataretentie: operationele logs max. 90 dagen, audit-logs conform bewaartermijn in ADR 0005/0007. DPIA uitgevoerd vóór productie.
 - Transport & opslag: TLS 1.2+ in transit; gevoelige secrets via sealed secrets, geen gevoelige data in logs. Encryptie-at-rest verplicht indien toepasbaar.

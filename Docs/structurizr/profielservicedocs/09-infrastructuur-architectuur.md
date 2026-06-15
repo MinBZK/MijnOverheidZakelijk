@@ -11,9 +11,9 @@ De Profiel Service draait op het Standaard Platform van Logius. Concrete cluster
 Toegang tot de Profiel Service is op twee niveaus geauthenticeerd:
 
 1. **Aanroeper-authenticatie**, uitgevoerd door de API-gateway op basis van FSC en FTV. Dit identificeert de organisatie die de aanroep doet (een dienstverlener, het MOZa-portaal of een vakapplicatie).
-2. **Subject-authenticatie**, uitgevoerd door de Profiel Service zelf op basis van een meegestuurd JWT dat de eindgebruiker identificeert namens wie de aanroep plaatsvindt. Dit JWT wordt door de Profiel Service per request gevalideerd tegen de uitgevende identity provider.
+2. **Subject-authenticatie**, uitgevoerd door de Profiel Service zelf, maar alleen wanneer de aanroep namens een eindgebruiker plaatsvindt. In dat geval stuurt de aanroeper een JWT mee dat de eindgebruiker identificeert; de Profiel Service valideert dit JWT per request tegen de uitgevende identity provider. Handelt de aanroeper (bijvoorbeeld een dienstverlener) op eigen titel, dan is er geen subject-JWT en volstaat de aanroeper-authenticatie.
 
-De aanroeper vouwt dus voor de eigen identiteit; de eindgebruikersidentiteit wordt onafhankelijk door de Profiel Service geverifieerd voordat een gegevenslookup plaatsvindt.
+De aanroeper staat dus in voor de eigen identiteit (afgedwongen door de gateway); een eventuele eindgebruikersidentiteit wordt onafhankelijk door de Profiel Service geverifieerd voordat er namens die eindgebruiker een gegevenslookup plaatsvindt.
 
 #### Aanroeper-authenticatie via de gateway
 
@@ -27,7 +27,7 @@ De gateway valideert vervolgens op basis van:
 Elke aanroep van de Profiel Service is daarmee een service-to-service-aanroep, ook wanneer er uiteindelijk een ingelogde eindgebruiker achter zit. Twee typen aanroepers zijn relevant:
 
 - **Het MOZa-portaal of een vakapplicatie**, dat handelt namens een ingelogde burger of ondernemer. De eindgebruiker is daar aan de voorkant geauthenticeerd via DigiD, eHerkenning of eIDAS; het portaal verkrijgt in die flow een subject-JWT voor de eindgebruiker en stuurt dat mee in de aanroep naar de Profiel Service. De inlogflow aan de voorkant is buiten scope voor de Profiel Service en wordt beschreven in [§07 Code, Authenticatie](07-code.md#authenticatie).
-- **Dienstverleners en ketenpartners** die rechtstreeks profielgegevens opvragen voor een specifieke eindgebruiker, bijvoorbeeld voor het versturen van notificaties. Ook deze partijen sturen het subject-JWT voor de betreffende eindgebruiker mee.
+- **Dienstverleners en ketenpartners** roepen de Profiel Service in de regel op eigen titel aan, bijvoorbeeld om contactgegevens op te halen voor het versturen van een notificatie. Voor zulke aanroepen sturen zij geen subject-JWT mee: de aanroeper-authenticatie via FSC/FTV en de scope-gebaseerde autorisatie zijn dan voldoende, en de partij-identificatie komt uit het verzoek zelf. Alleen wanneer een dienstverlener een handeling uitvoert die door of namens een specifieke eindgebruiker wordt gedaan, stuurt hij wél het subject-JWT van die eindgebruiker mee, zodat de Profiel Service die identiteit valideert.
 
 In beide gevallen handhaaft de gateway op basis van het FSC-contract van de aanroepende partij en het bijbehorende FTV-token. De Profiel Service zelf maakt geen onderscheid op netwerkniveau tussen "portaalverkeer" en "dienstverlenerverkeer".
 
@@ -35,16 +35,16 @@ Een uitgebreide beschrijving van FSC, FTV en hun samenhang met FDS en LDV staat 
 
 #### Subject-authenticatie via JWT
 
-De aanroeper stuurt bij elke request een JWT mee dat de eindgebruiker identificeert. De Profiel Service valideert dit JWT lokaal tegen de JSON Web Key Set (JWKS) van de uitgevende identity provider en gebruikt het gevalideerde subject (BSN, KvK of RSIN) als sleutel voor de gegevensbewerking.
+Wanneer een aanroep namens een eindgebruiker plaatsvindt, stuurt de aanroeper een JWT mee dat die eindgebruiker identificeert. De Profiel Service valideert dit JWT dan lokaal tegen de JSON Web Key Set (JWKS) van de uitgevende identity provider en gebruikt het gevalideerde subject (BSN, KvK of RSIN) als sleutel voor de gegevensbewerking. Aanroepen die een dienstverlener op eigen titel doet, bevatten geen subject-JWT.
 
 - **Uitgevende identity providers.** Het JWT wordt uitgegeven door DigiD (voor de BSN-gebaseerde flow) of de eHerkenning-makelaar (voor de KvK/RSIN-gebaseerde flow). De definitieve combinatie wordt in een vervolg-ADR vastgelegd; tot dat besluit gaan we uit van beide bronnen naast elkaar.
 - **Multi-issuer trustconfiguratie.** De Profiel Service kent voor elke geaccepteerde IdP een `iss`-waarde en de bijbehorende JWKS-URL. De `iss`-claim in het binnenkomende JWT bepaalt welke JWKS gebruikt wordt voor signature-verificatie.
-- **Validatie per request.** Voor elk JWT controleert de service de handtekening tegen de JWKS, de `iss` tegen de configuratielijst, de `aud` op aanwezigheid van de Profiel Service-identifier, en `exp`/`nbf` op tijdsgeldigheid. Verzoeken met een ongeldig of ontbrekend JWT worden afgewezen met HTTP 401.
+- **Validatie per request.** Voor elk meegestuurd JWT controleert de service de handtekening tegen de JWKS, de `iss` tegen de configuratielijst, de `aud` op aanwezigheid van de Profiel Service-identifier, en `exp`/`nbf` op tijdsgeldigheid. Een ongeldig JWT wordt altijd afgewezen met HTTP 401. Voor aanroepen die namens een eindgebruiker plaatsvinden is een geldig JWT verplicht; ontbreekt het daar, dan wordt het verzoek eveneens afgewezen.
 - **Performance.** JWKS-sleutels worden in-process gecached met een TTL en bij signature-mismatch direct opnieuw opgehaald. Daarmee voegt de validatie geen netwerkronde per request toe.
-- **Identificatie uit het JWT.** De partij-identificatie (BSN, KvK, RSIN) komt uit een geverifieerde claim van het JWT, niet uit de request body. Welke claim-naam per IdP geldt wordt in de vervolg-ADR vastgelegd. Tot die definitie blijft de service de identificatie ook uit de body lezen en wijst hij requests af waarin body en token niet overeenstemmen.
+- **Identificatie uit het JWT.** Bij een aanroep namens een eindgebruiker komt de partij-identificatie (BSN, KvK, RSIN) uit een geverifieerde claim van het JWT, niet uit de request body. Welke claim-naam per IdP geldt wordt in de vervolg-ADR vastgelegd. Tot die definitie blijft de service de identificatie ook uit de body lezen en wijst hij requests af waarin body en token niet overeenstemmen. Bij aanroepen op eigen titel van de dienstverlener komt de partij-identificatie uit het verzoek zelf.
 - **Implementatie.** De Quarkus-extensie `quarkus-smallrye-jwt` levert signature-verificatie, JWKS-caching en claim-extractie. Voor automatische tests gebruiken we `quarkus-test-security-jwt` om JWT's lokaal te genereren zonder een echte IdP-roundtrip.
 
-Subject-validatie geldt voor **alle endpoints** van de Profiel Service. Er is geen onderscheid tussen "lees-" en "schrijfendpoints" op dit punt.
+Subject-validatie geldt voor elke aanroep die namens een eindgebruiker plaatsvindt, ongeacht of het om een lees- of schrijfendpoint gaat. Aanroepen die een dienstverlener op eigen titel doet, kennen geen subject-JWT en worden uitsluitend op aanroeper-niveau geautoriseerd (FSC/FTV en scope).
 
 #### Consequenties voor de Profiel Service
 

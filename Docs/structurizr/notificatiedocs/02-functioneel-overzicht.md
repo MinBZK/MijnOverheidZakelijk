@@ -29,7 +29,7 @@ Belangrijke gebruikers en hun behoeften zijn:
    - Koppelt terug wanneer de status uiteindelijk naar Succeeded/Failed gaat.
 
 2. Kanaalkeuze en voorkeursverwerking – De aannamen is dat de vakapplicatie de kanaal en voorkeur al heeft vastgelegd.
-   - In sommige van de scenario's is de notificatie service wel verantwoordelijk voor kanaalherstel & het ophalen van adresgegevens.
+   - In sommige scenario's is de Notificatiedienst zelf verantwoordelijk voor contactherstel en het afleiden van adresgegevens.
 
 3. Aflevering en status – De service biedt het bericht aan bij het gekozen kanaal en registreert tussenstappen (Enqueued, Sent, Delivered/Failed).
    - Callbacks vanaf de provider worden verwerkt en beschikbaar gesteld aan de aanroeper.
@@ -41,13 +41,11 @@ Belangrijke gebruikers en hun behoeften zijn:
 
 #### Scenario’s
 
-Onderstaande scenario’s illustreren de samenwerking tussen vakapplicatie, Notificatie Service, Profiel Service en verzendvoorzieningen.
-Dit zijn de welbekende scenario's over hoe overheidsdiensten zouden kunnen interacteren met de Notificatie Service.
-Scenario 9 staat hier nog niet, maar is idem aan scenario 8, met de toevoeging van kanaalherstel.
+De dienst kent twee scenario’s, die aansluiten op de twee regie-modellen (zie hoofdstuk 6). Bij gedecentraliseerde regie levert de dienstverlener de gegevens zelf aan via de OMC; bij gecentraliseerde regie geeft de organisatie de regie uit handen aan het NMC, inclusief contactherstel bij een mislukte aflevering.
 
-##### Scenario 2 — Vakapplicatie belt direct de Notificatie Service
+> De sequencediagrammen (mermaid) zijn leidend.
 
-![Scenario 2 uitgetekend](images/Scenario2.png "Scenario 2 uitgetekend")
+##### Gedecentraliseerde regie
 
 <details>
   <summary>Zie mermaid code</summary>
@@ -57,54 +55,43 @@ Scenario 9 staat hier nog niet, maar is idem aan scenario 8, met de toevoeging v
         actor Medewerker
         Medewerker->>Vakapplicatie:
         activate Vakapplicatie
-        Vakapplicatie->>Notificatie service:Verstuur verzoek tot notificatie
-        activate Notificatie service
-        Notificatie service-->>Vakapplicatie:
-        deactivate Vakapplicatie
-        Notificatie service-->>Vakapplicatie:Notificatie status update callback
-        deactivate Notificatie service
-        activate Vakapplicatie
-        Vakapplicatie->>Vakapplicatie:Afhandeling callback
+        Vakapplicatie->>OMC:Verstuur verzoek tot notificatie
+        activate OMC
+        OMC->>Eigen profielservice:Haal contactgegevens op
+        Eigen profielservice-->>OMC:Contactgegevens
+        OMC->>NMC:Initiëren notificatie
+        activate NMC
+        NMC->>NotifyNL:Verstuur notificatie
+        NotifyNL-->>NMC:Geaccepteerd
+        NMC-->>OMC:Geaccepteerd (referentie)
+        NotifyNL-->>NMC:Afleverstatus (delivery receipt)
+        NMC-->>OMC:Afleverstatus (optionele consument-callback)
+        deactivate NMC
+        OMC-->>Vakapplicatie:Optionele statusupdate
+        deactivate OMC
         deactivate Vakapplicatie
 </details>
 
-##### Scenario 8 — Vakapplicatie via OMC met profielverrijking en fallback
-
-![Scenario 8 uitgetekend](images/Scenario8GeenLDV.png "Scenario 8 uitgetekend")
+##### Gecentraliseerde regie
 
 <details>
   <summary>Zie mermaid code</summary>
-    
+
     mermaid
     sequenceDiagram
         actor Medewerker
-        Medewerker->>Vakapplicatie:'
-        activate Vakapplicatie
-        Vakapplicatie->>OMC:Verstuur verzoek tot notificatie
-        deactivate Vakapplicatie
-        activate OMC
-        OMC->>Profiel service:Haal contact inforamtie op o.b.v. kvknummer
-        activate Profiel service
-        Profiel service-->>OMC:'
-        deactivate Profiel service
-        OMC->>Notificatie service:Verstuur verzoek tot notificatie
-        activate Notificatie service
-        deactivate OMC
-        
-        Notificatie service-->>OMC:Notificatie status update callback
-        deactivate Notificatie service
-        activate OMC
-        alt status = mislukt
-        OMC->>Profiel service:Haal adres gegevens op o.b.v. kvknummer
-        activate Profiel service
-        Profiel service-->>OMC:'
-        deactivate Profiel service
-        OMC->>Notificatie service:Stuur verzoek tot brief
-        activate Notificatie service
-        Notificatie service-->>OMC:Brief callback
-        deactivate Notificatie service
+        Medewerker->>Organisatie:Start proces
+        Organisatie->>NMC:Initiëren notificatie
+        NMC->>Profielservice:Haal contactvoorkeur op
+        Profielservice-->>NMC:Contactvoorkeur en gegevens
+        NMC->>NotifyNL:Verstuur notificatie
+        NotifyNL-->>NMC:Geaccepteerd
+        NMC-->>Organisatie:Geaccepteerd (referentie)
+        NotifyNL-->>NMC:Afleverstatus (delivery receipt)
+        alt Aflevering mislukt
+            NMC->>Adresbron:Adres ophalen (KvK Handelsregister of BRP)
+            NMC->>Contactherstel:Onbereikbaar + adres
+            Contactherstel->>Printstraat:Fysieke verzending
         end
-        deactivate OMC
-        OMC-->>Vakapplicatie:Optionele callback
-
+      NMC-->>Organisatie:Afleverstatus (optionele consument-callback)
 </details>

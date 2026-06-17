@@ -8,8 +8,8 @@ Een Rijksbrede voorziening voor het notificeren is nodig om te kunnen voldoen aa
 
 De Notificatiedienst kent twee modellen voor wie de regie over een verzending voert:
 
-- **Decentrale regie:** de dienstverlener houdt de regie. De Procesapplicatie roept de Output Management Component (OMC) aan; de OMC beschikt zelf al over de contactgegevens en initieert daarmee de notificatie bij het Notificatie Management Component (NMC). Het NMC haalt deze gegevens in dit model niet op.
-- **Centrale regie:** de dienstverlener geeft de regie uit handen. Met de juiste juridische grondslag stuurt de organisatie op basis van een identificerend nummer (KvK, RSIN of BSN) en een verplichte templateverwijzing een verzoek naar het NMC. Het NMC haalt zelf de voorkeur op bij de Profielservice.
+- **Decentrale regie:** de dienstverlener houdt de regie. De Vakapplicatie roept de Output Management Component (OMC) aan; de OMC beschikt zelf al over de contactgegevens en initieert daarmee de notificatie bij het Notificatie Management Component (NMC). Het NMC haalt deze gegevens in dit model niet op.
+- **Centrale regie:** de dienstverlener geeft de regie uit handen. Met de juiste juridische grondslag stuurt de organisatie op basis van een identificerend nummer (KvK, RSIN of BSN) en een templateverwijzing een verzoek naar het NMC. Het NMC haalt zelf de voorkeur op bij de Profielservice.
 
 ![Notificatie Service Context](embed:NotificatieServiceContext)
 
@@ -61,8 +61,8 @@ De twee regie-modellen vertalen zich naar twee scenario's. Zie ook hoofdstuk 2.
 
 #### Gedecentraliseerde regie
 
-De Procesapplicatie initieert via de OMC een notificatie en levert de contactgegevens zelf aan; het NMC verstuurt deze. Er is geen contactherstel door de dienst: bij een mislukte aflevering ligt de opvolging bij de dienstverlener.
+De Vakapplicatie initieert via de OMC een notificatie en levert de contactgegevens zelf aan; het NMC verstuurt deze. De afleverstatus wordt wel asynchroon teruggekoppeld, zodat de dienstverlener weet of de aflevering is geslaagd. Er is geen contactherstel door de dienst: bij een mislukte aflevering ligt de opvolging bij de dienstverlener.
 
 #### Gecentraliseerde regie
 
-De organisatie geeft de regie uit handen en stuurt op basis van een identificerend nummer (KvK, RSIN of BSN) en een verplichte templateverwijzing een verzoek naar het NMC, dat zelf de voorkeur ophaalt bij de Profielservice en verstuurt. Bij een mislukte aflevering door kanaaluitval verzorgt de Notificatiedienst het contactherstel: ze haalt het adres op bij het KvK Handelsregister of de BRP en geeft dit met de onbereikbaar-melding door aan de Contactherstel-dienst, die het bericht via de Printstraat fysiek verzendt.
+De organisatie geeft de regie uit handen en stuurt op basis van een identificerend nummer (KvK, RSIN of BSN) en een templateverwijzing een verzoek naar het NMC, dat zelf de voorkeur ophaalt bij de Profielservice en verstuurt. Bij een mislukte aflevering door kanaaluitval verzorgt de Notificatiedienst het contactherstel: ze haalt het adres op bij het KvK Handelsregister of de BRP en geeft dit met de onbereikbaar-melding door aan de Contactherstel-dienst, die het bericht via de Printstraat fysiek verzendt.

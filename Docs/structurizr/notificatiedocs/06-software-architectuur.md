@@ -31,7 +31,7 @@ Het NMC orchestreert het notificatieproces:
 - de **Verzendadapter** verstuurt het bericht via NotifyNL met een template_id en de personalisation;
 - de **Adres-adapter** haalt het adres op bij het KvK Handelsregister (KvK/RSIN) of de BRP (BSN);
 - de **Contactherstel-coördinator** haalt bij onbereikbaarheid het adres op en geeft dit met de onbereikbaar-melding door aan de Contactherstel-dienst;
-- de **Consument-callback-adapter** koppelt de afleverstatus terug aan de consument, los van de inkomende NotifyNL-callback.
+- de **Notificatiestatus-callback-adapter** koppelt de notificatiestatus terug aan de aanroeper, los van de inkomende NotifyNL-callback.
 
 > De centrale en decentrale intake zijn hier als aparte controllers getekend voor de duidelijkheid. Functioneel kunnen ze ook één API zijn; de keuze hangt af van of de twee regie-modellen een eigen autorisatiegrens nodig hebben (de centrale regie verwerkt immers identificerende nummers onder een eigen grondslag).
 

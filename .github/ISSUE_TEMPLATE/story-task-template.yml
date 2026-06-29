@@ -7,14 +7,14 @@ body:
   - type: textarea
     id: waarom
     attributes:
-      label: Beschrijf het waarom
+      label: Waarom
       description: Leg in één of enkele zinnen uit waarom dit ticket relevant is
     validations:
       required: true
   - type: textarea
     id: wat
     attributes:
-      label: Wat moet er gebeuren
+      label: Wat
       description: "Leg in enkele zinnen uit wat het doel is van dit ticket:"
     validations:
       required: true

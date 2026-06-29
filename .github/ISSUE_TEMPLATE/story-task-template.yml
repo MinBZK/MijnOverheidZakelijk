@@ -1,5 +1,5 @@
 name: "Story/Taak template (NL)"
-description: Maak een nieuwe Story of Taak aan
+description: "Maak een nieuwe Story of Taak aan"
 title: "[Story / Taak] "
 labels: ["Story", "Taak"]
 assignees: []

@@ -27,10 +27,11 @@ body:
     id: Acceptatiecriteria
     attributes:
       label: Acceptatiecriteria
-      description: Geeft concreet weer wanneer de story 'af' is - dit zijn daarmee de toetsingscriteria. Denk hierbij aan:\
-- Functionaliteit X werkt als onderdeel applicatie Y\
-- Functionaliteit X is getest - en dit is vastgelegd in het ticket\
-- Automatische testen zijn voor Functionaliteit X zijn toegevoegd in de pipeline\
-- Stories om Functionaliteit X te realiseren zijn aangemaakt én gelinked in deze story\
+      description: |
+        Geeft concreet weer wanneer de story 'af' is - dit zijn daarmee de toetsingscriteria. Denk hierbij aan:
+        - Functionaliteit X werkt als onderdeel applicatie Y
+        - Functionaliteit X is getest - en dit is vastgelegd in het ticket
+        - Automatische testen zijn voor Functionaliteit X zijn toegevoegd in de pipeline
+        - Stories om Functionaliteit X te realiseren zijn aangemaakt én gelinked in deze story
     validations:
       required: true

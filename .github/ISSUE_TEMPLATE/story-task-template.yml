@@ -5,26 +5,26 @@ labels: ["Story", "Taak"]
 assignees: []
 body:
   - type: textarea
-    id: Waarom
+    id: waarom
     attributes:
       label: Beschrijf het waarom
       description: Leg in één of enkele zinnen uit waarom dit ticket relevant is
     validations:
       required: true
   - type: textarea
-    id: Wat
+    id: wat
     attributes:
       label: Wat moet er gebeuren
       description: "Leg in enkele zinnen uit wat het doel is van dit ticket:"
     validations:
       required: true
   - type: textarea
-    id: Achtergrond informatie
+    id: achtergrond_informatie
     attributes:
       label: Achtergrond informatie
       description: Hier kan achtergrond informatie komen
   - type: textarea
-    id: Acceptatiecriteria
+    id: acceptatiecriteria
     attributes:
       label: Acceptatiecriteria
       description: |

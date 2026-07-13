@@ -1,0 +1,37 @@
+name: "Story/Taak template (NL)"
+description: "Maak een nieuwe Story of Taak aan"
+title: "[Story / Taak] "
+labels: ["Story", "Taak", "Turing-Team", "Lovelace", "Lamarr", "refine"]
+assignees: []
+body:
+  - type: textarea
+    id: waarom
+    attributes:
+      label: Waarom
+      description: Leg in één of enkele zinnen uit waarom dit ticket relevant is
+    validations:
+      required: true
+  - type: textarea
+    id: wat
+    attributes:
+      label: Wat
+      description: "Leg in enkele zinnen uit wat het doel is van dit ticket:"
+    validations:
+      required: true
+  - type: textarea
+    id: achtergrond_informatie
+    attributes:
+      label: Achtergrond informatie
+      description: Hier kan achtergrond informatie komen
+  - type: textarea
+    id: acceptatiecriteria
+    attributes:
+      label: Acceptatiecriteria
+      description: |
+        Geeft concreet weer wanneer de story 'af' is - dit zijn daarmee de toetsingscriteria. Denk hierbij aan:
+        - Functionaliteit X werkt als onderdeel applicatie Y
+        - Functionaliteit X is getest - en dit is vastgelegd in het ticket
+        - Automatische testen zijn voor Functionaliteit X zijn toegevoegd in de pipeline
+        - Stories om Functionaliteit X te realiseren zijn aangemaakt én gelinked in deze story
+    validations:
+      required: true

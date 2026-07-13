@@ -4,7 +4,7 @@ Date: 2025-07-08
 
 ## Status
 
-Proposed
+Superseded by [ADR 0021 Twee regie-modellen in plaats van de scenario's 2, 8 en 9](0021-twee-regie-modellen-ipv-scenarios.md)
 
 ## Context
 

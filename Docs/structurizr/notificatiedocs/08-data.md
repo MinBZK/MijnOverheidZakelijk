@@ -24,8 +24,8 @@ Centrale entiteit die een notificatieverzoek representeert.
 | `type` | Enum (EMAIL, SMS, BRIEF) | Notificatiekanaal |
 | `onderwerp` | String (max 255) | Onderwerp van de notificatie |
 | `inhoud` | Text | Inhoud/body van de notificatie |
-| `ontvanger` | String (max 320) | Directe ontvanger (scenario 2) |
-| `kvkNummer` | String (max 8) | KVK-nummer voor profielopzoeking (scenario 8/9) |
+| `referentie` | String (max 255, uniek) | Referentie die bij acceptatie aan de aanvrager wordt teruggegeven en waarmee de afleverstatus wordt gecorreleerd (beide regie-modellen) |
+| `identificerendNummer` | String (versleuteld opgeslagen) | Identificerend nummer (BSN, KvK of RSIN), alleen bij gecentraliseerde regie. Bewaard tot de afleverstatus is teruggekoppeld en daarna verwijderd, zodat contactherstel mogelijk blijft |
 | `status` | Enum | Huidige status (zie statusmodel) |
 | `kanaalStatus` | Enum (PRIMAIR, KANAALHERSTEL) | Of primair kanaal of kanaalherstel actief is |
 | `kanaalherstel` | Boolean | Of kanaalherstel gewenst is bij falen |

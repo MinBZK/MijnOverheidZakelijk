@@ -12,6 +12,8 @@ Binnen MijnOverheid Zakelijk is betrouwbare, tijdige en kanaalonafhankelijke com
 De Notificatie Service opereert als generieke voorziening tussen overheidsdiensten en verzendkanalen/platforms. 
 Dit maakt het mogelijk om notificaties consistent aan te bieden, kanaalkeuzes van de gebruiker te respecteren en technische verschillen tussen verzendproviders af te schermen.
 
+De dienst ondersteunt twee regie-modellen. Bij decentrale regie houdt de dienstverlener via de OMC zelf de regie en regelt hij bij een mislukte aflevering ook het contactherstel zelf; bij centrale regie geeft de organisatie de regie uit handen aan het Notificatie Management Component (NMC), dat op basis van een identificerend nummer (KvK, RSIN of BSN) de voorkeur bij de Profielservice ophaalt en bij een mislukte aflevering ook het contactherstel voor de dienstverlener regelt.
+
 ### Uitdagingen
 
 - Fragmentatie van kanalen en leveranciers: elke dienstverlener heeft eigen integraties en afleverbewijzen.

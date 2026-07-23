@@ -1,90 +1,72 @@
 ## Code
 
+De broncode van het NMC staat op GitHub: [MinBZK/moza-notificatiemanagementcomponent](https://github.com/MinBZK/moza-notificatiemanagementcomponent).
+
 ### Technologiestack
 
-De Notificatie Service zou gebouwd worden met de volgende technologiestack:
-
-| Component        | Technologie                               | Versie |
-|------------------|-------------------------------------------|--------|
-| Runtime          | Java                                      | 21     |
-| Framework        | Quarkus                                   | 3.31.1 |
-| Build tool       | Maven                                     | -      |
-| ORM              | Hibernate ORM met Panache (Active Record) | -      |
-| Audit trail      | Hibernate Envers                          | -      |
-| Messaging        | SmallRye Reactive Messaging (RabbitMQ)    | -      |
-| Email            | Quarkus Mailer (SMTP)                     | -      |
-| API-documentatie | SmallRye OpenAPI                          | -      |
-| Fault tolerance  | MicroProfile Fault Tolerance              | -      |
-| REST clients     | Quarkus REST Client (OpenAPI Generator)   | -      |
-| Authenticatie    | Quarkus OIDC (Keycloak)                   | -      |
+| Component          | Technologie                                        | Versie |
+|--------------------|----------------------------------------------------|--------|
+| Runtime            | Java                                               | 25     |
+| Framework          | Quarkus                                            | 3.35.1 |
+| Build tool         | Maven                                              | -      |
+| ORM                | Hibernate ORM met Panache (repository pattern)     | -      |
+| Databasemigraties  | Flyway                                             | -      |
+| Database           | PostgreSQL (H2 in tests)                           | -      |
+| API-contracten     | SmallRye OpenAPI + OpenAPI Generator (server-interfaces en uitgaande clients) | - |
+| Uitgaande JWT      | SmallRye JWT Build (NotifyNL-authenticatie)        | -      |
+| Foutafhandeling    | Quarkus HTTP Problem (RFC 9457)                    | -      |
+| Health             | SmallRye Health                                    | -      |
+| Container image    | Jib                                                | -      |
+| Verwerkingslogging | LDV-wrapper (logboekdataverwerking-wrapper)        | -      |
 
 ### Pakketstructuur
 
-De broncode zou een gelaagde pakketstructuur volgen onder `nl.rijksoverheid.moz.notificatie`:
+De broncode volgt een gelaagde pakketstructuur onder `nl.rijksoverheid.moz.nmc`:
 
-| Pakket             | Verantwoordelijkheid                                                                                        |
-|--------------------|-------------------------------------------------------------------------------------------------------------|
-| `controller`       | JAX-RS REST-endpoints (NotificatieController, DlqController, EmailTemplateController, AfbeeldingController) |
-| `services`         | Bedrijfslogica (NotificatieService, EmailTemplateService, KanaalherstelService, CallbackService)            |
-| `services.channel` | Kanaaladapters per notificatietype (EmailKanaalAdapter, SmsKanaalAdapter, BriefKanaalAdapter)               |
-| `entity`           | JPA-entiteiten met Panache Active Record patroon (Notificatie, NotificatieEvent, EmailTemplate, etc.)       |
-| `dto.request`      | Inkomende request-objecten                                                                                  |
-| `dto.response`     | Uitgaande response-objecten                                                                                 |
-| `mapper`           | Mapping tussen entiteiten en DTO's                                                                          |
-| `messaging`        | RabbitMQ-producers en -consumers (NotificatieProducer, NotificatieConsumer)                                 |
-| `auth`             | API key authenticatie (ApiKeyFilter)                                                                        |
-| `config`           | Configuratieklassen (RabbitMQ-topologie, SSRF-validatie, DNS-cache)                                         |
-| `helper`           | Hulpklassen (HashHelper voor PII-pseudonimisering)                                                          |
-| `common`           | Gedeelde enumeraties (NotificatieStatus, NotificatieType, KanaalStatus)                                     |
+| Pakket                   | Verantwoordelijkheid                                                                                     |
+|--------------------------|----------------------------------------------------------------------------------------------------------|
+| `controller`             | REST-endpoints van de business-API (centrale en decentrale intake) en de API-Version responsefilter      |
+| `service`                | Orchestratie van het notificatieproces en de mapping van berichttype naar NotifyNL-template              |
+| `domain`                 | De notificatie-entiteit en het statusmodel                                                               |
+| `repository`             | Toegang tot het Notificatieregister                                                                      |
+| `client.notifynl`        | Verzendadapter naar NotifyNL, inclusief de JWT-opbouw per aanroep                                        |
+| `client.profielservice`  | Adapter die de contactvoorkeur bij de Profielservice ophaalt                                             |
+| `client.consumentcallback` | Statusterugkoppeling naar de aanroeper als CloudEvents-webhook met retries                             |
+| `notifynlcallback`       | Inkomende NotifyNL delivery receipts: controller en bearer-token-authenticatiefilter                     |
+| `helper`                 | Pseudonimisering met keyed HMAC en hulpfuncties voor RFC 9457-responses                                  |
+
+De Adres-adapter en de Contactherstel-coördinator uit hoofdstuk 6 zijn nog niet gebouwd; ook herverzending en een endpoint om de notificatiestatus op te vragen ontbreken nog.
 
 ### Ontwikkelprincipes
 
-#### Active Record patroon (Panache)
+#### Contract-first met OpenAPI
 
-Alle entiteiten zouden `PanacheEntity` extenden en naast velden ook querymethoden bevatten. Dit maakt de code compacter doordat repository-klassen overbodig worden. Voorbeeld:
+De API-specificaties in `src/main/resources/META-INF` zijn de bron. De server-interfaces worden gegenereerd (jaxrs-spec, interface-only) en de controllers implementeren die interfaces. De NotifyNL-callback heeft bewust een eigen specificatie, los van de business-API, omdat het een inkomende webhook met een eigen contract is. Ook de clients voor NotifyNL en de Profielservice worden gegenereerd uit hun specificaties.
 
-```java
-Notificatie notificatie = Notificatie.findById(id);
-List<Notificatie> mislukt = Notificatie.findByStatus(NotificatieStatus.MISLUKT);
-```
+#### Ports & adapters per externe dienst
 
-#### Ports & Adapters voor kanalen
+Elke externe koppeling heeft een eigen adapter in een eigen pakket. De orchestrator kent alleen de adapters, niet de onderliggende REST-clients; externe diensten zijn daardoor vervangbaar zonder de orchestratie te raken.
 
-Kanaalspecifieke logica zou geabstraheerd worden achter een `NotificatieKanaal`-interface. Elke adapter zou `verstuur(Notificatie)` implementeren en voorzien worden van MicroProfile Fault Tolerance-annotaties (`@CircuitBreaker`, `@Retry`). Nieuwe kanalen zouden toegevoegd worden door een nieuwe adapter te implementeren zonder wijzigingen aan bestaande code.
+#### Constructor injection
 
-#### Transactiegrenzen
+Afhankelijkheden worden via de constructor geïnjecteerd, niet via field injection.
 
-Database-operaties en externe I/O (callbacks, kanaalverzending) zouden gescheiden worden om databaseconnecties niet te blokkeren tijdens netwerkverkeer. De `NotificatieConsumer` zou verwerking splitsen in een `@Transactional` methode voor databasewerk en een aparte stap voor callback-aflevering na commit.
+#### Statusterugkoppeling met retries
 
-#### OpenAPI-gegenereerde clients
+De ConsumentCallbackAdapter verstuurt de statusterugkoppeling als CloudEvents-event en herhaalt bij fouten met exponentiële back-off en een begrensd aantal pogingen; de wachttijd is configureerbaar.
 
-Externe service-integraties (Profiel Service, Handelsregister, Kanaalhersteldienst) zouden gegenereerd worden uit OpenAPI-specificaties in `src/main/openapi/`. De gegenereerde clients zouden geconfigureerd worden via `application.properties` en type-safe zijn. Dit borgt dat integraties altijd in lijn zijn met de contracten.
+#### Foutafhandeling volgens RFC 9457
+
+Fouten worden geretourneerd als `application/problem+json`, met een consistente structuur over alle endpoints.
 
 ### Testen
 
-Voor het testen zouden wij de volgende strategie hanteren:
+| Aspect          | Aanpak                                                                 |
+|-----------------|------------------------------------------------------------------------|
+| Framework       | JUnit 5 via `@QuarkusTest`                                             |
+| Database        | H2 in-memory (vervangt PostgreSQL in tests)                            |
+| REST API        | RestAssured                                                            |
+| Externe services | Mockito `@InjectMock`                                                 |
+| Testdekking     | JaCoCo; de build faalt onder 90% instructie- of 75% branch-dekking     |
 
-| Aspect | Aanpak |
-|--------|--------|
-| Framework | JUnit 5 via `@QuarkusTest` |
-| Database | H2 in-memory (vervangt PostgreSQL in tests) |
-| Messaging | SmallRye in-memory connectors (vervangt RabbitMQ) |
-| Email | Quarkus mock-mailer |
-| Authenticatie | `@TestSecurity` annotaties (OIDC uitgeschakeld) |
-| Externe services | Mockito `@InjectMock` |
-
-Tests zouden georganiseerd worden per laag:
-
-| Testklasse | Scope |
-|-----------|-------|
-| `NotificatieControllerTest` | REST API-integratie voor notificatie-endpoints |
-| `DlqControllerTest` | REST API-integratie voor DLQ-endpoints |
-| `EmailTemplateControllerTest` | REST API-integratie voor template-endpoints |
-| `AfbeeldingControllerTest` | REST API-integratie voor afbeelding-endpoints |
-| `NotificatieServiceTest` | Service-laag bedrijfslogica |
-| `EmailTemplateServiceTest` | Template-beheer bedrijfslogica |
-| `NotificatieConsumerTest` | Berichtverwerking en retry/DLQ-logica |
-| `CallbackServiceTest` | Callback-aflevering en SSRF-validatie |
-| `KanaalherstelServiceTest` | Kanaalherstel-flow (succes en falen) |
-| `TemplateRendererTest` | HTML-rendering en variabelenvervanging |
-| `ApiKeyFilterTest` | API key authenticatie |
+Tests zijn per laag georganiseerd: controllers (REST-integratie), services (bedrijfslogica en berichttypen), adapters (NotifyNL, Profielservice, consument-callback) en helpers.

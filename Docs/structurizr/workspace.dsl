@@ -11,7 +11,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         }
 
         group "DI" {
-            DV = softwareSystem "Dienstverlener" "Vakapplicatie (mockup) van een organisatie voor uitwerking voor scenario 2, 8 & 9"  {
+            DV = softwareSystem "Dienstverlener" "Vakapplicatie (mockup) van een organisatie voor uitwerking van de twee regie-modellen"  {
                 DVOmcService = container "Output management component" "Routeren van de output van processen naar de juiste kanalen" ""
                 DVService = container "Dienstverlener Service" "Een vakapplicatie of service bij een DV die processen start waarbij notificaties verstuurd moeten worden" "" {
                 }
@@ -26,22 +26,22 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             Berichtenbox = softwareSystem "BBO" "De Berichtenbox voor Burgers en Ondernemers" "Existing System"
             NotificatieService = softwareSystem "Notificatiedienst" "Versturen van notificaties en contactherstel" {
                 !docs notificatiedocs
-                NMC = container "Notificatie Management Component" "Orchestreert notificaties en contactherstel" "" "MOZa, Nog te bouwen" {
+                NMC = container "Notificatie Management Component" "Orchestreert notificaties en contactherstel" "" "MOZa" {
                     // Bewust gesplitst voor duidelijkheid; centrale en decentrale intake kunnen ook één API zijn.
-                    CentraleNotificatieController = component "Centrale-notificatie-controller" "Controller: intake op identificerend nummer (NMC resolvet)" "REST" "MOZa, Nog te bouwen"
-                    DecentraleNotificatieController = component "Decentrale-notificatie-controller" "Controller: intake met reeds opgehaalde gegevens" "REST" "MOZa, Nog te bouwen"
-                    AfleverstatusCallback = component "Afleverstatus-callback" "Controller: ontvangt NotifyNL delivery receipts" "REST" "MOZa, Nog te bouwen"
-                    NotificatieOrchestrator = component "Notificatie-orchestrator" "Coordineert voorkeur, opslag, versturen en statusverwerking" "" "MOZa, Nog te bouwen"
-                    ProfielAdapter = component "Profielservice-adapter" "Leest voorkeur en invalideert e-mailadres" "" "MOZa, Nog te bouwen"
-                    Verzendadapter = component "Verzendadapter" "Verstuurt via NotifyNL (template_id + personalisation)" "bearer-JWT" "MOZa, Nog te bouwen"
+                    CentraleNotificatieController = component "Centrale-notificatie-controller" "Controller: intake op identificerend nummer (NMC resolvet)" "REST" "MOZa"
+                    DecentraleNotificatieController = component "Decentrale-notificatie-controller" "Controller: intake met reeds opgehaalde gegevens" "REST" "MOZa"
+                    AfleverstatusCallback = component "Afleverstatus-callback" "Controller: ontvangt NotifyNL delivery receipts" "REST" "MOZa"
+                    NotificatieOrchestrator = component "Notificatie-orchestrator" "Coordineert voorkeur, opslag, versturen en statusverwerking" "" "MOZa"
+                    ProfielAdapter = component "Profielservice-adapter" "Leest voorkeur en invalideert e-mailadres" "" "MOZa"
+                    Verzendadapter = component "Verzendadapter" "Verstuurt via NotifyNL (template_id + personalisation)" "bearer-JWT" "MOZa"
                     AdresAdapter = component "Adres-adapter" "Haalt adres op bij KvK Handelsregister of BRP" "" "MOZa, Nog te bouwen"
                     Contactherstelcoordinator = component "Contactherstel-coordinator" "Haalt bij onbereikbaarheid het adres op en meldt dit aan de Contactherstel-dienst" "" "MOZa, Nog te bouwen"
-                    NotificatieStatusCallbackAdapter = component "Notificatiestatus-callback-adapter" "Koppelt de notificatiestatus terug aan de aanroeper; los van de inkomende NotifyNL-callback" "webhook, CloudEvents (NL GOV), bearer-JWT" "MOZa, Nog te bouwen"
+                    NotificatieStatusCallbackAdapter = component "Notificatiestatus-callback-adapter" "Koppelt de notificatiestatus terug aan de aanroeper; los van de inkomende NotifyNL-callback" "webhook, CloudEvents (NL GOV), bearer-JWT" "MOZa"
                 }
                 NotifyNL = container "NotifyNL" "Verstuurt template-berichten, meldt afleverstatus terug" "" "Notificatie Service"
                 Contactherstel = container "Contactherstel" "Bepaalt en voert contactherstel uit" "" "Team Geel"
                 Printstraat = container "Printstraat" "Verzorgt fysieke verzending" "" "Team Geel"
-                notificatiedatabase = container "notificatiedatabase" "Referentie, status en (centrale regie) versleuteld identificerend nummer; tot de callback is verstuurd" "PostgreSQL" "Database, Nog te bouwen"
+                notificatiedatabase = container "notificatiedatabase" "Referentie, status en (centrale regie) versleuteld identificerend nummer; tot de callback is verstuurd" "PostgreSQL" "Database, MOZa"
             }
         }
 
@@ -90,7 +90,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
 
         // VerificatieService
         VerificatieServiceBackend -> VerifiecatieServiceDatabase "Slaat gegevens op in" ""
-        VerificatieServiceBackend -> NotifyNL "Verstuurd notificatie via" ""
+        VerificatieServiceBackend -> NotifyNL "Verstuurt notificatie via" ""
 
         // IAM
         IAM -> eHerkenning "Gebruikt als IDP" "OAUTH2"
@@ -282,9 +282,13 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                 background #438dd5
                 color #ffffff
             }
-            element "Nog te bouwen" {
+            element "MOZa" {
                 background #E8A33D
                 color #000000
+            }
+            element "Nog te bouwen" {
+                border dashed
+                opacity 70
             }
             element "Person" {
                 background #08427b

@@ -13,7 +13,7 @@ De Notificatiedienst kent twee modellen voor wie de regie over een verzending vo
 
 ![Notificatie Service Context](embed:NotificatieServiceContext)
 
-De Notificatiedienst bestaat uit het NMC, NotifyNL, Contactherstel en Printstraat, en verhoudt zich tot de Profielservice, de KvK-API en de BRP-API.
+De Notificatiedienst bestaat uit het NMC, NotifyNL, Contactherstel en Printstraat, en verhoudt zich tot de Profielservice, de KvK-API en de BRP-API. MOZa bouwt het NMC en het Notificatieregister; NotifyNL, Contactherstel en de Printstraat zijn bestaande diensten die het NMC aanroept.
 
 ![Notificatiedienst Container](embed:NotificatieServiceContainer)
 
@@ -23,8 +23,8 @@ De Notificatiedienst bestaat uit het NMC, NotifyNL, Contactherstel en Printstraa
 
 Het NMC orchestreert het notificatieproces:
 
-- de **Centrale-regie-API** is de controller voor verzoeken op basis van een identificerend nummer; de NMC haalt zelf de voorkeur op;
-- de **Decentrale-regie-API** is de controller voor verzoeken waarbij de aanvrager de gegevens al heeft opgehaald;
+- de **Centrale-notificatie-controller** is de controller voor verzoeken op basis van een identificerend nummer; de NMC haalt zelf de voorkeur op;
+- de **Decentrale-notificatie-controller** is de controller voor verzoeken waarbij de aanvrager de gegevens al heeft opgehaald;
 - de **Afleverstatus-callback** is de controller die de delivery receipts van NotifyNL ontvangt;
 - de **Notificatie-orchestrator** coördineert de afhandeling: voorkeur ophalen, opslaan in het register en versturen, en bij een receipt de status verwerken, de consument terugkoppelen en zo nodig contactherstel starten;
 - de **Profielservice-adapter** leest de voorkeur en invalideert e-mailadressen bij de Profielservice;
@@ -40,6 +40,8 @@ Het **Notificatieregister** bewaart de minimale gegevens voor de asynchrone afha
 Bij **centrale regie** bewaart het register daarnaast het identificerend nummer (BSN, KvK of RSIN), uitsluitend om bij een mislukte aflevering contactherstel te kunnen starten. Dat nummer wordt versleuteld opgeslagen met een per-record datasleutel (envelope-encryptie); het adres wordt pas bij een mislukte aflevering opgehaald bij het KvK Handelsregister of de BRP en niet bewaard. Bij **decentrale regie** legt het register geen identificerende gegevens vast: de afleverstatus gaat terug naar de OMC, die het contactherstel zelf voert.
 
 De registratie wordt verwijderd zodra de statusupdate aan de dienstverlener is verstuurd, conform dataminimalisatie en opslagbeperking.
+
+> Stand van de implementatie: het huidige NMC bewaart per notificatie alleen de referentie, de afleverstatus en de callback-URL en verwijdert de registratie na de terugkoppeling. Het versleuteld opslaan van het identificerend nummer, het contactherstel en de Adres-adapter zijn nog niet gebouwd.
 
 Verwerkingen worden vastgelegd volgens de standaard Logboek Dataverwerkingen (LDV); dit is in de diagrammen niet als apart component opgenomen.
 

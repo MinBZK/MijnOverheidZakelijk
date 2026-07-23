@@ -7,7 +7,7 @@ Het biedt kort en duidelijk inzicht in wat de Notificatiedienst doet, voor wie h
 
 ### Overzicht
 
-De Notificatiedienst biedt één generieke voorziening waarmee overheidsorganisaties notificaties (attenderingen en kennisgevingen) kunnen laten versturen. De dienst richt zich op de kanalen e-mail en fysieke post; later worden meer kanalen toegevoegd.
+De Notificatiedienst biedt één generieke voorziening waarmee overheidsorganisaties notificaties (attenderingen en kennisgevingen) kunnen laten versturen. De dienst richt zich op e-mail als verzendkanaal; fysieke post wordt alleen ingezet als achtervang bij contactherstel en meer kanalen volgen later.
 De service schermt kanaalspecifieke verschillen af en respecteert voorkeuren en doelbinding.
 
 Belangrijke gebruikers en hun behoeften zijn:

@@ -9,7 +9,7 @@
 
 Binnen MijnOverheid Zakelijk is betrouwbare en tijdige communicatie richting burgers en ondernemers essentieel om te voldoen aan de Wet MEBV. Waar de `Profiel Service` voorziet in het vastleggen van contactgegevens en voorkeuren, faciliteert de Notificatiedienst het daadwerkelijk versturen van notificaties en het registreren van de afleverstatus. De dienst wordt samen met Logius, binnen het programma OBIS, neergezet als generieke voorziening tussen overheidsdiensten en verzendkanalen.
 
-De dienst richt zich op dit moment op twee kanalen: e-mail (digitaal) en fysieke post. De intentie is om later meer kanalen toe te voegen, zoals alternatieve digitale kanalen en sms. De Notificatiedienst notificeert, maar levert het inhoudelijke bericht niet af: een notificatie meldt dat er een bericht klaarstaat op een digitale locatie. Beschikkingen zelf worden dus niet via de Notificatiedienst verzonden.
+De dienst richt zich op dit moment op e-mail als verzendkanaal; fysieke post wordt alleen ingezet als achtervang bij contactherstel. De intentie is om later meer kanalen toe te voegen, zoals fysieke post als primair kanaal, alternatieve digitale kanalen en sms. De Notificatiedienst notificeert, maar levert het inhoudelijke bericht niet af: een notificatie meldt dat er een bericht klaarstaat op een digitale locatie. Beschikkingen zelf worden dus niet via de Notificatiedienst verzonden.
 
 MOZa bouwt binnen de Notificatiedienst het Notificatie Management Component (NMC) en het bijbehorende Notificatieregister. NotifyNL, Contactherstel en de Printstraat zijn bestaande diensten die het NMC aanroept. Deze documentatie beschrijft de dienst als geheel, met de nadruk op het NMC.
 

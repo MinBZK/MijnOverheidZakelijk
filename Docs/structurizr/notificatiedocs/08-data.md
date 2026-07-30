@@ -14,13 +14,13 @@ De Notificatiedienst gebruikt twee datastores:
 
 Het Notificatieregister bestaat uit één tabel, `notificatie`, aangemaakt met de Flyway-migratie `V1__init_notificatie.sql`:
 
-| Veld                 | Type                     | Beschrijving |
-|----------------------|--------------------------|--------------|
-| `id`                 | UUID (PK)                | Interne sleutel |
-| `external_reference` | UUID (uniek)             | Referentie van NotifyNL waarmee de delivery receipt aan de notificatie wordt gekoppeld |
-| `callback_url`       | varchar(2048)            | Optionele URL waarop de aanroeper de statusterugkoppeling ontvangt |
-| `status`             | varchar                  | Huidige status (zie statusmodel), afgedwongen met een check constraint |
-| `aangemaakt`         | timestamp with time zone | Aanmaaktijdstip (UTC) |
+| Veld                 | Type                     | Verplicht | Beschrijving |
+|----------------------|--------------------------|-----------|--------------|
+| `id`                 | UUID (PK)                | Ja        | Interne sleutel |
+| `external_reference` | UUID (uniek)             | Nee       | Referentie van NotifyNL waarmee de delivery receipt aan de notificatie wordt gekoppeld; leeg totdat NotifyNL het verzoek heeft geaccepteerd |
+| `callback_url`       | varchar(2048)            | Nee       | URL waarop de aanroeper de statusterugkoppeling ontvangt |
+| `status`             | varchar(17)              | Ja        | Huidige status (zie statusmodel), afgedwongen met een check constraint |
+| `aangemaakt`         | timestamp with time zone | Ja        | Aanmaaktijdstip (UTC) |
 
 Het register bevat bewust geen berichtinhoud, contactgegevens of identificerende nummers. Bij gecentraliseerde regie wordt het identificerend nummer alleen tijdens de aanroep gebruikt om de voorkeur bij de Profielservice op te halen. Voor het toekomstige contactherstel is voorzien dat het identificerend nummer met envelope-encryptie in het register wordt bewaard (zie hoofdstuk 6).
 
@@ -44,7 +44,7 @@ Een notificatie start als `created` en gaat na acceptatie door NotifyNL naar `se
 | Omgeving     | Strategie | Toelichting |
 |--------------|-----------|-------------|
 | Ontwikkeling | Flyway bij opstarten | Migraties draaien automatisch bij het starten van de applicatie |
-| Test         | Flyway op H2 | In-memory database, schema per testrun |
+| Test         | Flyway bij opstarten + `validate` | PostgreSQL; migraties draaien bij het starten en Hibernate valideert het schema |
 | Productie    | `validate` | Hibernate valideert het schema; Flyway-migraties draaien alleen wanneer dat per omgeving expliciet is geconfigureerd |
 
 ### Dataretentie en privacy

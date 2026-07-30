@@ -33,4 +33,4 @@ De dienst ondersteunt twee regie-modellen. Bij decentrale regie houdt de dienstv
 
 De Notificatiedienst abstraheert kanaalspecifieke complexiteit en registreert afleverresultaten voor inzicht en verantwoording. Dienstverleners kunnen de dienst als totaaloplossing afnemen of losse onderdelen ervan inzetten.
 
-![Notificatie Service Context](embed:NotificatieServiceContext)
+![Notificatiedienst Context](embed:NotificatieServiceContext)

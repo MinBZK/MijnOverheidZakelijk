@@ -11,7 +11,7 @@ De Notificatiedienst kent twee modellen voor wie de regie over een verzending vo
 - **Decentrale regie:** de dienstverlener houdt de regie. De Vakapplicatie roept de Output Management Component (OMC) aan; de OMC beschikt zelf al over de contactgegevens en initieert daarmee de notificatie bij het Notificatie Management Component (NMC). Het NMC haalt deze gegevens in dit model niet op.
 - **Centrale regie:** de dienstverlener geeft de regie uit handen. Met de juiste juridische grondslag stuurt de organisatie op basis van een identificerend nummer (KvK, RSIN of BSN) en een templateverwijzing een verzoek naar het NMC. Het NMC haalt zelf de voorkeur op bij de Profielservice.
 
-![Notificatie Service Context](embed:NotificatieServiceContext)
+![Notificatiedienst Context](embed:NotificatieServiceContext)
 
 De Notificatiedienst bestaat uit het NMC, NotifyNL, Contactherstel en Printstraat, en verhoudt zich tot de Profielservice, de KvK-API en de BRP-API. MOZa bouwt het NMC en het Notificatieregister; NotifyNL, Contactherstel en de Printstraat zijn bestaande diensten die het NMC aanroept.
 

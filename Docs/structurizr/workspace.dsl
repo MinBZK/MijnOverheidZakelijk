@@ -38,7 +38,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                     Contactherstelcoordinator = component "Contactherstel-coordinator" "Haalt bij onbereikbaarheid het adres op en meldt dit aan de Contactherstel-dienst" "" "MOZa, Nog te bouwen"
                     NotificatieStatusCallbackAdapter = component "Notificatiestatus-callback-adapter" "Koppelt de notificatiestatus terug aan de aanroeper; los van de inkomende NotifyNL-callback" "webhook, CloudEvents (NL GOV), bearer-JWT" "MOZa"
                 }
-                NotifyNL = container "NotifyNL" "Verstuurt template-berichten, meldt afleverstatus terug" "" "Notificatie Service"
+                NotifyNL = container "NotifyNL" "Verstuurt template-berichten, meldt afleverstatus terug"
                 Contactherstel = container "Contactherstel" "Bepaalt en voert contactherstel uit" "" "Team Geel"
                 Printstraat = container "Printstraat" "Verzorgt fysieke verzending" "" "Team Geel"
                 notificatiedatabase = container "notificatiedatabase" "Referentie, status en (centrale regie) versleuteld identificerend nummer; tot de callback is verstuurd" "PostgreSQL" "Database, MOZa"

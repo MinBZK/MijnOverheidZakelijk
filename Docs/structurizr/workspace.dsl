@@ -11,23 +11,37 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         }
 
         group "DI" {
-            DV = softwareSystem "Dienstverlener" "Vakapplicatie (mockup) van een organisatie voor uitwerking voor scenario 2, 8 & 9"  {
+            DV = softwareSystem "Dienstverlener" "Vakapplicatie (mockup) van een organisatie voor uitwerking van de twee regie-modellen"  {
                 DVOmcService = container "Output management component" "Routeren van de output van processen naar de juiste kanalen" ""
                 DVService = container "Dienstverlener Service" "Een vakapplicatie of service bij een DV die processen start waarbij notificaties verstuurd moeten worden" "" {
                 }
                 group "Datastores" {
                     DVOMCDatabase = container "Output management component Database" "Bevat status & geschiedenis van contactmomenten" "PostgreSQL" "Database"
+                    DVProfielStorage = container "Profiel-opslag" "Eigen contactgegevens en -voorkeuren van de dienstverlener" "" "Database"
                 }
             }
         }
 
         group "Logius" {
-            KanaalHerstelDienst = softwareSystem "Kanaalhersteldienst " "Verstuurt brieven t.b.v. het kaneelherstel met burgers of ondernemingen" "Existing System"
             Berichtenbox = softwareSystem "BBO" "De Berichtenbox voor Burgers en Ondernemers" "Existing System"
-            NotificatieService = softwareSystem "Notificatie service" "Verstuurt emails & sms naar gebruikers"  {
+            NotificatieService = softwareSystem "Notificatiedienst" "Versturen van notificaties en contactherstel" {
                 !docs notificatiedocs
-                KennisgevingService = container "Kennisgeving service" "Regelt communicatie naar NotifyNL en Kanaalherstel" "" "Kennisgeving Service"
-                NotifyNL = container "NotifyNL" "Verstuurt emails & sms naar gebruikers" "" "Notificatie Service"
+                NMC = container "Notificatie Management Component" "Orchestreert notificaties en contactherstel" "" "MOZa" {
+                    // Bewust gesplitst voor duidelijkheid; centrale en decentrale intake kunnen ook één API zijn.
+                    CentraleNotificatieController = component "Centrale-notificatie-controller" "Controller: intake op identificerend nummer (NMC resolvet)" "REST" "MOZa"
+                    DecentraleNotificatieController = component "Decentrale-notificatie-controller" "Controller: intake met reeds opgehaalde gegevens" "REST" "MOZa"
+                    AfleverstatusCallback = component "Afleverstatus-callback" "Controller: ontvangt NotifyNL delivery receipts" "REST" "MOZa"
+                    NotificatieOrchestrator = component "Notificatie-orchestrator" "Coordineert voorkeur, opslag, versturen en statusverwerking" "" "MOZa"
+                    ProfielAdapter = component "Profielservice-adapter" "Leest voorkeur en invalideert e-mailadres" "" "MOZa"
+                    Verzendadapter = component "Verzendadapter" "Verstuurt via NotifyNL (template_id + personalisation)" "bearer-JWT" "MOZa"
+                    AdresAdapter = component "Adres-adapter" "Haalt adres op bij KvK Handelsregister of BRP" "" "MOZa, Nog te bouwen"
+                    Contactherstelcoordinator = component "Contactherstel-coordinator" "Haalt bij onbereikbaarheid het adres op en meldt dit aan de Contactherstel-dienst" "" "MOZa, Nog te bouwen"
+                    NotificatieStatusCallbackAdapter = component "Notificatiestatus-callback-adapter" "Koppelt de notificatiestatus terug aan de aanroeper; los van de inkomende NotifyNL-callback" "webhook, CloudEvents (NL GOV), bearer-JWT" "MOZa"
+                }
+                NotifyNL = container "NotifyNL" "Verstuurt template-berichten, meldt afleverstatus terug"
+                Contactherstel = container "Contactherstel" "Bepaalt en voert contactherstel uit" "" "Team Geel"
+                Printstraat = container "Printstraat" "Verzorgt fysieke verzending" "" "Team Geel"
+                notificatiedatabase = container "notificatiedatabase" "Referentie, status en (centrale regie) versleuteld identificerend nummer; tot de callback is verstuurd" "PostgreSQL" "Database, MOZa"
             }
         }
 
@@ -38,7 +52,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             }
             ProfielService = softwareSystem "Profiel Service" "Bevat contactvoorkeuren en contactgegevens van een identificeerbaar persoon"  {
                 !docs profielservicedocs
-                ProfielServiceBackend = container "Profiel Service" "Bevat contactvoorkeuren en contactgegevens van een identificeerbaar persoon" "C#"
+                ProfielServiceBackend = container "Profiel Service" "Bevat contactvoorkeuren en contactgegevens van een identificeerbaar persoon" "Quarkus"
                 profielServiceDatabase = container "Profiel service Database" "Bevat basis profielinformatie over ondernemingen" "PostgreSQL" "Database"
             }
             IAM = softwareSystem "IAM Gateway" "Identity Provider / Broker en Access Management System (Keycloak)" "Shared System" {
@@ -56,6 +70,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         eHerkenning = softwareSystem "eHerkenning" "Identity Provider voor bedrijven" "Existing System"
         DigiD = softwareSystem "DigiD" "Identity Provider voor burgers en ZZP-ers" "Existing System"
         EIDAS = softwareSystem "EIDAS" "Identity Provider voor Europese bedrijven" "Existing System"
+        BRP = softwareSystem "BRP-API" "Adresgegevens o.b.v. BSN" "Existing System"
 
         // Relationships between people and software systems
         DVMedewerker -> DVService "Start notificatie process"
@@ -75,7 +90,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
 
         // VerificatieService
         VerificatieServiceBackend -> VerifiecatieServiceDatabase "Slaat gegevens op in" ""
-        VerificatieServiceBackend -> NotifyNL "Verstuurd notificatie via" ""
+        VerificatieServiceBackend -> NotifyNL "Verstuurt notificatie via" ""
 
         // IAM
         IAM -> eHerkenning "Gebruikt als IDP" "OAUTH2"
@@ -83,40 +98,64 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
         IAM -> EIDAS "Gebruikt als IDP" "OAUTH2"
         iamService -> iamDatabase "Slaat gegevens op in"
 
-        // DVOmcService
-        DVOmcService -> NotifyNL "Verstuurt attendering via" ""
-        DVOmcService -> ProfielServiceBackend "Haalt profiel informatie op" ""
+        // OMC (decentrale regie)
         DVOmcService -> DVOMCDatabase "Slaat gegevens op in" ""
-        // DVOmcService Scenario 9
+        DVOmcService -> DVProfielStorage "Haalt contactgegevens op" ""
         DVOmcService -> Berichtenbox "Verstuurt kennisgeving via" ""
-        DVOmcService -> KennisgevingService "Verstuurt kennisgeving via" ""
+        DVOmcService -> NMC "Initiëren notificatie (decentrale regie)" ""
 
-        // Scenario 2v
-        DVService -> NotifyNL "Verstuurt attendering via" ""
-
-        // Scenario 8 & 9
-        DVService ->  DVOmcService "Start notificatie" ""
+        DVService -> DVOmcService "Start notificatie" ""
+        DVService -> NMC "Initiëren notificatie (centrale regie)" ""
 
 
         // Berichtenbox
-        Berichtenbox -> KennisgevingService "Verstuurt kennisgeving via" ""
+        Berichtenbox -> NMC "Verstuurt kennisgeving" ""
         Berichtenbox -> ProfielServiceBackend "Haalt profiel informatie op" ""
 
 
-        // KennisgevingService
-        KennisgevingService -> KanaalHerstelDienst "Kanaal herstel request" ""
-        KennisgevingService -> NotifyNL "Verstuurt kennisgeving via" ""
-        KennisgevingService -> KvkHandelsregister "Adresgegevens request" ""
+        // Notificatiedienst
+        NMC -> NotifyNL "Verstuurt notificatie" "REST, bearer-JWT"
+        NotifyNL -> NMC "Delivery receipt (async)" ""
+        NMC -> ProfielServiceBackend "Haalt voorkeur op, invalideert e-mailadres" ""
+        NMC -> notificatiedatabase "Bewaart verzoek en status" ""
+        NMC -> KvkHandelsregister "Adres ophalen (KVK/RSIN)" ""
+        NMC -> BRP "Adres ophalen (BSN)" ""
+        NMC -> Contactherstel "Meldt onbereikbaar + adres" ""
+        NMC -> DVOmcService "Notificatiestatus (optioneel)" "webhook, CloudEvents (NL GOV), bearer-JWT"
+        Contactherstel -> Printstraat "Fysiek contactherstel" ""
+        NotifyNL -> zakelijkeGebruiker "Verstuurt e-mail/SMS" ""
+        Printstraat -> zakelijkeGebruiker "Verstuurt brief" ""
+
+        // NMC componenten
+        DVService -> CentraleNotificatieController "Initiëren notificatie (identificerend nummer)" ""
+        DVOmcService -> DecentraleNotificatieController "Initiëren notificatie (met gegevens)" ""
+        NotifyNL -> AfleverstatusCallback "Delivery receipt (async)" ""
+        CentraleNotificatieController -> NotificatieOrchestrator "Delegeert verzoek" ""
+        DecentraleNotificatieController -> NotificatieOrchestrator "Delegeert verzoek" ""
+        AfleverstatusCallback -> NotificatieOrchestrator "Delegeert receipt" ""
+        NotificatieOrchestrator -> ProfielAdapter "Voorkeur ophalen / e-mailadres invalideren" ""
+        NotificatieOrchestrator -> notificatiedatabase "Bewaart en werkt status bij" ""
+        NotificatieOrchestrator -> Verzendadapter "Laat versturen" ""
+        NotificatieOrchestrator -> Contactherstelcoordinator "Triggert contactherstel" ""
+        NotificatieOrchestrator -> NotificatieStatusCallbackAdapter "Koppelt notificatiestatus terug (optioneel)" ""
+        NotificatieStatusCallbackAdapter -> DVOmcService "Notificatiestatus" "webhook, CloudEvents (NL GOV), bearer-JWT"
+        ProfielAdapter -> ProfielServiceBackend "Leest voorkeur, invalideert e-mailadres" ""
+        Verzendadapter -> NotifyNL "Verstuurt notificatie" "REST, bearer-JWT"
+        Contactherstelcoordinator -> AdresAdapter "Adres ophalen" ""
+        AdresAdapter -> KvkHandelsregister "Adres ophalen (KVK/RSIN)" ""
+        AdresAdapter -> BRP "Adres ophalen (BSN)" ""
+        Contactherstelcoordinator -> Contactherstel "Meldt onbereikbaar + adres" ""
 
         // Deployment groups
         deploymentEnvironment "Ontwikkelomgeving" {
             deploymentNode "LOGIUS-O-ENVIRONMENT" "" "Ergens" {
                 deploymentNode "Logius" "" "iets:latest" {
-                    softwareSystemInstance KanaalHerstelDienst
                     softwareSystemInstance Berichtenbox
                     containerInstance NotifyNL
                     containerInstance ProfielServiceBackend
-                    containerInstance KennisgevingService
+                    containerInstance NMC
+                    containerInstance Contactherstel
+                    containerInstance Printstraat
                 }
             }
             deploymentNode "DV-O-ENVIRONMENT" "" "Ergens" {
@@ -206,6 +245,11 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             autoLayout
         }
 
+        component NMC "NMCComponents" "Componenten binnen het Notificatie Management Component" {
+            include *
+            autoLayout
+        }
+
         container VerificatieService "VerificatieServiceContainer" {
             include *
             autoLayout
@@ -237,6 +281,14 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             element "Container" {
                 background #438dd5
                 color #ffffff
+            }
+            element "MOZa" {
+                background #E8A33D
+                color #000000
+            }
+            element "Nog te bouwen" {
+                border dashed
+                opacity 70
             }
             element "Person" {
                 background #08427b

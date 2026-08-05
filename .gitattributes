@@ -1,0 +1,7 @@
+# Normalize text files to LF in the repo and working tree.
+# Overrides any local core.autocrlf so line endings stay LF.
+* text=auto eol=lf
+
+# Windows batch wrappers conventionally keep CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf

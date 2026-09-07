@@ -35,9 +35,16 @@ Buiten scope:
 - gebruiksonderzoek en toegankelijkheid (WCAG) van eventuele burgergerichte frontends.
 - de juistheid van de systemen van externe partijen zelf in tegenstelling tot afspraken met hen (zie Risicobeeld R4).
 
+**Aanname: deterministische services**\
+Deze strategie gaat ervan uit dat dezelfde invoer dezelfde uitvoer oplevert en dat een test die uitvoer kan asserteren.\
+Voor een component die zijn antwoord laat genereren of zelf zijn bron kiest vervalt die aanname.\
+Asserteren op gelijkheid kan daar niet en gebruikersinvoer wordt er een stuurmiddel in plaats van alleen data.\
+Zo'n component valt onder hetzelfde risicobeeld en dezelfde lagen maar vereist een aanvulling op deze strategie voordat hij in productie gaat.
+
 #### Risicobeeld
 
-Het risicobeeld wordt bepaald door het feit dat MOZA-services vastleggen hoe iemand door de overheid benaderd wil worden en daarnaar handelen.\
+Het risicobeeld wordt bepaald door wat de MOZA-backendservices met elkaar doen.\
+Zij leggen vast hoe iemand door de overheid benaderd wil worden, verstrekken die gegevens aan overheidsorganisaties die erom vragen, leveren op die basis berichten af bij de ontvanger, en melden over die aflevering terug aan de afzender.\
 De focus is met name op de gevallen waarin het systeem gewoon doorloopt en een verkeerde, onrechtmatige of onzichtbare uitkomst produceert. De testinspanning is daarop afgesteld.
 
 | # | Risico | Waarom | Afgedekt door |
@@ -49,6 +56,8 @@ De focus is met name op de gevallen waarin het systeem gewoon doorloopt en een v
 | **R5** | Stille storingen. Bijv.: jobs die niet meer draaien, retries die uitblijven, callbacks die verdwijnen. | Er wordt niets rood. De schade stapelt zich op tot iemand het handmatig opmerkt. | Component met gestuurde tijd, plus monitoring. |
 | **R6** | Onbeschikbaarheid of degradatie onder realistische load. | Burgers kunnen een dienst die ze moeten gebruiken niet bereiken. | Performance, tegen een vastgestelde drempel. |
 | **R7** | Compromittering via niet-vertrouwde invoer. Bijvoorbeeld request forgery via door de aanroeper aangeleverde URL's, omzeilen van authenticatie, verzwakte pseudonimisering. | Extern bereikbaar en extern vindbaar. | Misbruikcases en fuzzing; **niet** door scanners alleen. |
+| **R8** | Onjuiste terugmelding over aflevering: de afzender krijgt te horen dat een bericht is bezorgd terwijl dat niet zo is, of omgekeerd. | De afzender handelt naar die melding en stuurt geen herinnering, terwijl de ontvanger niets heeft gekregen. Niets wordt rood. Het verschil komt pas aan het licht bij een klacht of een gemiste termijn. | Component (de statusovergangen en de callback), contract (de vorm van de statusmelding), e2e (de journey inclusief de asynchrone bezorgstatus). |
+| **R9** | Onterecht uitgebleven uitkomst: een filter-, scope- of retentieregel die correct draait en ten onrechte iets weglaat, waardoor een bericht, gegeven of melding niet komt. | Er gaat niets stuk en er wordt niets rood. De ontvanger weet niet wat hij niet heeft gekregen. Het komt pas aan het licht bij een klacht of gemiste termijn. | Unit (de insluitingsregel, met expliciet het geval dat er wél door moet), component (scopefiltering en retentie vanaf de buitenkant). |
 
 #### Kwaliteitsattributen
 
@@ -115,6 +124,7 @@ Vereist:
 - contractverificatie waar R4 speelt
 - het risico benoemd in de pull request
 - een performancecheck waar R6 speelt, dus bijv. bij wijzigingen aan een endpoint in het kritieke pad of aan een query op een groeiende tabel.
+- een test op de statusovergang én op de terugmelding waar R8 speelt, dus bij wijzigingen aan de bezorgstatus of aan de callback die daarover bericht.
 
 **Klasse B**: gewoon gedrag.\
 Businesslogica en endpoints zonder impact op persoonsgegevens, security of contract.\
@@ -417,6 +427,8 @@ Wél:
 Diezelfde centrale test assert dat de body geen identificerend gegeven bevat dat de aanroeper heeft meegestuurd.\
 Een foutmelding is de makkelijkste plek waar een identificatienummer alsnog naar buiten lekt;
 - authenticatie, autorisatie en scope-filtering: elk beperkend endpoint krijgt ook een request dat geweigerd móét worden;
+- het spiegelbeeld daarvan (R9): elke uitsluitingsregel krijgt ook een geval dat er níét onder valt en dus door moet komen.\
+Een filter dat te veel weglaat maakt niets rood;
 - transactiegrenzen en rollback - een fout halverwege mag niets achterlaten;
 - gedrag dat alleen tegen een echte database bestaat: unique constraints, cascades, auditing
   (Envers), optimistic locking, en de migratieset zelf;

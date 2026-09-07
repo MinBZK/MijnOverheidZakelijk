@@ -34,6 +34,7 @@ Buiten scope:
 - uitwijk- en failover-oefeningen.
 - gebruiksonderzoek en toegankelijkheid (WCAG) van eventuele burgergerichte frontends.
 - de juistheid van de systemen van externe partijen zelf in tegenstelling tot afspraken met hen (zie Risicobeeld R4).
+- de alerteringsregels zelf en wie erop reageert (zie *Beheer en Support*). Dit hoofdstuk dekt alleen dat de service het signaal afgeeft.
 
 **Aanname: deterministische services**\
 Deze strategie gaat ervan uit dat dezelfde invoer dezelfde uitvoer oplevert en dat een test die uitvoer kan asserteren.\
@@ -53,7 +54,7 @@ De focus is met name op de gevallen waarin het systeem gewoon doorloopt en een v
 | **R2** | Onrechtmatige verstrekking of bewaring van persoonsgegevens. | Een juridische inbreuk, en een die een functionele suite vrolijk groen noemt. | Component (scopefiltering, retentiejobs), misbruikcases. |
 | **R3** | Ontbrekende of onjuiste verwerkingslogging. | Verwerkingen loggen is een wettelijke verplichting. Het ontbreken ervan is onzichtbaar bij normaal gebruik. | Component, geassert als uitkomst en nooit als implementatiedetail. |
 | **R4** | Een afspraak met een ander team of partij breken. | Breekt de service van een ander bij hún deploy, niet bij de onze. Laat en duur gevonden. | Contract |
-| **R5** | Stille storingen. Bijv.: jobs die niet meer draaien, retries die uitblijven, callbacks die verdwijnen. | Er wordt niets rood. De schade stapelt zich op tot iemand het handmatig opmerkt. | Component met gestuurde tijd, plus monitoring. |
+| **R5** | Stille storingen. Bijv.: jobs die niet meer draaien, retries die uitblijven, callbacks die verdwijnen. | Er wordt niets rood. De schade stapelt zich op tot iemand het handmatig opmerkt. | Component met gestuurde tijd, en een geasserteerd signaal waarop de alertering kan aanhaken. |
 | **R6** | Onbeschikbaarheid of degradatie onder realistische load. | Burgers kunnen een dienst die ze moeten gebruiken niet bereiken. | Performance, tegen een vastgestelde drempel. |
 | **R7** | Compromittering via niet-vertrouwde invoer. Bijvoorbeeld request forgery via door de aanroeper aangeleverde URL's, omzeilen van authenticatie, verzwakte pseudonimisering. | Extern bereikbaar en extern vindbaar. | Misbruikcases en fuzzing; **niet** door scanners alleen. |
 | **R8** | Onjuiste terugmelding over aflevering: de afzender krijgt te horen dat een bericht is bezorgd terwijl dat niet zo is, of omgekeerd. | De afzender handelt naar die melding en stuurt geen herinnering, terwijl de ontvanger niets heeft gekregen. Niets wordt rood. Het verschil komt pas aan het licht bij een klacht of een gemiste termijn. | Component (de statusovergangen en de callback), contract (de vorm van de statusmelding), e2e (de journey inclusief de asynchrone bezorgstatus). |
@@ -486,6 +487,8 @@ H2 test niet het PostgreSQL-dialect, de Flyway-SQL of het Envers-gedrag dat daad
 - **Assert op je eigen data, nooit op totalen.** "Drie rijen in de tabel" is ook een assertie over
   elke andere test.
 - **Scheduled jobs test je door de jobmethode aan te roepen, niet door te wachten.** Zet de scheduler in tests uit en roep de job expliciet aan met een vaste `Clock`. Wachten op een cron-trigger is traag en niet-deterministisch.
+- **Elke job en elk retrypad geeft een signaal af dat zijn uitblijven zichtbaar maakt.** Een teller, een gauge of een laatste-succesvol-tijdstip. De componenttest assert dat het signaal wordt afgegeven, niet dat er iemand naar kijkt.\
+  Dit is de helft van R5 die binnen dit hoofdstuk valt. Een test kan niet aantonen dat een cron in productie nog vuurt, maar wel dat de service waarneembaar is wanneer hij dat niet doet. `RetentieSchedulerTest` doet dit al met `retentie.verwijderd` en `retentie.anomalie`.
 - **Voor werkelijk asynchroon gedrag gebruik je Awaitility** met een expliciete timeout en nooit `Thread.sleep`.
 - **Logboek Dataverwerking (LDV)**: verwerkingslogging is een wettelijke verplichting, geen feature.\
   Leg per service vast welke verwerkingen gelogd moeten worden en dek dat af met minstens één

@@ -248,6 +248,39 @@ Deze strategie wordt, net als code, alleen aangepast met een PR inclusief een op
 Spreken de werkelijkheid en deze strategie elkaar tegen, dan wijzigt óf de strategie, óf het verschil wordt vastgelegd met een eigenaar erbij.\
 Deze strategie dient door het team te worden herzien wanneer een service aan MOZA wordt toegevoegd, wanneer het platform wezenlijk verandert, en verder minstens jaarlijks.
 
+#### Verhouding tot ADR-0017
+
+[ADR-0017](/workspace/decisions#17) *Inrichting testen MOZa* beschrijft een eerder testkader. Deze strategie en het testplan hieronder wijken daar op onderstaande punten bewust van af.\
+Er dient bepaald te worden of ADR-0017 hiermee vervalt of opgevolgd dient te worden door een nieuw ADR.\
+Tot dan legt deze sectie de afwijkingen vast.
+
+- **Geen handmatige regressietest.**\
+ADR-0017 liet regressietests na een deployment handmatig of geautomatiseerd uitvoeren.\
+Hier is regressie volledig geautomatiseerd (uitgangspunt 6).
+- **Geen verificatiestap na de merge.**\
+ADR-0017 valideerde elke deployment op een acceptatieomgeving, met geslaagde smoketests als acceptatiecriterium.\
+Hier is een groene PR-suite voldoende om te mergen. De e2e-laag draait 's nachts, blokkeert geen merge en weegt pas mee bij een release (zie *Afrondingscriteria*).
+- **Contracttesten in plaats van ketentests per wijziging.**\
+ADR-0017 liet bij een wijziging aan een API-contract een ketentest met de betrokken teams uitvoeren.\
+Hier vangt de contractlaag dat per pull request af, zonder gecoördineerd testvenster (doel 2).
+- **Een andere coveragenorm.**\
+ADR-0017 stelde een harde ondergrens van 80% voor unittests.\
+Het testplan meet line- en branchcoverage over de hele bundel, met een groeipad voor services die er nog onder zitten (zie *Code coverage* in het testplan).
+- **Geen aparte testerrol.**\
+ADR-0017 kende een tester die ketentests, acceptatietests en performancetests faciliteerde.\
+Hier bezit het team dat de service bezit ook de tests (uitgangspunt 7).
+- **Acceptatietest betekent iets anders.**\
+In ADR-0017 was dat een acceptatietest door de product owner of een belanghebbende.\
+Hier is het een geautomatiseerde test per story (zie *Functionele en acceptatietests* in het testplan).
+
+Nog niet besloten, en daarom niet stilzwijgend vervallen:
+
+- **Acceptatietests door de product owner of belanghebbenden** bij wijzigingen met zichtbare functionele impact.
+- **De korte functionele check door de reviewer**: de service starten en een tot drie relevante paden doorlopen.
+
+Beide staan in ADR-0017 en hebben in deze strategie nog geen plaats. Het team dient te besluiten of ze terugkomen.\
+Tot dat besluit er is zijn ze geen verplichting maar ook niet geschrapt.
+
 ---
 
 ### Testplan backendservices
@@ -390,7 +423,7 @@ De gate moet gebonden zijn aan een fase die de CI-pipeline daadwerkelijk bereikt
 Een gate die niet kan afgaan is geen gate.
 - **Meet op LINE en BRANCH** op bundle-niveau. Niet op INSTRUCTION: dat is gevoelig voor
   bytecode-details en niet vergelijkbaar tussen services.
-- **Ondergrens**: minimaal 80% line / 70% branch. Dit maakt de 80% uit [ADR-0017](/workspace/decisions#17) concreet.\
+- **Ondergrens**: minimaal 80% line / 70% branch. Dit wijkt bewust af van de 80%-eis uit [ADR-0017](/workspace/decisions#17); zie *Verhouding tot ADR 0017* in de teststrategie.\
 Een nieuwe service begint op het niveau dat ze bij oplevering haalt en verlaagt dat nooit. Een bestaande service die er nog onder zit groeit ernaartoe in stappen van ~5%.
 - **Ratchet**: de drempel gaat alleen omhoog.
 - **Gegenereerde code is uitgesloten** van de meting.
@@ -755,7 +788,8 @@ Per **pull request** (verplichte checks, doel < 15 min doorlooptijd):
 Let op de fasebinding: de pipeline moet een Maven-fase draaien die álle gates bereikt.\
 Stopt de build op `package`, dan draaien de failsafe-ITs niet en wordt een aan `verify` gebonden coverage-gate nooit geëvalueerd.
 
-'s Nachts op `main`: mutatietesten (PIT), e2e-suite, ZAP API-scan, smoke-perf, 1 u batch-fuzzing.\
+'s Nachts op `main`: mutatietesten (PIT), e2e-suite, ZAP API-scan, smoke-perf.\
+Wekelijks: 1 u batch-fuzzing.\
 Release: `can-i-deploy` tegen de doelomgeving, volledige e2e, loadtest als de wijziging daarom vraagt.
 
 Pipeline-principes: testresultaten (Surefire-/Failsafe-XML, JaCoCo, Pact, k6) worden als CI-artifacts gepubliceerd.\

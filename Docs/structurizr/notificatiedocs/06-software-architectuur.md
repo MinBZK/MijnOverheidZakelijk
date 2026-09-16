@@ -13,7 +13,7 @@ De Notificatiedienst kent twee modellen voor wie de regie over een verzending vo
 
 ![Notificatiedienst Context](embed:NotificatieServiceContext)
 
-De Notificatiedienst bestaat uit het NMC, NotifyNL, Contactherstel en Printstraat, en verhoudt zich tot de Profielservice, de KvK-API en de BRP-API. MOZa bouwt het NMC en het Notificatieregister; NotifyNL, Contactherstel en de Printstraat zijn bestaande diensten die het NMC aanroept.
+De Notificatiedienst bestaat uit het NMC en NotifyNL en verhoudt zich tot de Profielservice en de dienstverleners. MOZa bouwt het NMC en het Notificatieregister; NotifyNL is een bestaande dienst die het NMC aanroept.
 
 ![Notificatiedienst Container](embed:NotificatieServiceContainer)
 
@@ -21,27 +21,40 @@ De Notificatiedienst bestaat uit het NMC, NotifyNL, Contactherstel en Printstraa
 
 ![NMC Componenten](embed:NMCComponents)
 
-Het NMC orchestreert het notificatieproces:
+Het NMC voert de notificatielevenscyclus uit als een georkestreerde state machine in PostgreSQL met een transactioneel eventlog ([ADR 0022](/workspace/decisions#22)). Er is geen message broker en geen workflow-engine; timers zijn `due`-tijdstippen op taken en "event" betekent een rij in het commit-geordende eventlog. Contactherstel maakt geen deel uit van deze editie van het NMC; het model beschrijft de levenscyclus tot en met de terugkoppeling van de afleverstatus.
 
-- de **Centrale-notificatie-controller** is de controller voor verzoeken op basis van een identificerend nummer; de NMC haalt zelf de voorkeur op;
-- de **Decentrale-notificatie-controller** is de controller voor verzoeken waarbij de aanvrager de gegevens al heeft opgehaald;
-- de **Afleverstatus-callback** is de controller die de delivery receipts van NotifyNL ontvangt;
-- de **Notificatie-orchestrator** coördineert de afhandeling: voorkeur ophalen, opslaan in het register en versturen, en bij een receipt de status verwerken, de consument terugkoppelen en zo nodig contactherstel starten;
-- de **Profielservice-adapter** leest de voorkeur en invalideert e-mailadressen bij de Profielservice;
-- de **Verzendadapter** verstuurt het bericht via NotifyNL met een template_id en de personalisation;
-- de **Adres-adapter** haalt het adres op bij het KvK Handelsregister (KvK/RSIN) of de BRP (BSN);
-- de **Contactherstel-coördinator** haalt bij onbereikbaarheid het adres op en geeft dit met de onbereikbaar-melding door aan de Contactherstel-dienst;
-- de **Notificatiestatus-callback-adapter** koppelt de notificatiestatus terug aan de aanroeper, los van de inkomende NotifyNL-callback.
+Koppelvlakken naar de dienstverlener:
+
+- de **Centrale-notificatie-controller** neemt verzoeken aan op basis van een identificerend nummer (centrale regie). De aanname is synchroon en antwoordt met 202 nadat notificatie, eerste taak en eerste event in één transactie zijn opgeslagen;
+- de **Decentrale-notificatie-controller** doet hetzelfde voor verzoeken met een e-mailadres (decentrale regie);
+- de **Notificatiestatus-controller** biedt status opvragen, zoeken op de dvRef-HMAC en annuleren tot aan de claim;
+- de **Notificatiestatus-feed** biedt de cursorfeed over het eventlog per dienstverlener, de basis van de terugkoppeling.
+
+Inkomende events:
+
+- de **Afleverstatus-callback** ontvangt de delivery receipts van NotifyNL, slaat het event op zonder het e-mailadres uit de receipt en antwoordt daarna pas met 200.
+
+Levenscyclus:
+
+- het **Statusbeheer** is de enige schrijver van de notificatiestatus: het vergrendelt de notificatierij, toetst de overgang aan de toegestane overgangen en verhoogt de versie. Een databasetrigger toetst de overgang nogmaals en schrijft het event, zodat een statuswijziging zonder event niet kan bestaan;
+- de **Verzendverwerker** bestaat uit stateless workers die taken claimen met `SELECT ... FOR UPDATE SKIP LOCKED`, in batches en binnen het verzendbudget per Notify-service. Taaksoorten: verzenden (inclusief voorkeur ophalen), receipts verwerken en e-mailadres ongeldig melden;
+- de **Afleverstatus-navraag** vraagt bij NotifyNL de status op van elke poging zonder receipt, na 1, 6 en 24 uur en daarna dagelijks. Daarmee is het NMC onafhankelijk van het callback-venster van NotifyNL;
+- de **Notificatiestatus-webhook** leest per dienstverlener hetzelfde eventlog met een cursor, bundelt naar de laatste status per notificatie en levert op een bij onboarding geregistreerde webhook. Feed en webhook schrijven dezelfde bevestiging.
+
+Adapters:
+
+- de **Profielservice-adapter** leest de voorkeur binnen de verzendtaak, zonder het e-mailadres op te slaan, en meldt een e-mailadres ongeldig bij de Profielservice;
+- de **Verzendadapter** verstuurt via NotifyNL met een template_id en de personalisation, met de poging als `reference`, en vraagt voor de Afleverstatus-navraag de status op.
 
 > De centrale en decentrale intake zijn hier als aparte controllers getekend voor de duidelijkheid. Functioneel kunnen ze ook één API zijn; de keuze hangt af van of de twee regie-modellen een eigen autorisatiegrens nodig hebben (de centrale regie verwerkt immers identificerende nummers onder een eigen grondslag).
 
-Het **Notificatieregister** bewaart de minimale gegevens voor de asynchrone afhandeling: de referentie die bij de eerste aanroep aan de aanvrager wordt teruggegeven, met de afleverstatus. Zo kan de statusupdate later aan de juiste aanvrager worden teruggekoppeld zodra NotifyNL reageert.
+De verzending van één notificatie bij centrale regie, met een geslaagde aflevering:
 
-Bij **centrale regie** bewaart het register daarnaast het identificerend nummer (BSN, KvK of RSIN), uitsluitend om bij een mislukte aflevering contactherstel te kunnen starten. Dat nummer wordt versleuteld opgeslagen met een per-record datasleutel (envelope-encryptie); het adres wordt pas bij een mislukte aflevering opgehaald bij het KvK Handelsregister of de BRP en niet bewaard. Bij **decentrale regie** legt het register geen identificerende gegevens vast: de afleverstatus gaat terug naar de OMC, die het contactherstel zelf voert.
+![NMC Verzending](embed:NMCVerzending)
 
-De registratie wordt verwijderd zodra de statusupdate aan de dienstverlener is verstuurd, conform dataminimalisatie en opslagbeperking.
+De **notificatiedatabase** is de bron van waarheid. De tabellen `notificatie` en `poging` dragen de status, `taak` de bijwerkingen met lease en `due` en `event` het commit-geordende eventlog. Het eventlog bevat geen persoonsgegevens en geen referentie van de dienstverlener en is de enige bron voor terugkoppeling, rapportage en afleverbewijs, met per doel een eigen bewaartermijn. Persoonsgegevens op de notificatierij staan versleuteld met een sleutel per notificatie; het wissen van die sleutel is de wisactie. De referentie van de dienstverlener wordt aan de deur vervangen door een peppered HMAC. Hoofdstuk 7 werkt de componenten uit tot klassen.
 
-> Stand van de implementatie: het huidige NMC bewaart per notificatie alleen de referentie, de afleverstatus en de callback-URL en verwijdert de registratie na de terugkoppeling. Het versleuteld opslaan van het identificerend nummer, het contactherstel en de Adres-adapter zijn nog niet gebouwd.
+> Stand van de implementatie: het huidige NMC (PoC-fase) bevat de twee intake-controllers, de Afleverstatus-callback, de Profielservice-adapter, de Verzendadapter en een callback-adapter die per statuswijziging direct pusht. Het register bewaart per notificatie alleen referentie, afleverstatus en callback-URL. De takentabel, het eventlog en de overige componenten zijn nog niet gebouwd; in het componentdiagram staan die gestreept.
 
 Verwerkingen worden vastgelegd volgens de standaard Logboek Dataverwerkingen (LDV); dit is in de diagrammen niet als apart component opgenomen.
 

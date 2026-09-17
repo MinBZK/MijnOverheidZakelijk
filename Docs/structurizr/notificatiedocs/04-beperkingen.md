@@ -14,7 +14,7 @@ De volgende categorieën beperkingen zijn van toepassing. Per punt noemen we wat
 
 #### Identiteit, authenticatie en autorisatie
 - Service-to-service authenticatie via OIDC/OAuth2 verplicht (ADR 0006). Opgelegd door rijksbeleid en interoperabiliteitseisen. Impact: geen eigen credential management; integratie met IDP/token provider bepaalt token-handling; korte TTL’s en beperkte scopes.
-- Scope-gebaseerde autorisatie voor dienstverleners; scopes beperken toegang tot minimaal noodzakelijke rechten (least privilege) en doelbinding. Impact: de API’s dwingen scopes/claims af zodra het koppelvlak federatief wordt ontsloten.
+- Scope-gebaseerde autorisatie voor dienstverleners; scopes beperken toegang tot minimaal noodzakelijke rechten (least privilege) en doelbinding. Impact: de API’s dwingen scopes af en werken per object uitsluitend binnen de dienstverlener-identiteit (OIN) uit het token.
 
 #### Juridisch en compliance
 - AVG en LDV-vereisten (ADR 0007, 0010): auditeerbare gebeurtenissen, transparantie en bewaartermijnen zijn verplicht; geen persoonsgegevens in applicatielogs, alleen referenties/ID’s. Opgelegd door wet- en regelgeving. Impact: verwerkingslogging, referenties en idempotentie zijn noodzakelijk; logging wordt gestructureerd ingericht m.b.v. LDV.
@@ -32,13 +32,13 @@ De volgende categorieën beperkingen zijn van toepassing. Per punt noemen we wat
 #### Deploy- en hostingkader
 - Productie gaat bij Logius draaien. Impact: platformstandaarden van Logius bepalen o.a. secrets, netwerkpolicies en encryptie-at-rest.
 - Voor ontwikkeling en previews wordt ZAD gebruikt (zie hoofdstuk 10).
-- Netwerkbeperkingen: alleen uitgaand verkeer naar whitelisted endpoints. Impact: service discovery en integraties moeten binnen deze restricties werken; egress-controle en proxy’s waar nodig.
+- Netwerkbeperkingen: alleen uitgaand verkeer naar whitelisted endpoints. Impact: service discovery en integraties moeten binnen deze restricties werken; egress-controle en proxy’s waar nodig. Een webhook van een dienstverlener wordt bij registratie gevalideerd en aan de allowlist toegevoegd.
 
 #### Ontwikkelproces en team
 - Gedeelde capaciteit met andere deelprojecten (Profiel service, MOZa-Portaal, BBO). Opgelegd door programma. Impact: prioritering op kernflows, gefaseerde oplevering; automatisering (CI/CD, contracttests) is essentieel om snelheid/kwaliteit te borgen.
 
 #### Data, opslag en retentie
-- Geen opslag van berichtinhoud of contactgegevens; minimale opslag van status en referenties, waarbij registraties na afronding worden verwijderd. Opgelegd door AVG. Impact: design richt zich op metadata-opslag en verwijzingen i.p.v. payloads.
+- Contactgegevens, identificerende nummers en berichtinhoud (de waarden voor de personalisation) staan uitsluitend versleuteld op de notificatierij, met een sleutel per notificatie die op een vaste termijn na de terminale status wordt gewist; het eventlog en de applicatielogs bevatten ze niet. Opgelegd door AVG. Impact: sleutelbeheer met een KEK in de sleutelvoorziening van het platform, een wistaak en een wislatentie die gelijk is aan de bewaartermijn van de back-ups (ADR 0022).
 - Greenfield start, geen migratie van oude notificatie historiek.
 
 ### Waarom deze beperkingen ertoe doen

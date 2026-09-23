@@ -220,6 +220,7 @@ Die laatste gaat over precies de grenzen die de toelatingsregel noemt: netwerkbe
 Stap 7 krijgt de verplichte request body en de journey maakt zijn eigen data met een run-id en ruimt die op.\
 Een journey die groen is omdat hij tegen een mock draait, is geen e2e-test.\
 Automatiseren vóór het herstel legt de fout vast in plaats van hem te vinden.
+Context: **Stap 7 van de e2e-journey stuurt geen request body mee bij de DELETE**, terwijl het contract die verplicht stelt. Tegen WireMock slaagt de stap, want een mock valideert de body niet. Tegen de echte Profielservice geeft dezelfde aanroep een `400` met `"Request body mag niet leeg zijn"`.
 
 12. **Journeys die Bruno ontgroeien, gaan naar Karate of REST Assured.**\
 Heeft een journey polling of tijdgebonden asserties nodig, zoals de asynchrone bezorgstatus, dan wordt hij in Karate of REST Assured geschreven en niet met scripts in Bruno geforceerd.\
@@ -307,8 +308,10 @@ Wat wél beschermt, in volgorde van kracht:
 
 ## Openstaande punten
 
-1. Bevestigen dat de `kvkApiKey` in `moza-mock` de publieke testsleutel van de KvK is, of hem verwijderen.
-2. Vaststellen of iemand de omgeving `zad - stable` daadwerkelijk draait; zo ja, dan faalt stap 7 daar vandaag.
+1. In `moza-mock` staat een `kvkApiKey`. Naar alle waarschijnlijkheid is dat de publieke testsleutel van de KvK, maar dat is niet vastgelegd. het testplan stelt dat credentials nooit in de repository staan.\
+Bevestigen dat de `kvkApiKey` in `moza-mock` de publieke testsleutel van de KvK is, of hem verwijderen.
+2. Vaststellen of iemand de omgeving `zad - stable` daadwerkelijk draait; zo ja, dan faalt stap 7 daar.\
+Stap 7 van de e2e-journey stuurt geen request body mee bij de DELETE, terwijl het contract die verplicht stelt.
 3. Eigenaar aanwijzen voor de nachtrun en voor de triage van een rode run, zoals het testplan vraagt.
 4. De certificaatinstelling in de FSC-collectie omzetten van een vast lokaal pad naar variabelen (besluit 13), en nagaan of de Bruno-applicatie die variabelen net zo invult als de CLI. Voor de CLI is dat vastgesteld in de broncode van versie 4.1.0.
 5. Uitzoeken of de transactielog van beide peers via een API te bevragen is, zodat de FSC-journey erop kan asserten.

@@ -24,22 +24,22 @@ en vormen samen met de ADR’s de basis voor ontwerpkeuzes in de software-archit
 
 - Beveiliging en privacy by design
   Alleen noodzakelijke gegevens, least-privilege scopes, encryptie in transit, geen persoonsgegevens in logs.
-  Het NMC slaat geen contactgegevens of identificerende nummers op; identificerende nummers worden in het logboek gepseudonimiseerd.
+  Contactgegevens en identificerende nummers staan uitsluitend versleuteld op de notificatierij en worden met de sleutel gewist; het eventlog is pseudoniem; identificerende nummers worden in het logboek gepseudonimiseerd met een eigen pepper.
   Verwijzingen: ADR 0005, ADR 0006, ADR 0007, ADR 0010.
 
 - Idempotentie en correlatie als first-class concerns
   Delivery receipts en statusupdates zijn idempotent; herhaalde events veroorzaken geen dubbele acties.
   De referentie die bij acceptatie wordt teruggegeven correleert de asynchrone status aan de oorspronkelijke aanvraag.
 
-- Eenduidig statusmodel en callback-gedreven verwerking
-  Notificaties volgen een expliciet statusmodel, afgeleid van de NotifyNL-afleverstatussen (zie hoofdstuk 8).
-  De verwerking is webhook-gedreven in plaats van polling; state transitions zijn herleidbaar.
+- Eenduidig statusmodel en eventlog
+  Notificaties volgen een expliciet statusmodel (ADR 0024, hoofdstuk 8); elke overgang schrijft een event, zodat state transitions herleidbaar zijn.
+  Inkomende delivery receipts zijn webhook-gedreven en worden eerst opgeslagen; de terugkoppeling aan de aanroeper loopt via de status-query, de optionele webhook en de cursorfeed die ADR 0024 toevoegt.
 
-- Betrouwbaarheid via retries met back-off
-  De uitgaande statusterugkoppeling wordt bij tijdelijke fouten herhaald met exponentiële back-off en een begrensd aantal pogingen.
+- Betrouwbaarheid via taken met lease en timer
+  Verzending, herverzending, reconciliatie en de optionele webhook zijn taken met een lease en een `due`-tijdstip; een geaccepteerde notificatie gaat nooit verloren.
 
 - Hoge cohesie, lage koppeling
-  Duidelijke scheiding tussen publieke API (controllers), orchestratie, adapters per externe dienst en de persistente laag.
+  Duidelijke scheiding tussen publieke API (controllers), statusbeheer en taakverwerking, adapters per externe dienst en de persistente laag.
   Modules hebben een beperkte verantwoordelijkheid en communiceren via expliciete contracten.
 
 - Stateless services

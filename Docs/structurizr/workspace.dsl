@@ -24,24 +24,29 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
 
         group "Logius" {
             Berichtenbox = softwareSystem "BBO" "De Berichtenbox voor Burgers en Ondernemers" "Existing System"
-            NotificatieService = softwareSystem "Notificatiedienst" "Versturen van notificaties en contactherstel" {
+            NotificatieService = softwareSystem "Notificatiedienst" "Versturen van notificaties" {
                 !docs notificatiedocs
-                NMC = container "Notificatie Management Component" "Orchestreert notificaties en contactherstel" "" "MOZa" {
-                    // Bewust gesplitst voor duidelijkheid; centrale en decentrale intake kunnen ook één API zijn.
-                    CentraleNotificatieController = component "Centrale-notificatie-controller" "Controller: intake op identificerend nummer (NMC resolvet)" "REST" "MOZa"
-                    DecentraleNotificatieController = component "Decentrale-notificatie-controller" "Controller: intake met reeds opgehaalde gegevens" "REST" "MOZa"
-                    AfleverstatusCallback = component "Afleverstatus-callback" "Controller: ontvangt NotifyNL delivery receipts" "REST" "MOZa"
-                    NotificatieOrchestrator = component "Notificatie-orchestrator" "Coordineert voorkeur, opslag, versturen en statusverwerking" "" "MOZa"
-                    ProfielAdapter = component "Profielservice-adapter" "Leest voorkeur en invalideert e-mailadres" "" "MOZa"
-                    Verzendadapter = component "Verzendadapter" "Verstuurt via NotifyNL (template_id + personalisation)" "bearer-JWT" "MOZa"
-                    AdresAdapter = component "Adres-adapter" "Haalt adres op bij KvK Handelsregister of BRP" "" "MOZa, Nog te bouwen"
-                    Contactherstelcoordinator = component "Contactherstel-coordinator" "Haalt bij onbereikbaarheid het adres op en meldt dit aan de Contactherstel-dienst" "" "MOZa, Nog te bouwen"
-                    NotificatieStatusCallbackAdapter = component "Notificatiestatus-callback-adapter" "Koppelt de notificatiestatus terug aan de aanroeper; los van de inkomende NotifyNL-callback" "webhook, CloudEvents (NL GOV), bearer-JWT" "MOZa"
+                NMC = container "Notificatie Management Component" "Voert de notificatielevenscyclus uit als state machine met eventlog in PostgreSQL (ADR 0024)" "Quarkus" "MOZa" {
+                    // Koppelvlakken naar de dienstverlener. Bewust gesplitst voor duidelijkheid; centrale en decentrale intake kunnen ook één API zijn.
+                    CentraleNotificatieController = component "Centrale-notificatie-controller" "Aanname op identificerend nummer (centrale regie); 202 na opslag in één transactie; quota per DV" "REST over FSC, OAuth2-token met OIN" "MOZa"
+                    DecentraleNotificatieController = component "Decentrale-notificatie-controller" "Aanname met e-mailadres (decentrale regie); 202 na opslag in één transactie" "REST over FSC, OAuth2-token met OIN" "MOZa"
+                    NotificatieStatusController = component "Notificatiestatus-controller" "Status opvragen, zoeken op dvRef en annuleren, binnen de eigen DV" "REST over FSC, OAuth2-token met OIN" "MOZa, Nog te bouwen"
+                    NotificatiestatusFeed = component "Notificatiestatus-feed" "Cursorfeed van CloudEvents per DV over het eventlog; de DV bevestigt met de cursor" "REST over FSC, CloudEvents (NL GOV), OAuth2-token met OIN" "MOZa, Nog te bouwen"
+                    // Inkomende events: eerst opslaan, dan bevestigen, daarna verwerken
+                    AfleverstatusCallback = component "Afleverstatus-callback" "Ontvangt NotifyNL delivery receipts: valideert, slaat op als taak en antwoordt 200" "REST, bereikbaar vanaf internet, bearer-token" "MOZa"
+                    // Levenscyclus
+                    Statusbeheer = component "Statusbeheer" "Enige schrijver van de notificatiestatus: vergrendelt de rij, toetst de overgang en schrijft het event" "Java, PL/pgSQL-trigger" "MOZa, Nog te bouwen"
+                    Verzendverwerker = component "Verzendverwerker" "Stateless workers die taken claimen (SKIP LOCKED, verzendbudget) en per taaksoort uitvoeren" "Java, SQL" "MOZa, Nog te bouwen"
+                    AfleverstatusNavraag = component "Afleverstatus-navraag" "Vraagt bij NotifyNL de status op van pogingen zonder receipt; 404 geeft bezorgstatus-onbekend" "" "MOZa, Nog te bouwen"
+                    NotificatiestatusWebhook = component "Notificatiestatus-webhook" "Terugkoppeltaak per DV: levert events op de webhook vanaf een eigen leverpositie" "webhook, CloudEvents (NL GOV), bearer-JWT met aud" "MOZa, Nog te bouwen"
+                    // Adapters
+                    ProfielAdapter = component "Profielservice-adapter" "Leest de voorkeur binnen de verzendtaak (wordt niet opgeslagen); meldt een e-mailadres ongeldig" "" "MOZa"
+                    Dienstverlenerregister = component "Dienstverlenerregister" "Koppelt het OIN aan de dvId; berichttypen, quota, webhook en termijnen per DV" "" "MOZa, Nog te bouwen"
+                    Sleutelbeheer = component "Sleutelbeheer" "Sleutel per notificatie onder de KEK uit de sleutelvoorziening; wissen van de sleutel is de wisactie" "" "MOZa, Nog te bouwen"
+                    Verzendadapter = component "Verzendadapter" "Verstuurt via NotifyNL (template, personalisation, reference = poging) en vraagt statussen op" "bearer-JWT" "MOZa"
                 }
                 NotifyNL = container "NotifyNL" "Verstuurt template-berichten, meldt afleverstatus terug"
-                Contactherstel = container "Contactherstel" "Bepaalt en voert contactherstel uit" "" "Team Geel"
-                Printstraat = container "Printstraat" "Verzorgt fysieke verzending" "" "Team Geel"
-                notificatiedatabase = container "notificatiedatabase" "Referentie, status en (centrale regie) versleuteld identificerend nummer; tot de callback is verstuurd" "PostgreSQL" "Database, MOZa"
+                notificatiedatabase = container "notificatiedatabase" "dienstverlener, notificatie, poging, taak, verzendbudget, event (eventlog), bevestiging, webhookpositie" "PostgreSQL" "Database, MOZa"
             }
         }
 
@@ -67,10 +72,11 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             }
         }
 
+        Sleutelvoorziening = softwareSystem "Sleutelvoorziening" "Bewaart de KEK en de peppers van het NMC" "Existing System"
+        LDV = softwareSystem "Logboek Dataverwerkingen" "Verwerkingslog van MOZa (ClickHouse), gevuld via de LDV-wrapper" "Shared System"
         eHerkenning = softwareSystem "eHerkenning" "Identity Provider voor bedrijven" "Existing System"
         DigiD = softwareSystem "DigiD" "Identity Provider voor burgers en ZZP-ers" "Existing System"
         EIDAS = softwareSystem "EIDAS" "Identity Provider voor Europese bedrijven" "Existing System"
-        BRP = softwareSystem "BRP-API" "Adresgegevens o.b.v. BSN" "Existing System"
 
         // Relationships between people and software systems
         DVMedewerker -> DVService "Start notificatie process"
@@ -114,37 +120,62 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
 
 
         // Notificatiedienst
-        NMC -> NotifyNL "Verstuurt notificatie" "REST, bearer-JWT"
+        NMC -> NotifyNL "Verstuurt notificatie, vraagt status op" "REST, bearer-JWT"
         NotifyNL -> NMC "Delivery receipt (async)" ""
-        NMC -> ProfielServiceBackend "Haalt voorkeur op, invalideert e-mailadres" ""
-        NMC -> notificatiedatabase "Bewaart verzoek en status" ""
-        NMC -> KvkHandelsregister "Adres ophalen (KVK/RSIN)" ""
-        NMC -> BRP "Adres ophalen (BSN)" ""
-        NMC -> Contactherstel "Meldt onbereikbaar + adres" ""
-        NMC -> DVOmcService "Notificatiestatus (optioneel)" "webhook, CloudEvents (NL GOV), bearer-JWT"
-        Contactherstel -> Printstraat "Fysiek contactherstel" ""
+        NMC -> ProfielServiceBackend "Haalt voorkeur op binnen de verzendtaak, meldt e-mailadres ongeldig" ""
+        NMC -> notificatiedatabase "State machine, taken en eventlog in één transactie" ""
+        NMC -> Sleutelvoorziening "Haalt de KEK en de peppers op bij het opstarten" ""
+        NMC -> LDV "Schrijft verwerkingsregistraties" ""
+        NMC -> DVOmcService "Notificatiestatus (optionele webhook)" "webhook, CloudEvents (NL GOV), bearer-JWT"
+        NMC -> DVService "Notificatiestatus (optionele webhook)" "webhook, CloudEvents (NL GOV), bearer-JWT"
+        DVOmcService -> NMC "Leest eventfeed en bevestigt, vraagt status op" "REST over FSC, OAuth2-token met OIN"
+        DVService -> NMC "Leest eventfeed en bevestigt, vraagt status op" "REST over FSC, OAuth2-token met OIN"
         NotifyNL -> zakelijkeGebruiker "Verstuurt e-mail/SMS" ""
-        Printstraat -> zakelijkeGebruiker "Verstuurt brief" ""
 
-        // NMC componenten
-        DVService -> CentraleNotificatieController "Initiëren notificatie (identificerend nummer)" ""
-        DVOmcService -> DecentraleNotificatieController "Initiëren notificatie (met gegevens)" ""
+        // NMC componenten: koppelvlakken
+        DVService -> CentraleNotificatieController "Aanname (identificerend nummer)" ""
+        DVOmcService -> DecentraleNotificatieController "Aanname (e-mailadres)" ""
+        DVService -> NotificatieStatusController "Status, zoeken, annuleren" ""
+        DVOmcService -> NotificatieStatusController "Status, zoeken, annuleren" ""
+        DVService -> NotificatiestatusFeed "Leest events met cursor, bevestigt" ""
+        DVOmcService -> NotificatiestatusFeed "Leest events met cursor, bevestigt" ""
         NotifyNL -> AfleverstatusCallback "Delivery receipt (async)" ""
-        CentraleNotificatieController -> NotificatieOrchestrator "Delegeert verzoek" ""
-        DecentraleNotificatieController -> NotificatieOrchestrator "Delegeert verzoek" ""
-        AfleverstatusCallback -> NotificatieOrchestrator "Delegeert receipt" ""
-        NotificatieOrchestrator -> ProfielAdapter "Voorkeur ophalen / e-mailadres invalideren" ""
-        NotificatieOrchestrator -> notificatiedatabase "Bewaart en werkt status bij" ""
-        NotificatieOrchestrator -> Verzendadapter "Laat versturen" ""
-        NotificatieOrchestrator -> Contactherstelcoordinator "Triggert contactherstel" ""
-        NotificatieOrchestrator -> NotificatieStatusCallbackAdapter "Koppelt notificatiestatus terug (optioneel)" ""
-        NotificatieStatusCallbackAdapter -> DVOmcService "Notificatiestatus" "webhook, CloudEvents (NL GOV), bearer-JWT"
-        ProfielAdapter -> ProfielServiceBackend "Leest voorkeur, invalideert e-mailadres" ""
-        Verzendadapter -> NotifyNL "Verstuurt notificatie" "REST, bearer-JWT"
-        Contactherstelcoordinator -> AdresAdapter "Adres ophalen" ""
-        AdresAdapter -> KvkHandelsregister "Adres ophalen (KVK/RSIN)" ""
-        AdresAdapter -> BRP "Adres ophalen (BSN)" ""
-        Contactherstelcoordinator -> Contactherstel "Meldt onbereikbaar + adres" ""
+        NotificatiestatusWebhook -> DVOmcService "Notificatiestatus" "webhook, CloudEvents (NL GOV), bearer-JWT"
+        NotificatiestatusWebhook -> DVService "Notificatiestatus" "webhook, CloudEvents (NL GOV), bearer-JWT"
+
+        // NMC componenten: levenscyclus
+        CentraleNotificatieController -> Statusbeheer "Aanname: notificatie, eerste taak en eerste event in één transactie" ""
+        DecentraleNotificatieController -> Statusbeheer "Aanname: notificatie, eerste taak en eerste event in één transactie" ""
+        CentraleNotificatieController -> Dienstverlenerregister "Toetst OIN, berichttype en quotum" ""
+        DecentraleNotificatieController -> Dienstverlenerregister "Toetst OIN, berichttype en quotum" ""
+        NotificatieStatusController -> Dienstverlenerregister "Toetst OIN" ""
+        NotificatiestatusFeed -> Dienstverlenerregister "Toetst OIN; leest termijnen" ""
+        NotificatiestatusWebhook -> Dienstverlenerregister "Leest webhook" ""
+        Dienstverlenerregister -> notificatiedatabase "Leest dienstverlener" ""
+        CentraleNotificatieController -> Sleutelbeheer "Versleutelt nummer en personalisation; HMAC van dvRef" ""
+        DecentraleNotificatieController -> Sleutelbeheer "Versleutelt e-mailadres en personalisation; HMAC van dvRef" ""
+        NotificatieStatusController -> Statusbeheer "Annuleren" ""
+        NotificatieStatusController -> notificatiedatabase "Leest status" ""
+        AfleverstatusCallback -> notificatiedatabase "Slaat inkomend event en verwerktaak op" ""
+        Verzendverwerker -> notificatiedatabase "Claimt taken (SKIP LOCKED, verdeeld over DV's, verzendbudget); rondt af, stelt uit of markeert mislukt" ""
+        Verzendverwerker -> Statusbeheer "Voert overgang uit (claim naar in-verzending of nieuwe poging, verzonden, receipts, verlopen)" ""
+        Verzendverwerker -> Sleutelbeheer "Ontsleutelt binnen de verzendtaak en de taak ongeldig melden; wist de sleutel in de wistaak" ""
+        Verzendverwerker -> NotificatiestatusWebhook "Voert terugkoppeltaak uit" ""
+        Verzendverwerker -> LDV "Schrijft verwerkingsregistraties vóór elke externe aanroep" ""
+        NotificatiestatusFeed -> LDV "Schrijft een verwerkingsregistratie per opgevraagde pagina" ""
+        Verzendverwerker -> ProfielAdapter "Voorkeur ophalen; ongeldig melden" ""
+        Verzendverwerker -> Verzendadapter "Laat versturen" ""
+        Verzendverwerker -> AfleverstatusNavraag "Voert reconciliatietaak uit" ""
+        AfleverstatusNavraag -> Verzendadapter "Vraagt status op" ""
+        AfleverstatusNavraag -> Statusbeheer "Overgang bij late of ontbrekende receipt" ""
+        Statusbeheer -> notificatiedatabase "FOR UPDATE vóór elke schrijfactie op de rij; status, versie en event; trigger toetst" ""
+        NotificatiestatusFeed -> notificatiedatabase "Leest eventlog onder het watermerk (replica); schrijft de bevestiging" ""
+        NotificatiestatusWebhook -> notificatiedatabase "Leest eventlog per DV onder het watermerk vanaf de leverpositie; schrijft de leverpositie" ""
+        Sleutelbeheer -> Sleutelvoorziening "Haalt de KEK en de peppers op bij het opstarten" ""
+
+        // NMC componenten: adapters
+        ProfielAdapter -> ProfielServiceBackend "Leest voorkeur, meldt e-mailadres ongeldig" ""
+        Verzendadapter -> NotifyNL "Verstuurt notificatie, vraagt status op" "REST, bearer-JWT"
 
         // Deployment groups
         deploymentEnvironment "Ontwikkelomgeving" {
@@ -154,8 +185,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
                     containerInstance NotifyNL
                     containerInstance ProfielServiceBackend
                     containerInstance NMC
-                    containerInstance Contactherstel
-                    containerInstance Printstraat
+                    containerInstance notificatiedatabase
                 }
             }
             deploymentNode "DV-O-ENVIRONMENT" "" "Ergens" {
@@ -249,6 +279,31 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             include *
             autoLayout
         }
+
+        dynamic NMC "NMCVerzending" "Verzending, receipt en overgang (centrale regie, geslaagde aflevering)" {
+            DVService -> CentraleNotificatieController "Aanname (identificerend nummer)"
+            CentraleNotificatieController -> Dienstverlenerregister "Toetst OIN, berichttype en quotum"
+            CentraleNotificatieController -> Sleutelbeheer "Versleutelt nummer en personalisation; HMAC van dvRef"
+            CentraleNotificatieController -> Statusbeheer "Notificatie, verzendtaak en eerste event in één transactie; 202"
+            Verzendverwerker -> notificatiedatabase "Claimt de verzendtaak (SKIP LOCKED, verzendbudget)"
+            Verzendverwerker -> Statusbeheer "Overgang aangenomen naar in-verzending, in dezelfde claimtransactie"
+            Verzendverwerker -> LDV "Schrijft de LDV-registratie vóór het ophalen van de voorkeur"
+            Verzendverwerker -> ProfielAdapter "Voorkeur ophalen"
+            Verzendverwerker -> LDV "Schrijft de LDV-registratie vóór het verzenden"
+            Verzendverwerker -> Verzendadapter "Laat versturen (reference = poging)"
+            Verzendadapter -> NotifyNL "POST; 201 met NotifyNL-id"
+            Verzendverwerker -> Statusbeheer "Overgang in-verzending naar verzonden; taak afgerond; plant de navraagtaak"
+            NotifyNL -> AfleverstatusCallback "Delivery receipt: delivered"
+            AfleverstatusCallback -> notificatiedatabase "Valideert; slaat receipt op als taak zonder e-mailadres (reference = poging); 200"
+            Verzendverwerker -> notificatiedatabase "Claimt de receipttaak"
+            Verzendverwerker -> Statusbeheer "Overgang verzonden naar bezorgd (NotifyNL-id past op de poging); plant de vaststeltaak"
+            Verzendverwerker -> notificatiedatabase "Claimt de vaststeltaak na de vaststellingstermijn (due)"
+            Verzendverwerker -> Statusbeheer "Overgang bezorgd naar definitief-bezorgd"
+            DVService -> NotificatiestatusFeed "Leest events met cursor; bevestigt"
+            NotificatiestatusFeed -> notificatiedatabase "Leest eventlog onder het watermerk; schrijft de bevestiging"
+            autoLayout
+        }
+
 
         container VerificatieService "VerificatieServiceContainer" {
             include *

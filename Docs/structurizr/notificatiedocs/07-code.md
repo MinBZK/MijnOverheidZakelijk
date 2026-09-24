@@ -26,17 +26,17 @@ De broncode volgt een gelaagde pakketstructuur onder `nl.rijksoverheid.moz.nmc`:
 | Pakket                   | Verantwoordelijkheid                                                                                     |
 |--------------------------|----------------------------------------------------------------------------------------------------------|
 | `controller`             | REST-endpoints van de business-API (centrale en decentrale intake) en de API-Version responsefilter      |
-| `service`                | Orchestratie van het notificatieproces en de mapping van berichttype naar NotifyNL-template              |
-| `domain`                 | De notificatie-entiteit met statusgeschiedenis en projectie van de laatste status, en het statusmodel    |
+| `service`                | Aanname en verzending, de overgangsfunctie, de receiptverwerking en de mapping van berichttype naar NotifyNL-template |
+| `domain`                 | De entiteiten notificatie, poging en event, de statussen en de toegestane overgangen                     |
 | `repository`             | Toegang tot het Notificatieregister, inclusief het claimen van verlopen notificaties voor de retentiejob |
-| `job`                    | Retentiejob die notificaties na de bewaartermijn in batches verwijdert, met cascade naar de geschiedenis |
+| `job`                    | Retentiejob die notificaties na de bewaartermijn in batches verwijdert, met cascade naar de pogingen      |
 | `client.notifynl`        | Verzendadapter naar NotifyNL, inclusief de JWT-opbouw per aanroep                                        |
 | `client.profielservice`  | Adapter die de contactvoorkeur bij de Profielservice ophaalt                                             |
 | `client.consumentcallback` | Statusterugkoppeling naar de aanroeper als CloudEvents-webhook met retries                             |
 | `notifynlcallback`       | Inkomende NotifyNL delivery receipts: controller en bearer-token-authenticatiefilter                     |
 | `helper`                 | Pseudonimisering met keyed HMAC en hulpfuncties voor RFC 9457-responses                                  |
 
-De takentabel, het eventlog, de herverzending, de reconciler, de eventfeed en het status-endpoint uit hoofdstuk 6 zijn nog niet gebouwd.
+De takentabel, de herverzending, de reconciler, de eventfeed en het status-endpoint uit hoofdstuk 6 zijn nog niet gebouwd.
 
 ### Klassen (doelontwerp ADR 0024)
 
@@ -505,7 +505,7 @@ Afhankelijkheden worden via de constructor geïnjecteerd, niet via field injecti
 
 #### Statusterugkoppeling met retries
 
-In de PoC-fase verstuurt de ConsumentCallbackAdapter de statusterugkoppeling als CloudEvents-event en herhaalt hij bij fouten met exponentiële back-off en een begrensd aantal pogingen; de wachttijd is configureerbaar. In het doelontwerp levert de terugkoppeltaak vanaf de leverpositie en pauzeert hij na herhaald falen (hoofdstuk 6). Dezelfde status wordt hooguit één keer doorgegeven; een andere uitkomst na een uitkomst, zoals een faalstatus na `delivered`, wordt opnieuw doorgegeven. Een geslaagde terugkoppeling verwijdert de notificatie niet; dat doet de retentiejob.
+In de PoC-fase verstuurt de ConsumentCallbackAdapter de statusterugkoppeling als CloudEvents-event en herhaalt hij bij fouten met exponentiële back-off en een begrensd aantal pogingen; de wachttijd is configureerbaar. In het doelontwerp levert de terugkoppeltaak vanaf de leverpositie en pauzeert hij na herhaald falen (hoofdstuk 6). Elke overgang die op een receipt volgt, wordt één keer doorgegeven, met `sequence` het volgnummer waarop de dienstverlener ordent; een herhaalde of oudere receipt levert geen terugkoppeling op. Een geslaagde terugkoppeling verwijdert de notificatie niet; dat doet de retentiejob.
 
 #### Foutafhandeling volgens RFC 9457
 

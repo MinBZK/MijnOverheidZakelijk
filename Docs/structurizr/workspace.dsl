@@ -26,7 +26,7 @@ workspace "Mijn Overheid Zakelijk" "Het model voor Mijn Overheid Zakelijk" {
             Berichtenbox = softwareSystem "BBO" "De Berichtenbox voor Burgers en Ondernemers" "Existing System"
             NotificatieService = softwareSystem "Notificatiedienst" "Versturen van notificaties" {
                 !docs notificatiedocs
-                NMC = container "Notificatie Management Component" "Voert de notificatielevenscyclus uit als state machine met eventlog in PostgreSQL (ADR 0022)" "Quarkus" "MOZa" {
+                NMC = container "Notificatie Management Component" "Voert de notificatielevenscyclus uit als state machine met eventlog in PostgreSQL (ADR 0024)" "Quarkus" "MOZa" {
                     // Koppelvlakken naar de dienstverlener. Bewust gesplitst voor duidelijkheid; centrale en decentrale intake kunnen ook één API zijn.
                     CentraleNotificatieController = component "Centrale-notificatie-controller" "Aanname op identificerend nummer (centrale regie); 202 na opslag in één transactie; quota per DV" "REST over FSC, OAuth2-token met OIN" "MOZa"
                     DecentraleNotificatieController = component "Decentrale-notificatie-controller" "Aanname met e-mailadres (decentrale regie); 202 na opslag in één transactie" "REST over FSC, OAuth2-token met OIN" "MOZa"

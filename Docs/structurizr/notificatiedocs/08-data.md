@@ -12,7 +12,7 @@ De Notificatiedienst gebruikt twee datastores:
 
 ### Datamodel
 
-Het Notificatieregister volgt [ADR 0022](/workspace/decisions#22): `dienstverlener` is het register uit de onboarding, de tabellen `notificatie` en `poging` zijn de bron van waarheid, `taak` draagt de bijwerkingen, `verzendbudget` de tokens per Notify-service, `event` het eventlog en `bevestiging` en `webhookpositie` de cursors per dienstverlener. Hoofdstuk 7 werkt de tabellen uit tot klassen.
+Het Notificatieregister volgt [ADR 0024](/workspace/decisions#24): `dienstverlener` is het register uit de onboarding, de tabellen `notificatie` en `poging` zijn de bron van waarheid, `taak` draagt de bijwerkingen, `verzendbudget` de tokens per Notify-service, `event` het eventlog en `bevestiging` en `webhookpositie` de cursors per dienstverlener. Hoofdstuk 7 werkt de tabellen uit tot klassen.
 
 | Tabel | Inhoud | Persoonsgegevens |
 |---|---|---|
@@ -33,7 +33,7 @@ Het register bevat geen referentie van de dienstverlener in platte tekst en geen
 
 `poging.status`: `gepland`, `verzonden`, `bezorgd`, `tijdelijk-mislukt`, `permanent-mislukt`, `technisch-mislukt` en `onbekend`, afgeleid van de afleverstatussen van NotifyNL (`delivered`, `temporary-failure`, `permanent-failure`, `technical-failure`). Een poging is lopend zolang haar status `verzonden` of `onbekend` is.
 
-Elke overgang van de notificatie verhoogt de versie en schrijft een event met hetzelfde volgnummer; een databasetrigger weigert een wijziging van de versie zonder event en houdt de tabel van toegestane paren. De feed garandeert geen volgorde binnen één notificatie; de dienstverlener verwerkt per notificatie op volgnummer. De volledige overgangsregels en het toestandsdiagram staan in ADR 0022 en hoofdstuk 7.
+Elke overgang van de notificatie verhoogt de versie en schrijft een event met hetzelfde volgnummer; een databasetrigger weigert een wijziging van de versie zonder event en houdt de tabel van toegestane paren. De feed garandeert geen volgorde binnen één notificatie; de dienstverlener verwerkt per notificatie op volgnummer. De volledige overgangsregels en het toestandsdiagram staan in ADR 0024 en hoofdstuk 7.
 
 > Stand van de implementatie: het huidige NMC (PoC-fase) heeft de tabel `notificatie` (`V1__init_notificatie.sql`, `V2__notificatie_retentie.sql`) met `id`, `versie`, `external_reference`, `callback_url` en een projectie van de laatste status (`laatste_status`, `laatste_status_tijdstip`, `laatste_status_update`), en de tabel `notificatie_status` met per notificatie de statusgeschiedenis op volgnummer, met het tijdstip van de bron (`completed_at` uit de receipt) en van de registratie. Statussen: `created`, `sending`, `delivered`, `permanent-failure`, `temporary-failure`, `technical-failure` en `onbekend`. Een nachtelijke retentiejob verwijdert notificaties waarvan de laatste statusregistratie ouder is dan de bewaartermijn, ongeacht de status, met cascade naar de geschiedenis; de statusterugkoppeling verwijdert niets. Dat model vervalt met de eerste migratie naar het ontwerp hierboven.
 

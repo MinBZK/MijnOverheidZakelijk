@@ -32,8 +32,8 @@ en vormen samen met de ADR’s de basis voor ontwerpkeuzes in de software-archit
   De referentie die bij acceptatie wordt teruggegeven correleert de asynchrone status aan de oorspronkelijke aanvraag.
 
 - Eenduidig statusmodel en eventlog
-  Notificaties volgen een expliciet statusmodel (ADR 0022, hoofdstuk 8); elke overgang schrijft een event, zodat state transitions herleidbaar zijn.
-  Inkomende delivery receipts zijn webhook-gedreven en worden eerst opgeslagen; de terugkoppeling aan de aanroeper loopt via de status-query, de optionele webhook en de cursorfeed die ADR 0022 toevoegt.
+  Notificaties volgen een expliciet statusmodel (ADR 0024, hoofdstuk 8); elke overgang schrijft een event, zodat state transitions herleidbaar zijn.
+  Inkomende delivery receipts zijn webhook-gedreven en worden eerst opgeslagen; de terugkoppeling aan de aanroeper loopt via de status-query, de optionele webhook en de cursorfeed die ADR 0024 toevoegt.
 
 - Betrouwbaarheid via taken met lease en timer
   Verzending, herverzending, reconciliatie en de optionele webhook zijn taken met een lease en een `due`-tijdstip; een geaccepteerde notificatie gaat nooit verloren.

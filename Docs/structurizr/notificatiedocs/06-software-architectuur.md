@@ -21,14 +21,14 @@ De Notificatiedienst bestaat uit het NMC en NotifyNL en verhoudt zich tot de Pro
 
 ![NMC Componenten](embed:NMCComponents)
 
-Het NMC voert de notificatielevenscyclus uit als een georkestreerde state machine in PostgreSQL met een transactioneel eventlog ([ADR 0022](/workspace/decisions#22)). Er is geen message broker en geen workflow-engine; timers zijn `due`-tijdstippen op taken en "event" betekent een rij in het eventlog, gelezen onder een visibiliteitswatermerk. Contactherstel wordt later aan het model toegevoegd; het model beschrijft de levenscyclus tot en met de terugkoppeling van de afleverstatus.
+Het NMC voert de notificatielevenscyclus uit als een georkestreerde state machine in PostgreSQL met een transactioneel eventlog ([ADR 0024](/workspace/decisions#24)). Er is geen message broker en geen workflow-engine; timers zijn `due`-tijdstippen op taken en "event" betekent een rij in het eventlog, gelezen onder een visibiliteitswatermerk. Contactherstel wordt later aan het model toegevoegd; het model beschrijft de levenscyclus tot en met de terugkoppeling van de afleverstatus.
 
 Koppelvlakken naar de dienstverlener:
 
 - de **Centrale-notificatie-controller** neemt verzoeken aan op basis van een identificerend nummer (centrale regie). De aanname is synchroon en antwoordt met 202 nadat notificatie, eerste taak en eerste event in één transactie zijn opgeslagen; de quota per dienstverlener worden hier afgedwongen;
 - de **Decentrale-notificatie-controller** doet hetzelfde voor verzoeken met een e-mailadres (decentrale regie);
 - de **Notificatiestatus-controller** biedt status opvragen (met versie), zoeken op de dvRef-HMAC en annuleren tot aan de claim;
-- de **Notificatiestatus-feed** biedt de cursorfeed van CloudEvents over het eventlog per dienstverlener, de toevoeging van ADR 0022 naast de status-query en de webhook; de dienstverlener verwerkt per notificatie op volgnummer en schrijft de bevestiging; per opgevraagde pagina schrijft de feed een LDV-registratie;
+- de **Notificatiestatus-feed** biedt de cursorfeed van CloudEvents over het eventlog per dienstverlener, de toevoeging van ADR 0024 naast de status-query en de webhook; de dienstverlener verwerkt per notificatie op volgnummer en schrijft de bevestiging; per opgevraagde pagina schrijft de feed een LDV-registratie;
 - het **Dienstverlenerregister** koppelt het OIN uit het token aan de dienstverlener en houdt per dienstverlener de toegestane berichttypen, quota, webhook, bevestigingstermijn, maximale cursorleeftijd en beheerkanaal bij, gevuld bij onboarding.
 
 De koppelvlakken worden ontsloten over FSC. Elke aanroep draagt een OAuth2-toegangstoken (NL GOV Assurance profile for OAuth 2.0, uitgegeven door de IAM-gateway van MOZa) met het OIN van de dienstverlener; status, zoeken, annuleren, feed en bevestiging werken uitsluitend binnen die identiteit.
@@ -70,7 +70,7 @@ NotifyNL bevestigt bij verzending alleen de acceptatie. De uiteindelijke aflever
 
 Een receipt `delivered` is niet definitief: tot zeven dagen erna kan NotifyNL nog een faalreceipt sturen. De notificatie staat daarom eerst op `bezorgd` en wordt na de vaststellingstermijn uit de MEBV door een vaststeltaak `definitief-bezorgd`; een temporary-failure of permanent-failure binnen die termijn wordt verwerkt als bij een lopende poging, een latere wordt alleen op de poging vastgelegd.
 
-Bij een tijdelijke of technische afleverfout, zoals een volle mailbox, biedt het NMC de notificatie zelf eenmaal opnieuw aan en informeert het de aanroeper bij iedere stap over de status (ADR 0022). Deze herverzending is nog niet geïmplementeerd. Het besluit of een mislukte notificatie tot een nieuw bericht moet leiden, blijft businesslogica van de dienstverlener.
+Bij een tijdelijke of technische afleverfout, zoals een volle mailbox, biedt het NMC de notificatie zelf eenmaal opnieuw aan en informeert het de aanroeper bij iedere stap over de status (ADR 0024). Deze herverzending is nog niet geïmplementeerd. Het besluit of een mislukte notificatie tot een nieuw bericht moet leiden, blijft businesslogica van de dienstverlener.
 
 ### Contactherstel
 

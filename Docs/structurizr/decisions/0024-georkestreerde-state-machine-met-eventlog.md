@@ -1,4 +1,4 @@
-# 22. Georkestreerde state machine met eventlog voor de notificatielevenscyclus
+# 24. Georkestreerde state machine met eventlog voor de notificatielevenscyclus
 
 Datum: 2026-08-31
 

@@ -38,7 +38,7 @@ De volgende categorieën beperkingen zijn van toepassing. Per punt noemen we wat
 - Gedeelde capaciteit met andere deelprojecten (Profiel service, MOZa-Portaal, BBO). Opgelegd door programma. Impact: prioritering op kernflows, gefaseerde oplevering; automatisering (CI/CD, contracttests) is essentieel om snelheid/kwaliteit te borgen.
 
 #### Data, opslag en retentie
-- Contactgegevens, identificerende nummers en berichtinhoud (de waarden voor de personalisation) staan uitsluitend versleuteld op de notificatierij, met een sleutel per notificatie die op een vaste termijn na de terminale status wordt gewist; het eventlog en de applicatielogs bevatten ze niet. Opgelegd door AVG. Impact: sleutelbeheer met een KEK in de sleutelvoorziening van het platform, een wistaak en een wislatentie die gelijk is aan de bewaartermijn van de back-ups (ADR 0022).
+- Contactgegevens, identificerende nummers en berichtinhoud (de waarden voor de personalisation) staan uitsluitend versleuteld op de notificatierij, met een sleutel per notificatie die op een vaste termijn na de terminale status wordt gewist; het eventlog en de applicatielogs bevatten ze niet. Opgelegd door AVG. Impact: sleutelbeheer met een KEK in de sleutelvoorziening van het platform, een wistaak en een wislatentie die gelijk is aan de bewaartermijn van de back-ups (ADR 0024).
 - Greenfield start, geen migratie van oude notificatie historiek.
 
 ### Waarom deze beperkingen ertoe doen

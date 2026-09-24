@@ -38,9 +38,9 @@ De broncode volgt een gelaagde pakketstructuur onder `nl.rijksoverheid.moz.nmc`:
 
 De takentabel, het eventlog, de herverzending, de reconciler, de eventfeed en het status-endpoint uit hoofdstuk 6 zijn nog niet gebouwd.
 
-### Klassen (doelontwerp ADR 0022)
+### Klassen (doelontwerp ADR 0024)
 
-De componenten uit hoofdstuk 6 werken uit tot de klassen hieronder. Dit is het doelontwerp van [ADR 0022](/workspace/decisions#22); de pakketstructuur hierboven beschrijft de huidige code. Klassen die blijven bestaan houden hun naam (`NotifyNLVerzendAdapter`, `ProfielServiceAdapter`, `NotifyNLCallbackController`, `ConsumentCallbackAdapter`, `HashHelper`, `NotificatieRepository`). De orchestrator `NotificatieService` vervalt; zijn verantwoordelijkheden verdelen zich over de aanname, de overgangsfunctie en de taakhandlers. De mechanismen hieronder (`SKIP LOCKED`, `xid8`, de trigger, partities) zijn niet op H2 te testen; de tests van het doelontwerp draaien op een embedded PostgreSQL.
+De componenten uit hoofdstuk 6 werken uit tot de klassen hieronder. Dit is het doelontwerp van [ADR 0024](/workspace/decisions#24); de pakketstructuur hierboven beschrijft de huidige code. Klassen die blijven bestaan houden hun naam (`NotifyNLVerzendAdapter`, `ProfielServiceAdapter`, `NotifyNLCallbackController`, `ConsumentCallbackAdapter`, `HashHelper`, `NotificatieRepository`). De orchestrator `NotificatieService` vervalt; zijn verantwoordelijkheden verdelen zich over de aanname, de overgangsfunctie en de taakhandlers. De mechanismen hieronder (`SKIP LOCKED`, `xid8`, de trigger, partities) zijn niet op H2 te testen; de tests van het doelontwerp draaien op een embedded PostgreSQL.
 
 | Component (hoofdstuk 6) | Klassen |
 |---|---|

@@ -24,7 +24,7 @@ GitHub Actions:
 
 ### Configuratie
 
-Omgevingsspecifieke configuratie en secrets (database, NotifyNL API-key, callback-token, LDV) worden buiten de repository beheerd en als omgevingsvariabelen aan de container meegegeven. De hash-pepper is in de PoC-fase ook een omgevingsvariabele; in het doelontwerp komen de KEK en de peppers bij het opstarten uit de sleutelvoorziening van het platform (ADR 0022).
+Omgevingsspecifieke configuratie en secrets (database, NotifyNL API-key, callback-token, LDV) worden buiten de repository beheerd en als omgevingsvariabelen aan de container meegegeven. De hash-pepper is in de PoC-fase ook een omgevingsvariabele; in het doelontwerp komen de KEK en de peppers bij het opstarten uit de sleutelvoorziening van het platform (ADR 0024).
 
 ### Broncode
 

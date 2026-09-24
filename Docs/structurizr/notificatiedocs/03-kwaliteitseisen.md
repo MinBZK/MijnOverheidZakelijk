@@ -22,9 +22,9 @@ De onderstaande kwaliteitseisen zijn architectonisch significant en sturen ontwe
 Waar zaken bewust buiten scope vallen, is dit expliciet benoemd.
 
 #### Beveiliging & Privacy
-- Authenticatie: dienstverleners authenticeren met een OAuth2-toegangstoken volgens het NL GOV Assurance profile for OAuth 2.0, uitgegeven door de IAM-gateway van MOZa, met het OIN als claim (ADR 0022); de koppelvlakken worden ontsloten over FSC. Tokens met beperkte scopes, geen long-lived secrets in code. De inkomende NotifyNL-callback is beveiligd met een bearer token dat alleen bij NotifyNL en het NMC bekend is; richting NotifyNL authenticeert het NMC per verzoek met een ondertekende JWT.
+- Authenticatie: dienstverleners authenticeren met een OAuth2-toegangstoken volgens het NL GOV Assurance profile for OAuth 2.0, uitgegeven door de IAM-gateway van MOZa, met het OIN als claim (ADR 0024); de koppelvlakken worden ontsloten over FSC. Tokens met beperkte scopes, geen long-lived secrets in code. De inkomende NotifyNL-callback is beveiligd met een bearer token dat alleen bij NotifyNL en het NMC bekend is; richting NotifyNL authenticeert het NMC per verzoek met een ondertekende JWT.
 - Autorisatie: scope-gebaseerde autorisatie per dienst/dienstverlener, en per object: elke aanroep werkt uitsluitend binnen de dienstverlener-identiteit (OIN) uit het token, zodat een dienstverlener geen notificaties, status of events van een andere dienstverlener kan lezen of wijzigen.
-- Dataminimalisatie: contactgegevens, identificerende nummers en de waarden voor de personalisation staan uitsluitend versleuteld op de notificatierij, met een sleutel per notificatie die op een vaste termijn na de terminale status wordt gewist; het NMC bewaart geen samengesteld bericht. Het eventlog bevat geen contactgegevens, identificerende nummers of referentie van de dienstverlener, is pseudoniem en herleidbaar door de dienstverlener en wordt als persoonsgegeven behandeld (zie hoofdstuk 8 en ADR 0022).
+- Dataminimalisatie: contactgegevens, identificerende nummers en de waarden voor de personalisation staan uitsluitend versleuteld op de notificatierij, met een sleutel per notificatie die op een vaste termijn na de terminale status wordt gewist; het NMC bewaart geen samengesteld bericht. Het eventlog bevat geen contactgegevens, identificerende nummers of referentie van de dienstverlener, is pseudoniem en herleidbaar door de dienstverlener en wordt als persoonsgegeven behandeld (zie hoofdstuk 8 en ADR 0024).
 - Privacy/AVG: verwerkingsregister en grondslagregistratie op orde (AVG art. 6 en 30). DPIA uitgevoerd vóór productie. Identificerende nummers worden in het Logboek Dataverwerkingen gepseudonimiseerd met een keyed hash.
 - Transport & opslag: TLS 1.2+ in transit; secrets via de secret-voorziening van het platform; encryptie-at-rest waar toepasbaar.
 
@@ -42,7 +42,7 @@ Waar zaken bewust buiten scope vallen, is dit expliciet benoemd.
 - NotifyNL bevestigt de acceptatie synchroon; de afleverstatus volgt asynchroon via delivery receipts.
 - Statusmodellering: eenduidig statusmodel, afgeleid van de NotifyNL-afleverstatussen (zie hoofdstuk 8). Overgangen zijn herleidbaar.
 - Een geaccepteerde notificatie gaat nooit verloren en eindigt altijd in een terminale status waarvan de dienstverlener kennis kan nemen via de status-query, de feed of de optionele webhook; de webhook wordt bij fouten herhaald vanaf de eigen leverpositie en pauzeert na herhaald falen.
-- Volledige afleverzekerheid bestaat bij e-mail niet: aflevering bij de mailserver van de ontvanger geldt als succesvolle verzending, mits die het bericht zonder foutmelding accepteert. Fouten zoals een volle mailbox of een niet-bestaand adres leiden tot een `temporary-failure` respectievelijk `permanent-failure` (zie hoofdstuk 8). Het NMC herverzendt eenmaal na een `temporary-failure` of `technical-failure` (ADR 0022); het besluit of een mislukte notificatie tot een nieuw bericht leidt, blijft bij de dienstverlener.
+- Volledige afleverzekerheid bestaat bij e-mail niet: aflevering bij de mailserver van de ontvanger geldt als succesvolle verzending, mits die het bericht zonder foutmelding accepteert. Fouten zoals een volle mailbox of een niet-bestaand adres leiden tot een `temporary-failure` respectievelijk `permanent-failure` (zie hoofdstuk 8). Het NMC herverzendt eenmaal na een `temporary-failure` of `technical-failure` (ADR 0024); het besluit of een mislukte notificatie tot een nieuw bericht leidt, blijft bij de dienstverlener.
 
 #### Auditability & Logging (LDV)
 - Verwerkingen worden vastgelegd volgens de standaard Logboek Dataverwerkingen (ADR 0007, ADR 0010).
@@ -51,7 +51,7 @@ Waar zaken bewust buiten scope vallen, is dit expliciet benoemd.
 #### Interoperabiliteit & Open Standaarden
 - API-contracten in OpenAPI 3.0+, JSON over HTTPS; contract-first ontwikkeling. HTTP-statuscodes volgens REST best practices.
 - Foutmeldingen volgen RFC 9457 (application/problem+json).
-- De statusterugkoppeling aan afnemers volgt het NL GOV profiel voor CloudEvents (ADR 0020, ADR 0022), conform de pas-toe-of-leg-uit-lijst van het Forum Standaardisatie, zowel in de cursorfeed (pull, `sequence`) als in de optionele webhook (push).
+- De statusterugkoppeling aan afnemers volgt het NL GOV profiel voor CloudEvents (ADR 0020, ADR 0024), conform de pas-toe-of-leg-uit-lijst van het Forum Standaardisatie, zowel in de cursorfeed (pull, `sequence`) als in de optionele webhook (push).
 - Iedere response bevat een API-Version header ten behoeve van versionering.
 
 #### Observeerbaarheid

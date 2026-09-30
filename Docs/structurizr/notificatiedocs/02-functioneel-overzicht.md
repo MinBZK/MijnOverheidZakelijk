@@ -36,16 +36,15 @@ Dienstverleners kunnen de dienst als totaaloplossing afnemen of losse onderdelen
    - Bij gecentraliseerde regie haalt het NMC de voorkeur en contactgegevens op bij de Profielservice.
 
 3. Aflevering en status – Het NMC biedt het bericht aan bij NotifyNL, dat de acceptatie direct bevestigt en de afleverstatus asynchroon terugmeldt met delivery receipts.
-   - Het NMC verwerkt de receipts idempotent en koppelt de status terug aan de aanroeper via de optionele consument-callback.
+   - Het NMC verwerkt de receipts idempotent; de aanroeper vraagt de status op, leest de eventfeed of ontvangt de optionele webhook.
    - Volledige afleverzekerheid bestaat bij e-mail niet: mailsystemen melden fouten niet altijd terug. Aflevering bij de mailserver van de ontvanger geldt daarom als succesvolle verzending, mits die het bericht zonder foutmelding (zoals een volle mailbox of een niet-bestaand adres) accepteert.
 
-4. Opvolging – De businesslogica over herverzending en procesgevolgen ligt bij de dienstverlener; de Notificatiedienst kent daar zelf geen betekenis aan toe.
-   - Bij gecentraliseerde regie start de Notificatiedienst bij een onbereikbaar kanaal wel het contactherstel (zie hoofdstuk 6).
+4. Opvolging – Het NMC herverzendt eenmaal na een tijdelijke of technische fout en meldt bij gecentraliseerde regie een ongeldig e-mailadres bij de Profielservice; de procesgevolgen van een mislukte notificatie liggen bij de dienstverlener. Contactherstel wordt later aan het model toegevoegd.
 
 
 #### Scenario’s
 
-De dienst kent twee scenario’s, die aansluiten op de twee regie-modellen (zie hoofdstuk 6). Bij gedecentraliseerde regie levert de dienstverlener de gegevens zelf aan via de OMC; bij gecentraliseerde regie geeft de organisatie de regie uit handen aan het NMC, inclusief contactherstel bij een mislukte aflevering.
+De dienst kent twee scenario’s, die aansluiten op de twee regie-modellen (zie hoofdstuk 6). Bij gedecentraliseerde regie levert de dienstverlener de gegevens zelf aan via de OMC; bij gecentraliseerde regie geeft de organisatie de regie over voorkeur en verzending uit handen aan het NMC.
 
 > De sequencediagrammen (mermaid) zijn leidend.
 
@@ -69,7 +68,9 @@ De dienst kent twee scenario’s, die aansluiten op de twee regie-modellen (zie 
         NotifyNL-->>NMC:Geaccepteerd
         NMC-->>OMC:Geaccepteerd (referentie)
         NotifyNL-->>NMC:Afleverstatus (delivery receipt)
-        NMC-->>OMC:Afleverstatus (optionele consument-callback)
+        NMC-->>OMC:Afleverstatus (optionele webhook)
+        OMC->>NMC:Status opvragen of eventfeed lezen
+        NMC-->>OMC:Status / events
         deactivate NMC
         OMC-->>Vakapplicatie:Optionele statusupdate
         deactivate OMC
@@ -92,10 +93,10 @@ De dienst kent twee scenario’s, die aansluiten op de twee regie-modellen (zie 
         NotifyNL-->>NMC:Geaccepteerd
         NMC-->>Organisatie:Geaccepteerd (referentie)
         NotifyNL-->>NMC:Afleverstatus (delivery receipt)
-        alt Aflevering mislukt
-            NMC->>Adresbron:Adres ophalen (KvK Handelsregister of BRP)
-            NMC->>Contactherstel:Onbereikbaar + adres
-            Contactherstel->>Printstraat:Fysieke verzending
+        alt Adres ongeldig (permanent-failure)
+            NMC->>Profielservice:E-mailadres ongeldig melden
         end
-      NMC-->>Organisatie:Afleverstatus (optionele consument-callback)
+        NMC-->>Organisatie:Afleverstatus (optionele webhook)
+        Organisatie->>NMC:Status opvragen of eventfeed lezen
+        NMC-->>Organisatie:Status / events
 </details>

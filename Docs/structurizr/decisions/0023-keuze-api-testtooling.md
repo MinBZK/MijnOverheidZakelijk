@@ -58,7 +58,7 @@ Geen enkele andere kandidaat die rol A haalt, doet dat zonder een tweede gereeds
 - **Importeert OpenAPI**, waardoor de collectie een afgeleide van het contract is en geen tweede handmatig onderhouden waarheid.
 - **MIT, en het actiefste van de beoordeelde clients.**
 
-## Onderzoek resultaten
+## Onderzoeksresultaten
 Licenties en projectactiviteit zijn gemeten op 10 september 2026; zie *Meetgegevens*.
 
 ### Rol A: handmatige API-client

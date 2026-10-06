@@ -78,22 +78,28 @@ Een release is een pull request als elke andere. Elk teamlid mag er een maken; d
 
 Elke merge naar `main` levert een intern deploybare build op. Een *versie* wordt uitgebracht wanneer er iets te melden valt aan afnemers of beheer, niet op een vast ritme.
 
+Een hotfix volgt dezelfde weg: een pull request, een review en een release. Het verschil zit in de urgentie en, wanneer productie op een oudere versie draait, in de branch waarop hij landt. Paragraaf 3 beschrijft dat geval.
+
 ### 3. Branching en merge
 
 `main` is de enige langlevende branch. Ontwikkeling gebeurt in feature-branches die via een pull request naar `main` worden gemerged. Een release is een tag op een commit in `main`.
 
-Een `release/x.y`-branch wordt alleen aangemaakt wanneer een productieversie moet worden gepatcht terwijl `main` al verder is. Die branch wordt dan afgetakt van de betreffende tag, ontvangt de fix via cherry-pick, en levert een patch-release op; dezelfde fix gaat ook naar `main`. De complexiteit van een releasebranch wordt zo alleen betaald wanneer die nodig is.
+Een `release/x.y`-branch wordt alleen aangemaakt wanneer een productieversie moet worden gepatcht terwijl `main` al verder is. Staat `main` nog op dezelfde lijn, dan is er geen branch nodig en gaat de fix mee in de eerstvolgende release.
+
+Is die branch wel nodig, dan wordt de fix **eerst op `main` gemaakt en gereviewd**. Daarna wordt de branch afgetakt van de betreffende tag en wordt die commit erheen gecherry-pickt, wat een patch-release op die lijn oplevert. Die volgorde voorkomt dat een fix alleen op de oude lijn bestaat en bij de volgende release weer verdwijnt. Alleen wanneer de fix op `main` niet toepasbaar is omdat de code daar al is vervangen, ontstaat hij op de release-branch zelf en wordt het probleem op `main` apart opgelost.
+
+De complexiteit van een releasebranch wordt zo alleen betaald wanneer die nodig is.
 
 Merges gebeuren met squash. Merge commits en rebase worden in de repository-instellingen uitgezet. Omdat de titel van de pull request bij squash het commitonderwerp wordt, is die titel de plaats waar de aard van de wijziging wordt vastgelegd.
 
-Dit besluit vervangt de GitFlow-beschrijving in `Docs/structurizr/docs/10-deployment.md`.
+De uitgeschreven branchingstrategie hoort in `Docs/structurizr/docs/10-deployment.md`; deze ADR legt alleen vast wat een release is en wanneer een branch nodig is. Dat document beschreef een GitFlow-model dat nergens werd toegepast en wordt met deze wijziging gecorrigeerd.
 
 Uit dit besluit volgen twee inrichtingsacties op ZAD:
 
 - De bestaande deployment `stable` wordt hernoemd naar `latest`. Dat is de omgeving die bij elke merge naar `main` wordt bijgewerkt. Het raakt `deploy.yml` in de betrokken services en de eenmalige configuratie op die deployment in Operations Manager.
 - Er komt een aparte release-omgeving die op een release-tag draait, naast de `latest`-omgeving. Daarmee wordt promotie van een artefact zichtbaar en ontstaat een plek om een release te valideren voordat hij verder gaat.
 
-> Het woord *latest* komt hierdoor in twee betekenissen voor. De ZAD-deployment `latest` is een **omgeving**: een plek waar iets draait. De `:latest`-tag die in paragraaf 5 vervalt is een **image-tag**: een verwijzing die naar een steeds ander artefact kan wijzen. Het eerste is een naam, het tweede is het probleem.
+Let op dat *latest* hierdoor twee dingen aanduidt: de ZAD-deployment `latest` is een omgeving, terwijl de `:latest`-image-tag die in paragraaf 5 vervalt een verwijzing naar een artefact is.
 
 ### 4. Versienummering
 
@@ -118,9 +124,18 @@ De prijs is één extra commit per release. Die is aanvaard, omdat het dezelfde 
 
 **Startversie.** Repositories met een gepubliceerd, stabiel contract beginnen op `1.0.0`. Repositories waarvan `publiccode.yml` de status `development` meldt, beginnen op `0.y.z`; daarmee is expliciet dat er nog geen compatibiliteitsbelofte is. Dit is dezelfde regel die de regime-indeling stuurt, en zij geldt voor alle negen repositories in scope. De toewijzing per repository is een invulactie bij de implementatie. `moza-email-verificatie-service` staat vandaag op `1.0-SNAPSHOT` — twee componenten, niet SemVer-vormig — en wordt daarbij rechtgezet.
 
-**Bepaling van de bump.** De versiebump wordt afgeleid uit Conventional Commits in de titel van de pull request: `fix:` geeft een patch, `feat:` een minor, en `!` of `BREAKING CHANGE:` een major. Tooling stelt op basis daarvan een release-pull-request op die vóór merge kan worden bijgesteld. De conventie wordt in CI afgedwongen; zonder die controle verwatert hij. Omdat het schema overal SemVer is, bepaalt dit mechanisme het versienummer voor applicaties, API-versies en libraries op dezelfde manier.
+**Bepaling van de bump.** Elke pull request krijgt een Conventional Commit-prefix in de titel: `fix:` geeft een patch, `feat:` een minor, en `!` of `BREAKING CHANGE:` een major. Een prefix is op élke pull request verplicht — de CI-controle laat geen titel zonder geldige prefix door — maar niet elke prefix leidt tot een bump: `chore:`, `docs:`, `refactor:` en `test:` beschrijven wijzigingen waar een afnemer niets van merkt en tellen niet mee. Zonder die controle verwatert de conventie, en daarmee de changelog. Omdat het schema overal SemVer is, werkt dit mechanisme hetzelfde voor applicaties, API-versies en libraries.
 
-**Bron van waarheid.** De git-tag is de bron. De release-automatisering werkt het versiebestand van het project bij — `pom.xml`, `package.json` of `pyproject.toml` — in de release-pull-request. Daarmee vervalt de permanente `-SNAPSHOT`-versie die nu in meerdere repositories op de hoofdbranch staat.
+**Van commit tot tag.** De volgorde ligt vast, omdat de verhouding tussen het versiebestand en de git-tag anders onduidelijk blijft:
+
+1. Pull requests landen op `main` met een Conventional Commit-titel. Er verandert nog geen versienummer.
+2. De release-tooling berekent uit die titels sinds de vorige tag welke bump nodig is, en opent een **release-pull-request** die het versiebestand — `pom.xml`, `package.json` of `pyproject.toml` — en de `CHANGELOG.md` bijwerkt. Hier wordt het nummer vastgesteld, en hier kan een mens het bijstellen.
+3. Bij de merge van die pull request zet de tooling de tag op diezelfde commit, met hetzelfde nummer.
+4. De tag triggert de publicatie. Image-tag, SBOM, attestatie en GitHub Release verwijzen er allemaal naar.
+
+Versiebestand en tag kunnen daardoor niet uiteenlopen: ze komen uit één commit en worden door dezelfde automatisering gezet. De Conventional Commits bepalen *welk* nummer het wordt; de tag legt vast *dat* het dat nummer is, en is vanaf dat moment de identiteit waar al het andere naar verwijst. De image-tag staat niet in een bestand — CI leidt hem af uit de git-tag.
+
+Daarmee vervalt ook de permanente `-SNAPSHOT`-versie die nu in meerdere repositories op de hoofdbranch staat.
 
 **Tagformaat.** `vMAJOR.MINOR.PATCH`, bijvoorbeeld `v1.2.0`.
 
@@ -128,7 +143,7 @@ De prijs is één extra commit per release. Die is aanvaard, omdat het dezelfde 
 
 **Snapshots.** Libraries publiceren `-SNAPSHOT`-versies naar de snapshot-repository, zodat afnemers kunnen meelopen met de ontwikkeling. Services krijgen geen snapshot-artefact; daarvoor zijn de bestaande per-commit-images bedoeld.
 
-Een snapshot wordt niet gereleased maar gepubliceerd: een release is onveranderlijk, een snapshot juist niet. Hij is bedoeld voor één situatie — iemand anders moet met nog-niet-vastgelegd werk verder kunnen. Bijvoorbeeld wanneer `moza-logboekdataverwerking` een wijziging krijgt die een consumerende service nodig heeft, of wanneer twee componenten tegelijk wijzigen en in een ketentest tegen elkaar moeten draaien. Voor een deployable service is een snapshot zinloos: niemand lost daar een Maven-coördinaat voor op, en de per-commit-image doet dat werk al. Als release candidate is hij ongeschikt, omdat wat getest is niet noodzakelijk is wat wordt uitgeleverd; daarvoor is een onveranderlijke pre-releaseversie het aangewezen middel.
+Een snapshot wordt niet gereleased maar gepubliceerd: een release is onveranderlijk, een snapshot juist niet. Hij is bedoeld voor één situatie — iemand anders moet met nog-niet-vastgelegd werk verder kunnen. Bijvoorbeeld wanneer `moza-logboekdataverwerking` een wijziging krijgt die een consumerende service nodig heeft, of wanneer twee componenten tegelijk wijzigen en in een ketentest tegen elkaar moeten draaien. Voor een deployable service is een snapshot zinloos. Een service wordt niet als afhankelijkheid in een ander project opgenomen maar uitgerold, dus niemand haalt hem ooit als Maven-artefact op; de per-commit-image doet dat werk al. Als release candidate is hij ongeschikt, omdat wat getest is niet noodzakelijk is wat wordt uitgeleverd; daarvoor is een onveranderlijke pre-releaseversie het aangewezen middel.
 
 Daaruit volgt één regel: **een release bevat geen snapshot-afhankelijkheden.** Staat er een snapshot in de afhankelijkheidsboom, dan verwijst de SBOM uit paragraaf 5 naar iets wat meerdere builds kan zijn en breekt de herkomstketen precies daar. Dit wordt afgedwongen met de enforcer-regel `requireReleaseDeps` in het `release`-profiel.
 
@@ -143,7 +158,9 @@ Per artefacttype geldt een kanaal:
 - **Maven Central** — voor herbruikbare libraries, onder de namespace `nl.mijnoverheidzakelijk`.
 - **Harbor en Nexus** — blijven de keten van het Standaard Platform. Omdat de Logius Private Cloud GitHub niet kan benaderen, loopt de route naar productie hier hoe dan ook langs; of de digest die overgang overleeft, is open punt O1.
 
-**Onveranderlijkheid.** Een gepubliceerde versie ligt vast. Een versie-tag wordt niet verplaatst en niet overschreven; een fout in een release leidt tot een nieuwe patch-versie. Uitrollen gebeurt op digest, niet op tag. De mutabele `:latest`-tag in `moza-site` en `moza-mock` vervalt.
+**Onveranderlijkheid.** Een gepubliceerde versie ligt vast. Een versie-tag wordt niet verplaatst en niet overschreven; een fout in een release leidt tot een nieuwe patch-versie. Uitrollen gebeurt op digest, niet op tag.
+
+Het gaat om één wijzigbare tag die vervalt: de `:latest`-image-tag die `moza-site` en `moza-mock` vandaag naar GHCR pushen en die telkens naar een ander artefact wijst. Versietags als `1.2.0` blijven bestaan en blijven naar dezelfde digest verwijzen.
 
 **Moment van publiceren.** Een merge naar `main` levert een intern deploybare build. Pas bij een release-tag ontstaat een gepubliceerde, onveranderlijke versie met release notes.
 
@@ -155,13 +172,17 @@ De changelog wordt gegenereerd uit de Conventional Commits en landt zowel in `CH
 
 Release notes zijn gericht op de Product Owner en de technische beheerders. Ze bestaan uit één document met twee lagen: een functionele samenvatting die beschrijft wat van de wijziging gemerkt wordt, boven de gegenereerde technische lijst. De functionele kop is verplicht bij minor- en major-releases en optioneel bij patches.
 
-Een breaking change in een API wordt minimaal één minor-release vooraf aangekondigd en als deprecated gemarkeerd. `/core/transition-period` begrenst dit al tot maximaal twee major API-versies naast elkaar; de exacte ondersteuningstermijn wordt vastgesteld als onderdeel van open punt O3.
+Wat in een nieuwe major-versie verdwijnt of verandert, wordt minimaal één minor-release eerder al als deprecated gemarkeerd. De aankondiging zit dus in de release *vóór* de breaking change, niet in de release die hem doorvoert: een afnemer ziet de waarschuwing terwijl zijn integratie nog werkt. `/core/transition-period` begrenst dit al tot maximaal twee major API-versies naast elkaar; de exacte ondersteuningstermijn wordt vastgesteld als onderdeel van open punt O3.
 
 De GitHub Release is de bron van release-informatie. `CHANGELOG.md` biedt de leesbare historie in de repository. De Structurizr-documentatie verwijst daarnaar in plaats van het te dupliceren.
 
 ### 7. Traceerbaarheid en omgevingen
 
-Elke service maakt zijn versie, commit-sha en buildtijdstip zichtbaar via een runtime-endpoint en als OCI-label op het image. Daarnaast komt er één overzicht dat per omgeving toont welke versie er draait. Zonder dat overzicht blijft het probleem uit de context bestaan, ook met versienummers.
+Elke service maakt zijn versie, commit-sha en buildtijdstip zichtbaar via een runtime-endpoint en als OCI-label op het image. Die drie waarden staan niet in de broncode — op het moment van schrijven bestaan ze nog niet — maar worden bij de build uit de git-tag en de commit afgeleid en in het artefact gebakken.
+
+Voor het label geldt de bestaande OCI-conventie: de annotaties `org.opencontainers.image.version`, `.revision` en `.created`. Voor het endpoint ligt het formaat nog niet vast; voor de Quarkus-services ligt de `quarkus-info`-extensie voor de hand, die `/q/info` serveert met onder meer git- en buildgegevens. Dat wordt bij de pilotrepository vastgesteld, zodat elke service hetzelfde oplevert en het overzicht ze op één manier kan uitlezen.
+
+Daarnaast komt er één overzicht dat per omgeving toont welke versie er draait. Zonder dat overzicht blijft het probleem uit de context bestaan, ook met versienummers.
 
 Artefacten worden gepromoveerd tussen omgevingen, niet per omgeving opnieuw gebouwd: dezelfde digest gaat van ontwikkel- naar productieomgeving. Opnieuw bouwen per omgeving betekent dat iets anders wordt getest dan wordt uitgerold.
 

@@ -19,7 +19,7 @@ Proposed
 
 ## Context
 
-Er is de wens om de API van de Profielservice en de NMC ook los te kunnen testen. De story vraagt om een toolingkeuze met deze eisen:
+Er is de wens om de diverse MOZa API's ook los te kunnen testen. De story vraagt om een toolingkeuze met deze eisen:
 
 1. bruikbaar voor niet-technici, dus ook zonder Git-toegang;
 2. een installatie op de gebruikerslaptop is toegestaan;
@@ -45,8 +45,10 @@ De kandidaten zijn beoordeeld tegen de zeven eisen, gesplitst naar **twee rollen
 ## Besluit
 
 1. **Bruno vervult rol A en, voor de nachtelijke run, ook rol B.**
-2. **Journeys die Bruno ontgroeien, gaan naar Karate of REST Assured.**
-Heeft een journey polling of tijdgebonden asserties nodig, zoals de asynchrone bezorgstatus, dan wordt hij in Karate of REST Assured geschreven en niet met scripts in Bruno geforceerd.
+2. **Journeys die Bruno ontgroeien, gaan naar Playwright.**
+Heeft een journey polling of tijdgebonden asserties nodig, zoals de asynchrone bezorgstatus, dan wordt hij in Playwright geschreven en niet met scripts in Bruno geforceerd. `expect.poll()` en `toPass()` zijn daar kernfunctionaliteit, en `clientCertificates` op een `APIRequestContext` dekt de mTLS van de FSC-route.\
+Blijft een journey liever in Java, dan is REST Assured de route; dat is dezelfde tooling als de componentlaag. Karate is het tweede alternatief; zie de kandidatentabel voor de licentiekant.\
+De Playwright-specs staan in een eigen repository (`moza-e2e-tests`), niet in een servicerepo en niet in de Bruno-collectie.
 3. **Schemathesis wordt als optionele derde stap voorgesteld,** in dezelfde nachtrun, tegen dezelfde omgeving, gevoed door hetzelfde `openapi.yaml`. Dit betreft een aanvulling met vrijwel nul onderhoud.
 
 De volgende punten geven, in volgorde van gewicht, de doorslag voor besluit 1.:
@@ -93,8 +95,8 @@ Open source qua licentie, maar niet gemeenschappelijk bestuurd wat ongewenste ri
 |---|---|---|
 | **Bruno CLI** | MIT | **Gekozen** voor de nachtelijke smoke- en journeyrun |
 | REST Assured | Apache 2.0 | **Afgevallen**: Al in gebruik in de componentlaag; blijft daar |
-| Karate | Apache 2.0 | **Gekozen** als route voor journeys met asynchrone stappen |
-| Playwright | Apache 2.0 | **Afgevallen**: Sterk, maar niet-Java; heroverwegen bij een frontend |
+| **Playwright** | Apache 2.0 | **Gekozen** voor journeys met polling of tijdgebonden asserties |
+| Karate | MIT (kern) | **Alternatief**: de kern is gratis, maar de betaalde laag ligt juist op "async" |
 | Schemathesis | MIT | **Aanbevolen aanvulling**, geen vervanging |
 | Hurl | Apache 2.0 | **Afgevallen**: Prima CLI, maar geen UI en dus geen dubbelrol |
 | Newman | Apache 2.0 | **Afgevallen**: Alleen zinvol met Postman |
@@ -108,12 +110,18 @@ Open source qua licentie, maar niet gemeenschappelijk bestuurd wat ongewenste ri
 **Bruno CLI.** Draait dezelfde collectie als de applicatie en schrijft JSON-, JUnit- en HTML-rapportages.\
 Er is een officiële Docker-image en een GitHub Action. De aanroep is een gewoon npm-commando.
 
-**Playwright.** Doet met `APIRequestContext` zuiver API-testen zonder browser, en handelt asynchroon wachten met `expect.poll()` beter af dan scripting in een API-client.\
-Het heeft geen UI om een verzoek op te stellen en vervult rol A dus niet.\
-Als runner is het een echte kandidaat naast Karate. Het bezwaar is dat het testcode in Node/TypeScript zet in een Java-team.\
-Het testplan stelt dat er een aanvullend testplan komt zodra MOZA een frontend krijgt.\
-Op dat moment dekt Playwright browserjourneys én hun API-voorbereiding met één gereedschap, en verschuift de afweging.\
-Dat is een expliciet heroverwegingsmoment, geen afwijzing.
+**Playwright.** Doet met `APIRequestContext` zuiver API-testen zonder browser, en handelt asynchroon wachten met `expect.poll()` en `toPass()` beter af dan scripting in een API-client.\
+Het heeft geen UI om een verzoek op te stellen en vervult rol A dus niet; het is uitsluitend een runner.\
+Wat ervoor pleit:
+- **Wachten is kernfunctionaliteit**, geen scriptwerk: `expect.poll()` en `toPass()` herhalen een assertie tot zij slaagt, met een eigen interval en timeout.
+- **`clientCertificates` op een `APIRequestContext`** (origin, certificaat, sleutel, passphrase) dekt de mTLS van de FSC-route, met certificaatpaden uit de omgeving in plaats van uit de repository.
+- **Geen betaalde laag.** Apache 2.0, onderhouden door Microsoft. Er is geen commerciële editie en is op dit punt dus sterker dan Karate.
+- **Eén gereedschap als er een frontend komt.** Het testplan stelt dat er dan een aanvullend testplan volgt; Playwright dekt vanaf dat moment browserjourneys én hun API-voorbereiding.
+- **De npm-toolchain staat er al,** omdat de nachtrun de Bruno CLI gebruikt. 
+
+**Karate.** De kern is MIT en gratis, en dekt API-testen, UI-automatisering, mocks, Gatling-performance en CI/CD. Voor HTTP-polling is dat genoeg: `retry until` zit in die kern.\
+De betaalde laag ligt echter uitgerekend op **async protocol testing (Kafka, gRPC, WebSocket)** wat het project op basis van ADR 0022 in de nabije toekomst gaat raken omdat daar zowel lokaal als in de pipeline licenties voor nodig zijn.
+Karate blijft daarmee een werkbaar alternatief als Playwright onverwacht niet past, maar het is niet de eerste keuze.
 
 **Schemathesis.** Genereert tests rechtstreeks uit het OpenAPI-document en zoekt naar antwoorden die het contract schenden, inclusief randgevallen die niemand met de hand zou opschrijven. Geen UI en geen handmatig gebruik.\
 Wel een aanvulling met vrijwel nul onderhoud, omdat er niets te onderhouden valt: het contract is de test.

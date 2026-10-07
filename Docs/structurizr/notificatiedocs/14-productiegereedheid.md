@@ -1,103 +1,106 @@
 # Productiegereedheid van de NMC
-## Algemene production ready checklist
 
-Datum: 2026-09-23. Levend document — de status hieronder geldt op dat moment; sommige punten die nodig zijn voor production-ready kunnen inmiddels al voltooid zijn.
+Stand per 2026-10-07. Dit document wordt bijgewerkt zolang de stories lopen.
 
-## Legenda
+Dit document past [ADR 0025 Productiegereedheid van MOZa-backendsystemen](../decisions/0025-productiegereedheid-backendsystemen.md) toe op de Notificatie Management Component (NMC). Per besluit uit die ADR staat hier wat de NMC ermee doet, in welke story en met welke status. De NMC moet in januari in productie draaien op de LPC; tot nu toe draait hij alleen op ZAD, als preview per pull request en als `stable`-omgeving op `main`.
 
-Elk onderdeel hieronder heeft een status:
+Het ontwerp van de NMC zelf staat in [ADR 0024](../decisions/0024-georkestreerde-state-machine-met-eventlog.md).
 
-- **Aanwezig** — bestaande CI-checks of documentatie dekken dit al
-- **Actie nodig** — moet nog gebeuren of belegd worden vóór productie
-- **Besluit nodig** — vraagt een keuze, geen losse actie
-- **Niet van toepassing** — expliciet uitgesloten, met reden (zie onderaan)
+## Functionele scope voor januari
 
-De kolom **Story** bevat de link naar de bijbehorende story zodra die is aangemaakt.
+Uitwerking van besluit 2.
 
-## Infrastructuur, netwerk & TLS
-
-| Item | Status | Toelichting | Story                                                                                        |
-| --- | --- | --- |----------------------------------------------------------------------------------------------|
-| Beslissen domein naam | Actie nodig | Om een domeinnaam aan te vragen en te registreren moeten we wel eerst bepalen wat de domeinnaam gaat zijn | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1148 |
-| Domeinnaam aangevraagd bij Min AZ | Actie nodig | Los van het Websiteregister (zie "Niet van toepassing"): AZ moet apart geïnformeerd worden over het productie-domein/URL (URL registratie), zodat bekend is dat de NMC daar draait | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1149 |
-| Opname in LPC-loadbalancer & hosting-allowlist | Actie nodig | | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1165 |
-| DV/OV-certificaat (evt. met SAN) | Actie nodig | | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1167 |
-| internet.nl-test | Actie nodig | Geldt voor elke HTTPS-service, niet alleen websites | https://github.com/MinBZK/MijnOverheidZakelijk/issues/866 (spits story nog wel toe voor NMC) |
-| SSL Labs-test | Actie nodig | | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1168 |
-| X-Forwarded-For wegschrijven voor forensisch onderzoek | Actie nodig | Hoort bij het bestaande Logboek Dataverwerkingen (LDV), dat nu nog uitstaat op preview (`LOGBOEKDATAVERWERKING_ENABLED=false`) totdat de ClickHouse-config werkt | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1169 |
-
-## Beveiliging
-
-| Item | Status | Toelichting | Story |
+| Onderdeel | Voor januari? | Toelichting | Story |
 | --- | --- | --- | --- |
-| BIO-toetsing / pentest | Actie nodig | Formele stap, zwaarder dan de geautomatiseerde scans die al in CI draaien (CodeQL, Scorecard, ClusterFuzzLite). BIO is gebaseerd op ISO 27001/27002, dus deze story bevat ook backup-herstel, bedrijfscontinuïteit, RTO en RPO voor de managed Postgres — voorheen een los item ("Backup & disaster recovery"), nu hierin opgenomen | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1170 |
-| SAST (statische codeanalyse) | Aanwezig | CodeQL draait al in CI op elke PR/push (zie `.github/workflows/`) | |
-| DAST (dynamische scan tegen een draaiende instantie) | Actie nodig | Nog niets ingericht. [WuppieFuzz](https://github.com/TNO-S3/WuppieFuzz) (TNO, open source) is specifiek gebouwd voor REST API's: genereert requests uit de OpenAPI-spec en meet coverage via JaCoCo, wat al onderdeel is van de bestaande JaCoCo-gate. Alternatief: OWASP ZAP | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1171 |
-| `CallbackUrlValidator`'s SSRF-beperking | Besluit nodig | De validator is bewust een denylist op vorm, geen volledige SSRF-bescherming (staat zo in de javadoc); `callbackUrl` is aanroeper-gestuurd. Risico expliciet accepteren of dichten? | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1049 |
-| Securityheaders-check | Actie nodig | Op de API toegesneden, niet de generieke browserscanner: HSTS/`X-Content-Type-Options` relevant, CSP grotendeels niet voor een JSON-API zonder HTML-rendering | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1172 |
-| `security.txt` | Aanwezig | Staat al op `src/main/resources/META-INF/resources/.well-known/security.txt` (Contact: moza@minbzk.nl, Expires: 2027-06-16, Preferred-Languages: nl/en), niet verlopen. Open: is dat contactadres daadwerkelijk gemonitord, en is er een reminder om het vóór de Expires-datum te vernieuwen? | |
-| Idempotency-Key op schrijvende endpoints | Actie nodig | `POST /centraal/notificaties` en `/decentraal/notificaties` hebben geen idempotency-mechanisme; een client-retry na een timeout kan een dubbele notificatie/e-mail opleveren. API Design Rules noemt een `Idempotency-Key`-header als standaardpatroon voor niet-idempotente operaties | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1174 |
-| Cyberbeveiligingswet (NIS2) | Besluit nodig | Sinds 15-8-2026 van kracht. Valt de NMC, als gedeelde notificatie-infrastructuur voor meerdere Dienstverleners, onder de reikwijdte (essentiële/belangrijke dienst)? Zo ja: risicoanalyse, incidentmelding en registratie in het entiteitenregister zijn dan verplicht | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1202 |
+| Aanname, verzending en receiptverwerking | Ja | Volgens ADR 0024 | [#1150](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1150) |
+| Herverzending | Ja | Eén herverzending na een `temporary-failure` of `technical-failure` (ADR 0024) | [#1160](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1160) |
+| Cursorfeed | Ja | DV's zonder webhook volgen de status via de feed (ADR 0024 §5) | [#1161](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1161) |
+| Webhook | Ja | Optioneel per DV, geregistreerd bij onboarding (ADR 0024 §5) | [#1162](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1162) |
+| Status-query | Besluit nodig | Aanvulling op de feed om één notificatie direct op te vragen | [#904](https://github.com/MinBZK/MijnOverheidZakelijk/issues/904) |
+| Contactherstel | Nee | | |
+| Koppeling Templating Service | Nee | De NMC gebruikt vaste NotifyNL-template-ID's | |
+| OMC-koppeling | Nee | | |
 
-## Privacy & gegevensbescherming
+## Open besluiten voor de NMC
 
-| Item | Status | Toelichting | Story |
-| --- | --- | --- | --- |
-| AVG-verplichtingen algemeen | Actie nodig | | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1205 |
-| DPIA | Besluit nodig | De NMC verwerkt BSN/KVK/RSIN centraal voor meerdere Dienstverleners. Bestaat er al een DPIA op MijnOverheidZakelijk-programmaniveau die de NMC expliciet dekt, of is een eigen DPIA nodig? | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1204 |
-| Retentiejob | Actie nodig | Dataminimalisatie richting de AVG | https://github.com/MinBZK/MijnOverheidZakelijk/issues/757 |
-
-## Open standaarden & authenticatie
-
-| Item | Status | Toelichting | Story |
-| --- | --- | --- | --- |
-| Forumstandaardisatie.nl / pas-toe-of-leg-uit | Actie nodig | Concreet van toepassing, via developer.overheid.nl/kennisbank: de OpenAPI Specification (eigen verplichte standaard, los van de API Design Rules), de API Design Rules zelf, en het NL GOV profile for CloudEvents (verplicht sinds 25-9-2025 — de NMC gebruikt al CloudEvents voor de consument-callback, nog te toetsen tegen het profiel) | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1206 |
-| OpenAPI-publicatie op de standaardlocatie | Actie nodig | De API Design Rules (`publish-openapi`) eisen `/openapi.json` achter de base-URL, zonder authenticatie en met `Access-Control-Allow-Origin: *`. De NMC publiceert nu op `/q/openapi` (Quarkus-default), niet op `/openapi.json` | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1207 |
-| Authenticatiemechanisme voor Dienstverleners | Actie nodig | Ontwerpbeslissing inmiddels gemaakt (zie kwaliteitseisen, ADR 0024): OAuth2-toegangstoken volgens het NL GOV Assurance profile for OAuth 2.0, uitgegeven door de IAM-gateway van MOZa, met het OIN als claim, koppelvlakken over FSC. Nog niet geïmplementeerd in de NMC-code (geen OAuth2/IAM-gateway-integratie aanwezig) | https://github.com/MinBZK/MijnOverheidZakelijk/issues/880 |
-| Doorlopen [beslisboom open standaarden](https://www.forumstandaardisatie.nl/beslisboom/beslisboom-open-standaarden) | Actie nodig | Interactieve tool van Forum Standaardisatie; handmatig doorlopen per relevante keuze (o.a. authenticatiemechanisme, berichtformaat/CloudEvents). | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1208 |
-
-## Operationele gereedheid
-
-| Item | Status | Toelichting | Story |
-| --- | --- | --- | --- |
-| Secretsbeheer & rotatie | Actie nodig | `notify.api-key`, `notify.callback.bearer-token`, `hash.pepper` staan nu handmatig in ZAD Operations Manager, zonder vault en zonder rotatieprocedure | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1209 |
-| Observability / alerting | Actie nodig | Grefana/Gibana nodig voor NMC. Wel mogelijk op LPC, nog niet op ZAD. | https://github.com/MinBZK/MijnOverheidZakelijk/issues/837 |
-| Migratieveiligheid | Actie nodig | Bekende bevinding: de statusgeschiedenis-migratie doet expand én contract in één script (breekt rollback en rolling deploy). Geaccepteerd zolang er geen productie is — moet vóór januari opgelost zijn | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1246 |
-| Rate limiting | Actie nodig | | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1247 |
-| Load-/performancetest | Actie nodig | Capaciteit tegen verwacht productievolume nog niet gevalideerd. Workload-model inmiddels bekend (kwaliteitseisen): piek van 2,2 miljoen notificaties van één Dienstverlener per maand, af te voeren binnen vijf werkdagen, met eerlijke verdeling over Dienstverleners in het claim/batch-model | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1248 |
-| Incident-runbook/beheer | Actie nodig | Bijv. DB-storing: wie is on-call en wat is de procedure? | https://github.com/MinBZK/MijnOverheidZakelijk/issues/844 |
-| Afspraken rondom releasegang | Besluit nodig | Wie het releasebesluit neemt is al vastgesteld op MOZa-niveau (ADR 0022 §2: geen release-managerrol, elk teamlid mag releasen) — dat geldt ook terwijl de ADR nog "Proposed" is, los van open punt O1 (LPC-deploy). Nog open: wie het rollback-besluit voor de NMC neemt en binnen welke termijn — ADR 0022 §7 verwijst dat door naar afstemming met ADR 0017 stap 6, zonder het zelf in te vullen. Ook het escalatiepad bij onbereikbaarheid ontbreekt nog | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1187 |
-
-## Functionele scope
-
-Voor elk moet expliciet vastgelegd worden of het wel of bewust niet meegaat voor januari (stilzwijgend ontbreken is geen besluit). Zie ook [ADR 0020 — Standaard afleverstatus-terugkoppeling](../decisions/0020-standaard-afleverstatus-terugkoppeling.md) voor de aanverwante, nog niet vastgestelde keuze rond een status-query endpoint.
-
-| Onderdeel | Voor januari? | Story |
+| Besluit | Waarom open | Story |
 | --- | --- | --- |
-| Endpoint om de status op te vragen | Besluit nodig | https://github.com/MinBZK/MijnOverheidZakelijk/issues/904 |
-| Contactherstel | Niet van toepassing | |
-| Templating Service-koppeling (nu vaste NotifyNL-template-ID's) | Niet van toepassing | |
-| OMC-koppeling | Niet van toepassing | |
-| Keuze herverzending vs. contactherstel | Niet van toepassing | Ontwerpbeslissing inmiddels gemaakt in ADR 0024 (eenmalige herverzending bij `temporary-failure`/`technical-failure`; het besluit of een mislukte notificatie tot een nieuw bericht leidt blijft bij de Dienstverlener), maar de implementatie valt onder de event-driven-refactor-epic en staat niet gepland voor januari | |
+| Domeinnaam | Wordt uitgewerkt in de context van FSC: het adres waaronder de Inway de NMC ontsluit | [#1148](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1148) |
+| NotifyNL via FSC of via het platform? | NotifyNL komt naar verwachting ook binnen de LPC te draaien (open besluit in ADR 0025). ADR 0024 gaat nog uit van verkeer over het publieke internet: NotifyNL pusht de receipts vanaf internet en de NMC roept NotifyNL aan met een HS256-JWT. ADR 0024 wordt bijgewerkt zodra dit besloten is | — |
+| Valt de NMC onder de Cyberbeveiligingswet? | Vraagt juridische/compliance-input (besluit 13) | [#1202](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1202) |
+| Status-query voor januari? | Zie *Functionele scope* | [#904](https://github.com/MinBZK/MijnOverheidZakelijk/issues/904) |
+| Wie besluit tot rollback | ADR 0022 legt de mechaniek vast, niet wie besluit en binnen welke termijn (besluit 24) | [#1249](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1249) |
+| RTO en RPO | Bepalen de back-upfrequentie en de herstelvoorzieningen (besluit 10) | [#1170](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1170) |
 
-## Productie-deploypipeline
+## Uitwerking per besluit
 
-| Item | Status | Toelichting | Story |
-| --- | --- | --- | --- |
-| Geteste pipeline naar het echte productiecluster (LPC) | Actie nodig | ZAD is uitsluitend de PR-preview-omgeving; "echte releases draaien op een ander cluster" volgens de eigen projectdocumentatie. Nog te bevestigen dat die pipeline naar LPC getest bestaat, zodat "geen verschil tussen pre-prod- en prod-code" ook in de praktijk klopt en niet alleen als aanname | https://github.com/MinBZK/MijnOverheidZakelijk/issues/1199 |
+**Legenda**
 
-## Niet van toepassing
+- **Aanwezig**: bestaande CI-checks, code of documentatie dekken dit al
+- **Actie nodig**: moet nog gebeuren of belegd worden vóór productie
+- **Besluit nodig**: vraagt een keuze, zie *Open besluiten*
+- **Bij Logius**: wordt door Logius opgepakt; de NMC levert input
+- **Niet van toepassing**: vervalt op grond van het besluit; de story kan in refinement worden afgesloten
 
-De NMC is een backend-API zonder eigen UI. Een deel van de oorspronkelijke checklist komt uit een generieke Rijkswebsite-checklist en is hier niet van toepassing. 
+### Toepasbaarheid
 
-| Item | Waarom niet van toepassing |
-| --- | --- |
-| F12-inspector / alleen 200's | Geen browser-UI om te inspecteren — vervangen door synthetic monitoring op de echte endpoints |
-| Piwik-analytics | Geen eindgebruikersbrowsersessies op een backend-API |
-| Websiteregister Rijksoverheid | Geen website, dus geen registratie. Wél een aparte actie: BZK informeren over het productie-domein/URL (zie Infrastructuur), zodat bekend is dat de NMC daar draait |
-| Toegankelijkheidstoets (WCAG) | Alleen relevant als Swagger UI publiek in productie zou staan; dat is nu een preview-only build-flag (`-Dquarkus.swagger-ui.always-include=true`). Bevestigen dat dit zo blijft, dan vervalt dit item volledig |
+| Besluit | Item | Status | Toelichting | Story |
+| --- | --- | --- | --- | --- |
+| 1 | F12-inspectie, Piwik, Websiteregister, WCAG | Niet van toepassing | Swagger UI staat alleen aan in de preview (`-Dquarkus.swagger-ui.always-include=true`) | |
+| 3 | DPIA | Bij Logius | Op niveau van de Notificatiedienst | [#1204](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1204) |
+| 3 | Verwerkersovereenkomsten, verwerkingsregister, betrokkenenrechten | Bij Logius | Wacht op de DPIA van de Notificatiedienst | [#1205](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1205) |
+| 3 | Operational readiness / incident-runbook | Bij Logius | MOZa ondersteunt | [#844](https://github.com/MinBZK/MijnOverheidZakelijk/issues/844) |
 
-## Vervolgstappen
+### Hosting en ontsluiting
 
-1. Eigenaren en een deadline vóór januari beleggen bij de aangemaakte stories (zie de Story-kolom per tabel hierboven)
-2. Stories uitvoeren en status in dit document bijwerken na implementatie
+| Besluit | Item | Status | Toelichting | Story |
+| --- | --- | --- | --- | --- |
+| 4 | LPC-onboarding | Actie nodig | Gitlab-project, Harbor, namespace, Vault-tenant, managed Postgres. Wacht op toegang | [#961](https://github.com/MinBZK/MijnOverheidZakelijk/issues/961) |
+| 4, 5 | Opname in LPC-loadbalancer & hosting-allowlist | Actie nodig | In refinement: wat blijft nodig nu de NMC alleen via de FSC-Inway bereikbaar is? | [#1165](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1165) |
+| 5 | Domein melden bij Min AZ | Besluit nodig | Te onderzoeken (BA); open besluit in ADR 0025 | [#1149](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1149) |
+| 6 | DV/OV-certificaat | Niet van toepassing | | [#1167](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1167) |
+| 6 | internet.nl-test | Niet van toepassing | | [#866](https://github.com/MinBZK/MijnOverheidZakelijk/issues/866) |
+| 6 | SSL Labs-test | Niet van toepassing | | [#1168](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1168) |
+| 6 | `security.txt` | Niet van toepassing | Het bestand staat nu nog in de code (`.well-known/security.txt`) | |
+| 7 | Response headers | Actie nodig | Alleen `nosniff`; vaststellen of de LPC of de Inway hem al zet | [#1172](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1172) |
+| 8 | Herleidbaarheid aanroeper | Actie nodig | Nagaan wat Inway en LPC-gateways doorgeven. LDV staat op preview nog uit (`LOGBOEKDATAVERWERKING_ENABLED=false`) | [#1169](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1169) |
+
+### Beveiliging
+
+| Besluit | Item | Status | Toelichting | Story |
+| --- | --- | --- | --- | --- |
+| 9 | SAST, Dependabot, Scorecard | Aanwezig | CodeQL op elke PR/push; daarnaast ClusterFuzzLite | |
+| 9 | DAST | Actie nodig | Nachtelijke ZAP API-scan. Een geslaagde POST verstuurt een echte e-mail via NotifyNL; de scan moet dat voorkomen | [#1171](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1171) |
+| 10 | BIO-toetsing, pentest en continuïteit | Actie nodig | Inclusief back-up en geteste restore van de managed Postgres | [#1170](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1170) |
+| 11 | Idempotency-Key | Actie nodig | Op `POST /centraal/notificaties` en `/decentraal/notificaties` | [#1174](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1174) |
+| 12 | SSRF-bescherming webhook | Actie nodig | De webhook wordt per DV bij onboarding geregistreerd (ADR 0024 §5) | [#1049](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1049) |
+| 13 | Cyberbeveiligingswet | Besluit nodig | | [#1202](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1202) |
+| 14 | Secretsbeheer & rotatie | Actie nodig | `notify.api-key`, `notify.callback.bearer-token`, `hash.pepper`, KEK-versies en de webhook-JWT-sleutel staan nu handmatig in ZAD Operations Manager. De KEK-rotatie (#1155) dient als model | [#1209](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1209) |
+
+### Privacy
+
+| Besluit | Item | Status | Toelichting | Story |
+| --- | --- | --- | --- | --- |
+| 15 | Retentie en wissen | Actie nodig | De retentiejob uit #757 wordt vervangen door de wistaak en onderhoudstaak uit ADR 0024: wissen van de sleutel per notificatie, en opruimen van het eventlog na de bewaartermijn van het afleverbewijs | [#1163](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1163) |
+| 16 | Verwerkingslogging (LDV) | Actie nodig | Taakhandlers buiten een REST-request loggen nog niet naar LDV (ADR 0024 §10) | [#962](https://github.com/MinBZK/MijnOverheidZakelijk/issues/962) |
+
+### Open standaarden en authenticatie
+
+| Besluit | Item | Status | Toelichting | Story |
+| --- | --- | --- | --- | --- |
+| 17 | Pas-toe-of-leg-uit-toets | Actie nodig | Inclusief het NL GOV CloudEvents-profiel; ADR 0024 zet `subject` op de notificatie-id | [#1206](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1206) |
+| 17 | Beslisboom open standaarden | Actie nodig | | [#1208](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1208) |
+| 18 | Authenticatie en autorisatie van DV's | Actie nodig | Besloten in ADR 0024 §9: OAuth2-toegangstoken volgens het NL GOV Assurance profile, uitgegeven door de IAM-gateway van MOZa, met het OIN van de DV als claim. Nog niet geïmplementeerd | [#880](https://github.com/MinBZK/MijnOverheidZakelijk/issues/880) |
+| 19 | OpenAPI op `/openapi.json` | Actie nodig | Nu nog op `/q/openapi` | [#1207](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1207) |
+
+### Operationele gereedheid
+
+| Besluit | Item | Status | Toelichting | Story |
+| --- | --- | --- | --- | --- |
+| 20 | Rate limiting | Actie nodig | Dagquotum per DV en feedlimiet bestaan al, nog zonder `Retry-After` | [#1247](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1247) |
+| 21 | Load-/performancetest | Actie nodig | Workloadmodel: piek van 2,2 miljoen notificaties van één DV per maand, af te voeren binnen vijf werkdagen, met eerlijke verdeling over DV's | [#1248](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1248) |
+| 22 | Observability / alerting | Actie nodig | Grafana is beschikbaar op de LPC, niet op ZAD | [#837](https://github.com/MinBZK/MijnOverheidZakelijk/issues/837) |
+| 23 | Migratieveiligheid | Actie nodig | De breuk in de rollback bij de release van de 1150-stack is op 2026-09-28 geaccepteerd, tot de eerste release met echte notificaties | [#1246](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1246) |
+| 24 | Rollback-besluit en escalatiepad | Besluit nodig | | [#1249](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1249) |
+| 24 | Release-automatisering (pilot) | Actie nodig | De NMC is de pilotrepository voor ADR 0022 | [#1187](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1187) |
+| 25 | Pipeline naar de LPC | Actie nodig | Van GitHub via de LPC-GitLab naar Harbor; overlapt met ADR 0022 O1 | [#1199](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1199) |

@@ -8,6 +8,10 @@ ontwikkeld en na review via een Merge Request naar de `develop` branch wordt gem
 De software wordt via CI/CD-pipelines uitgerold naar de omgevingen. Dit gebeurt binnen een OpenShift 4.x-omgeving.
 De uitrol wordt handmatig gestart via een pipeline in het GitLab-project dat je wilt uitrollen. Deze pipeline downloadt de broncode van de main-branch uit de GitHub-repository, bouwt hieruit een image en pusht deze naar Harbor. Vervolgens wordt ArgoCD genotificeerd dat er een nieuwe sync moet plaatsvinden; Argo synchroniseert daarna de deployment op OpenShift naar de nieuwste versie.
 
+### Uitrol naar de LPC
+
+Voor de Logius Private Cloud (LPC) gaat de broncode niet naar GitLab. Een pipeline in LPC-GitLab kopieert het image dat op GitHub gebouwd is van GHCR naar Harbor, met dezelfde digest. Hoe je die pipeline opzet staat in [Een image van GHCR naar Harbor in de LPC](https://github.com/MinBZK/MijnOverheidZakelijk/blob/main/Docs/lpc/image-naar-harbor.md).
+
 ### Gebruikte Tooling
 
 | Applicatie     | URL                                                                     | Beschrijving                                                                   |

@@ -20,15 +20,14 @@ tag kies je bij het starten van de pipeline. Het draaien van een component op de
   digest op te leveren. Het image in Harbor is dus precies het image dat op GitHub
   gebouwd is: promoveren gebeurt zonder opnieuw te bouwen, en terugrollen op digest kan
   ook aan LPC-kant.
-- De job draait op een instance-runner (Kubernetes-executor), zonder `tags:`. Het image
-  `quay.io/skopeo/stable` mag gebruikt worden. Een kopie duurt ongeveer 30 seconden.
+- De job draait op een instance-runner (Kubernetes-executor), zonder `tags:`. Een kopie duurt ongeveer 30 seconden.
 
 ## Benodigde toegang
 
 - Een account op LPC-GitLab met het recht om een project aan te maken in de subgroep
   `logius/open/gs/on`.
 - Een account op Harbor (`https://harbor.az1.lpc.logius.nl`) met toegang tot project
-  `gs` en het recht om daar robotaccounts aan te maken.
+  `gs` (indien we daar nog onder vallen. Indien onbekend, doe navraag bij Logius) en het recht om daar robotaccounts aan te maken.
 
 Namen van knoppen en menu's kunnen per GitLab- en Harbor-versie verschillen.
 
@@ -186,17 +185,6 @@ GitLab-project `logius/open/gs/on/nmc-image-to-harbor`.
   dat project het algemene kopieerproject, maak dan volgens [stap 2](#stap-2-robotaccount-en-variabelen)
   een nieuw robotaccount aan, met een naam die bij de hele Notificatiedienst past, en zet
   het in `HARBOR_ROBOT` en `HARBOR_SECRET`.
-
-Ter referentie, voor als de LPC later eisen gaat stellen:
-
-- Docker v2-manifest, gecomprimeerd ongeveer 180 MB.
-- Base-image `eclipse-temurin:25-jre` (Docker Hub, op tag, niet op digest), draait als
-  uid 1001.
-- Geen image-signing en geen SBOM.
-- Elk image bevat Swagger UI: de build geeft altijd
-  `-Dquarkus.swagger-ui.always-include=true` mee, ook op `main`.
-- Het image wordt gebouwd met `-DskipTests`; de tests draaien apart in `Maven verify`,
-  een verplichte check vóór merge naar `main`.
 
 ## Zie ook
 

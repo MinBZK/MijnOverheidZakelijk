@@ -12,7 +12,7 @@ Het document gaat naar Accepted zodra de punten onder *Open besluiten* zijn geno
 
 Deze ADR geldt voor **backendsystemen** van MOZa: systemen zonder eigen gebruikersinterface die een API aanbieden aan andere systemen. Voorbeelden zijn de Notificatie Management Component (NMC), de Profielservice en Contactherstel. Frontends en websites vallen erbuiten.
 
-Wat een specifiek backendsysteem met deze besluiten doet (welke stories, welke status, welke afwijkingen), staat in een eigen productiegereedheidsdocument per systeem. Voor de NMC is dat [Productiegereedheid van de NMC](../notificatiedocs/14-productiegereedheid.md).
+De ADR is onafhankelijk van het hostingplatform en van wie een dienst beheert. Wat een specifiek backendsysteem met deze besluiten doet (op welk platform het draait, welke stories, welke status, welke afwijkingen), staat in een eigen productiegereedheidsdocument per systeem. Voor de NMC is dat [Productiegereedheid van de NMC](../notificatiedocs/14-productiegereedheid.md).
 
 ## Gerelateerde ADRs
 
@@ -27,9 +27,9 @@ Wat een specifiek backendsysteem met deze besluiten doet (welke stories, welke s
 
 ## Context
 
-Gangbare eisen voor productiegereedheid bij de Rijksoverheid gaan vaak uit van een website: een publiek bereikbaar endpoint, een browser en een gebruikersinterface. Een backendsysteem heeft die niet. Een deel van die eisen geldt daarom niet, en een deel moet anders ingevuld worden. Deze ADR legt ook expliciet vast wat een backendsysteem bewust níet doet, met de reden erbij, zodat een ontbrekende toets herkenbaar is als keuze en niet als vergeten punt. Zonder gedeeld kader maakt elk systeem die afweging opnieuw, en is niet te zien waar systemen van elkaar afwijken.
+Gangbare eisen voor productiegereedheid bij de Rijksoverheid gaan vaak uit van een website: een anoniem bereikbaar endpoint, een browser en een gebruikersinterface. Een backendsysteem heeft die niet. Een deel van die eisen geldt daarom niet, en een deel moet anders ingevuld worden. Deze ADR legt ook expliciet vast wat een backendsysteem bewust níet doet, met de reden erbij, zodat een ontbrekende toets herkenbaar is als keuze en niet als vergeten punt. Zonder gedeeld kader maakt elk systeem die afweging opnieuw, en is niet te zien waar systemen van elkaar afwijken.
 
-Daarnaast zijn een aantal punten geen technische keuze van het bouwende team. Logius host de Logius Private Cloud (LPC) en beheert diensten zoals de Notificatiedienst.
+Daarnaast zijn een aantal punten geen technische keuze van het bouwende team, maar liggen ze bij de beheerder van de dienst of bij de partij die het hostingplatform levert.
 
 ## Besluit
 
@@ -37,47 +37,48 @@ Daarnaast zijn een aantal punten geen technische keuze van het bouwende team. Lo
 
 1. **Een backendsysteem wordt getoetst als API, niet als website.** Eisen die uitgaan van een browser-UI vervallen: F12-inspectie, Piwik-analytics, het Websiteregister en de WCAG-toets. Een API-documentatie-UI zoals Swagger UI staat alleen aan in niet-productieomgevingen.
 2. **De functionele scope per systeem is expliciet.** Het productiegereedheidsdocument van een systeem legt vast welke functionaliteit wel en niet meegaat naar productie. Iets dat stilzwijgend ontbreekt, telt niet als besluit.
-3. **Wat op dienstniveau ligt, regelt het systeem niet zelf.** Een DPIA wordt opgesteld op het niveau van de dienst of het proces, niet per applicatie. Hetzelfde geldt voor verwerkersovereenkomsten, het verwerkingsregister, de afhandeling van verzoeken van betrokkenen en het operational-readiness-document. Wie dat oppakt, hangt af van wie de dienst beheert; bij de Notificatiedienst is dat Logius. Het backendsysteem levert de technische input.
+3. **Wat op dienstniveau ligt, regelt het systeem niet zelf.** Een DPIA wordt opgesteld op het niveau van de dienst of het proces, niet per applicatie. Hetzelfde geldt voor verwerkersovereenkomsten, het verwerkingsregister, de afhandeling van verzoeken van betrokkenen en het operational-readiness-document. Wie dat oppakt, hangt af van wie de dienst beheert, en staat in het productiegereedheidsdocument van het systeem. Het backendsysteem levert de technische input.
 
 ### Hosting en ontsluiting
 
-4. **Productie draait op de LPC.** Back-up, secretsvoorziening, observability en netwerktoegang komen daarmee van het platform.
-5. **Afnemers bereiken een backendsysteem alleen via FSC.** Elke afnemer heeft een FSC-contract nodig. Transportbeveiliging komt van FSC (mTLS binnen het PKI-vertrouwenskader) en de LPC. Er is geen directe publiek bereikbaar endpoint. Of verkeer tussen componenten binnen de LPC ook via FSC loopt, is een open besluit.
-6. **Wat daarom bewust niet gebeurt.** Deze punten gaan uit van een publiek bereikbaar endpoint, en dat is er niet:
-   * geen publiek DV/OV-certificaat; FSC werkt met eigen certificaten;
-   * geen internet.nl-, SSL Labs- of securityheaders.com-toets;
-   * geen `security.txt` op het systeem zelf, omdat buitenstaanders `/.well-known/security.txt` achter FSC niet kunnen bereiken. Waar kwetsbaarheden dan wel gemeld kunnen worden, is een open besluit.
-7. **Response headers worden afgestemd op een JSON-API.** Een backendsysteem zet `X-Content-Type-Options: nosniff`, zodat een client de response niet als iets anders dan JSON interpreteert. Headers die browsers beschermen (CSP, `X-Frame-Options`, `Referrer-Policy`, HSTS) zijn niet van toepassing. Waar de LPC of de Inway headers al centraal zet, wordt dat alleen geverifieerd.
-8. **De aanroeper is herleidbaar voor forensisch onderzoek.** Achter de Inway en de LPC-gateways is het bronadres niet dat van de aanroeper. Vastgelegd worden de identiteit uit het FSC-contract en het token, en `X-Forwarded-For` voor zover die wordt doorgegeven. Dit komt in een voorziening met audittrail-eisen, niet in de gewone applicatielog.
+4. **Het hostingplatform wordt per systeem gekozen.** Deze ADR schrijft geen platform voor. Het productiegereedheidsdocument van een systeem legt vast op welk platform productie draait, en welke voorzieningen dat platform levert: back-up, secretsvoorziening, observability en netwerktoegang. Wat het platform niet levert, regelt het systeem zelf.
+5. **Afnemers bereiken een backendsysteem alleen via FSC.** Elke afnemer heeft een FSC-contract nodig. Het adres van de Inway is publiek bereikbaar via internet, maar niet anoniem: zonder geldig contract en PKIoverheid-certificaat weigert de Inway de aanroep. Transportbeveiliging komt van FSC (mTLS binnen het PKI-vertrouwenskader). Naast de Inway heeft het systeem geen eigen publiek bereikbaar endpoint. Of verkeer tussen MOZa-componenten onderling ook via FSC loopt, is een open besluit.
+6. **Toetsen op een publiek endpoint gebeuren op het Inway-adres.** Wat buitenstaanders van een backendsysteem kunnen zien, is de TLS- en DNS-configuratie van het adres waaronder de Inway het systeem ontsluit. Daarom:
+   * worden de internet.nl- en SSL Labs-toets uitgevoerd op dat Inway-adres. Vraagt de Inway al tijdens de handshake om een clientcertificaat en mislukt de toets daardoor, dan wordt dat vastgelegd;
+   * is er geen publiek DV/OV-certificaat nodig; FSC werkt met PKIoverheid-certificaten;
+   * is er geen securityheaders.com-toets; die toetst headers die browsers beschermen (zie besluit 7);
+   * staat er geen `security.txt` op het systeem zelf, omdat `/.well-known/security.txt` achter de Inway alleen met een contract bereikbaar is. Kwetsbaarheden worden gemeld via de responsible-disclosure-regeling van MinBZK (de organisatiebrede [`SECURITY.md`](https://github.com/MinBZK/.github/blob/main/SECURITY.md)), die verwijst naar het meldpunt van het NCSC.
+7. **Response headers worden afgestemd op een JSON-API.** Een backendsysteem zet `X-Content-Type-Options: nosniff`, zodat een client de response niet als iets anders dan JSON interpreteert. Headers die browsers beschermen (CSP, `X-Frame-Options`, `Referrer-Policy`, HSTS) zijn niet van toepassing. Waar het hostingplatform of de Inway headers al centraal zet, wordt dat alleen geverifieerd.
+8. **De aanroeper is herleidbaar voor forensisch onderzoek.** Achter de Inway en eventuele gateways van het hostingplatform is het bronadres niet dat van de aanroeper. Vastgelegd worden de identiteit uit het FSC-contract en het token, en `X-Forwarded-For` voor zover die wordt doorgegeven. Dit komt in een voorziening met audittrail-eisen, niet in de gewone applicatielog.
 
 ### Beveiliging
 
 9. **Testen volgens de MOZa-teststrategie.** SAST (CodeQL), Dependabot en OpenSSF Scorecard draaien op de repository van elk backendsysteem. Daar komt een nachtelijke OWASP ZAP API-scan bij, aangestuurd door de OpenAPI-spec. Heeft een aanroep bijwerkingen buiten het systeem, zoals het versturen van een e-mail, dan wordt de scan zo ingericht dat die bijwerkingen niet bij echte ontvangers of externe diensten terechtkomen.
 10. **BIO-toetsing en pentest zijn de formele toets, inclusief continuïteit.** Per systeem worden RTO en RPO vastgesteld. Back-up en herstel en het bedrijfscontinuïteitsplan horen bij de BIO-toetsing; een restore wordt daadwerkelijk getest. Bevindingen worden opgelost, of geaccepteerd met motivatie en een verantwoordelijke.
 11. **Niet-idempotente schrijvende endpoints accepteren een `Idempotency-Key`.** Een retry van de client na een timeout mag geen dubbele verwerking opleveren. Dit volgt het patroon uit de NL GOV API Design Rules. De sleutel wordt in dezelfde transactie vastgelegd als het resultaat.
-12. **Roept een systeem adressen aan namens een afnemer, dan worden die bij onboarding geregistreerd.** Een afnemer geeft geen URL per aanroep mee. Een geregistreerd adres wordt gecontroleerd op interne adressen (resolve-and-refuse en/of een egress-NetworkPolicy), om server-side request forgery te voorkomen.
+12. **Roept een systeem URL's aan namens een afnemer, zoals een webhook, dan worden die bij onboarding geregistreerd.** Een afnemer geeft geen URL per aanroep mee. Een geregistreerde URL wordt gecontroleerd op interne adressen (resolve-and-refuse en/of een egress-NetworkPolicy), om server-side request forgery te voorkomen.
 13. **Per systeem wordt beoordeeld of de Cyberbeveiligingswet (NIS2) van toepassing is.** De uitkomst en de gebruikte criteria worden vastgelegd. Bij een positieve uitkomst volgen registratie, risicoanalyse en een incidentmeldingsproces.
-14. **Secrets staan in de secretsvoorziening van de LPC, met een rotatieprocedure per secret.** Secrets die pseudonimisering of versleuteling dragen, krijgen een rotatie die bestaande gegevens bruikbaar houdt, of een bewuste keuze om de correlatie te verbreken.
+14. **Secrets staan in een secretsvoorziening, met een rotatieprocedure per secret.** Welke voorziening dat is, hangt af van het hostingplatform (besluit 4). Secrets die pseudonimisering of versleuteling dragen, krijgen een rotatie die bestaande gegevens bruikbaar houdt, of een bewuste keuze om de correlatie te verbreken.
 
 ### Privacy
 
-15. **Bewaartermijnen en wissen zijn per systeem vastgelegd en geautomatiseerd.** Persoonsgegevens worden niet langer bewaard dan nodig, en het wissen gebeurt door een taak, niet handmatig.
+15. **Bewaar- en wistermijnen zijn per systeem vastgelegd, en het wissen is geautomatiseerd.** Persoonsgegevens worden niet langer bewaard dan nodig, en het wissen gebeurt door een taak, niet handmatig.
 16. **Elke verwerking van persoonsgegevens wordt gelogd volgens het Logboek Dataverwerkingen.** Dat geldt ook voor verwerkingen in achtergrondtaken buiten een REST-aanroep.
 
 ### Open standaarden en authenticatie
 
 17. **De pas-toe-of-leg-uit-standaarden worden systematisch getoetst.** Minimaal de OpenAPI Specification en de API Design Rules, en waar van toepassing het NL GOV-profiel voor CloudEvents. De beslisboom van Forum Standaardisatie wordt handmatig doorlopen ter bevestiging.
-18. **Elke aanroep is geauthenticeerd en per afnemer geautoriseerd, bovenop FSC.** De enige uitzondering is de OpenAPI-spec (besluit 19). Een afnemer werkt uitsluitend binnen zijn eigen gegevens; gegevens van een andere afnemer bestaan voor hem niet. Het mechanisme verschilt per systeem en wordt in een eigen ADR vastgelegd: voor aanroepen namens gebruikers is dat ADR 0006, voor de NMC ADR 0024 §9.
-19. **De OpenAPI-spec staat op `/openapi.json` binnen FSC.** Dat is de standaardlocatie uit de API Design Rules, zonder extra authenticatie bovenop FSC. Een CORS-header is niet nodig: er is geen browser die de spec cross-origin ophaalt. Omdat het systeem niet publiek bereikbaar is, hoeft de spec dat ook niet te zijn.
+18. **Het systeem authenticeert en autoriseert elke aanroep zelf, ook achter FSC.** Dat de Inway een aanroep doorlaat, is niet genoeg. De enige uitzondering is de OpenAPI-spec (besluit 19). Een afnemer werkt uitsluitend binnen zijn eigen gegevens; gegevens van een andere afnemer bestaan voor hem niet. Het mechanisme verschilt per systeem en wordt per systeem vastgelegd: voor aanroepen namens gebruikers is dat ADR 0006, voor de NMC ADR 0024 §9, en de Profielservice hervalideert het FSC-token zelf ([§09 Infrastructuur](../profielservicedocs/09-infrastructuur-architectuur.md)).
+19. **De OpenAPI-spec staat op `/openapi.json` binnen FSC.** Dat is de standaardlocatie uit de API Design Rules, zonder extra authenticatie bovenop FSC. Een CORS-header is niet nodig: er is geen browser die de spec cross-origin ophaalt. Een aparte publieke kopie is niet nodig: de code is open source, en wie vóór een FSC-contract wil zien wat een systeem biedt, kan daar terecht.
 
 ### Operationele gereedheid
 
-20. **Rate limiting gebeurt per afnemer, en elke 429 krijgt een `Retry-After`.** Eerst wordt vastgesteld of de Inway of het platform al misbruikbescherming biedt; anders gebeurt het in de applicatie. Drempelwaarden volgen uit het workloadmodel van het systeem.
+20. **Rate limiting gebeurt per afnemer, en elke 429 krijgt een `Retry-After`.** Eerst wordt vastgesteld of de Inway of het hostingplatform al misbruikbescherming biedt; anders gebeurt het in de applicatie. Drempelwaarden volgen uit het workloadmodel van het systeem.
 21. **Performance wordt getest tegen een drempel, niet als rapport.** Met k6 of Gatling, conform de teststrategie, tegen een workloadmodel per systeem. Er komen een lichte regelmatige run en een zwaardere pre-release-run met soak-test.
-22. **Observability draait op het platform van de LPC.** Elk systeem levert health endpoints, metrics en de alarmen uit zijn kwaliteitseisen.
+22. **Elk systeem is observeerbaar.** Elk systeem levert health endpoints, metrics en de alarmen uit zijn kwaliteitseisen, aangesloten op de observability-voorziening van het hostingplatform.
 23. **Expand/contract geldt per release, niet per script.** Een `DROP` landt pas in een release ná de release waarin niets de kolom of tabel nog leest, zodat een rollback van één release altijd mogelijk is.
 24. **Release en rollback volgen ADR 0022.** Elk teamlid mag releasen via PR, review en CI. Een rollback gaat terug naar de digest van de vorige versie. Per systeem wordt vastgelegd wie tot een rollback besluit, binnen welke termijn en wat het escalatiepad is.
-25. **Productie draait op een geteste pipeline naar de LPC.** Hetzelfde artefact gaat van pre-productie naar productie. Pas als die route getest is, klopt de aanname dat er geen verschil is tussen pre-prod- en prod-code.
+25. **Productie draait op een geteste pipeline naar het hostingplatform.** Hetzelfde artefact gaat van pre-productie naar productie. Pas als die route getest is, klopt de aanname dat er geen verschil is tussen pre-prod- en prod-code.
 
 ## Open besluiten
 
@@ -85,26 +86,24 @@ Deze punten zijn nog niet genomen. Ze blokkeren de overgang naar Accepted.
 
 | Besluit | Waarom open |
 | --- | --- |
-| Verkeer binnen de LPC via FSC? | Besluit 5 geldt voor afnemers. Of componenten die allebei binnen de LPC draaien ook via FSC met elkaar communiceren, of via het netwerk van het platform, is nog niet besloten. Voorbeeld: NotifyNL, dat de NMC aanroept om afleverstatussen terug te melden en door de NMC wordt aangeroepen om e-mail te versturen |
-| Domein melden bij Min AZ? | Een backendsysteem heeft geen website, maar wel een adres achter FSC. Of zo'n domein bij Min AZ gemeld moet worden, wordt onderzocht |
-| Meldpunt voor kwetsbaarheden | Zonder `security.txt` op het systeem (besluit 6) moet het melden van kwetsbaarheden ergens anders belegd zijn, bijvoorbeeld op organisatieniveau. Nog na te gaan of en waar dat geregeld is |
-| Publieke kopie van de OpenAPI-spec | Niet verplicht, omdat het systeem niet publiek is. Wel nuttig voor partijen die vóór een FSC-contract willen zien wat een systeem biedt, bijvoorbeeld via het API-register op developer.overheid.nl. Een publieke kopie wordt dan gecontroleerd op interne hostnamen en realistische persoonsgegevens |
+| Verkeer tussen MOZa-componenten via FSC? | Besluit 5 geldt voor afnemers. Of MOZa-componenten onderling ook via FSC communiceren, of bij hosting op hetzelfde platform via het netwerk van dat platform, is nog niet besloten. Voorbeeld: NotifyNL, dat de NMC aanroept om afleverstatussen terug te melden en door de NMC wordt aangeroepen om e-mail te versturen |
+| Domein melden bij Min AZ? | Een backendsysteem heeft geen website, maar het Inway-adres is wel publiek bereikbaar (besluit 5). Of zo'n domein bij Min AZ gemeld moet worden, wordt onderzocht |
 
 ## Gevolgen
 
 ### Wat dit oplevert
 
-* Eén kader voor alle MOZa-backendsystemen. Afwegingen worden één keer gemaakt, en afwijkingen per systeem zijn zichtbaar.
+* Eén kader voor alle MOZa-backendsystemen, ongeacht het hostingplatform. Afwegingen worden één keer gemaakt, en afwijkingen per systeem zijn zichtbaar.
 * Er wordt niet getoetst op websitecriteria die voor een API geen betekenis hebben, en dat is onderbouwd.
-* Het kader is naast eisen van Logius te leggen, zodat zichtbaar wordt waar de gaten zitten.
+* Het kader is naast de eisen van een dienstbeheerder of platformleverancier te leggen, zodat zichtbaar wordt waar de gaten zitten.
 
 ### Wat dit kost
 
 * Elk backendsysteem houdt een eigen productiegereedheidsdocument bij.
 * Elke afnemer moet eerst een FSC-contract hebben. Dat voegt een onboardingstap toe.
-* Een aantal punten hangt af van Logius (DPIA, secretsvoorziening, operational readiness, LPC-onboarding). De doorlooptijd daarvan ligt niet bij het team.
+* Een aantal punten hangt af van de dienstbeheerder of de platformleverancier (DPIA, secretsvoorziening, operational readiness, onboarding op het platform). De doorlooptijd daarvan ligt niet bij het team.
 
 ### Risico's
 
-* Zolang de LPC-onboarding niet rond is, zijn FSC-Inway, pipeline, observability en secrets niet in te richten.
-* Als de pipeline naar de LPC de digest niet behoudt (ADR 0022 O1), is de belofte dat precies hetzelfde artefact wordt uitgerold niet waar te maken.
+* Zolang de onboarding op het hostingplatform niet rond is, zijn FSC-Inway, pipeline, observability en secrets niet in te richten.
+* Als de pipeline naar het hostingplatform de digest niet behoudt (ADR 0022 O1), is de belofte dat precies hetzelfde artefact wordt uitgerold niet waar te maken.

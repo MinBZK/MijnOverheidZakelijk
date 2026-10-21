@@ -8,18 +8,17 @@ Het ontwerp van de NMC zelf staat in [ADR 0024](../decisions/0024-georkestreerde
 
 ## Functionele scope voor januari
 
-Uitwerking van besluit 2.
-
 | Onderdeel | Voor januari? | Toelichting | Story |
 | --- | --- | --- | --- |
+| Decentrale regie | Ja | De OMC van een DV levert de notificatie met contactgegevens aan bij de NMC (ADR 0021) | |
+| Centrale regie | Nee | Hangt af van Contactherstel en de Templating Service | |
 | Aanname, verzending en receiptverwerking | Ja | Volgens ADR 0024 | [#1150](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1150) |
 | Herverzending | Ja | Eén herverzending na een `temporary-failure` of `technical-failure` (ADR 0024) | [#1160](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1160) |
 | Cursorfeed | Ja | DV's zonder webhook volgen de status via de feed (ADR 0024 §5) | [#1161](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1161) |
 | Webhook | Ja | Optioneel per DV, geregistreerd bij onboarding (ADR 0024 §5) | [#1162](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1162) |
-| Status-query | Besluit nodig | Aanvulling op de feed om één notificatie direct op te vragen | [#904](https://github.com/MinBZK/MijnOverheidZakelijk/issues/904) |
+| Status-query | Ja | Aanvulling op de feed om één notificatie direct op te vragen | [#904](https://github.com/MinBZK/MijnOverheidZakelijk/issues/904) |
 | Contactherstel | Nee | | |
 | Koppeling Templating Service | Nee | De NMC gebruikt vaste NotifyNL-template-ID's | |
-| OMC-koppeling | Nee | | |
 
 ## Open besluiten voor de NMC
 
@@ -28,7 +27,6 @@ Uitwerking van besluit 2.
 | Domeinnaam | Wordt uitgewerkt in de context van FSC: het adres waaronder de Inway de NMC ontsluit | [#1148](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1148) |
 | NotifyNL via FSC of via het platform? | NotifyNL komt naar verwachting ook binnen de LPC te draaien (open besluit in ADR 0025). ADR 0024 gaat nog uit van verkeer over het publieke internet: NotifyNL pusht de receipts vanaf internet en de NMC roept NotifyNL aan met een HS256-JWT. ADR 0024 wordt bijgewerkt zodra dit besloten is | — |
 | Valt de NMC onder de Cyberbeveiligingswet? | Vraagt juridische/compliance-input (besluit 13) | [#1202](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1202) |
-| Status-query voor januari? | Zie *Functionele scope* | [#904](https://github.com/MinBZK/MijnOverheidZakelijk/issues/904) |
 | Wie besluit tot rollback | ADR 0022 legt de mechaniek vast, niet wie besluit en binnen welke termijn (besluit 24) | [#1249](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1249) |
 | RTO en RPO | Bepalen de back-upfrequentie en de herstelvoorzieningen (besluit 10) | [#1170](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1170) |
 
@@ -55,13 +53,14 @@ Uitwerking van besluit 2.
 
 | Besluit | Item | Status | Toelichting | Story |
 | --- | --- | --- | --- | --- |
-| 4 | LPC-onboarding | Actie nodig | Gitlab-project, Harbor, namespace, Vault-tenant, managed Postgres. Wacht op toegang | [#961](https://github.com/MinBZK/MijnOverheidZakelijk/issues/961) |
+| 4 | Hostingplatform | Aanwezig | De NMC draait in productie op de LPC; Logius beheert de Notificatiedienst | |
+| 4 | LPC-onboarding | Actie nodig | Gitlab-project, Harbor, namespace, Vault-tenant, managed Postgres. Eerste teamlid heeft toegang tot GitLab en Harbor, Vault nog te verifiëren; overige teamleden zijn bezig | [#961](https://github.com/MinBZK/MijnOverheidZakelijk/issues/961) |
 | 4, 5 | Opname in LPC-loadbalancer & hosting-allowlist | Actie nodig | In refinement: wat blijft nodig nu de NMC alleen via de FSC-Inway bereikbaar is? | [#1165](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1165) |
 | 5 | Domein melden bij Min AZ | Besluit nodig | Te onderzoeken (BA); open besluit in ADR 0025 | [#1149](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1149) |
 | 6 | DV/OV-certificaat | Niet van toepassing | | [#1167](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1167) |
-| 6 | internet.nl-test | Niet van toepassing | | [#866](https://github.com/MinBZK/MijnOverheidZakelijk/issues/866) |
-| 6 | SSL Labs-test | Niet van toepassing | | [#1168](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1168) |
-| 6 | `security.txt` | Niet van toepassing | Het bestand staat nu nog in de code (`.well-known/security.txt`) | |
+| 6 | internet.nl-test | Actie nodig | Op het Inway-adres van de NMC, zodra dat er is (#1148) | [#866](https://github.com/MinBZK/MijnOverheidZakelijk/issues/866) |
+| 6 | SSL Labs-test | Actie nodig | Op het Inway-adres van de NMC, zodra dat er is (#1148) | [#1168](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1168) |
+| 6 | `security.txt` | Niet van toepassing | Melden loopt via de `SECURITY.md` van MinBZK. Het bestand staat nu nog in de code (`.well-known/security.txt`) | |
 | 7 | Response headers | Actie nodig | Alleen `nosniff`; vaststellen of de LPC of de Inway hem al zet | [#1172](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1172) |
 | 8 | Herleidbaarheid aanroeper | Actie nodig | Nagaan wat Inway en LPC-gateways doorgeven. LDV staat op preview nog uit (`LOGBOEKDATAVERWERKING_ENABLED=false`) | [#1169](https://github.com/MinBZK/MijnOverheidZakelijk/issues/1169) |
 

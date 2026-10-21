@@ -10,7 +10,7 @@ De uitrol wordt handmatig gestart via een pipeline in het GitLab-project dat je 
 
 ### Uitrol naar de LPC
 
-Voor de Logius Private Cloud (LPC) gaat de broncode niet naar GitLab. Een pipeline in LPC-GitLab kopieert het image dat op GitHub gebouwd is van GHCR naar Harbor, met dezelfde digest. Hoe je die pipeline opzet staat in [Een image van GHCR naar Harbor in de LPC](https://github.com/MinBZK/MijnOverheidZakelijk/blob/main/Docs/lpc/image-naar-harbor.md).
+Voor de Logius Private Cloud (LPC) gaat de broncode niet naar GitLab. Een pipeline in LPC-GitLab kopieert het image dat op GitHub gebouwd is van GHCR naar Harbor, met dezelfde digest. Hoe je die pipeline opzet staat in [Image op GHCR naar LPC Harbor](https://docs.rijksapp.nl/docs/ad895fc4-a364-47b3-9cdf-fe4dea54769d/).
 
 ### Gebruikte Tooling
 

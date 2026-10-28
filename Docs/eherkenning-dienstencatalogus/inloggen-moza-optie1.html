@@ -396,70 +396,50 @@
   .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
   .rep-tag { display: block; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
   .callout.go { background: color-mix(in srgb, var(--o2) 8%, var(--surface)); border-color: color-mix(in srgb, var(--o2) 40%, transparent); }
+
+  .tbadge text { font-size: 11px; }
+  .tbadge.sm text { font-size: 9.5px; }
+  .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
 </style>
 </head>
 <body>
 <div class="layout" id="layout">
 <main>
   <p class="crumb"><a class="home-btn" href="index.html">← Terug naar hoofdpagina</a></p>
-  <h1>MOZa-portaal via dienstbemiddeling zónder portaaldienst</h1>
-  <p class="intro">Gewenste flow volgens MOZa optie 1: dienstbemiddeling zónder portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Stap 4 en 11 kennen elk drie mogelijke varianten (A, B of C); na stap 13 gaat alleen variant B verder.</p>
-
+  <h1>MOZa-portaal via dienstbemiddeling mét portaaldienst</h1>
+  <p class="intro">Gewenste flow volgens MOZa optie 1: dienstbemiddeling mét portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.</p>
   <div class="toolbar">
     <div>
       <h2>Stappen</h2>
-      <div class="chips steps" id="step-chips"><button class="chip start" type="button" id="start">Stap voor stap ▸</button><button class="chip start" type="button" id="fold-all">▸ Stap 4 en 11 uitklappen</button></div>
+      <div class="chips steps" id="step-chips"><button class="chip start" type="button" id="start">Stap voor stap ▸</button></div>
     </div>
     <div>
       <h2>Toelichtingen</h2>
       <div class="chips" id="chips"></div>
     </div>
   </div>
-
   <div class="canvas">
-    <svg id="diagram" viewBox="0 0 1120 2893" role="img" aria-label="Volgordediagram: Bilal logt in bij het MOZa-portaal, optie 1">
+    <svg id="diagram" viewBox="0 0 1120 1168" role="img" aria-label="Volgordediagram: Bilal logt in bij het MOZa-portaal, optie 1">
       <defs>
       <marker id="arB" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-bilal)"/></marker>
       <marker id="arZ" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-uwv)"/></marker>
       <marker id="arM" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-mak)"/></marker>
       <marker id="arL" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-lev)"/></marker>
       </defs>
-      <rect class="lane-bg a-bilal" data-adj="height" x="-5" y="94" width="250" height="2789" rx="14"/>
-      <line class="lifeline" data-adj="y2" x1="120" y1="84" x2="120" y2="2881"/>
-      <g class="actor a-bilal"><rect x="5" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="120" y="42" text-anchor="middle">Bilal Yilmaz</text><text class="actor-sub" x="120" y="58" text-anchor="middle">werknemer, op de website van MOZa</text></g>
-      <rect class="lane-bg a-uwv" data-adj="height" x="235" y="94" width="250" height="2789" rx="14"/>
-      <line class="lifeline" data-adj="y2" x1="360" y1="84" x2="360" y2="2881"/>
-      <g class="actor a-uwv"><rect x="245" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="360" y="42" text-anchor="middle">MOZa</text><text class="actor-sub" x="360" y="58" text-anchor="middle">dienstbemiddelaar</text><g class="tbadge" data-note="1" tabindex="0" role="button" aria-label="Toelichting 1" transform="translate(465 18)"><circle r="11"/><text>1</text></g></g>
-      <rect class="lane-bg a-mak" data-adj="height" x="495" y="94" width="250" height="2789" rx="14"/>
-      <line class="lifeline" data-adj="y2" x1="620" y1="84" x2="620" y2="2881"/>
-      <g class="actor a-mak"><rect x="505" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="620" y="36" text-anchor="middle">eHerkenningsmakelaar</text><text class="actor-sub" x="620" y="58" text-anchor="middle">bijv. Digidentity</text><text class="actor-sub" x="620" y="72" text-anchor="middle">gekozen door MOZa (dienstbemiddelaar)</text></g>
-      <rect class="lane-bg a-lev" data-adj="height" x="755" y="94" width="250" height="2789" rx="14"/>
-      <line class="lifeline" data-adj="y2" x1="880" y1="84" x2="880" y2="2881"/>
-      <g class="actor a-lev"><rect x="765" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="880" y="36" text-anchor="middle">eHerkenningsleverancier</text><text class="actor-sub" x="880" y="58" text-anchor="middle">bijv. Z-Login</text><text class="actor-sub" x="880" y="72" text-anchor="middle">gekozen door Karin (werkgever)</text></g>
-      <g class="step a-bilal" data-step="1"><line class="msg a-bilal" x1="135" y1="140" x2="617" y2="140" marker-end="url(#arB)"/><text class="msg-label" x="370.0" y="130" text-anchor="middle">klikt op &quot;Inloggen MOZa-website met eHerkenning&quot;</text><g class="snum" tabindex="0" role="button" aria-label="Stap 1: Inloggen starten" transform="translate(120 140)"><circle r="13"/><text>1</text></g></g>
+      <rect class="lane-bg a-bilal" x="-5" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="120" y1="84" x2="120" y2="1156"/><g class="actor a-bilal"><rect x="5" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="120" y="36" text-anchor="middle">Bilal Yilmaz</text><text class="actor-sub" x="120" y="58" text-anchor="middle">werknemer, op de website</text><text class="actor-sub" x="120" y="72" text-anchor="middle">van het MOZa-portaal</text></g><rect class="lane-bg a-uwv" x="235" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="360" y1="84" x2="360" y2="1156"/><g class="actor a-uwv"><rect x="245" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="360" y="42" text-anchor="middle">MOZa</text><text class="actor-sub" x="360" y="58" text-anchor="middle">dienstbemiddelaar?</text><g class="tbadge" data-note="1" tabindex="0" role="button" aria-label="Toelichting 1" transform="translate(465 18)"><circle r="10"/><text>1</text></g></g><rect class="lane-bg a-mak" x="495" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="620" y1="84" x2="620" y2="1156"/><g class="actor a-mak"><rect x="505" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="620" y="36" text-anchor="middle">eHerkenningsmakelaar</text><text class="actor-sub" x="620" y="58" text-anchor="middle">bijv. Digidentity</text><text class="actor-sub" x="620" y="72" text-anchor="middle">gekozen door MOZa (dienstbemiddelaar)</text></g><rect class="lane-bg a-lev" x="755" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="880" y1="84" x2="880" y2="1156"/><g class="actor a-lev"><rect x="765" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="880" y="36" text-anchor="middle">eHerkenningsleverancier</text><text class="actor-sub" x="880" y="58" text-anchor="middle">bijv. Z-Login</text><text class="actor-sub" x="880" y="72" text-anchor="middle">gekozen door Karin (werkgever)</text></g>
+      <g class="step a-bilal" data-step="1"><line class="msg a-bilal" x1="135" y1="140" x2="617" y2="140" marker-end="url(#arB)"/><text class="msg-label" x="370.0" y="130" text-anchor="middle">klikt op &quot;Inloggen MOZa-portaal met eHerkenning&quot;</text><g class="snum" tabindex="0" role="button" aria-label="Stap 1: Inloggen starten" transform="translate(120 140)"><circle r="13"/><text>1</text></g></g>
       <g class="step a-mak" data-step="2"><line class="msg a-mak" x1="605" y1="200" x2="123" y2="200" marker-end="url(#arM)"/><text class="msg-label" x="370.0" y="190" text-anchor="middle">Verzoek aan Bilal: selecteer je leverancier</text><g class="snum" tabindex="0" role="button" aria-label="Stap 2: Verzoek: kies leverancier" transform="translate(620 200)"><circle r="13"/><text>2</text></g></g>
       <g class="step a-bilal" data-step="3"><line class="msg a-bilal" x1="135" y1="260" x2="617" y2="260" marker-end="url(#arB)"/><text class="msg-label" x="370.0" y="250" text-anchor="middle">Bilal selecteert zijn leverancier</text><g class="snum" tabindex="0" role="button" aria-label="Stap 3: Leverancier gekozen" transform="translate(120 260)"><circle r="13"/><text>3</text></g></g>
-      <g class="fold collapsed" id="fold4"><g class="exp"><g class="frag"><rect class="frag-box" x="572" y="300" width="536" height="800" rx="10"/><path class="frag-tab" d="M572 310 a10 10 0 0 1 10 -10 H952 l-14 26 H572 z"/><text class="frag-title" x="584" y="318">Stap 4 · inlogverzoek — 3 varianten (OF)</text><g class="tbadge" data-note="2" tabindex="0" role="button" aria-label="Toelichting 2" transform="translate(1094 314)"><circle r="11"/><text>2</text></g></g><g class="step variant a-mak o1" data-step="4" data-opt="1"><rect class="sec-bg o1" x="573" y="326" width="534" height="418"/><text class="sec-label o1" x="584" y="343">Variant A · los inlogverzoek per dienst</text><rect class="card a-mak" x="642" y="354" width="216" height="96" rx="8"/><text class="card-title" x="654" y="373">Inlogverzoek 1</text><text class="card-row" x="654" y="392"><tspan class="k">ServiceProvider:</tspan> MOZa (namens UWV)</text><text class="card-row" x="654" y="408"><tspan class="k">ServiceName:</tspan> Ziekmelden werknemer</text><text class="card-row" x="654" y="424"><tspan class="k">ServiceID:</tspan> Service_123</text><text class="card-row" x="654" y="440"><tspan class="k">Vereist niveau:</tspan> EH2</text><line class="msg a-mak" x1="635" y1="464" x2="877" y2="464" marker-end="url(#arM)"/><g class="snum o1" data-opt="1" tabindex="0" role="button" aria-label="Stap 4 variant A: Inlogverzoek 1" transform="translate(620 464)"><circle r="13"/><text>4</text></g><rect class="card a-mak" x="642" y="486" width="216" height="96" rx="8"/><text class="card-title" x="654" y="505">Inlogverzoek 2</text><text class="card-row" x="654" y="524"><tspan class="k">ServiceProvider:</tspan> MOZa (namens RVO)</text><text class="card-row" x="654" y="540"><tspan class="k">ServiceName:</tspan> Vergunning aanvragen</text><text class="card-row" x="654" y="556"><tspan class="k">ServiceID:</tspan> Service_456</text><text class="card-row" x="654" y="572"><tspan class="k">Vereist niveau:</tspan> EH3</text><line class="msg a-mak" x1="623" y1="596" x2="877" y2="596" marker-end="url(#arM)"/><rect class="card a-mak" x="642" y="618" width="216" height="96" rx="8"/><text class="card-title" x="654" y="637">Inlogverzoek 3</text><text class="card-row" x="654" y="656"><tspan class="k">ServiceProvider:</tspan> MOZa (namens BD)</text><text class="card-row" x="654" y="672"><tspan class="k">ServiceName:</tspan> Belasting doorgeven</text><text class="card-row" x="654" y="688"><tspan class="k">ServiceID:</tspan> Service_789</text><text class="card-row" x="654" y="704"><tspan class="k">Vereist niveau:</tspan> EH3</text><line class="msg a-mak" x1="623" y1="728" x2="877" y2="728" marker-end="url(#arM)"/></g><g class="ofdiv"><line x1="572" y1="744" x2="1108" y2="744"/><rect x="1038" y="734" width="40" height="20" rx="10"/><text x="1058" y="748" text-anchor="middle">OF</text></g><g class="step variant a-mak o2" data-step="4" data-opt="2"><rect class="sec-bg o2" x="573" y="744" width="534" height="154"/><text class="sec-label o2" x="584" y="761">Variant B · leeg portaal, later SSO</text><rect class="card a-mak" x="642" y="772" width="216" height="96" rx="8"/><text class="card-title" x="654" y="791">Inlogverzoek</text><text class="card-row" x="654" y="810"><tspan class="k">ServiceProvider:</tspan> MOZa</text><text class="card-row" x="654" y="826"><tspan class="k">ServiceName:</tspan> MOZa (leeg portaal)</text><text class="card-row" x="654" y="842"><tspan class="k">ServiceID:</tspan> MOZa_portal</text><text class="card-row" x="654" y="858"><tspan class="k">Vereist niveau:</tspan> EH3 (i.v.m. SSO later)</text><line class="msg a-mak" x1="635" y1="882" x2="877" y2="882" marker-end="url(#arM)"/><g class="snum o2" data-opt="2" tabindex="0" role="button" aria-label="Stap 4 variant B: Inlogverzoek" transform="translate(620 882)"><circle r="13"/><text>4</text></g></g><g class="ofdiv"><line x1="572" y1="898" x2="1108" y2="898"/><rect x="1038" y="888" width="40" height="20" rx="10"/><text x="1058" y="902" text-anchor="middle">OF</text></g><g class="step variant a-mak o3" data-step="4" data-opt="3"><rect class="sec-bg o3" x="573" y="898" width="534" height="202"/><text class="sec-label o3" x="584" y="915">Variant C · alle diensten in één keer</text><rect class="card a-mak" x="642" y="926" width="216" height="144" rx="8"/><text class="card-title" x="654" y="945">Eén inlogverzoek</text><text class="card-row" x="654" y="964"><tspan class="k">ServiceProvider:</tspan> MOZa (namens UWV,</text><text class="card-row" x="654" y="980">BD en RVO)</text><text class="card-row" x="654" y="996"><tspan class="k">ServiceName:</tspan> Ziekmelden werknemer,</text><text class="card-row" x="654" y="1012">Vergunning aanvragen,</text><text class="card-row" x="654" y="1028">Belasting doorgeven</text><text class="card-row" x="654" y="1044"><tspan class="k">ServiceID:</tspan> Service_123, _456, _789</text><text class="card-row" x="654" y="1060"><tspan class="k">Vereist niveau:</tspan> EH2, EH3</text><line class="msg a-mak" x1="635" y1="1084" x2="877" y2="1084" marker-end="url(#arM)"/><g class="snum o3" data-opt="3" tabindex="0" role="button" aria-label="Stap 4 variant C: Eén inlogverzoek" transform="translate(620 1084)"><circle r="13"/><text>4</text></g></g><g class="fold-btn" data-frag="4" tabindex="0" role="button" aria-label="▾ Inklappen stap 4"><rect x="958" y="305" width="108" height="20" rx="10"/><text x="1012" y="319" text-anchor="middle">▾ Inklappen</text></g></g><g class="col"><rect class="frag-box" x="572" y="300" width="536" height="112" rx="10"/><path class="frag-tab" d="M572 310 a10 10 0 0 1 10 -10 H952 l-14 26 H572 z"/><text class="frag-title" x="584" y="318">Stap 4 · inlogverzoek — 3 varianten (OF)</text><g class="fold-btn" data-frag="4" tabindex="0" role="button" aria-label="▸ Uitklappen stap 4"><rect x="958" y="305" width="108" height="20" rx="10"/><text x="1012" y="319" text-anchor="middle">▸ Uitklappen</text></g><g class="tbadge" data-note="2" tabindex="0" role="button" aria-label="Toelichting 2" transform="translate(1094 314)"><circle r="11"/><text>2</text></g><g class="fpill variant o1" data-step="4" data-opt="1" tabindex="0" role="button" aria-label="Stap 4, Variant A · per dienst"><rect x="586" y="336" width="152" height="26" rx="13"/><text x="662.0" y="353" text-anchor="middle">Variant A · per dienst</text></g><text class="of-mini" x="753" y="353" text-anchor="middle">OF</text><g class="fpill variant o2" data-step="4" data-opt="2" tabindex="0" role="button" aria-label="Stap 4, Variant B · leeg portaal"><rect x="768" y="336" width="152" height="26" rx="13"/><text x="844.0" y="353" text-anchor="middle">Variant B · leeg portaal</text></g><text class="of-mini" x="935" y="353" text-anchor="middle">OF</text><g class="fpill variant o3" data-step="4" data-opt="3" tabindex="0" role="button" aria-label="Stap 4, Variant C · alles in één keer"><rect x="950" y="336" width="152" height="26" rx="13"/><text x="1026.0" y="353" text-anchor="middle">Variant C · alles in één keer</text></g><g class="step a-mak" data-step="4"><line class="msg a-mak" x1="635" y1="390" x2="877" y2="390" marker-end="url(#arM)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 4: Stap 4 · inlogverzoek — 3 varianten (OF)" transform="translate(620 390)"><circle r="13"/><text>4</text></g></g></g></g>
-      <g id="sh1">
-      <g class="step a-lev" data-step="5"><line class="msg a-lev" x1="865" y1="1150" x2="123" y2="1150" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="1140" text-anchor="middle">Verzoek aan Bilal: vul gebruikersnaam en wachtwoord in</text><g class="snum" tabindex="0" role="button" aria-label="Stap 5: Verzoek: inloggegevens" transform="translate(880 1150)"><circle r="13"/><text>5</text></g></g>
-      <g class="step a-bilal" data-step="6"><line class="msg a-bilal" x1="135" y1="1210" x2="877" y2="1210" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="1200" text-anchor="middle">Bilal logt in met zijn Z-Login-accountgegevens</text><g class="snum" tabindex="0" role="button" aria-label="Stap 6: Inloggen bij Z-Login" transform="translate(120 1210)"><circle r="13"/><text>6</text></g></g>
-      <g class="step a-lev" data-step="7"><rect class="activity a-lev" x="900" y="1250.0" width="208" height="50" rx="12"/><text class="act-label" x="912" y="1272.0">Controleert of Bilals account het</text><text class="act-label" x="912" y="1288.0">gevraagde niveau heeft</text><g class="tbadge" data-note="3" tabindex="0" role="button" aria-label="Toelichting 3" transform="translate(1104 1250.0)"><circle r="11"/><text>3</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 7: Controle niveau" transform="translate(880 1275)"><circle r="13"/><text>7</text></g></g>
-      <g class="step a-lev" data-step="8"><line class="msg a-lev" x1="865" y1="1345" x2="123" y2="1345" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="1335" text-anchor="middle">Verzoek aan Bilal: namens welk bedrijf wil je inloggen?</text><g class="snum" tabindex="0" role="button" aria-label="Stap 8: Verzoek: kies bedrijf" transform="translate(880 1345)"><circle r="13"/><text>8</text></g></g>
-      <g class="step a-bilal" data-step="9"><line class="msg a-bilal" x1="135" y1="1405" x2="877" y2="1405" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="1395" text-anchor="middle">Bilal selecteert Koffiezaak Noon</text><g class="snum" tabindex="0" role="button" aria-label="Stap 9: Bedrijf gekozen" transform="translate(120 1405)"><circle r="13"/><text>9</text></g></g>
-      <g class="step a-lev" data-step="10"><rect class="activity a-lev" x="900" y="1444.0" width="208" height="66" rx="12"/><text class="act-label" x="912" y="1466.0">Controleert of Bilal namens Noon</text><text class="act-label" x="912" y="1482.0">gemachtigd is voor de diensten</text><text class="act-label" x="912" y="1498.0">in het portaal</text><g class="tbadge" data-note="4" tabindex="0" role="button" aria-label="Toelichting 4" transform="translate(1104 1444.0)"><circle r="11"/><text>4</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 10: Controle machtigingen" transform="translate(880 1477)"><circle r="13"/><text>10</text></g></g>
-      </g>
-      <g id="sh1b"><g class="fold collapsed" id="fold11"><g class="exp"><g class="frag"><rect class="frag-box" x="572" y="1527" width="536" height="688" rx="10"/><path class="frag-tab" d="M572 1537 a10 10 0 0 1 10 -10 H952 l-14 26 H572 z"/><text class="frag-title" x="584" y="1545">Stap 11 · versleutelde assertion(s) — 3 varianten (OF)</text></g><g class="step variant a-lev o1" data-step="11" data-opt="1"><rect class="sec-bg o1" x="573" y="1553" width="534" height="370"/><text class="sec-label o1" x="584" y="1570">Variant A · losse assertion per dienst</text><rect class="card a-lev" x="642" y="1581" width="216" height="80" rx="8"/><text class="card-title" x="654" y="1600">Versleutelde assertion 1</text><text class="card-row" x="654" y="1619">PseudoID1234 is gemachtigd</text><text class="card-row" x="654" y="1635">namens KVK-nummer1234</text><text class="card-row" x="654" y="1651">voor Service_123</text><line class="msg a-lev" x1="865" y1="1675" x2="623" y2="1675" marker-end="url(#arL)"/><g class="snum o1" data-opt="1" tabindex="0" role="button" aria-label="Stap 11 variant A: Versleutelde assertion 1" transform="translate(880 1675)"><circle r="13"/><text>11</text></g><rect class="card a-lev" x="642" y="1697" width="216" height="80" rx="8"/><text class="card-title" x="654" y="1716">Versleutelde assertion 2</text><text class="card-row" x="654" y="1735">PseudoID5678 is gemachtigd</text><text class="card-row" x="654" y="1751">namens KVK-nummer1234</text><text class="card-row" x="654" y="1767">voor Service_456</text><line class="msg a-lev" x1="877" y1="1791" x2="623" y2="1791" marker-end="url(#arL)"/><rect class="card a-lev" x="642" y="1813" width="216" height="80" rx="8"/><text class="card-title" x="654" y="1832">Versleutelde assertion 3</text><text class="card-row" x="654" y="1851">PseudoID9010212 is gemachtigd</text><text class="card-row" x="654" y="1867">namens KVK-nummer1234</text><text class="card-row" x="654" y="1883">voor Service_789</text><line class="msg a-lev" x1="877" y1="1907" x2="623" y2="1907" marker-end="url(#arL)"/></g><g class="ofdiv"><line x1="572" y1="1923" x2="1108" y2="1923"/><rect x="1038" y="1913" width="40" height="20" rx="10"/><text x="1058" y="1927" text-anchor="middle">OF</text></g><g class="step variant a-lev o2" data-step="11" data-opt="2"><rect class="sec-bg o2" x="573" y="1923" width="534" height="138"/><text class="sec-label o2" x="584" y="1940">Variant B · assertion voor MOZa (leeg portaal)</text><rect class="card a-lev" x="642" y="1951" width="216" height="80" rx="8"/><text class="card-title" x="654" y="1970">Versleutelde assertion</text><text class="card-row" x="654" y="1989">PseudoID8888 is gemachtigd</text><text class="card-row" x="654" y="2005">namens KVK-nummer1234</text><text class="card-row" x="654" y="2021">voor Service_MOZa (leeg)</text><line class="msg a-lev" x1="865" y1="2045" x2="623" y2="2045" marker-end="url(#arL)"/><g class="snum o2" data-opt="2" tabindex="0" role="button" aria-label="Stap 11 variant B: Versleutelde assertion" transform="translate(880 2045)"><circle r="13"/><text>11</text></g></g><g class="ofdiv"><line x1="572" y1="2061" x2="1108" y2="2061"/><rect x="1038" y="2051" width="40" height="20" rx="10"/><text x="1058" y="2065" text-anchor="middle">OF</text></g><g class="step variant a-lev o3" data-step="11" data-opt="3"><rect class="sec-bg o3" x="573" y="2061" width="534" height="154"/><text class="sec-label o3" x="584" y="2078">Variant C · één overkoepelende assertion</text><rect class="card a-lev" x="642" y="2089" width="216" height="96" rx="8"/><text class="card-title" x="654" y="2108">Eén versleutelde assertion</text><text class="card-row" x="654" y="2127">PseudoID8888 is gemachtigd</text><text class="card-row" x="654" y="2143">namens KVK-nummer1234</text><text class="card-row" x="654" y="2159">voor Service_123, Service_456,</text><text class="card-row" x="654" y="2175">Service_789, enz.</text><line class="msg a-lev" x1="865" y1="2199" x2="623" y2="2199" marker-end="url(#arL)"/><g class="snum o3" data-opt="3" tabindex="0" role="button" aria-label="Stap 11 variant C: Eén versleutelde assertion" transform="translate(880 2199)"><circle r="13"/><text>11</text></g></g><g class="fold-btn" data-frag="11" tabindex="0" role="button" aria-label="▾ Inklappen stap 11"><rect x="958" y="1532" width="108" height="20" rx="10"/><text x="1012" y="1546" text-anchor="middle">▾ Inklappen</text></g></g><g class="col"><rect class="frag-box" x="572" y="1527" width="536" height="112" rx="10"/><path class="frag-tab" d="M572 1537 a10 10 0 0 1 10 -10 H952 l-14 26 H572 z"/><text class="frag-title" x="584" y="1545">Stap 11 · versleutelde assertion(s) — 3 varianten (OF)</text><g class="fold-btn" data-frag="11" tabindex="0" role="button" aria-label="▸ Uitklappen stap 11"><rect x="958" y="1532" width="108" height="20" rx="10"/><text x="1012" y="1546" text-anchor="middle">▸ Uitklappen</text></g><g class="fpill variant o1" data-step="11" data-opt="1" tabindex="0" role="button" aria-label="Stap 11, Variant A · per dienst"><rect x="586" y="1563" width="152" height="26" rx="13"/><text x="662.0" y="1580" text-anchor="middle">Variant A · per dienst</text></g><text class="of-mini" x="753" y="1580" text-anchor="middle">OF</text><g class="fpill variant o2" data-step="11" data-opt="2" tabindex="0" role="button" aria-label="Stap 11, Variant B · leeg portaal"><rect x="768" y="1563" width="152" height="26" rx="13"/><text x="844.0" y="1580" text-anchor="middle">Variant B · leeg portaal</text></g><text class="of-mini" x="935" y="1580" text-anchor="middle">OF</text><g class="fpill variant o3" data-step="11" data-opt="3" tabindex="0" role="button" aria-label="Stap 11, Variant C · overkoepelend"><rect x="950" y="1563" width="152" height="26" rx="13"/><text x="1026.0" y="1580" text-anchor="middle">Variant C · overkoepelend</text></g><g class="step a-lev" data-step="11"><line class="msg a-lev" x1="865" y1="1617" x2="623" y2="1617" marker-end="url(#arL)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 11: Stap 11 · versleutelde assertion(s) — 3 varianten (OF)" transform="translate(880 1617)"><circle r="13"/><text>11</text></g></g></g></g></g>
-      <g id="sh2">
-      <g class="step a-mak" data-step="12"><line class="msg a-mak" x1="605" y1="2277" x2="363" y2="2277" marker-end="url(#arM)"/><text class="msg-label" x="490.0" y="2267" text-anchor="middle">ongeopend door aan MOZa</text><text class="msg-label" x="490.0" y="2252" text-anchor="middle">Makelaar geeft het bericht</text><g class="snum" tabindex="0" role="button" aria-label="Stap 12: Doorgeven aan MOZa" transform="translate(620 2277)"><circle r="13"/><text>12</text></g></g>
-      <g class="step a-uwv" data-step="13"><line class="msg a-uwv" x1="345" y1="2339" x2="123" y2="2339" marker-end="url(#arZ)"/><text class="msg-label" x="240.0" y="2329" text-anchor="middle">het MOZa-portaal</text><text class="msg-label" x="240.0" y="2314" text-anchor="middle">Bilal krijgt toegang tot</text><g class="tbadge" data-note="5" tabindex="0" role="button" aria-label="Toelichting 5" transform="translate(320 2325)"><circle r="11"/><text>5</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 13: Toegang tot MOZa-portaal" transform="translate(360 2339)"><circle r="13"/><text>13</text></g></g>
-      <g class="endline"><line x1="16" y1="2381" x2="1104" y2="2381"/><g class="pill stop"><rect x="40" y="2366" width="270" height="30" rx="15"/><text x="175" y="2386" text-anchor="middle">■  Einde flow bij variant A en C</text></g><g class="pill go"><rect x="790" y="2366" width="290" height="30" rx="15"/><text x="935" y="2386" text-anchor="middle">▼  Variant B gaat verder: stap 14–18</text></g></g>
-      <g class="o2frame opt2only"><rect x="16" y="2411" width="1088" height="462" rx="12"/><path d="M16 2423 a12 12 0 0 1 12 -12 H330 l-14 28 H16 z"/><text x="30" y="2430">Alleen bij variant B · stap 14–18</text></g>
-      <g class="step a-bilal opt2only" data-step="14"><line class="msg a-bilal" x1="135" y1="2481" x2="617" y2="2481" marker-end="url(#arB)"/><text class="msg-label" x="370.0" y="2471" text-anchor="middle">om de SSO-inlogverzoeken voor de losse diensten te versturen</text><text class="msg-label" x="370.0" y="2456" text-anchor="middle">Na binnenkomst in het lege portaal: trigger (liefst automatisch)</text><g class="snum" tabindex="0" role="button" aria-label="Stap 14: Trigger voor SSO-inlogverzoeken" transform="translate(120 2481)"><circle r="13"/><text>14</text></g></g>
-      <g class="step a-mak opt2only" data-step="15"><line class="msg a-mak" x1="635" y1="2563" x2="877" y2="2563" marker-end="url(#arM)"/><text class="msg-label" x="750.0" y="2553" text-anchor="middle">onderliggende diensten, met SSO</text><text class="msg-label" x="750.0" y="2538" text-anchor="middle">Inlogverzoek(en) voor de</text><g class="snum" tabindex="0" role="button" aria-label="Stap 15: SSO-inlogverzoeken" transform="translate(620 2563)"><circle r="13"/><text>15</text></g></g>
-      <g class="step a-lev opt2only" data-step="16"><rect class="card a-lev" x="642" y="2603" width="216" height="96" rx="8"/><text class="card-title" x="654" y="2622">Versleutelde assertion(s)</text><text class="card-row" x="654" y="2641">PseudoID1234 is gemachtigd</text><text class="card-row" x="654" y="2657">namens KVK-nummer1234</text><text class="card-row" x="654" y="2673">voor Service_123, Service_456</text><text class="card-row" x="654" y="2689">en Service_789</text><line class="msg a-lev" x1="865" y1="2713" x2="623" y2="2713" marker-end="url(#arL)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 16: Assertion(s)" transform="translate(880 2713)"><circle r="13"/><text>16</text></g></g>
-      <g class="step a-mak opt2only" data-step="17"><line class="msg a-mak" x1="605" y1="2775" x2="363" y2="2775" marker-end="url(#arM)"/><text class="msg-label" x="490.0" y="2765" text-anchor="middle">ongeopend door aan MOZa</text><text class="msg-label" x="490.0" y="2750" text-anchor="middle">Makelaar geeft het bericht</text><g class="snum" tabindex="0" role="button" aria-label="Stap 17: Doorgeven aan MOZa" transform="translate(620 2775)"><circle r="13"/><text>17</text></g></g>
-      <g class="step a-uwv opt2only" data-step="18"><line class="msg a-uwv" x1="345" y1="2837" x2="123" y2="2837" marker-end="url(#arZ)"/><text class="msg-label" x="240.0" y="2827" text-anchor="middle">diensten in het portaal</text><text class="msg-label" x="240.0" y="2812" text-anchor="middle">Bilal krijgt toegang tot de</text><g class="snum" tabindex="0" role="button" aria-label="Stap 18: Toegang tot diensten" transform="translate(360 2837)"><circle r="13"/><text>18</text></g></g>
-      </g>
+      <g class="step a-mak" data-step="4"><rect class="card a-mak" x="634" y="300" width="240" height="96" rx="8"/><text class="card-title" x="646" y="319">Inlogverzoek (anoniem)</text><text class="card-row" x="646" y="338"><tspan class="k">ServiceProvider:</tspan> MOZa</text><g class="tbadge sm" data-note="2" tabindex="0" role="button" aria-label="Toelichting 2" transform="translate(860 334)"><circle r="7.5"/><text>2</text></g><text class="card-row" x="646" y="354"><tspan class="k">ServiceName:</tspan> MOZa-portaaldienst</text><text class="card-row" x="646" y="370"><tspan class="k">ServiceID:</tspan> PortalService_MOZa123</text><g class="tbadge sm" data-note="3" tabindex="0" role="button" aria-label="Toelichting 3" transform="translate(860 366)"><circle r="7.5"/><text>3</text></g><text class="card-row" x="646" y="386"><tspan class="k">Vereist niveau:</tspan> ??</text><g class="tbadge sm" data-note="4" tabindex="0" role="button" aria-label="Toelichting 4" transform="translate(860 382)"><circle r="7.5"/><text>4</text></g><line class="msg a-mak" x1="635" y1="410" x2="877" y2="410" marker-end="url(#arM)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 4: Anoniem inlogverzoek" transform="translate(620 410)"><circle r="13"/><text>4</text></g></g>
+      <g class="step a-lev" data-step="5"><line class="msg a-lev" x1="865" y1="472" x2="123" y2="472" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="462" text-anchor="middle">Verzoek aan Bilal: vul gebruikersnaam en wachtwoord in</text><g class="snum" tabindex="0" role="button" aria-label="Stap 5: Verzoek: inloggegevens" transform="translate(880 472)"><circle r="13"/><text>5</text></g></g>
+      <g class="step a-bilal" data-step="6"><line class="msg a-bilal" x1="135" y1="532" x2="877" y2="532" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="522" text-anchor="middle">Bilal logt in met zijn Z-Login-accountgegevens</text><g class="snum" tabindex="0" role="button" aria-label="Stap 6: Inloggen bij Z-Login" transform="translate(120 532)"><circle r="13"/><text>6</text></g></g>
+      <g class="step a-lev" data-step="7"><rect class="activity a-lev" x="900" y="572.0" width="208" height="50" rx="12"/><text class="act-label" x="912" y="594.0">Controleert of Bilals account het</text><text class="act-label" x="912" y="610.0">gevraagde niveau heeft</text><g class="snum" tabindex="0" role="button" aria-label="Stap 7: Controle niveau" transform="translate(880 597)"><circle r="13"/><text>7</text></g></g>
+      <g class="step a-lev" data-step="8"><line class="msg a-lev" x1="865" y1="667" x2="123" y2="667" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="657" text-anchor="middle">Verzoek aan Bilal: namens welk bedrijf wil je inloggen?</text><g class="snum" tabindex="0" role="button" aria-label="Stap 8: Verzoek: kies bedrijf" transform="translate(880 667)"><circle r="13"/><text>8</text></g></g>
+      <g class="step a-bilal" data-step="9"><line class="msg a-bilal" x1="135" y1="727" x2="877" y2="727" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="717" text-anchor="middle">Bilal selecteert Koffiezaak Noon</text><g class="snum" tabindex="0" role="button" aria-label="Stap 9: Bedrijf gekozen" transform="translate(120 727)"><circle r="13"/><text>9</text></g></g>
+      <g class="step a-lev" data-step="10"><rect class="activity a-lev" x="900" y="766.0" width="208" height="66" rx="12"/><text class="act-label" x="912" y="788.0">Controleert of Bilal namens Noon</text><text class="act-label" x="912" y="804.0">gemachtigd is voor de diensten</text><text class="act-label" x="912" y="820.0">in het portaal</text><g class="tbadge" data-note="5" tabindex="0" role="button" aria-label="Toelichting 5" transform="translate(1104 766.0)"><circle r="10"/><text>5</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 10: Controle machtigingen" transform="translate(880 799)"><circle r="13"/><text>10</text></g></g>
+      <g class="step a-lev" data-step="11"><rect class="card a-lev" x="634" y="849" width="240" height="128" rx="8"/><text class="card-title" x="646" y="868">Versleutelde assertion</text><text class="card-row" x="646" y="887">PseudoID1234 is gemachtigd</text><g class="tbadge sm" data-note="6" tabindex="0" role="button" aria-label="Toelichting 6" transform="translate(860 883)"><circle r="7.5"/><text>6</text></g><text class="card-row" x="646" y="903">namens KVK-nummer1234</text><text class="card-row" x="646" y="919">voor Service_ABC123 &amp;</text><g class="tbadge sm" data-note="7" tabindex="0" role="button" aria-label="Toelichting 7" transform="translate(860 915)"><circle r="7.5"/><text>7</text></g><text class="card-row" x="646" y="935">Service_CDF345 &amp;</text><text class="card-row" x="646" y="951">Service_FGH567 &amp;</text><text class="card-row" x="646" y="967">Service_HIJ789 &amp; …</text><line class="msg a-lev" x1="865" y1="991" x2="623" y2="991" marker-end="url(#arL)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 11: Versleutelde assertion" transform="translate(880 991)"><circle r="13"/><text>11</text></g></g>
+      <g class="step a-mak" data-step="12"><line class="msg a-mak" x1="605" y1="1063" x2="363" y2="1063" marker-end="url(#arM)"/><text class="msg-label" x="490.0" y="1053" text-anchor="middle">ongeopend door aan MOZa</text><text class="msg-label" x="490.0" y="1038" text-anchor="middle">Makelaar geeft het bericht</text><g class="snum" tabindex="0" role="button" aria-label="Stap 12: Doorgeven aan MOZa" transform="translate(620 1063)"><circle r="13"/><text>12</text></g></g>
+      <g class="step a-uwv" data-step="13"><line class="msg a-uwv" x1="345" y1="1128" x2="123" y2="1128" marker-end="url(#arZ)"/><text class="msg-label" x="240.0" y="1118" text-anchor="middle">het MOZa-portaal</text><text class="msg-label" x="240.0" y="1103" text-anchor="middle">Bilal krijgt toegang tot</text><g class="snum" tabindex="0" role="button" aria-label="Stap 13: Toegang tot MOZa-portaal" transform="translate(360 1128)"><circle r="13"/><text>13</text></g></g>
     </svg>
   </div>
 </main>
@@ -482,231 +462,142 @@
 </aside>
 </div>
 
-<template id="note-1" data-title="MOZa als dienstbemiddelaar">
-  <p>Of dienstbemiddeling voor méérdere diensten van verschillende dienstverleners bestaat (en mogelijk is), is nog een vraag:</p>
+<template id="note-1" data-title="Rol van MOZa">
+  <div class="q"><p><span class="q-label">Vraag (12)</span>Welke rol speelt MOZa hier? Is MOZa de dienstbemiddelaar voor de portaaldienst?</p></div>
+  <p>Dit raakt aan een eerder gestelde vraag:</p>
+  <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (2)</span>Als een portaaldienst namens meerdere dienstaanbieders inderdaad kan bestaan: betekent dit dan dat er altijd dienstbemiddeling nodig is om de authenticatie/autorisatie voor zo'n portaal te regelen? (Het afsprakenstelsel noemt als geval van dienstbemiddeling: "<i>Hetzelfde portaal/dezelfde aansluiting wordt namens meer dan één dienstverlener aangeboden.</i>")</p></div>
+</template>
+
+<template id="note-2" data-title="Namens welke dienstverlener?">
+  <div class="q"><p><span class="q-label">Vraag (13)</span>Namens welke dienstverlener wordt dit verzoek gestuurd? Namens MOZa als dienstbemiddelaar, of namens de oorspronkelijke dienstverleners?</p></div>
   <div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (5a)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (5b)</span>Vervolg op vraag (5a): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (13a)</span>Hoe werkt dit bij normale dienstbemiddeling (voor één dienst)?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (13b)</span>Hoe werkt dit bij dienstbemiddeling voor meerdere dienstverleners?</p></div>
   </div>
 </template>
 
-<template id="note-2" data-title="Inlogverzoek: welke variant?">
-  <div class="q"><p><span class="q-label">Vraag (11)</span>Is MOZa hier inderdaad de ServiceProvider (in de rol van dienstbemiddelaar)?</p></div>
-  <p class="sub-title">Welke variant van stap 4?</p>
+<template id="note-3" data-title="Dienstcode van een portaaldienst">
+  <div class="q"><p><span class="q-label">Vraag (14)</span>Heeft een portaaldienst een eigen dienstcode (ServiceID)?</p></div>
+</template>
+
+<template id="note-4" data-title="Vereist niveau bij een portaaldienst">
+  <div class="q"><p><span class="q-label">Vraag (15)</span>Hoe werkt het "vereisen" van een niveau bij een portaaldienst?</p></div>
   <div>
-    <div class="q"><p><span class="q-label">Vraag (12a)</span><span class="opt-tag o1">Variant A</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
-    <div class="q"><p><span class="q-label">Vraag (12b)</span><span class="opt-tag o2">Variant B</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
-    <div class="q"><p><span class="q-label">Vraag (12c)</span><span class="opt-tag o3">Variant C</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (15a)</span>Wordt er één niveau ingesteld voor het portaal <i>als dienst</i>? Kiest de dienstverlener dat niveau dan zelf?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (15b)</span>Of wordt het vereiste niveau van het portaal automatisch bepaald op basis van het niveau van de onderliggende diensten? Is dat dan het hoogste of het laagste niveau (als het portaal diensten met verschillende niveaus bevat)?</p></div>
   </div>
+  <div class="callout warn">
+    <p class="callout-title">Gevolg bij het hoogste niveau</p>
+    <p>Een EH2-gebruiker krijgt dan geen toegang tot een portaal dat op EH3 is ingesteld, terwijl er in het portaal misschien wel diensten met EH2-niveau zitten.</p>
+  </div>
+</template>
+
+<template id="note-5" data-title="Machtigingen voor het hele portaal">
+  <p>Hier zijn de antwoorden op deze eerder gestelde vragen weer van belang:</p>
+  <div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (6)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders?</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (7a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>überhaupt</i> door een dienstbemiddelaar worden geregeld?</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (7b)</span>Vervolgvraag: kan dit ook voor een portaaldienst met diensten van meerdere dienstaanbieders? (Afhankelijk van de antwoorden op vraag (6) en (7a).)</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (7c)</span>Zo ja: kunnen de machtigingen voor alle diensten in dat portaal dan ook in bulk worden opgevraagd? Bij een portaaldienst kan dat normaal gesproken wel, maar de vraag is of dat ook geldt als het portaal diensten van meerdere dienstaanbieders bevat.</p></div>
+  </div>
+</template>
+
+<template id="note-6" data-title="PseudoID in deze context">
+  <div>
+    <div class="q"><p><span class="q-label">Vraag (16a)</span>Hoe werkt dit bij "normale" portaaldiensten? Klopt het dat er één PseudoID is voor alle diensten van dezelfde dienstverlener? Een portaaldienst hoort normaal gesproken bij één dienstverlener, dus dan wordt dat PseudoID ook gebruikt voor het inloggen bij de portaaldienst (net als bij een losse dienst).</p></div>
+    <div class="q"><p><span class="q-label">Vraag (16b)</span>Het MOZa-portaal bevat juist diensten van meerdere dienstverleners. Welk PseudoID wordt dan gebruikt? Het is niet duidelijk welke "dienstaanbieder" het inlogverzoek doet. Dit hangt samen met vraag (17a–b).</p></div>
+  </div>
+  <div>
+    <div class="q"><p><span class="q-label">Vraag (17a)</span>Hoe werkt het PseudoID bij normale dienstbemiddeling (voor één dienst)? Krijgt Bilal een apart PseudoID voor de dienstbemiddelaar? Of doet de dienstbemiddelaar het inlogverzoek "namens" een dienstaanbieder (bijv. UWV), zodat hetzelfde PseudoID wordt gebruikt als bij die dienstaanbieder?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (17b)</span>In de context van MOZa (een portaal met diensten van meerdere dienstverleners) doet MOZa als bemiddelaar een inlogverzoek namens méérdere dienstaanbieders (UWV, RVO, BD, …). Welk PseudoID komt er dan mee in de assertion?</p></div>
+  </div>
+</template>
+
+<template id="note-7" data-title="Alle machtigingen in één assertion">
+  <p>Of alle machtigingen in één assertion kunnen worden doorgegeven, hangt af van het antwoord op vraag (6) t/m (7c) <sup class="ref" data-ref="5">5</sup>: kunnen deze machtigingen in bulk worden opgevraagd?</p>
   <div class="callout idea">
-    <p class="callout-title">Nog beter zou zijn:</p>
-    <p>MOZa weet al vóór het versturen van de inlogverzoeken voor welke diensten Bilal gemachtigd is (die informatie is in principe bekend bij de eHerkenningsleverancier). Dan hoeft er alleen voor de gemachtigde diensten een inlogverzoek te worden verstuurd, wat het systeem minder belast.</p>
-  </div>
-</template>
-
-<template id="note-3" data-title="Gecontroleerd niveau">
-  <p>Welk niveau hier wordt gecontroleerd, hangt af van het antwoord op deze eerder gestelde vragen:</p>
-  <div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12a)</span><span class="opt-tag o1">Variant A</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12b)</span><span class="opt-tag o2">Variant B</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12c)</span><span class="opt-tag o3">Variant C</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
-  </div>
-</template>
-
-<template id="note-4" data-title="Machtigingen opvragen per variant">
-  <p>Ook hoe de machtigingen worden opgevraagd, hangt af van het antwoord op vraag (12a–c). Per variant:</p>
-  <div>
-    <div class="optblock o1">
-      <h4><span class="opt-tag">Variant A</span>Los verzoek per dienst</h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12a)</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
-      <p>Is Bilal gemachtigd voor dienst 1? Voor dienst 2? Voor dienst 3?</p>
-      <div class="q"><p><span class="q-label">Vraag (13)</span>Er komen dan losse assertions per dienst, die allemaal bij MOZa (als dienstbemiddelaar) terechtkomen, inclusief alle PseudoID's van de verschillende dienstverleners. Gaat dit in tegen privacyoverwegingen, omdat één dienstverlener dan kan zien voor welke diensten Bilal allemaal gemachtigd is?</p></div>
-    </div>
-    <p class="of-sep">OF</p>
-    <div class="optblock o2">
-      <h4><span class="opt-tag">Variant B</span>Eén inlogverzoek alleen voor MOZa (leeg portaal)</h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12b)</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
-      <p>Op dit punt wordt alleen de machtiging voor de dienst MOZa (leeg portaal) gecontroleerd: is Bilal gemachtigd voor MOZa?</p>
-    </div>
-    <p class="of-sep">OF</p>
-    <div class="optblock o3">
-      <h4><span class="opt-tag">Variant C</span>Eén inlogverzoek voor alle diensten tegelijk</h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12c)</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
-      <p>Het machtigingenregister wordt in één keer bevraagd voor alle diensten binnen MOZa: is Bilal gemachtigd voor diensten x, y en z?</p>
-      <div class="q"><p><span class="q-label">Vraag (14)</span>Hoe werkt dit met het PseudoID? Is dat dan nog van toepassing?</p></div>
-    </div>
-  </div>
-</template>
-
-<template id="note-5" data-title="Situatie na inloggen">
-  <p>Afhankelijk van de variant (het antwoord op vraag 12a–c) is Bilal nu:</p>
-  <div>
-    <div class="optblock o1">
-      <h4><span class="opt-tag">Variant A</span><span class="opt-tag o3">Variant C</span></h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12a)</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12c)</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
-      <p>Ingelogd op de MOZa-website/het portaal én al ingelogd bij alle onderliggende diensten waarvoor hij gemachtigd is. De flow eindigt hier.</p>
-    </div>
-    <p class="of-sep">OF</p>
-    <div class="optblock o2">
-      <h4><span class="opt-tag">Variant B</span></h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12b)</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
-      <p>Ingelogd op de MOZa-website/het portaal, maar nog niet bij de onderliggende diensten. De inlogverzoeken voor die diensten worden pas bij of na binnenkomst in het portaal verstuurd, met SSO (stap 14–18).</p>
-    </div>
+    <p class="callout-title">Zo ja:</p>
+    <p>Dan is er maar één inlogverzoek nodig om Bilal in te loggen op het MOZa-portaal en hem direct de tegels/informatie te tonen waarvoor hij gemachtigd is.</p>
   </div>
 </template>
 
 <script>
 (function () {
   const ACT = {"B": {"name": "Bilal", "cls": "a-bilal"}, "Z": {"name": "MOZa", "cls": "a-uwv"}, "M": {"name": "Makelaar (Digidentity)", "cls": "a-mak"}, "L": {"name": "Leverancier (Z-Login)", "cls": "a-lev"}};
-  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op de MOZa-website op \"Inloggen MOZa-website met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Inlogverzoek", "note": 2, "text": "De makelaar stuurt een inlogverzoek naar de leverancier. Hoe dat verzoek eruitziet is nog een vraag; er zijn drie mogelijke varianten:", "variants": {"1": {"title": "Variant A (12a): een los inlogverzoek per dienst", "groups": [{"title": "Verzoek voor UWV", "rows": ["ServiceProvider: MOZa (namens UWV)", "ServiceName (dienstnaam): \"Ziekmelden werknemer\"", "ServiceID (dienstcode): Service_123", "Vereist niveau: EH2"]}, {"title": "Verzoek voor RVO", "rows": ["ServiceProvider: MOZa (namens RVO)", "ServiceName (dienstnaam): \"Vergunning aanvragen\"", "ServiceID (dienstcode): Service_456", "Vereist niveau: EH3"]}, {"title": "Verzoek voor BD", "rows": ["ServiceProvider: MOZa (namens BD)", "ServiceName (dienstnaam): \"Belasting doorgeven\"", "ServiceID (dienstcode): Service_789", "Vereist niveau: EH3"]}]}, "2": {"title": "Variant B (12b): één inlogverzoek voor MOZa (leeg portaal), later SSO", "groups": [{"title": null, "rows": ["ServiceProvider: MOZa", "ServiceName (dienstnaam): MOZa (leeg portaal)", "ServiceID (dienstcode): MOZa_portal", "Vereist niveau: EH3, vanwege de SSO later in de flow"]}]}, "3": {"title": "Variant C (12c): één inlogverzoek voor alle diensten tegelijk", "groups": [{"title": null, "rows": ["ServiceProvider: MOZa (namens UWV, BD en RVO)", "ServiceName (dienstnaam): Ziekmelden werknemer, Vergunning aanvragen, Belasting doorgeven", "ServiceID (dienstcode): Service_123, Service_456, Service_789", "Vereist niveau: EH2, EH3"]}]}}}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "note": 3, "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft."}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "note": 4, "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal."}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "text": "De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar. Welke variant van toepassing is, hangt af van de variant bij stap 4:", "variants": {"1": {"title": "Variant A: een losse assertion per dienst", "groups": [{"title": "Assertion 1", "rows": ["PseudoID1234 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123"]}, {"title": "Assertion 2", "rows": ["PseudoID5678 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_456"]}, {"title": "Assertion 3", "rows": ["PseudoID9010212 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_789"]}]}, "2": {"title": "Variant B: één assertion voor MOZa (leeg portaal)", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_MOZa (leeg portaal)"]}]}, "3": {"title": "Variant C: één overkoepelende assertion", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123, Service_456, Service_789, enz."]}]}}}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "note": 5, "text": "Bilal krijgt toegang tot het MOZa-portaal.", "end": true}, {"n": 14, "f": "B", "t": "M", "title": "Trigger voor SSO-inlogverzoeken", "only2": true, "text": "Na binnenkomst in het lege MOZa-portaal wordt er (het liefst automatisch) een trigger gestuurd om de SSO-inlogverzoeken voor de losse onderliggende diensten te gaan versturen. Zo krijgt Bilal ook toegang tot die diensten."}, {"n": 15, "f": "M", "t": "L", "title": "SSO-inlogverzoeken", "only2": true, "text": "De makelaar stuurt inlogverzoek(en) voor de onderliggende diensten naar de leverancier, met SSO."}, {"n": 16, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "only2": true, "text": "De leverancier stuurt versleutelde assertion(s) naar de makelaar, met daarin dat:", "groups": [{"title": null, "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_123, Service_456 en Service_789"]}]}, {"n": 17, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "only2": true, "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 18, "f": "Z", "t": "B", "title": "Toegang tot diensten", "only2": true, "text": "Bilal krijgt toegang tot de diensten in het portaal."}];
-  const NOTES = [1, 2, 3, 4, 5];
-  const NOTE_STEP = { 2: 4, 3: 7, 4: 10, 5: 13 };
-  const OPTNAME = { 1: 'Variant A', 2: 'Variant B', 3: 'Variant C' };
+  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op het MOZa-portaal op \"Inloggen MOZa-portaal met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Anoniem inlogverzoek", "notes": [2, 3, 4], "text": "De makelaar stuurt een anoniem inlogverzoek voor de MOZa-portaaldienst naar de leverancier:", "rows": ["ServiceProvider (dienstverlener): MOZa", "ServiceName (dienstnaam): \"MOZa-portaaldienst\"", "ServiceID (dienstcode): \"PortalService_MOZa123\"", "Vereist niveau: nog onbekend"]}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "notes": [4], "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft."}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "notes": [5], "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal."}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion", "notes": [6, 7], "text": "De leverancier stuurt één versleutelde assertion (verklaring) naar de makelaar, met daarin dat:", "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_ABC123, Service_CDF345, Service_FGH567, Service_HIJ789, …"]}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "text": "Bilal krijgt toegang tot het MOZa-portaal en ziet direct de diensten waarvoor hij gemachtigd is."}];
+  const NOTES = [1, 2, 3, 4, 5, 6, 7];
+  const NOTE_STEP = {"2": 4, "3": 4, "4": 4, "5": 10, "6": 11, "7": 11};
+  const lab = n => n === 'x' ? '*' : String(n);
+  const key = v => (v === 'x' ? 'x' : +v);
 
   const $ = id => document.getElementById(id);
   const dlg = $('dlg'), layout = $('layout'), svg = $('diagram');
   const numEl = $('dlg-num'), kindEl = $('dlg-kind'), titleEl = $('dlg-title');
   const bodyEl = $('dlg-body'), relEl = $('dlg-related'), prevBtn = $('dlg-prev'), nextBtn = $('dlg-next');
-  let cur = null, opt = 0;
-  const FOLD = { 4: { full: 800, small: 112, c: true }, 11: { full: 688, small: 112, c: true } };
-  const BASE_H = 2893;
-  function relayout() {
-    const d4 = FOLD[4].c ? FOLD[4].full - FOLD[4].small : 0;
-    const d11 = FOLD[11].c ? FOLD[11].full - FOLD[11].small : 0;
-    $('fold4').classList.toggle('collapsed', FOLD[4].c);
-    $('fold11').classList.toggle('collapsed', FOLD[11].c);
-    $('sh1').setAttribute('transform', 'translate(0 ' + (-d4) + ')');
-    $('sh1b').setAttribute('transform', 'translate(0 ' + (-d4) + ')');
-    $('sh2').setAttribute('transform', 'translate(0 ' + (-d4 - d11) + ')');
-    const h = BASE_H - d4 - d11;
-    svg.setAttribute('viewBox', '0 0 1120 ' + h);
-    svg.querySelectorAll('[data-adj="height"]').forEach(r => r.setAttribute('height', h - 104));
-    svg.querySelectorAll('[data-adj="y2"]').forEach(l => l.setAttribute('y2', h - 12));
-    $('fold-all').textContent = (FOLD[4].c || FOLD[11].c) ? '▸ Stap 4 en 11 uitklappen' : '▾ Stap 4 en 11 inklappen';
-  }
-  function setFold(n, c) { FOLD[n].c = c; relayout(); }
-
+  let cur = null;
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
   const noteTitle = n => $('note-' + n).dataset.title;
   const S = n => STEPS.find(s => s.n === n);
-  const order = () => STEPS.filter(s => !s.only2 || opt === 0 || opt === 2).map(s => s.n);
 
   function chip(num, label, onClick, cls) {
     const b = el('button', 'chip' + (cls ? ' ' + cls : '')); b.type = 'button';
-    b.append(el('span', 'num', num));
-    if (label) b.append(el('span', 'lbl', label));
-    b.addEventListener('click', onClick);
-    return b;
+    b.append(el('span', 'num', num)); if (label) b.append(el('span', 'lbl', label));
+    b.addEventListener('click', onClick); return b;
   }
   const actorChip = k => el('span', 'actor-chip ' + ACT[k].cls, ACT[k].name);
 
   function markActive() {
-    svg.querySelectorAll('.step').forEach(g => {
-      const n = +g.dataset.step, v = +(g.dataset.opt || 0);
-      let on = false;
-      if (cur && cur.kind === 'step' && n === cur.n) on = !v || !cur.v || v === cur.v;
-      if (cur && cur.kind === 'note' && n === NOTE_STEP[cur.n]) on = true;
-      g.classList.toggle('active', on);
-    });
-    svg.querySelectorAll('.tbadge').forEach(b => b.classList.toggle('active', !!cur && cur.kind === 'note' && +b.dataset.note === cur.n));
+    svg.querySelectorAll('.step').forEach(g => g.classList.toggle('active', !!cur &&
+      ((cur.kind === 'step' && +g.dataset.step === cur.n) || (cur.kind === 'note' && +g.dataset.step === NOTE_STEP[cur.n]))));
+    svg.querySelectorAll('.tbadge').forEach(b => b.classList.toggle('active', !!cur && cur.kind === 'note' && key(b.dataset.note) === cur.n));
     svg.classList.toggle('focusing', !!cur);
   }
   function open() { if (dlg.hidden) { dlg.hidden = false; layout.classList.add('panel-open'); } markActive(); }
 
-  function optBlock(v, data) {
-    const d = el('div', 'optblock o' + v);
-    const h = el('h4'); h.append(el('span', 'opt-tag', OPTNAME[v])); h.append(document.createTextNode(data.title.replace(/^Variant [A-C]\s*(\([^)]*\))?:\s*/, '')));
-    d.append(h);
-    data.groups.forEach(gr => {
-      if (gr.title) d.append(el('p', 'grp-title', gr.title));
-      const ul = el('ul', 'fields'); gr.rows.forEach(r => ul.append(el('li', null, r))); d.append(ul);
-    });
-    return d;
-  }
-
-  function showStep(n, v) {
+  function showStep(n) {
     const s = S(n); if (!s) return;
-    cur = { kind: 'step', n, v: v || 0 };
+    cur = { kind: 'step', n };
     numEl.className = 'num step-num ' + ACT[s.f].cls; numEl.textContent = n;
-    const vv = v || opt;
-    kindEl.textContent = 'Stap ' + n + (s.variants && vv ? ' · ' + OPTNAME[vv] : '') + (s.only2 ? ' · alleen bij variant B' : '');
-    titleEl.textContent = s.title;
+    kindEl.textContent = 'Stap ' + n + ' van ' + STEPS.length; titleEl.textContent = s.title;
     const body = [];
     const route = el('div', 'route'); route.append(actorChip(s.f));
     if (s.t) { route.append(el('span', null, '→')); route.append(actorChip(s.t)); } else route.append(el('span', null, '(interne controle)'));
-    body.push(route);
-    body.push(el('p', 'lead', s.text));
-    if (s.groups) s.groups.forEach(gr => { const ul = el('ul', 'fields'); gr.rows.forEach(r => ul.append(el('li', null, r))); body.push(ul); });
-    if (s.variants) {
-      const wrap = el('div');
-      const keys = vv ? [vv] : [1, 2, 3];
-      keys.forEach((k, i) => { if (i) wrap.append(el('p', 'of-sep', 'OF')); wrap.append(optBlock(k, s.variants[k])); });
-      body.push(wrap);
-      if (vv) {
-        const p = el('p', 'opt-hint', 'Dit is 1 van de 3 varianten van deze stap. ');
-        const a = el('a', null, 'Toon alle varianten'); a.href = '#'; a.addEventListener('click', e => { e.preventDefault(); setOpt(0); showStep(n); });
-        p.append(a); body.push(p);
-      }
-    }
-    if (s.end) {
-      const c1 = el('div', 'callout stop'); c1.append(el('p', null, 'Bij variant A en C eindigt de flow hier.')); body.push(c1);
-      const c2 = el('div', 'callout go'); c2.append(el('p', null, 'Bij variant B gaat de flow verder met stap 14 (inloggen bij de onderliggende diensten via SSO).')); body.push(c2);
-    }
-    if (s.note) {
+    body.push(route, el('p', 'lead', s.text));
+    if (s.rows) { const ul = el('ul', 'fields'); s.rows.forEach(r => ul.append(el('li', null, r))); body.push(ul); }
+    if (s.notes) {
       const box = el('div', 'callout info');
-      box.append(el('p', 'callout-title', 'Bij deze stap hoort een toelichting'));
-      const p = el('p'); p.append(chip(s.note, noteTitle(s.note), () => showNote(s.note))); box.append(p);
-      body.push(box);
+      box.append(el('p', 'callout-title', s.notes.length > 1 ? 'Bij deze stap horen toelichtingen' : 'Bij deze stap hoort een toelichting'));
+      const p = el('p'); s.notes.forEach(k => p.append(chip(lab(k), noteTitle(k), () => showNote(k)))); p.style.display = 'flex'; p.style.flexWrap = 'wrap'; p.style.gap = '6px';
+      box.append(p); body.push(box);
     }
-    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0;
-    relEl.replaceChildren();
-    const o = order(), i = o.indexOf(n);
-    prevBtn.disabled = i <= 0; nextBtn.disabled = i < 0 || i >= o.length - 1;
+    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
+    prevBtn.disabled = n <= 1; nextBtn.disabled = n >= STEPS.length;
     open();
   }
-
   function showNote(n) {
     const tpl = $('note-' + n); if (!tpl) return;
     cur = { kind: 'note', n };
-    numEl.className = 'num'; numEl.textContent = n;
-    kindEl.textContent = 'Toelichting ' + n; titleEl.textContent = tpl.dataset.title;
+    numEl.className = 'num'; numEl.textContent = lab(n);
+    kindEl.textContent = 'Toelichting ' + lab(n); titleEl.textContent = tpl.dataset.title;
     bodyEl.replaceChildren(tpl.content.cloneNode(true)); bodyEl.scrollTop = 0;
     bodyEl.querySelectorAll('sup.ref').forEach(s => { s.tabIndex = 0; s.setAttribute('role', 'button'); });
     relEl.replaceChildren();
-    if (NOTE_STEP[n]) { const s = NOTE_STEP[n]; relEl.append(el('span', null, 'Hoort bij:')); relEl.append(chip(s, 'Stap ' + s + ': ' + S(s).title, () => showStep(s))); }
-    else { relEl.append(el('span', null, 'Hoort bij: actor MOZa (dienstbemiddelaar)')); }
-    prevBtn.disabled = n <= 1; nextBtn.disabled = n >= NOTES.length;
+    const s = NOTE_STEP[n];
+    if (s) { relEl.append(el('span', null, 'Hoort bij:')); relEl.append(chip(s, 'Stap ' + s + ': ' + S(s).title, () => showStep(s))); }
+    else relEl.append(el('span', null, 'Hoort bij: actor MOZa (dienstbemiddelaar?)'));
+    const i = NOTES.indexOf(n); prevBtn.disabled = i <= 0; nextBtn.disabled = i >= NOTES.length - 1;
     open();
   }
-
   function go(d) {
     if (!cur) return;
-    if (cur.kind === 'note') return showNote(cur.n + d);
-    const o = order(); const i = o.indexOf(cur.n);
-    if (o[i + d]) showStep(o[i + d], cur.v && S(o[i + d]).variants ? cur.v : 0);
+    if (cur.kind === 'step') showStep(cur.n + d);
+    else showNote(NOTES[NOTES.indexOf(cur.n) + d]);
   }
   function closePanel() { dlg.hidden = true; layout.classList.remove('panel-open'); cur = null; markActive(); }
 
-  const HINT = {
-    0: 'Alle drie de varianten zijn zichtbaar. Stap 4 en 11 hebben elk drie OF-varianten; na stap 13 gaat alleen variant B verder.',
-    1: 'Variant A: los inlogverzoek per dienst. De flow eindigt na stap 13.',
-    2: 'Variant B: eerst inloggen op een leeg MOZa-portaal, daarna via SSO bij de onderliggende diensten (stap 14–18).',
-    3: 'Variant C: één inlogverzoek voor alle diensten tegelijk. De flow eindigt na stap 13.'
-  };
-  function setOpt(v) {
-    opt = v;
-    if (v) svg.setAttribute('data-opt', v); else svg.removeAttribute('data-opt');
-    document.querySelectorAll('#step-chips .chip.o2only').forEach(c => c.classList.toggle('off', v === 1 || v === 3));
-    if (cur && cur.kind === 'step') {
-      if (!order().includes(cur.n)) closePanel(); else showStep(cur.n, S(cur.n).variants ? v : 0);
-    }
-  }
-
-  const stepChips = $('step-chips');
-  STEPS.forEach(s => { const c = chip(s.n, null, () => showStep(s.n, s.variants ? opt : 0), s.only2 ? 'o2only' : ''); c.title = 'Stap ' + s.n + ': ' + s.title + (s.only2 ? ' (alleen variant B)' : ''); stepChips.append(c); });
+  STEPS.forEach(s => { const c = chip(s.n, null, () => showStep(s.n)); c.title = 'Stap ' + s.n + ': ' + s.title; $('step-chips').append(c); });
   $('start').addEventListener('click', () => showStep(1));
-  NOTES.forEach(n => $('chips').append(chip(n, noteTitle(n), () => showNote(n))));
+  NOTES.forEach(n => $('chips').append(chip(lab(n), noteTitle(n), () => showNote(n))));
 
   function bind(sel, fn) {
     svg.querySelectorAll(sel).forEach(e => {
@@ -714,14 +605,9 @@
       e.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); fn(e); } });
     });
   }
-  bind('.snum', e => showStep(+e.closest('.step').dataset.step, +(e.dataset.opt || 0)));
-  bind('.tbadge', e => showNote(+e.dataset.note));
-  bind('.fold-btn', e => setFold(+e.dataset.frag, !FOLD[+e.dataset.frag].c));
-  bind('.fpill', e => { const n = +e.dataset.step; setFold(n, false); showStep(n, +e.dataset.opt); });
-  $('fold-all').addEventListener('click', () => { const c = !(FOLD[4].c || FOLD[11].c); setFold(4, c); setFold(11, c); });
-  bodyEl.addEventListener('click', e => { const s = e.target.closest('sup.ref'); if (s) showNote(+s.dataset.ref); });
-  bodyEl.addEventListener('keydown', e => { const s = e.target.closest('sup.ref'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); showNote(+s.dataset.ref); } });
-
+  bind('.snum', e => showStep(+e.closest('.step').dataset.step));
+  bind('.tbadge', e => showNote(key(e.dataset.note)));
+  bodyEl.addEventListener('click', e => { const s = e.target.closest('sup.ref'); if (s) showNote(key(s.dataset.ref)); });
   prevBtn.addEventListener('click', () => go(-1));
   nextBtn.addEventListener('click', () => go(1));
   $('dlg-close').addEventListener('click', closePanel);
@@ -731,8 +617,6 @@
     if (e.key === 'ArrowRight' && !nextBtn.disabled) go(1);
     if (e.key === 'ArrowLeft' && !prevBtn.disabled) go(-1);
   });
-  setOpt(0);
-  relayout();
 })();
 </script>
 </body>

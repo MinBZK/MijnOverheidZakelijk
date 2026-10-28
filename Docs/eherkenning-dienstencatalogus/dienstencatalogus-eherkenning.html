@@ -307,8 +307,8 @@
         <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--bd-stroke)" stroke-width="8"/></svg>BD</li>
         <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--justis-stroke)" stroke-width="8"/></svg>Justis</li>
         <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--line)" stroke-width="2"/></svg>Bestaande relatie</li>
-        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--opt1)" stroke-width="2" stroke-dasharray="7 5"/></svg>MOZa? Optie 1</li>
-        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--opt2)" stroke-width="2" stroke-dasharray="7 5"/></svg>MOZa? Optie 2 / MOZa portaal</li>
+        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--opt2)" stroke-width="2" stroke-dasharray="7 5"/></svg>MOZa? Optie 1 / MOZa portaal</li>
+        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--opt1)" stroke-width="2" stroke-dasharray="7 5"/></svg>MOZa? Optie 2</li>
       </ul>
     </div>
   </div>
@@ -361,13 +361,13 @@
         <text x="760" y="168" text-anchor="middle">Zorgtoeslag"</text>
         <g class="badge" transform="translate(815 125)"><circle r="11"/><text>5</text></g>
       </g>
-      <g class="node hypo" data-id="opt1" data-note="6" tabindex="0" role="button" aria-label="MOZa? Optie 1, toelichting 6">
+      <g class="node hypo" data-id="opt2" data-note="6" tabindex="0" role="button" aria-label="MOZa? Optie 1, toelichting 6">
         <rect x="825" y="125" width="110" height="60" rx="10"/>
         <text x="880" y="151" text-anchor="middle">MOZa?</text>
         <text class="small" x="880" y="169" text-anchor="middle">Optie 1</text>
         <g class="badge" transform="translate(935 125)"><circle r="11"/><text>6</text></g>
       </g>
-      <g class="node hypo" data-id="opt2" data-note="7" tabindex="0" role="button" aria-label="MOZa? Optie 2, toelichting 7">
+      <g class="node hypo" data-id="opt1" data-note="7" tabindex="0" role="button" aria-label="MOZa? Optie 2, toelichting 7">
         <rect x="945" y="125" width="110" height="60" rx="10"/>
         <text x="1000" y="151" text-anchor="middle">MOZa?</text>
         <text class="small" x="1000" y="169" text-anchor="middle">Optie 2</text>
@@ -427,13 +427,13 @@
       <!-- Loket Zorgtoeslag -> Zorgtoeslag aanvragen -->
       <path class="edge solid" data-from="loket" data-to="zorgtoeslag" d="M760,185 V268 H428 V440 H417" marker-end="url(#arr)"/>
 
-      <!-- MOZa? Optie 1 -> Subsidie / Belastingaangifte / VOG -->
-      <path class="edge opt1" data-from="opt1" data-to="subsidie" d="M880,185 V280 H165 V356" marker-end="url(#arr1)"/>
-      <path class="edge opt1" data-from="opt1" data-to="belasting" d="M880,185 V280 H375 V356" marker-end="url(#arr1)"/>
-      <path class="edge opt1" data-from="opt1" data-to="vog" d="M880,185 V280 H605 V356" marker-end="url(#arr1)"/>
+      <!-- MOZa? Optie 2 (zonder portaaldienst) -> Subsidie / Belastingaangifte / VOG -->
+      <path class="edge opt1" data-from="opt1" data-to="subsidie" d="M1000,185 V280 H165 V356" marker-end="url(#arr1)"/>
+      <path class="edge opt1" data-from="opt1" data-to="belasting" d="M1000,185 V280 H375 V356" marker-end="url(#arr1)"/>
+      <path class="edge opt1" data-from="opt1" data-to="vog" d="M1000,185 V280 H605 V356" marker-end="url(#arr1)"/>
 
-      <!-- MOZa? Optie 2 -> MOZa portaal -->
-      <path class="edge opt2" data-from="opt2" data-to="mozaportaal" d="M1000,185 V712 H662" marker-end="url(#arr2)"/>
+      <!-- MOZa? Optie 1 (met portaaldienst) -> MOZa portaal -->
+      <path class="edge opt2" data-from="opt2" data-to="mozaportaal" d="M880,185 V712 H662" marker-end="url(#arr2)"/>
 
       <!-- MOZa portaal -> Subsidie / Belastingaangifte / VOG -->
       <path class="edge opt2" data-from="mozaportaal" data-to="subsidie" d="M45,712 H22 V388 H43" marker-end="url(#arr2)"/>
@@ -555,33 +555,12 @@
     <p><span class="q-label">Vraag (4)</span>Klopt dit (ongeveer)?</p>
   </div>
   <div class="q">
-    <p><span class="q-label">Vraag (5a)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p>
+    <p><span class="q-label">Vraag (5)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p>
   </div>
 </template>
 
 <template id="note-6" data-title="MOZa? — Optie 1">
-  <p class="lead"><span class="tag yes">Zo ja</span> op vraag (5a) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 1</p>
-  <h3 class="sec-title">MOZa als bemiddelaar voor meerdere diensten (zonder portaaldienst)</h3>
-  <div>
-    <div class="pc pro">
-      <p class="pc-label">Voordeel</p>
-      <p>Er is geen portaaldienst nodig. Dat is relevant, omdat een portaaldienst voor diensten van <i>verschillende</i> dienstaanbieders mogelijk niet kan (zie vraag (1) <sup class="ref" data-ref="3">3</sup>).</p>
-    </div>
-    <div class="pc con">
-      <p class="pc-label">Nadeel</p>
-      <p>Mogelijk (?) moet per dienst een apart inlogverzoek worden verstuurd (eventueel met SSO), omdat bulkbevraging alleen bij portaaldiensten kan.</p>
-    </div>
-  </div>
-  <p class="sub-title">Vragen</p>
-  <div>
-    <div class="q"><p><span class="q-label">Vraag (5b)</span>Vervolg op vraag (5a): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
-    <div class="q"><p><span class="q-label">Vraag (6a)</span>Kan dit inderdaad zonder portaaldienst waarin de betreffende diensten gebundeld zijn?</p></div>
-    <div class="q"><p><span class="q-label">Vraag (6b)</span>Zo ja: als de diensten <i>niet</i> in een portaaldienst gebundeld zijn, kunnen machtigingen niet in bulk worden opgevraagd (dat kan alleen bij portaaldiensten). Moet de bemiddelaar dan voor elke dienst een apart inlogverzoek versturen om de autorisatie te controleren?</p></div>
-  </div>
-</template>
-
-<template id="note-7" data-title="MOZa? — Optie 2">
-  <p class="lead"><span class="tag no">Zo nee</span> op vraag (5a) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 2</p>
+  <p class="lead"><span class="tag no">Zo nee</span> op vraag (5) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 1</p>
   <h3 class="sec-title">MOZa als bemiddelaar voor één portaaldienst met meerdere diensten</h3>
   <div>
     <div class="pc pro">
@@ -595,10 +574,31 @@
   </div>
   <p class="sub-title">Vragen</p>
   <div>
-    <div class="q"><p><span class="q-label">Vraag (7)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders? (Zie vraag (1) <sup class="ref" data-ref="3">3</sup>.)</p></div>
-    <div class="q"><p><span class="q-label">Vraag (8a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>überhaupt</i> door een dienstbemiddelaar worden geregeld?</p></div>
-    <div class="q"><p><span class="q-label">Vraag (8b)</span>Vervolgvraag: kan dit ook voor een portaaldienst met diensten van meerdere dienstaanbieders? (Afhankelijk van de antwoorden op vraag (7) en (8a).)</p></div>
-    <div class="q"><p><span class="q-label">Vraag (8c)</span>Zo ja: kunnen de machtigingen voor alle diensten in dat portaal dan ook in bulk worden opgevraagd? Bij een portaaldienst kan dat normaal gesproken wel (zie <sup class="ref" data-ref="2">2</sup>), maar de vraag is of dat ook geldt als het portaal diensten van meerdere dienstaanbieders bevat.</p></div>
+    <div class="q"><p><span class="q-label">Vraag (6)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders? (Zie vraag (1) <sup class="ref" data-ref="3">3</sup>.)</p></div>
+    <div class="q"><p><span class="q-label">Vraag (7a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>überhaupt</i> door een dienstbemiddelaar worden geregeld?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (7b)</span>Vervolgvraag: kan dit ook voor een portaaldienst met diensten van meerdere dienstaanbieders? (Afhankelijk van de antwoorden op vraag (6) en (7a).)</p></div>
+    <div class="q"><p><span class="q-label">Vraag (7c)</span>Zo ja: kunnen de machtigingen voor alle diensten in dat portaal dan ook in bulk worden opgevraagd? Bij een portaaldienst kan dat normaal gesproken wel (zie <sup class="ref" data-ref="2">2</sup>), maar de vraag is of dat ook geldt als het portaal diensten van meerdere dienstaanbieders bevat.</p></div>
+  </div>
+</template>
+
+<template id="note-7" data-title="MOZa? — Optie 2">
+  <p class="lead"><span class="tag yes">Zo ja</span> op vraag (5) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 2</p>
+  <h3 class="sec-title">MOZa als bemiddelaar voor meerdere diensten (zonder portaaldienst)</h3>
+  <div>
+    <div class="pc pro">
+      <p class="pc-label">Voordeel</p>
+      <p>Er is geen portaaldienst nodig. Dat is relevant, omdat een portaaldienst voor diensten van <i>verschillende</i> dienstaanbieders mogelijk niet kan (zie vraag (1) <sup class="ref" data-ref="3">3</sup>).</p>
+    </div>
+    <div class="pc con">
+      <p class="pc-label">Nadeel</p>
+      <p>Mogelijk (?) moet per dienst een apart inlogverzoek worden verstuurd (eventueel met SSO), omdat bulkbevraging alleen bij portaaldiensten kan.</p>
+    </div>
+  </div>
+  <p class="sub-title">Vragen</p>
+  <div>
+    <div class="q"><p><span class="q-label">Vraag (8)</span>Vervolg op vraag (5): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (9a)</span>Kan dit inderdaad zonder portaaldienst waarin de betreffende diensten gebundeld zijn?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (9b)</span>Zo ja: als de diensten <i>niet</i> in een portaaldienst gebundeld zijn, kunnen machtigingen niet in bulk worden opgevraagd (dat kan alleen bij portaaldiensten). Moet de bemiddelaar dan voor elke dienst een apart inlogverzoek versturen om de autorisatie te controleren?</p></div>
   </div>
 </template>
 
@@ -606,7 +606,7 @@
 (function () {
   const NOTES = [1, 2, 3, 4, 5, 6, 7];
   // Verbanden tussen toelichtingen zoals in het oorspronkelijke diagram (o.a. pijlen van 5 naar 6 en 7)
-  const RELATED = { 1: [2], 2: [3, 7], 3: [2, 6, 7], 4: [5], 5: [6, 7], 6: [3, 5], 7: [2, 3, 5] };
+  const RELATED = { 1: [2], 2: [3, 6], 3: [2, 6, 7], 4: [5], 5: [6, 7], 6: [2, 3, 5], 7: [3, 5] };
 
   const dlg = document.getElementById('dlg');
   const layout = document.getElementById('layout');

@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inloggen MOZa-portaal optie 2</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #1f2933;
+    --muted: #6b7280;
+    --border: #9aa1ab;
+    --region: #eef0f3;
+    --region-inner: #e2e5ea;
+    --line: #1f2933;
+    --badge: #154273;
+    --badge-text: #ffffff;
+    --rvo-fill: #dae8fc; --rvo-stroke: #6c8ebf;
+    --bd-fill: #d5e8d4;  --bd-stroke: #82b366;
+    --justis-fill: #ffe6cc; --justis-stroke: #d79b00;
+    --opt1: #7c3aed;
+    --opt2: #0e7490;
+    --focus: #f59e0b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111418; --surface: #1b1f24; --text: #e5e7eb; --muted: #9ca3af;
+      --border: #6b7280; --region: #1b1f24; --region-inner: #242a31; --line: #e5e7eb;
+      --badge: #8fb8e8; --badge-text: #0b1520;
+      --rvo-fill: #1e3350; --rvo-stroke: #7fa6d9;
+      --bd-fill: #1f3a24; --bd-stroke: #8cc276;
+      --justis-fill: #4a3214; --justis-stroke: #e0a83a;
+      --opt1: #b39af7; --opt2: #4fc3d9;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111418; --surface: #1b1f24; --text: #e5e7eb; --muted: #9ca3af;
+    --border: #6b7280; --region: #1b1f24; --region-inner: #242a31; --line: #e5e7eb;
+    --badge: #8fb8e8; --badge-text: #0b1520;
+    --rvo-fill: #1e3350; --rvo-stroke: #7fa6d9;
+    --bd-fill: #1f3a24; --bd-stroke: #8cc276;
+    --justis-fill: #4a3214; --justis-stroke: #e0a83a;
+    --opt1: #b39af7; --opt2: #4fc3d9;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "RijksoverheidSans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  main { max-width: 1200px; width: 100%; min-width: 0; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  .intro { color: var(--muted); margin: 0 0 20px; }
+
+  .toolbar {
+    display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .toolbar h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0 0 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    text-align: left;
+    font: inherit; font-size: .85rem; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px 3px 4px;
+  }
+  .chip:hover, .chip:focus-visible { border-color: var(--badge); outline: none; }
+  .chip .num {
+    display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--badge); color: var(--badge-text); font-weight: 700; font-size: .75rem;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85rem; list-style: none; margin: 0; padding: 0; }
+  .legend li { display: flex; align-items: center; gap: 6px; }
+  .legend svg { flex: none; }
+
+  .canvas {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    overflow-x: auto;
+  }
+  .canvas svg { display: block; width: 100%; min-width: 760px; height: auto; }
+
+  /* SVG styling */
+  .region { fill: var(--region); stroke: var(--border); stroke-width: 3; }
+  .region-inner { fill: var(--region-inner); stroke: var(--border); stroke-width: 2.5; }
+  .region-label { fill: var(--muted); font-weight: 700; font-size: 17px; }
+  .lane { stroke-width: 1.5; stroke-dasharray: 2 4; opacity: .9; }
+  .lane-label { font-size: 12px; font-weight: 700; fill: var(--muted); letter-spacing: .05em; }
+  .node text { fill: var(--text); font-size: 13.5px; pointer-events: none; }
+  .node .small { font-size: 11.5px; fill: var(--muted); }
+  .provider rect { stroke-width: 3; }
+  .rvo { fill: var(--rvo-fill); stroke: var(--rvo-stroke); }
+  .bd { fill: var(--bd-fill); stroke: var(--bd-stroke); }
+  .justis { fill: var(--justis-fill); stroke: var(--justis-stroke); }
+  .service rect { stroke-width: 1.5; }
+  .portal rect { stroke-width: 3; }
+  .hypo rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1.8; stroke-dasharray: 6 4; }
+  .hypo text { fill: var(--muted); }
+  .plain rect { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+
+  .edge { fill: none; stroke-width: 2; }
+  .edge.solid { stroke: var(--line); }
+  .edge.opt1 { stroke: var(--opt1); stroke-dasharray: 7 5; }
+  .edge.opt2 { stroke: var(--opt2); stroke-dasharray: 7 5; }
+  .offer { stroke-width: 9; stroke-linecap: butt; }
+  .offer.rvo { stroke: var(--rvo-stroke); }
+  .offer.bd { stroke: var(--bd-stroke); }
+  .offer.justis { stroke: var(--justis-stroke); }
+
+  .badge circle { fill: var(--badge); stroke: var(--surface); stroke-width: 2; }
+  .badge text { fill: var(--badge-text); font-size: 12px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+
+  [data-note] { cursor: pointer; }
+  [data-note]:focus { outline: none; }
+  [data-note]:focus-visible rect, [data-note]:focus-visible circle { stroke: var(--focus); stroke-width: 4; }
+  g[data-note]:hover .badge circle, g[data-note]:focus-visible .badge circle { fill: var(--focus); }
+
+  svg.dimmed .node, svg.dimmed .edge, svg.dimmed .offer { opacity: .18; transition: opacity .15s; }
+  svg.dimmed .hl { opacity: 1 !important; }
+  svg.dimmed .edge.hl { stroke-width: 3; }
+
+  /* Layout met zijpaneel */
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .layout.panel-open { grid-template-columns: minmax(0, 1fr) min(460px, 40vw); }
+  .panel {
+    position: sticky; top: 0; height: 100vh;
+    background: var(--surface); color: var(--text);
+    border-left: 1px solid var(--border);
+    box-shadow: -8px 0 24px rgba(0,0,0,.08);
+  }
+  .panel[hidden] { display: none; }
+  .dlg { display: flex; flex-direction: column; height: 100%; }
+  .dlg .body { flex: 1; }
+  @media (max-width: 900px) {
+    .layout.panel-open { grid-template-columns: minmax(0, 1fr); }
+    .layout.panel-open main { padding-bottom: 58vh; }
+    .panel {
+      position: fixed; top: auto; left: 0; right: 0; bottom: 0; height: 55vh; z-index: 10;
+      border-left: none; border-top: 1px solid var(--border);
+      border-radius: 14px 14px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,.2);
+    }
+  }
+  /* actief element in het diagram */
+  [data-note].active rect { stroke: var(--focus) !important; stroke-width: 4 !important; }
+  [data-note].active .badge circle { fill: var(--focus); }
+  .dlg header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px; border-bottom: 1px solid var(--region-inner);
+  }
+  .dlg header .num {
+    flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--badge); color: var(--badge-text); font-weight: 700;
+  }
+  .dlg header h2 { font-size: 1.15rem; margin: 0; flex: 1; }
+  .icon-btn {
+    font: inherit; font-size: 1.4rem; line-height: 1; cursor: pointer;
+    background: none; border: none; color: var(--muted); padding: 4px 8px; border-radius: 6px;
+  }
+  .icon-btn:hover, .icon-btn:focus-visible { background: var(--region-inner); color: var(--text); outline: none; }
+  .dlg .body { padding: 18px 20px 24px; overflow-y: auto; font-size: .95rem; }
+  .dlg .body > * + * { margin-top: 14px !important; }
+  .dlg .body p { margin: 0; }
+  .dlg .body p + p { margin-top: 6px; }
+  .dlg .body ul, .dlg .body ol { margin: 6px 0 0; padding-left: 1.2em; }
+  .dlg .body li { margin: 4px 0; }
+  .dlg .body li::marker { color: var(--muted); }
+  .dlg .body a { color: var(--badge); text-underline-offset: 2px; }
+  .dlg .body code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .82em;
+    background: var(--region-inner); border-radius: 4px; padding: 1px 5px; white-space: nowrap;
+  }
+  .dlg .body .sec-title {
+    font-size: .98rem; font-weight: 700; margin: 0;
+    padding-left: 10px; border-left: 3px solid var(--badge);
+  }
+  .dlg .body .sub-title {
+    font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--muted); margin: 22px 0 0 !important;
+  }
+  .dlg .body .lead { font-size: 1rem; }
+  .dlg .body .tag {
+    display: inline-block; font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 1px 9px; margin-right: 4px;
+    background: var(--region-inner); color: var(--text);
+  }
+  .dlg .body .tag.yes { background: color-mix(in srgb, var(--bd-stroke) 25%, var(--surface)); }
+  .dlg .body .tag.no { background: color-mix(in srgb, #dc2626 18%, var(--surface)); }
+
+  /* veldenlijst */
+  .dlg .body .fields { list-style: none; padding: 0; border: 1px solid var(--region-inner); border-radius: 10px; overflow: hidden; }
+  .dlg .body .fields li { margin: 0; padding: 7px 12px; }
+  .dlg .body .fields li + li { border-top: 1px solid var(--region-inner); }
+
+  /* bronnen */
+  .dlg .body .src {
+    font-size: .82rem; color: var(--muted); margin-top: 6px;
+    display: flex; gap: 6px; align-items: baseline;
+  }
+  .dlg .body .src::before { content: "↗"; flex: none; font-weight: 700; color: var(--badge); }
+  .dlg .body .src i { color: var(--text); }
+
+  /* callouts */
+  .callout { border-radius: 10px; padding: 12px 14px; border: 1px solid; }
+  .callout-title { font-weight: 700; display: flex; gap: 8px; align-items: center; }
+  .callout.info { background: color-mix(in srgb, var(--rvo-stroke) 10%, var(--surface)); border-color: color-mix(in srgb, var(--rvo-stroke) 45%, transparent); }
+  .callout.warn { background: color-mix(in srgb, var(--justis-stroke) 12%, var(--surface)); border-color: color-mix(in srgb, var(--justis-stroke) 55%, transparent); }
+  .callout.warn .callout-title::before {
+    content: "!"; display: grid; place-items: center; flex: none; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--justis-stroke); color: #fff; font-size: .8rem;
+  }
+  .callout.idea { background: color-mix(in srgb, var(--opt2) 9%, var(--surface)); border-color: color-mix(in srgb, var(--opt2) 45%, transparent); }
+  .callout.example { background: var(--region); border-color: var(--region-inner); }
+  .callout > * + * { margin-top: 8px; }
+
+  /* citaten */
+  .dlg .body blockquote {
+    margin: 6px 0 0; padding: 6px 12px; border-left: 3px solid var(--border);
+    color: var(--muted); font-size: .9rem;
+  }
+  .dlg .body blockquote b { color: var(--text); }
+
+  /* open vragen */
+  .q {
+    border-radius: 10px; padding: 10px 14px;
+    background: color-mix(in srgb, var(--opt1) 8%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--opt1) 35%, transparent);
+    border-left-width: 4px; border-left-color: var(--opt1);
+  }
+  .q + .q { margin-top: 8px !important; }
+  .q-label {
+    display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .02em;
+    background: var(--opt1); color: #fff; border-radius: 999px; padding: 1px 9px; margin-right: 6px;
+    vertical-align: 1px; white-space: nowrap;
+  }
+
+  /* voordeel / nadeel */
+  .pc { border-radius: 10px; padding: 10px 14px; border: 1px solid; }
+  .pc + .pc { margin-top: 8px !important; }
+  .pc-label { font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px !important; }
+  .pc.pro { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: color-mix(in srgb, var(--bd-stroke) 50%, transparent); }
+  .pc.pro .pc-label { color: color-mix(in srgb, var(--bd-stroke) 70%, var(--text)); }
+  .pc.con { background: color-mix(in srgb, #dc2626 8%, var(--surface)); border-color: color-mix(in srgb, #dc2626 35%, transparent); }
+  .pc.con .pc-label { color: color-mix(in srgb, #dc2626 75%, var(--text)); }
+
+  /* stappen */
+  .dlg .body .steps { list-style: none; padding: 0; counter-reset: st; }
+  .dlg .body .steps li { counter-increment: st; position: relative; padding-left: 34px; min-height: 24px; margin: 8px 0; }
+  .dlg .body .steps li::before {
+    content: counter(st); position: absolute; left: 0; top: 0;
+    width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--region-inner); font-size: .78rem; font-weight: 700;
+  }
+  .dlg .body .divider {
+    display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--muted);
+  }
+  .dlg .body .divider::before, .dlg .body .divider::after { content: ""; flex: 1; height: 1px; background: var(--region-inner); }
+  sup.ref {
+    cursor: pointer; color: var(--badge-text); background: var(--badge);
+    border-radius: 999px; padding: 0 5px; font-weight: 700; font-size: .7em;
+  }
+  sup.ref:hover, sup.ref:focus-visible { background: var(--focus); outline: none; }
+  .dlg footer {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 12px 20px; border-top: 1px solid var(--region-inner);
+  }
+  .dlg footer .nav { display: flex; justify-content: space-between; gap: 8px; }
+  .dlg footer .related:empty { display: none; }
+  .dlg footer .related { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .85rem; color: var(--muted); }
+  .nav-btn {
+    font: inherit; font-size: .9rem; cursor: pointer;
+    background: var(--region-inner); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 5px 12px;
+  }
+  .nav-btn:disabled { opacity: .4; cursor: default; }
+  .nav-btn:not(:disabled):hover { border-color: var(--badge); }
+
+  :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
+  :root[data-theme="dark"] { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; }
+  .a-bilal { --c: var(--c-bilal); } .a-uwv { --c: var(--c-uwv); } .a-mak { --c: var(--c-mak); } .a-lev { --c: var(--c-lev); }
+  .lane-bg { fill: color-mix(in srgb, var(--c) 7%, var(--surface)); stroke: none; }
+  .lifeline { stroke: var(--border); stroke-width: 1.5; stroke-dasharray: 5 5; }
+  .actor rect { fill: color-mix(in srgb, var(--c) 22%, var(--surface)); stroke: var(--c); stroke-width: 2.5; }
+  .actor-name { font-weight: 700; font-size: 14px; fill: var(--text); }
+  .actor-sub { font-size: 11px; fill: var(--muted); }
+  .msg { stroke: var(--c); stroke-width: 2; }
+  .msg-label { font-size: 12.5px; fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
+  .card { fill: var(--surface); stroke: var(--c); stroke-width: 1.5; }
+  .card-title { font-size: 12.5px; font-weight: 700; fill: var(--text); }
+  .card-row { font-size: 11.5px; fill: var(--text); }
+  .card-row .k { fill: var(--muted); }
+  .activity { fill: color-mix(in srgb, var(--c) 22%, var(--surface)); stroke: var(--c); stroke-width: 1.5; }
+  .act-label { font-size: 12px; fill: var(--text); }
+  .snum circle { fill: color-mix(in srgb, var(--c) 30%, var(--surface)); stroke: var(--c); stroke-width: 2; }
+  .snum text, .tbadge text { font-size: 12px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .snum text { fill: var(--text); }
+  .snum, .tbadge { cursor: pointer; }
+  .snum:focus, .tbadge:focus { outline: none; }
+  .tbadge circle { fill: var(--badge); stroke: var(--surface); stroke-width: 2; }
+  .tbadge text { fill: var(--badge-text); }
+  .snum:hover circle, .snum:focus-visible circle, .step.active .snum circle { stroke: var(--focus); stroke-width: 4; }
+  .tbadge:hover circle, .tbadge:focus-visible circle, .tbadge.active circle { fill: var(--focus); }
+  .step.active .msg { stroke-width: 4; }
+  .step.active .card, .step.active .activity { stroke: var(--focus); stroke-width: 3; }
+  svg.focusing .step:not(.active) { opacity: .35; }
+  .step { transition: opacity .15s; }
+
+  .chips.steps .chip { padding: 3px; }
+  .chip.start { padding: 4px 12px; font-weight: 600; border-color: var(--badge); }
+  .crumb { font-size: .85rem; margin: 0 0 8px; }
+  .crumb a { color: var(--badge); }
+
+  .dlg header .kind { display: block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .dlg header .num.step-num { background: color-mix(in srgb, var(--c) 30%, var(--surface)); color: var(--text); border: 2px solid var(--c); }
+  .route { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: .85rem; }
+  .actor-chip { border-radius: 999px; padding: 2px 10px; font-weight: 600; border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 15%, var(--surface)); }
+  .callout.todo { background: color-mix(in srgb, var(--todo) 7%, var(--surface)); border: 1.5px dashed color-mix(in srgb, var(--todo) 60%, transparent); }
+  .callout.todo .callout-title { color: var(--todo); }
+  .callout.stop { background: color-mix(in srgb, var(--todo) 8%, var(--surface)); border-color: color-mix(in srgb, var(--todo) 35%, transparent); }
+
+  :root { --o1: #7c3aed; --o2: #0e7490; --o3: #be185d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --o1: #b39af7; --o2: #4fc3d9; --o3: #f472b6; } }
+  :root[data-theme="dark"] { --o1: #b39af7; --o2: #4fc3d9; --o3: #f472b6; }
+  .o1 { --o: var(--o1); } .o2 { --o: var(--o2); } .o3 { --o: var(--o3); }
+  .msg-label.sm { font-size: 11.5px; }
+  .msg-label .b, .card-title { font-weight: 700; }
+  .frag-box { fill: none; stroke: var(--text); stroke-width: 1.5; }
+  .frag-tab { fill: var(--text); }
+  .frag-title { fill: var(--surface); font-size: 12px; font-weight: 700; }
+  .sec-bg { fill: color-mix(in srgb, var(--o) 9%, transparent); }
+  .sec-label { fill: var(--o); font-size: 12px; font-weight: 700; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; }
+  .snum.o1 circle, .snum.o2 circle, .snum.o3 circle { stroke: var(--o); stroke-width: 3; }
+  .ofdiv line { stroke: var(--text); stroke-width: 1.5; stroke-dasharray: 6 4; }
+  .ofdiv rect { fill: var(--text); }
+  .ofdiv text { fill: var(--surface); font-size: 11px; font-weight: 800; letter-spacing: .05em; }
+  .endline > line { stroke: var(--todo); stroke-width: 2; stroke-dasharray: 2 5; }
+  .pill rect { stroke-width: 2; }
+  .pill text { font-size: 12.5px; font-weight: 700; }
+  .pill.stop rect { fill: color-mix(in srgb, var(--todo) 12%, var(--surface)); stroke: var(--todo); }
+  .pill.stop text { fill: var(--todo); }
+  .pill.go rect { fill: color-mix(in srgb, var(--o2) 14%, var(--surface)); stroke: var(--o2); }
+  .pill.go text { fill: var(--o2); }
+  .o2frame rect { fill: color-mix(in srgb, var(--o2) 5%, transparent); stroke: var(--o2); stroke-width: 2; stroke-dasharray: 8 5; }
+  .o2frame path { fill: var(--o2); }
+  .o2frame text { fill: #fff; font-size: 12px; font-weight: 700; }
+  .variant, .opt2only, .pill { transition: opacity .2s; }
+  svg[data-opt="1"] .variant:not(.o1), svg[data-opt="2"] .variant:not(.o2), svg[data-opt="3"] .variant:not(.o3) { opacity: .15; }
+  svg[data-opt="1"] .opt2only, svg[data-opt="3"] .opt2only, svg[data-opt="1"] .pill.go, svg[data-opt="3"] .pill.go { opacity: .15; }
+  svg[data-opt="2"] .pill.stop { opacity: .25; }
+  svg.focusing .step:not(.active) { opacity: .35; }
+  svg.focusing[data-opt] .variant.step:not(.active) { opacity: .15; }
+
+  .fold.collapsed > .exp { display: none; }
+  .fold:not(.collapsed) > .col { display: none; }
+  .fold-btn { cursor: pointer; }
+  .fold-btn rect { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; }
+  .fold-btn text { font-size: 11px; font-weight: 700; fill: var(--text); pointer-events: none; }
+  .fold-btn:hover rect, .fold-btn:focus-visible rect { stroke: var(--focus); stroke-width: 2.5; }
+  .fold-btn:focus { outline: none; }
+  .fpill { cursor: pointer; }
+  .fpill rect { fill: color-mix(in srgb, var(--o) 14%, var(--surface)); stroke: var(--o); stroke-width: 1.5; }
+  .fpill text { font-size: 11.5px; font-weight: 700; fill: var(--o); pointer-events: none; }
+  .fpill:hover rect, .fpill:focus-visible rect { stroke-width: 3; }
+  .fpill:focus { outline: none; }
+  .of-mini { font-size: 10px; font-weight: 800; fill: var(--muted); letter-spacing: .05em; }
+  .seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .seg button { font: inherit; font-size: .85rem; cursor: pointer; border: none; background: var(--surface); color: var(--text); padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; }
+  .seg button + button { border-left: 1px solid var(--border); }
+  .seg button[aria-pressed="true"] { background: var(--badge); color: var(--badge-text); }
+  .seg .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--o); }
+  .opt-hint { font-size: .82rem; color: var(--muted); margin-top: 6px; max-width: 520px; }
+  .chip.o2only { border-color: var(--o2); border-style: dashed; }
+  .chip.off { opacity: .35; }
+  .chips.steps .chip.o2only .num { background: var(--o2); }
+
+  .optblock { border-radius: 10px; border: 1px solid color-mix(in srgb, var(--o) 40%, transparent); border-left: 4px solid var(--o); padding: 10px 14px; background: color-mix(in srgb, var(--o) 6%, var(--surface)); }
+  .optblock + .optblock { margin-top: 8px !important; }
+  .optblock > * + * { margin-top: 6px; }
+  .opt-tag { display: inline-block; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--o); color: #fff; margin-right: 6px; vertical-align: 1px; }
+  .optblock h4 { margin: 0; font-size: .92rem; }
+  .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
+  .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
+  .callout.go { background: color-mix(in srgb, var(--o2) 8%, var(--surface)); border-color: color-mix(in srgb, var(--o2) 40%, transparent); }
+
+  .tbadge text { font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="layout" id="layout">
+<main>
+  <p class="crumb"><a href="dienstencatalogus-eherkenning.html">← Dienstencatalogus eHerkenning</a> · <a href="inloggen-losse-dienst.html">Bestaande flow: losse dienst</a> · <a href="inloggen-moza-optie1.html">Gewenste flow: optie 1</a></p>
+  <h1>Bilal logt in bij het MOZa-portaal</h1>
+  <p class="intro">Gewenste flow volgens MOZa optie 2: dienstbemiddeling mét portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.</p>
+  <div class="toolbar">
+    <div>
+      <h2>Stappen</h2>
+      <div class="chips steps" id="step-chips"><button class="chip start" type="button" id="start">Stap voor stap ▸</button></div>
+    </div>
+    <div>
+      <h2>Toelichtingen</h2>
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+  <div class="canvas">
+    <svg id="diagram" viewBox="0 0 1120 1168" role="img" aria-label="Volgordediagram: Bilal logt in bij het MOZa-portaal, optie 2">
+      <defs>
+      <marker id="arB" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-bilal)"/></marker>
+      <marker id="arZ" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-uwv)"/></marker>
+      <marker id="arM" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-mak)"/></marker>
+      <marker id="arL" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-lev)"/></marker>
+      </defs>
+      <rect class="lane-bg a-bilal" x="-5" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="120" y1="84" x2="120" y2="1156"/><g class="actor a-bilal"><rect x="5" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="120" y="36" text-anchor="middle">Bilal Yilmaz</text><text class="actor-sub" x="120" y="58" text-anchor="middle">werknemer, op de website</text><text class="actor-sub" x="120" y="72" text-anchor="middle">van het MOZa-portaal</text></g><rect class="lane-bg a-uwv" x="235" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="360" y1="84" x2="360" y2="1156"/><g class="actor a-uwv"><rect x="245" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="360" y="42" text-anchor="middle">MOZa</text><text class="actor-sub" x="360" y="58" text-anchor="middle">dienstbemiddelaar?</text><g class="tbadge" data-note="4" tabindex="0" role="button" aria-label="Toelichting 4" transform="translate(465 18)"><circle r="10"/><text>4</text></g></g><rect class="lane-bg a-mak" x="495" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="620" y1="84" x2="620" y2="1156"/><g class="actor a-mak"><rect x="505" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="620" y="36" text-anchor="middle">eHerkenningsmakelaar</text><text class="actor-sub" x="620" y="58" text-anchor="middle">bijv. Digidentity</text><text class="actor-sub" x="620" y="72" text-anchor="middle">gekozen door MOZa (dienstbemiddelaar)</text></g><rect class="lane-bg a-lev" x="755" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="880" y1="84" x2="880" y2="1156"/><g class="actor a-lev"><rect x="765" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="880" y="36" text-anchor="middle">eHerkenningsleverancier</text><text class="actor-sub" x="880" y="58" text-anchor="middle">bijv. Z-Login</text><text class="actor-sub" x="880" y="72" text-anchor="middle">gekozen door Karin (werkgever)</text></g>
+      <g class="step a-bilal" data-step="1"><line class="msg a-bilal" x1="135" y1="140" x2="617" y2="140" marker-end="url(#arB)"/><text class="msg-label" x="370.0" y="130" text-anchor="middle">klikt op &quot;Inloggen MOZa-portaal met eHerkenning&quot;</text><g class="snum" tabindex="0" role="button" aria-label="Stap 1: Inloggen starten" transform="translate(120 140)"><circle r="13"/><text>1</text></g></g>
+      <g class="step a-mak" data-step="2"><line class="msg a-mak" x1="605" y1="200" x2="123" y2="200" marker-end="url(#arM)"/><text class="msg-label" x="370.0" y="190" text-anchor="middle">Verzoek aan Bilal: selecteer je leverancier</text><g class="snum" tabindex="0" role="button" aria-label="Stap 2: Verzoek: kies leverancier" transform="translate(620 200)"><circle r="13"/><text>2</text></g></g>
+      <g class="step a-bilal" data-step="3"><line class="msg a-bilal" x1="135" y1="260" x2="617" y2="260" marker-end="url(#arB)"/><text class="msg-label" x="370.0" y="250" text-anchor="middle">Bilal selecteert zijn leverancier</text><g class="snum" tabindex="0" role="button" aria-label="Stap 3: Leverancier gekozen" transform="translate(120 260)"><circle r="13"/><text>3</text></g></g>
+      <g class="step a-mak" data-step="4"><rect class="card a-mak" x="634" y="300" width="240" height="96" rx="8"/><text class="card-title" x="646" y="319">Inlogverzoek (anoniem)</text><text class="card-row" x="646" y="338"><tspan class="k">ServiceProvider:</tspan> MOZa</text><g class="tbadge" data-note="x" tabindex="0" role="button" aria-label="Toelichting *" transform="translate(860 334)"><circle r="10"/><text>*</text></g><text class="card-row" x="646" y="354"><tspan class="k">ServiceName:</tspan> MOZa-portaaldienst</text><text class="card-row" x="646" y="370"><tspan class="k">ServiceID:</tspan> PortalService_MOZa123</text><g class="tbadge" data-note="2" tabindex="0" role="button" aria-label="Toelichting 2" transform="translate(860 366)"><circle r="10"/><text>2</text></g><text class="card-row" x="646" y="386"><tspan class="k">Vereist niveau:</tspan> ??</text><g class="tbadge" data-note="1" tabindex="0" role="button" aria-label="Toelichting 1" transform="translate(860 382)"><circle r="10"/><text>1</text></g><line class="msg a-mak" x1="635" y1="410" x2="877" y2="410" marker-end="url(#arM)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 4: Anoniem inlogverzoek" transform="translate(620 410)"><circle r="13"/><text>4</text></g></g>
+      <g class="step a-lev" data-step="5"><line class="msg a-lev" x1="865" y1="472" x2="123" y2="472" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="462" text-anchor="middle">Verzoek aan Bilal: vul gebruikersnaam en wachtwoord in</text><g class="snum" tabindex="0" role="button" aria-label="Stap 5: Verzoek: inloggegevens" transform="translate(880 472)"><circle r="13"/><text>5</text></g></g>
+      <g class="step a-bilal" data-step="6"><line class="msg a-bilal" x1="135" y1="532" x2="877" y2="532" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="522" text-anchor="middle">Bilal logt in met zijn Z-Login-accountgegevens</text><g class="snum" tabindex="0" role="button" aria-label="Stap 6: Inloggen bij Z-Login" transform="translate(120 532)"><circle r="13"/><text>6</text></g></g>
+      <g class="step a-lev" data-step="7"><rect class="activity a-lev" x="900" y="572.0" width="208" height="50" rx="12"/><text class="act-label" x="912" y="594.0">Controleert of Bilals account het</text><text class="act-label" x="912" y="610.0">gevraagde niveau heeft</text><g class="snum" tabindex="0" role="button" aria-label="Stap 7: Controle niveau" transform="translate(880 597)"><circle r="13"/><text>7</text></g></g>
+      <g class="step a-lev" data-step="8"><line class="msg a-lev" x1="865" y1="667" x2="123" y2="667" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="657" text-anchor="middle">Verzoek aan Bilal: namens welk bedrijf wil je inloggen?</text><g class="snum" tabindex="0" role="button" aria-label="Stap 8: Verzoek: kies bedrijf" transform="translate(880 667)"><circle r="13"/><text>8</text></g></g>
+      <g class="step a-bilal" data-step="9"><line class="msg a-bilal" x1="135" y1="727" x2="877" y2="727" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="717" text-anchor="middle">Bilal selecteert Koffiezaak Noon</text><g class="snum" tabindex="0" role="button" aria-label="Stap 9: Bedrijf gekozen" transform="translate(120 727)"><circle r="13"/><text>9</text></g></g>
+      <g class="step a-lev" data-step="10"><rect class="activity a-lev" x="900" y="766.0" width="208" height="66" rx="12"/><text class="act-label" x="912" y="788.0">Controleert of Bilal namens Noon</text><text class="act-label" x="912" y="804.0">gemachtigd is voor de diensten</text><text class="act-label" x="912" y="820.0">in het portaal</text><g class="tbadge" data-note="3" tabindex="0" role="button" aria-label="Toelichting 3" transform="translate(1104 766.0)"><circle r="10"/><text>3</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 10: Controle machtigingen" transform="translate(880 799)"><circle r="13"/><text>10</text></g></g>
+      <g class="step a-lev" data-step="11"><rect class="card a-lev" x="634" y="849" width="240" height="128" rx="8"/><text class="card-title" x="646" y="868">Versleutelde assertion</text><text class="card-row" x="646" y="887">PseudoID1234 is gemachtigd</text><g class="tbadge" data-note="6" tabindex="0" role="button" aria-label="Toelichting 6" transform="translate(860 883)"><circle r="10"/><text>6</text></g><text class="card-row" x="646" y="903">namens KVK-nummer1234</text><text class="card-row" x="646" y="919">voor Service_ABC123 &amp;</text><g class="tbadge" data-note="5" tabindex="0" role="button" aria-label="Toelichting 5" transform="translate(860 915)"><circle r="10"/><text>5</text></g><text class="card-row" x="646" y="935">Service_CDF345 &amp;</text><text class="card-row" x="646" y="951">Service_FGH567 &amp;</text><text class="card-row" x="646" y="967">Service_HIJ789 &amp; …</text><line class="msg a-lev" x1="865" y1="991" x2="623" y2="991" marker-end="url(#arL)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 11: Versleutelde assertion" transform="translate(880 991)"><circle r="13"/><text>11</text></g></g>
+      <g class="step a-mak" data-step="12"><line class="msg a-mak" x1="605" y1="1063" x2="363" y2="1063" marker-end="url(#arM)"/><text class="msg-label" x="490.0" y="1053" text-anchor="middle">ongeopend door aan MOZa</text><text class="msg-label" x="490.0" y="1038" text-anchor="middle">Makelaar geeft het bericht</text><g class="snum" tabindex="0" role="button" aria-label="Stap 12: Doorgeven aan MOZa" transform="translate(620 1063)"><circle r="13"/><text>12</text></g></g>
+      <g class="step a-uwv" data-step="13"><line class="msg a-uwv" x1="345" y1="1128" x2="123" y2="1128" marker-end="url(#arZ)"/><text class="msg-label" x="240.0" y="1118" text-anchor="middle">het MOZa-portaal</text><text class="msg-label" x="240.0" y="1103" text-anchor="middle">Bilal krijgt toegang tot</text><g class="snum" tabindex="0" role="button" aria-label="Stap 13: Toegang tot MOZa-portaal" transform="translate(360 1128)"><circle r="13"/><text>13</text></g></g>
+    </svg>
+  </div>
+</main>
+<aside class="panel" id="dlg" aria-labelledby="dlg-title" hidden>
+  <div class="dlg">
+    <header>
+      <span class="num" id="dlg-num"></span>
+      <h2><span class="kind" id="dlg-kind"></span><span id="dlg-title"></span></h2>
+      <button class="icon-btn" id="dlg-close" aria-label="Sluiten">&times;</button>
+    </header>
+    <div class="body" id="dlg-body"></div>
+    <footer>
+      <div class="related" id="dlg-related"></div>
+      <div class="nav">
+        <button class="nav-btn" id="dlg-prev">&larr; Vorige</button>
+        <button class="nav-btn" id="dlg-next">Volgende &rarr;</button>
+      </div>
+    </footer>
+  </div>
+</aside>
+</div>
+
+<template id="note-1" data-title="Vereist niveau bij een portaaldienst">
+  <div class="q"><p><span class="q-label">Open vraag (11)</span>Hoe werkt het "vereisen" van een niveau bij een portaaldienst?</p></div>
+  <div>
+    <div class="q"><p><span class="q-label">Open vraag (11a)</span>Wordt er één niveau ingesteld voor het portaal <i>als dienst</i>? Kiest de dienstverlener dat niveau dan zelf?</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (11b)</span>Of wordt het vereiste niveau van het portaal automatisch bepaald op basis van het niveau van de onderliggende diensten? Is dat dan het hoogste of het laagste niveau (als het portaal diensten met verschillende niveaus bevat)?</p></div>
+  </div>
+  <div class="callout warn">
+    <p class="callout-title">Gevolg bij het hoogste niveau</p>
+    <p>Een EH2-gebruiker krijgt dan geen toegang tot een portaal dat op EH3 is ingesteld, terwijl er in het portaal misschien wel diensten met EH2-niveau zitten.</p>
+  </div>
+</template>
+
+<template id="note-2" data-title="Dienstcode van een portaaldienst">
+  <div class="q"><p><span class="q-label">Open vraag (12)</span>Heeft een portaaldienst een eigen dienstcode (ServiceID)?</p></div>
+</template>
+
+<template id="note-x" data-title="Namens welke dienstverlener?">
+  <div class="q"><p><span class="q-label">Open vraag (nr. nog toe te kennen)</span>Namens welke dienstverlener wordt dit verzoek gestuurd? Namens MOZa als dienstbemiddelaar, of namens de oorspronkelijke dienstverleners?</p></div>
+  <p class="sub-title">Twee deelvragen</p>
+  <ul>
+    <li>Hoe werkt dit bij normale dienstbemiddeling (voor één dienst)?</li>
+    <li>Hoe werkt dit bij dienstbemiddeling voor meerdere dienstverleners?</li>
+  </ul>
+</template>
+
+<template id="note-3" data-title="Machtigingen voor het hele portaal">
+  <p>Hier zijn de antwoorden op open vraag (7) t/m (8c) uit de <a href="dienstencatalogus-eherkenning.html">Dienstencatalogus eHerkenning</a> (toelichting 7) weer van belang:</p>
+  <ul>
+    <li>Kan een portaaldienst diensten van meerdere dienstaanbieders bevatten?</li>
+    <li>Zo ja: kunnen de machtigingen dan ook in bulk worden opgevraagd, dus voor alle onderliggende diensten in het portaal tegelijk? Bij een portaaldienst met diensten van één dienstaanbieder kan dat normaal gesproken wel.</li>
+  </ul>
+</template>
+
+<template id="note-4" data-title="Rol van MOZa">
+  <div class="q"><p><span class="q-label">Open vraag (13)</span>Welke rol speelt MOZa hier? Is MOZa de dienstbemiddelaar voor de portaaldienst?</p></div>
+  <p>Dit raakt aan open vraag (2) uit de <a href="dienstencatalogus-eherkenning.html">Dienstencatalogus eHerkenning</a> (toelichting 3): is er altijd een dienstbemiddelaar nodig als een portaal namens meerdere dienstverleners wordt aangeboden?</p>
+</template>
+
+<template id="note-5" data-title="Alle machtigingen in één assertion">
+  <p>Of alle machtigingen in één assertion kunnen worden doorgegeven, hangt af van het antwoord op open vraag (7) t/m (8c): kunnen deze machtigingen in bulk worden opgevraagd? (zie <sup class="ref" data-ref="3">3</sup>)</p>
+  <div class="callout idea">
+    <p class="callout-title">Zo ja:</p>
+    <p>Dan is er maar één inlogverzoek nodig om Bilal in te loggen op het MOZa-portaal en hem direct de tegels/informatie te tonen waarvoor hij gemachtigd is.</p>
+  </div>
+</template>
+
+<template id="note-6" data-title="PseudoID in deze context">
+  <div>
+    <div class="q"><p><span class="q-label">Open vraag (14a)</span>Hoe werkt dit bij "normale" portaaldiensten? Klopt het dat er één PseudoID is voor alle diensten van dezelfde dienstverlener? Een portaaldienst hoort normaal gesproken bij één dienstverlener, dus dan wordt dat PseudoID ook gebruikt voor het inloggen bij de portaaldienst (net als bij een losse dienst).</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (14b)</span>Het MOZa-portaal bevat juist diensten van meerdere dienstverleners. Welk PseudoID wordt dan gebruikt? Het is niet duidelijk welke "dienstaanbieder" het inlogverzoek doet. Dit hangt samen met open vraag (15a–b).</p></div>
+  </div>
+  <div>
+    <div class="q"><p><span class="q-label">Open vraag (15a)</span>Hoe werkt het PseudoID bij normale dienstbemiddeling (voor één dienst)? Krijgt Bilal een apart PseudoID voor de dienstbemiddelaar? Of doet de dienstbemiddelaar het inlogverzoek "namens" een dienstaanbieder (bijv. UWV), zodat hetzelfde PseudoID wordt gebruikt als bij die dienstaanbieder?</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (15b)</span>In de context van MOZa (een portaal met diensten van meerdere dienstverleners) doet MOZa als bemiddelaar een inlogverzoek namens méérdere dienstaanbieders (UWV, RVO, BD, …). Welk PseudoID komt er dan mee in de assertion?</p></div>
+  </div>
+</template>
+
+<script>
+(function () {
+  const ACT = {"B": {"name": "Bilal", "cls": "a-bilal"}, "Z": {"name": "MOZa", "cls": "a-uwv"}, "M": {"name": "Makelaar (Digidentity)", "cls": "a-mak"}, "L": {"name": "Leverancier (Z-Login)", "cls": "a-lev"}};
+  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op het MOZa-portaal op \"Inloggen MOZa-portaal met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Anoniem inlogverzoek", "notes": ["x", 2, 1], "text": "De makelaar stuurt een anoniem inlogverzoek voor de MOZa-portaaldienst naar de leverancier:", "rows": ["ServiceProvider (dienstverlener): MOZa", "ServiceName (dienstnaam): \"MOZa-portaaldienst\"", "ServiceID (dienstcode): \"PortalService_MOZa123\"", "Vereist niveau: nog onbekend"]}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "notes": [1], "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft."}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "notes": [3], "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal."}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion", "notes": [6, 5], "text": "De leverancier stuurt één versleutelde assertion (verklaring) naar de makelaar, met daarin dat:", "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_ABC123, Service_CDF345, Service_FGH567, Service_HIJ789, …"]}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "text": "Bilal krijgt toegang tot het MOZa-portaal en ziet direct de diensten waarvoor hij gemachtigd is."}];
+  const NOTES = [1, 2, 'x', 3, 4, 5, 6];
+  const NOTE_STEP = {"1": 4, "2": 4, "x": 4, "3": 10, "5": 11, "6": 11};
+  const lab = n => n === 'x' ? '*' : String(n);
+  const key = v => (v === 'x' ? 'x' : +v);
+
+  const $ = id => document.getElementById(id);
+  const dlg = $('dlg'), layout = $('layout'), svg = $('diagram');
+  const numEl = $('dlg-num'), kindEl = $('dlg-kind'), titleEl = $('dlg-title');
+  const bodyEl = $('dlg-body'), relEl = $('dlg-related'), prevBtn = $('dlg-prev'), nextBtn = $('dlg-next');
+  let cur = null;
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const noteTitle = n => $('note-' + n).dataset.title;
+  const S = n => STEPS.find(s => s.n === n);
+
+  function chip(num, label, onClick, cls) {
+    const b = el('button', 'chip' + (cls ? ' ' + cls : '')); b.type = 'button';
+    b.append(el('span', 'num', num)); if (label) b.append(el('span', 'lbl', label));
+    b.addEventListener('click', onClick); return b;
+  }
+  const actorChip = k => el('span', 'actor-chip ' + ACT[k].cls, ACT[k].name);
+
+  function markActive() {
+    svg.querySelectorAll('.step').forEach(g => g.classList.toggle('active', !!cur &&
+      ((cur.kind === 'step' && +g.dataset.step === cur.n) || (cur.kind === 'note' && +g.dataset.step === NOTE_STEP[cur.n]))));
+    svg.querySelectorAll('.tbadge').forEach(b => b.classList.toggle('active', !!cur && cur.kind === 'note' && key(b.dataset.note) === cur.n));
+    svg.classList.toggle('focusing', !!cur);
+  }
+  function open() { if (dlg.hidden) { dlg.hidden = false; layout.classList.add('panel-open'); } markActive(); }
+
+  function showStep(n) {
+    const s = S(n); if (!s) return;
+    cur = { kind: 'step', n };
+    numEl.className = 'num step-num ' + ACT[s.f].cls; numEl.textContent = n;
+    kindEl.textContent = 'Stap ' + n + ' van ' + STEPS.length; titleEl.textContent = s.title;
+    const body = [];
+    const route = el('div', 'route'); route.append(actorChip(s.f));
+    if (s.t) { route.append(el('span', null, '→')); route.append(actorChip(s.t)); } else route.append(el('span', null, '(interne controle)'));
+    body.push(route, el('p', 'lead', s.text));
+    if (s.rows) { const ul = el('ul', 'fields'); s.rows.forEach(r => ul.append(el('li', null, r))); body.push(ul); }
+    if (s.notes) {
+      const box = el('div', 'callout info');
+      box.append(el('p', 'callout-title', s.notes.length > 1 ? 'Bij deze stap horen toelichtingen' : 'Bij deze stap hoort een toelichting'));
+      const p = el('p'); s.notes.forEach(k => p.append(chip(lab(k), noteTitle(k), () => showNote(k)))); p.style.display = 'flex'; p.style.flexWrap = 'wrap'; p.style.gap = '6px';
+      box.append(p); body.push(box);
+    }
+    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
+    prevBtn.disabled = n <= 1; nextBtn.disabled = n >= STEPS.length;
+    open();
+  }
+  function showNote(n) {
+    const tpl = $('note-' + n); if (!tpl) return;
+    cur = { kind: 'note', n };
+    numEl.className = 'num'; numEl.textContent = lab(n);
+    kindEl.textContent = 'Toelichting ' + lab(n); titleEl.textContent = tpl.dataset.title;
+    bodyEl.replaceChildren(tpl.content.cloneNode(true)); bodyEl.scrollTop = 0;
+    bodyEl.querySelectorAll('sup.ref').forEach(s => { s.tabIndex = 0; s.setAttribute('role', 'button'); });
+    relEl.replaceChildren();
+    const s = NOTE_STEP[n];
+    if (s) { relEl.append(el('span', null, 'Hoort bij:')); relEl.append(chip(s, 'Stap ' + s + ': ' + S(s).title, () => showStep(s))); }
+    else relEl.append(el('span', null, 'Hoort bij: actor MOZa (dienstbemiddelaar?)'));
+    const i = NOTES.indexOf(n); prevBtn.disabled = i <= 0; nextBtn.disabled = i >= NOTES.length - 1;
+    open();
+  }
+  function go(d) {
+    if (!cur) return;
+    if (cur.kind === 'step') showStep(cur.n + d);
+    else showNote(NOTES[NOTES.indexOf(cur.n) + d]);
+  }
+  function closePanel() { dlg.hidden = true; layout.classList.remove('panel-open'); cur = null; markActive(); }
+
+  STEPS.forEach(s => { const c = chip(s.n, null, () => showStep(s.n)); c.title = 'Stap ' + s.n + ': ' + s.title; $('step-chips').append(c); });
+  $('start').addEventListener('click', () => showStep(1));
+  NOTES.forEach(n => $('chips').append(chip(lab(n), noteTitle(n), () => showNote(n))));
+
+  function bind(sel, fn) {
+    svg.querySelectorAll(sel).forEach(e => {
+      e.addEventListener('click', ev => { ev.stopPropagation(); fn(e); });
+      e.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); fn(e); } });
+    });
+  }
+  bind('.snum', e => showStep(+e.closest('.step').dataset.step));
+  bind('.tbadge', e => showNote(key(e.dataset.note)));
+  bodyEl.addEventListener('click', e => { const s = e.target.closest('sup.ref'); if (s) showNote(key(s.dataset.ref)); });
+  prevBtn.addEventListener('click', () => go(-1));
+  nextBtn.addEventListener('click', () => go(1));
+  $('dlg-close').addEventListener('click', closePanel);
+  document.addEventListener('keydown', e => {
+    if (dlg.hidden) return;
+    if (e.key === 'Escape') closePanel();
+    if (e.key === 'ArrowRight' && !nextBtn.disabled) go(1);
+    if (e.key === 'ArrowLeft' && !prevBtn.disabled) go(-1);
+  });
+})();
+</script>
+</body>
+</html>

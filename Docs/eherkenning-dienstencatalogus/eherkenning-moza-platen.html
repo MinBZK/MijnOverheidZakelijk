@@ -286,6 +286,16 @@
     padding: 4px 12px; background: var(--surface);
   }
   .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
+  .status { display: flex; gap: 12px; align-items: flex-start; border-radius: 12px; padding: 12px 16px; margin: 0 0 18px; border: 1.5px solid; max-width: 860px; }
+  .status .st-tag { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; color: #fff; margin-top: 2px; }
+  .status p { margin: 0; font-size: .92rem; }
+  .status.concept { background: color-mix(in srgb, #d97706 9%, var(--surface)); border-color: #d97706; border-style: dashed; }
+  .status.concept .st-tag { background: #b45309; }
+  .status.existing { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: var(--bd-stroke); }
+  .status.existing .st-tag { background: #3f7d2a; }
+  .tag-mini { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; color: #fff; margin-left: 6px; vertical-align: 1px; }
+  .tag-mini.concept { background: #b45309; }
+  .tag-mini.existing { background: #3f7d2a; }
 
   main { max-width: 1040px; }
   .lede { color: var(--muted); max-width: 720px; margin: 0 0 8px; font-size: 1.02rem; }
@@ -305,6 +315,7 @@
   .ic-line line { stroke: var(--muted); stroke-width: 2; }
   .ic-dot circle, .ic-dot rect { fill: var(--badge); }
   .ic-pill rect { fill: var(--bd-stroke); opacity: .7; }
+  .card.concept { border-style: dashed; }
   .card.o1 .ic-dot circle { fill: #7c3aed; }
   .card.o2 .ic-dot circle { fill: #0e7490; }
   .meta { display: flex; align-items: center; gap: 8px; }
@@ -328,6 +339,7 @@
   <p class="lede">Verkenning van hoe inloggen met eHerkenning werkt, en hoe MOZa als dienstbemiddelaar diensten van meerdere dienstverleners in één portaal zou kunnen ontsluiten.</p>
   <ul class="guide">
     <li>De platen bouwen op elkaar voort: begin bij 1</li>
+    <li>Plaat 2 is de bestaande flow; plaat 3 en 4 zijn conceptflows waarvan nog niet vaststaat of ze kunnen</li>
     <li>Vragen zijn over alle platen heen doorgenummerd</li>
     <li>Op elke plaat: klik op een nummer voor uitleg</li>
   </ul>
@@ -345,25 +357,25 @@
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">2</span><span class="kind">Bestaande flow</span></div>
+      <div class="meta"><span class="num">2</span><span class="kind">Bestaande flow</span><span class="tag-mini existing">Werkt al zo</span></div>
       <h2>Bilal logt in bij een losse dienst</h2>
       <p>Stap voor stap hoe inloggen met eHerkenning nu werkt bij één dienst (UWV Werkgeversportaal): makelaar, leverancier, machtigingen en de assertion.</p>
       <div class="foot"><span class="qs">Vragen 10–11</span><span class="go">Open plaat →</span></div>
     </a>
-    <a class="card o2" href="#inloggen-moza-optie1">
+    <a class="card o2 concept" href="#inloggen-moza-optie1">
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">3</span><span class="kind">Gewenste flow · MOZa optie 1</span></div>
+      <div class="meta"><span class="num">3</span><span class="kind">Conceptflow · MOZa optie 1</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling mét portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal als één portaaldienst: één inlogverzoek voor het hele portaal en machtigingen in bulk.</p>
       <div class="foot"><span class="qs">Vragen 12–17</span><span class="go">Open plaat →</span></div>
     </a>
-    <a class="card o1" href="#inloggen-moza-optie2">
+    <a class="card o1 concept" href="#inloggen-moza-optie2">
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">4</span><span class="kind">Gewenste flow · MOZa optie 2</span></div>
+      <div class="meta"><span class="num">4</span><span class="kind">Conceptflow · MOZa optie 2</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling zónder portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal en MOZa bemiddelt voor elke dienst afzonderlijk. Met drie mogelijke varianten (A, B, C) voor het inlogverzoek en de assertion.</p>
       <div class="foot"><span class="qs">Vragen 18–21</span><span class="go">Open plaat →</span></div>
@@ -659,6 +671,16 @@
     padding: 4px 12px; background: var(--surface);
   }
   .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
+  .status { display: flex; gap: 12px; align-items: flex-start; border-radius: 12px; padding: 12px 16px; margin: 0 0 18px; border: 1.5px solid; max-width: 860px; }
+  .status .st-tag { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; color: #fff; margin-top: 2px; }
+  .status p { margin: 0; font-size: .92rem; }
+  .status.concept { background: color-mix(in srgb, #d97706 9%, var(--surface)); border-color: #d97706; border-style: dashed; }
+  .status.concept .st-tag { background: #b45309; }
+  .status.existing { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: var(--bd-stroke); }
+  .status.existing .st-tag { background: #3f7d2a; }
+  .tag-mini { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; color: #fff; margin-left: 6px; vertical-align: 1px; }
+  .tag-mini.concept { background: #b45309; }
+  .tag-mini.existing { background: #3f7d2a; }
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -672,17 +694,6 @@
     &lt;div&gt;
       &lt;h2&gt;Toelichtingen&lt;/h2&gt;
       &lt;div class=&quot;chips&quot; id=&quot;chips&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-      &lt;h2&gt;Legenda&lt;/h2&gt;
-      &lt;ul class=&quot;legend&quot;&gt;
-        &lt;li&gt;&lt;svg width=&quot;34&quot; height=&quot;12&quot; aria-hidden=&quot;true&quot;&gt;&lt;line x1=&quot;0&quot; y1=&quot;6&quot; x2=&quot;34&quot; y2=&quot;6&quot; stroke=&quot;var(--rvo-stroke)&quot; stroke-width=&quot;8&quot;/&gt;&lt;/svg&gt;RVO&lt;/li&gt;
-        &lt;li&gt;&lt;svg width=&quot;34&quot; height=&quot;12&quot; aria-hidden=&quot;true&quot;&gt;&lt;line x1=&quot;0&quot; y1=&quot;6&quot; x2=&quot;34&quot; y2=&quot;6&quot; stroke=&quot;var(--bd-stroke)&quot; stroke-width=&quot;8&quot;/&gt;&lt;/svg&gt;BD&lt;/li&gt;
-        &lt;li&gt;&lt;svg width=&quot;34&quot; height=&quot;12&quot; aria-hidden=&quot;true&quot;&gt;&lt;line x1=&quot;0&quot; y1=&quot;6&quot; x2=&quot;34&quot; y2=&quot;6&quot; stroke=&quot;var(--justis-stroke)&quot; stroke-width=&quot;8&quot;/&gt;&lt;/svg&gt;Justis&lt;/li&gt;
-        &lt;li&gt;&lt;svg width=&quot;34&quot; height=&quot;12&quot; aria-hidden=&quot;true&quot;&gt;&lt;line x1=&quot;0&quot; y1=&quot;6&quot; x2=&quot;34&quot; y2=&quot;6&quot; stroke=&quot;var(--line)&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;Bestaande relatie&lt;/li&gt;
-        &lt;li&gt;&lt;svg width=&quot;34&quot; height=&quot;12&quot; aria-hidden=&quot;true&quot;&gt;&lt;line x1=&quot;0&quot; y1=&quot;6&quot; x2=&quot;34&quot; y2=&quot;6&quot; stroke=&quot;var(--opt2)&quot; stroke-width=&quot;2&quot; stroke-dasharray=&quot;7 5&quot;/&gt;&lt;/svg&gt;MOZa? Optie 1 / MOZa portaal&lt;/li&gt;
-        &lt;li&gt;&lt;svg width=&quot;34&quot; height=&quot;12&quot; aria-hidden=&quot;true&quot;&gt;&lt;line x1=&quot;0&quot; y1=&quot;6&quot; x2=&quot;34&quot; y2=&quot;6&quot; stroke=&quot;var(--opt1)&quot; stroke-width=&quot;2&quot; stroke-dasharray=&quot;7 5&quot;/&gt;&lt;/svg&gt;MOZa? Optie 2&lt;/li&gt;
-      &lt;/ul&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -1396,6 +1407,16 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     padding: 4px 12px; background: var(--surface);
   }
   .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
+  .status { display: flex; gap: 12px; align-items: flex-start; border-radius: 12px; padding: 12px 16px; margin: 0 0 18px; border: 1.5px solid; max-width: 860px; }
+  .status .st-tag { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; color: #fff; margin-top: 2px; }
+  .status p { margin: 0; font-size: .92rem; }
+  .status.concept { background: color-mix(in srgb, #d97706 9%, var(--surface)); border-color: #d97706; border-style: dashed; }
+  .status.concept .st-tag { background: #b45309; }
+  .status.existing { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: var(--bd-stroke); }
+  .status.existing .st-tag { background: #3f7d2a; }
+  .tag-mini { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; color: #fff; margin-left: 6px; vertical-align: 1px; }
+  .tag-mini.concept { background: #b45309; }
+  .tag-mini.existing { background: #3f7d2a; }
 
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
@@ -1447,7 +1468,8 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
 &lt;main&gt;
   &lt;p class=&quot;crumb&quot;&gt;&lt;a class=&quot;home-btn&quot; href=&quot;#&quot; data-nav=&quot;home&quot;&gt;← Terug naar hoofdpagina&lt;/a&gt;&lt;/p&gt;
   &lt;h1&gt;Bilal logt in bij een losse dienst&lt;/h1&gt;
-  &lt;p class=&quot;intro&quot;&gt;Bestaande flow. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Het paneel verschijnt naast het diagram.&lt;/p&gt;
+  &lt;div class=&quot;status existing&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Bestaande flow&lt;/span&gt;&lt;p&gt;Zo werkt inloggen met eHerkenning nu al bij een losse dienst. Deze plaat beschrijft de huidige situatie en dient als basis voor de conceptflows van MOZa (plaat 3 en 4).&lt;/p&gt;&lt;/div&gt;
+  &lt;p class=&quot;intro&quot;&gt;Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Het paneel verschijnt naast het diagram.&lt;/p&gt;
 
   &lt;div class=&quot;toolbar&quot;&gt;
     &lt;div&gt;
@@ -1974,6 +1996,16 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     padding: 4px 12px; background: var(--surface);
   }
   .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
+  .status { display: flex; gap: 12px; align-items: flex-start; border-radius: 12px; padding: 12px 16px; margin: 0 0 18px; border: 1.5px solid; max-width: 860px; }
+  .status .st-tag { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; color: #fff; margin-top: 2px; }
+  .status p { margin: 0; font-size: .92rem; }
+  .status.concept { background: color-mix(in srgb, #d97706 9%, var(--surface)); border-color: #d97706; border-style: dashed; }
+  .status.concept .st-tag { background: #b45309; }
+  .status.existing { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: var(--bd-stroke); }
+  .status.existing .st-tag { background: #3f7d2a; }
+  .tag-mini { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; color: #fff; margin-left: 6px; vertical-align: 1px; }
+  .tag-mini.concept { background: #b45309; }
+  .tag-mini.existing { background: #3f7d2a; }
 
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
@@ -2095,7 +2127,8 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
 &lt;main&gt;
   &lt;p class=&quot;crumb&quot;&gt;&lt;a class=&quot;home-btn&quot; href=&quot;#&quot; data-nav=&quot;home&quot;&gt;← Terug naar hoofdpagina&lt;/a&gt;&lt;/p&gt;
   &lt;h1&gt;MOZa-portaal via dienstbemiddeling mét portaaldienst&lt;/h1&gt;
-  &lt;p class=&quot;intro&quot;&gt;Gewenste flow volgens MOZa optie 1: dienstbemiddeling mét portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.&lt;/p&gt;
+  &lt;div class=&quot;status concept&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Conceptflow&lt;/span&gt;&lt;p&gt;Dit is een denkrichting, geen bestaande flow. We weten nog niet of dit binnen het eHerkenningsstelsel allemaal kan: de vragen op deze plaat moeten dat uitwijzen. De bestaande flow staat op plaat 2.&lt;/p&gt;&lt;/div&gt;
+  &lt;p class=&quot;intro&quot;&gt;Conceptflow voor MOZa optie 1: dienstbemiddeling mét portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.&lt;/p&gt;
   &lt;div class=&quot;toolbar&quot;&gt;
     &lt;div&gt;
       &lt;h2&gt;Stappen&lt;/h2&gt;
@@ -2606,6 +2639,16 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     padding: 4px 12px; background: var(--surface);
   }
   .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
+  .status { display: flex; gap: 12px; align-items: flex-start; border-radius: 12px; padding: 12px 16px; margin: 0 0 18px; border: 1.5px solid; max-width: 860px; }
+  .status .st-tag { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; color: #fff; margin-top: 2px; }
+  .status p { margin: 0; font-size: .92rem; }
+  .status.concept { background: color-mix(in srgb, #d97706 9%, var(--surface)); border-color: #d97706; border-style: dashed; }
+  .status.concept .st-tag { background: #b45309; }
+  .status.existing { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: var(--bd-stroke); }
+  .status.existing .st-tag { background: #3f7d2a; }
+  .tag-mini { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; color: #fff; margin-left: 6px; vertical-align: 1px; }
+  .tag-mini.concept { background: #b45309; }
+  .tag-mini.existing { background: #3f7d2a; }
 
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
@@ -2723,7 +2766,8 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
 &lt;main&gt;
   &lt;p class=&quot;crumb&quot;&gt;&lt;a class=&quot;home-btn&quot; href=&quot;#&quot; data-nav=&quot;home&quot;&gt;← Terug naar hoofdpagina&lt;/a&gt;&lt;/p&gt;
   &lt;h1&gt;MOZa-portaal via dienstbemiddeling zónder portaaldienst&lt;/h1&gt;
-  &lt;p class=&quot;intro&quot;&gt;Gewenste flow volgens MOZa optie 2: dienstbemiddeling zónder portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Stap 4 en 11 kennen elk drie mogelijke varianten (A, B of C); na stap 13 gaat alleen variant B verder.&lt;/p&gt;
+  &lt;div class=&quot;status concept&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Conceptflow&lt;/span&gt;&lt;p&gt;Dit is een denkrichting, geen bestaande flow. We weten nog niet of dit binnen het eHerkenningsstelsel allemaal kan: de vragen op deze plaat moeten dat uitwijzen. De bestaande flow staat op plaat 2.&lt;/p&gt;&lt;/div&gt;
+  &lt;p class=&quot;intro&quot;&gt;Conceptflow voor MOZa optie 2: dienstbemiddeling zónder portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Stap 4 en 11 kennen elk drie mogelijke varianten (A, B of C); na stap 13 gaat alleen variant B verder.&lt;/p&gt;
 
   &lt;div class=&quot;toolbar&quot;&gt;
     &lt;div&gt;

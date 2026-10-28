@@ -286,6 +286,16 @@
     padding: 4px 12px; background: var(--surface);
   }
   .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
+  .status { display: flex; gap: 12px; align-items: flex-start; border-radius: 12px; padding: 12px 16px; margin: 0 0 18px; border: 1.5px solid; max-width: 860px; }
+  .status .st-tag { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; color: #fff; margin-top: 2px; }
+  .status p { margin: 0; font-size: .92rem; }
+  .status.concept { background: color-mix(in srgb, #d97706 9%, var(--surface)); border-color: #d97706; border-style: dashed; }
+  .status.concept .st-tag { background: #b45309; }
+  .status.existing { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: var(--bd-stroke); }
+  .status.existing .st-tag { background: #3f7d2a; }
+  .tag-mini { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; color: #fff; margin-left: 6px; vertical-align: 1px; }
+  .tag-mini.concept { background: #b45309; }
+  .tag-mini.existing { background: #3f7d2a; }
 
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
@@ -337,7 +347,8 @@
 <main>
   <p class="crumb"><a class="home-btn" href="index.html">← Terug naar hoofdpagina</a></p>
   <h1>Bilal logt in bij een losse dienst</h1>
-  <p class="intro">Bestaande flow. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Het paneel verschijnt naast het diagram.</p>
+  <div class="status existing"><span class="st-tag">Bestaande flow</span><p>Zo werkt inloggen met eHerkenning nu al bij een losse dienst. Deze plaat beschrijft de huidige situatie en dient als basis voor de conceptflows van MOZa (plaat 3 en 4).</p></div>
+  <p class="intro">Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Het paneel verschijnt naast het diagram.</p>
 
   <div class="toolbar">
     <div>

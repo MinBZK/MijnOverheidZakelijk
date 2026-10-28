@@ -286,6 +286,16 @@
     padding: 4px 12px; background: var(--surface);
   }
   .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
+  .status { display: flex; gap: 12px; align-items: flex-start; border-radius: 12px; padding: 12px 16px; margin: 0 0 18px; border: 1.5px solid; max-width: 860px; }
+  .status .st-tag { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; color: #fff; margin-top: 2px; }
+  .status p { margin: 0; font-size: .92rem; }
+  .status.concept { background: color-mix(in srgb, #d97706 9%, var(--surface)); border-color: #d97706; border-style: dashed; }
+  .status.concept .st-tag { background: #b45309; }
+  .status.existing { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: var(--bd-stroke); }
+  .status.existing .st-tag { background: #3f7d2a; }
+  .tag-mini { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; color: #fff; margin-left: 6px; vertical-align: 1px; }
+  .tag-mini.concept { background: #b45309; }
+  .tag-mini.existing { background: #3f7d2a; }
 
   main { max-width: 1040px; }
   .lede { color: var(--muted); max-width: 720px; margin: 0 0 8px; font-size: 1.02rem; }
@@ -305,6 +315,7 @@
   .ic-line line { stroke: var(--muted); stroke-width: 2; }
   .ic-dot circle, .ic-dot rect { fill: var(--badge); }
   .ic-pill rect { fill: var(--bd-stroke); opacity: .7; }
+  .card.concept { border-style: dashed; }
   .card.o1 .ic-dot circle { fill: #7c3aed; }
   .card.o2 .ic-dot circle { fill: #0e7490; }
   .meta { display: flex; align-items: center; gap: 8px; }
@@ -323,6 +334,7 @@
   <p class="lede">Verkenning van hoe inloggen met eHerkenning werkt, en hoe MOZa als dienstbemiddelaar diensten van meerdere dienstverleners in één portaal zou kunnen ontsluiten.</p>
   <ul class="guide">
     <li>De platen bouwen op elkaar voort: begin bij 1</li>
+    <li>Plaat 2 is de bestaande flow; plaat 3 en 4 zijn conceptflows waarvan nog niet vaststaat of ze kunnen</li>
     <li>Vragen zijn over alle platen heen doorgenummerd</li>
     <li>Op elke plaat: klik op een nummer voor uitleg</li>
   </ul>
@@ -340,25 +352,25 @@
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">2</span><span class="kind">Bestaande flow</span></div>
+      <div class="meta"><span class="num">2</span><span class="kind">Bestaande flow</span><span class="tag-mini existing">Werkt al zo</span></div>
       <h2>Bilal logt in bij een losse dienst</h2>
       <p>Stap voor stap hoe inloggen met eHerkenning nu werkt bij één dienst (UWV Werkgeversportaal): makelaar, leverancier, machtigingen en de assertion.</p>
       <div class="foot"><span class="qs">Vragen 10–11</span><span class="go">Open plaat →</span></div>
     </a>
-    <a class="card o2" href="inloggen-moza-optie1.html">
+    <a class="card o2 concept" href="inloggen-moza-optie1.html">
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">3</span><span class="kind">Gewenste flow · MOZa optie 1</span></div>
+      <div class="meta"><span class="num">3</span><span class="kind">Conceptflow · MOZa optie 1</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling mét portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal als één portaaldienst: één inlogverzoek voor het hele portaal en machtigingen in bulk.</p>
       <div class="foot"><span class="qs">Vragen 12–17</span><span class="go">Open plaat →</span></div>
     </a>
-    <a class="card o1" href="inloggen-moza-optie2.html">
+    <a class="card o1 concept" href="inloggen-moza-optie2.html">
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">4</span><span class="kind">Gewenste flow · MOZa optie 2</span></div>
+      <div class="meta"><span class="num">4</span><span class="kind">Conceptflow · MOZa optie 2</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling zónder portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal en MOZa bemiddelt voor elke dienst afzonderlijk. Met drie mogelijke varianten (A, B, C) voor het inlogverzoek en de assertion.</p>
       <div class="foot"><span class="qs">Vragen 18–21</span><span class="go">Open plaat →</span></div>

@@ -453,10 +453,10 @@
 </aside>
 </div>
 
-<!-- ============ Toelichtingen (tekst ongewijzigd overgenomen, alleen opmaak aangepast) ============ -->
+<!-- ============ Toelichtingen ============ -->
 
 <template id="note-1" data-title="Diensten">
-  <h3 class="sec-title">Bij registreren van een dienst moet de volgende informatie worden geregistreerd:</h3>
+  <h3 class="sec-title">Bij het registreren van een dienst moet de volgende informatie worden vastgelegd:</h3>
   <ul class="fields">
     <li>Dienstverlenernaam (<code>OrganizationDisplayName</code>)</li>
     <li>Dienstnaam (<code>ServiceName</code>)</li>
@@ -465,132 +465,132 @@
   </ul>
   <p class="src"><span>Bron: <a href="https://www.eherkenning.nl/sites/default/files/2022-02/Handleiding%20Dienstencatalogus%20versie%20VII.pdf" target="_blank" rel="noopener">Communicatie Handleiding eHerkenning versie 2 2017</a></span></p>
   <div>
-    <p>Daarnaast kan (moet?) o.a. aangegeven worden of voor de betreffende dienst SSO ondersteund wordt (<code>SSOSupport</code>), en of de dienst door een Dienstbemiddelaar mag worden ontsloten (<code>ServiceIntermediationAllowed</code>).</p>
+    <p>Daarnaast kan (of moet?) onder andere worden aangegeven of de dienst SSO ondersteunt (<code>SSOSupport</code>) en of de dienst door een dienstbemiddelaar mag worden ontsloten (<code>ServiceIntermediationAllowed</code>).</p>
     <p class="src"><span>Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a></span></p>
   </div>
   <div class="callout info">
-    <p>Aansluiten op het eHerkenningssteldel gaat via een eHerkenninsmakelaar (marktpartij). Dienstverlener kiest zelf welke.</p>
+    <p>Een dienstverlener sluit aan op het eHerkenningsstelsel via een eHerkenningsmakelaar (een marktpartij) naar eigen keuze.</p>
   </div>
 </template>
 
 <template id="note-2" data-title="Portaaldiensten">
   <div>
-    <p>Een dienstaanbieder registreert de losse diensten, maar kan daarnaast ook een portaaldienst registreren (<code>IsPortal = true</code>). Portaaldienst is dus een speciaal type dienst. Hierbij moet worden verwezen naar welke diensten er in dit portaal zitten (met <code>PortalForService</code> -&gt; <code>ServiceID</code>'s van de beoogde diensten).</p>
+    <p>Een dienstaanbieder registreert de afzonderlijke diensten, maar kan daarnaast ook een portaaldienst registreren (<code>IsPortal = true</code>). Een portaaldienst is dus een speciaal type dienst. Daarin wordt verwezen naar de diensten die onder het portaal vallen, via <code>PortalForService</code> met de <code>ServiceID</code>'s van die diensten.</p>
     <p class="src"><span>Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a></span></p>
   </div>
   <div>
-    <p>Voor een portaaldienst kan bij het inloggen in bulk het machtigingenregister bevraagd worden: "Voor welke diensten in dit portaal is deze gebruiker gemachtigd namens zijn onderneming?" Hierdoor hoeft er maar 1x ingelogd te worden, en zijn losse inlogverzoeken voor de onderliggende diensten niet nodig.</p>
+    <p>Bij het inloggen op een portaaldienst kan het machtigingenregister in één keer (in bulk) worden bevraagd: "Voor welke diensten in dit portaal is deze gebruiker gemachtigd namens zijn onderneming?" De gebruiker hoeft dan maar één keer in te loggen; aparte inlogverzoeken voor de onderliggende diensten zijn niet nodig.</p>
     <p class="src"><span>Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/guc4-3-portaalfunctie" target="_blank" rel="noopener">GUC4.3 Portaalfunctie | Afsprakenstelsel eToegang</a></span></p>
   </div>
   <div class="callout idea">
-    <p class="callout-title">Dit is mogelijk interessant voor MOZa:</p>
+    <p class="callout-title">Mogelijk interessant voor MOZa:</p>
     <ul>
-      <li>Hypothese: MOZa registreert een Portaaldienst ("MOZa portaal") met verwijzing naar alle bij MOZa aangesloten diensten</li>
-      <li>Bij inloggen op het MOZa portaal wordt het register bevraagd in bulk.</li>
-      <li>MOZa krijgt terug: Gebruiker is gemachtigd voor diensten x,y,z, --&gt; na inloggen worden direct de diensten ingelogd/zichtbaar waarvoor deze gebruiker gemachtigd is, <i>zonder</i> dat hierbij voor de onderliggende diensten losse inlogverzoeken hoeven te worden verstuurd en opnieuw het register moet worden bevraagd op bevoegdheid.</li>
+      <li>Hypothese: MOZa registreert een portaaldienst ("MOZa portaal") die verwijst naar alle diensten die op MOZa zijn aangesloten.</li>
+      <li>Bij het inloggen op het MOZa portaal wordt het register in bulk bevraagd.</li>
+      <li>MOZa krijgt terug voor welke diensten (bijv. x, y en z) de gebruiker gemachtigd is. Direct na het inloggen zijn die diensten beschikbaar, <i>zonder</i> dat er per onderliggende dienst een apart inlogverzoek en een nieuwe bevoegdheidscheck in het register nodig is.</li>
     </ul>
   </div>
   <p class="divider">Maar:</p>
   <div class="callout warn">
     <p class="callout-title">Belangrijke beperking in het stelsel:</p>
     <blockquote><i>PortalForService MUST ONLY contain existing ServiceIDs referring to service(s) of the same ServiceProvider that the portal belongs to.</i></blockquote>
-    <p>D.w.z.: Een portaaldienst hoort bij één dienstaanbieder; en kan dus alleen diensten bevatten die bij diezelfde dienstaanbieder horen.</p>
+    <p>Met andere woorden: een portaaldienst hoort bij één dienstaanbieder en kan alleen diensten van diezelfde dienstaanbieder bevatten.</p>
     <p class="src"><span>Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a></span></p>
   </div>
-  <p><b>Dus dit leidt tot open vraag --&gt; zie <sup class="ref" data-ref="3">3</sup>.</b></p>
+  <p><b>Dit leidt tot een open vraag → zie <sup class="ref" data-ref="3">3</sup>.</b></p>
 </template>
 
 <template id="note-3" data-title="Portaaldienst namens meerdere dienstaanbieders? — &quot;MOZa portaal&quot;">
   <div class="q">
-    <p><span class="q-label">Open vraag (1)</span>Is het mogelijk om een portaaldienst te registeren met verwijzingen naar diensten van <i>verschillende</i> dienstaanbieders?</p>
+    <p><span class="q-label">Open vraag (1)</span>Kan een portaaldienst worden geregistreerd die verwijst naar diensten van <i>verschillende</i> dienstaanbieders?</p>
     <ul>
-      <li>Enerzijds lijkt dit uitgesloten door:
-        <blockquote>"<i>PortalForService MUST ONLY contain existing ServiceIDs referring to service(s) of the same ServiceProvider that the portal belongs to.</i>" (Zie <sup class="ref" data-ref="2">2</sup>)</blockquote>
+      <li>Enerzijds lijkt dit uitgesloten door de regel (zie <sup class="ref" data-ref="2">2</sup>):
+        <blockquote>"<i>PortalForService MUST ONLY contain existing ServiceIDs referring to service(s) of the same ServiceProvider that the portal belongs to.</i>"</blockquote>
       </li>
-      <li>Anderzijds lijkt dit wel te bestaan --&gt; zie onderstaand citaat uit pagina <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/aansluiten-als-dienstbemiddelaar" target="_blank" rel="noopener">Aansluiten als dienstbemiddelaar | Afsprakenstelsel eToegang</a>:
+      <li>Anderzijds lijkt het wél te kunnen, gezien dit citaat van de pagina <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/aansluiten-als-dienstbemiddelaar" target="_blank" rel="noopener">Aansluiten als dienstbemiddelaar | Afsprakenstelsel eToegang</a>:
         <blockquote>"<i>Er is sprake van <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/dienstbemiddeling" target="_blank" rel="noopener">Dienstbemiddeling</a> in de volgende gevallen: 1. ... , 2. ... , 3. <b>Hetzelfde portaal/dezelfde aansluiting wordt namens meer dan één dienstverlener aangeboden.</b></i>"</blockquote>
       </li>
     </ul>
   </div>
   <div class="q">
-    <p><span class="q-label">Open vraag (2)</span>Betekent (3) dan ook dat <i>als</i> zo'n portaaldienst namens meerdere dienstaanbieders inderdaad kan bestaan, dat er dus altijd dienstbemiddeling nodig is om de authenticatie/autorisatie te regelen voor zo'n portaal?</p>
+    <p><span class="q-label">Open vraag (2)</span>Als zo'n portaaldienst namens meerdere dienstaanbieders inderdaad kan bestaan: betekent geval 3 uit dit citaat dan dat er altijd dienstbemiddeling nodig is om de authenticatie/autorisatie voor zo'n portaal te regelen?</p>
   </div>
 </template>
 
 <template id="note-4" data-title="Dienstbemiddelaars">
   <div>
-    <p class="lead">Een aparte dienstverlener sluit zich als Dienstbemiddelaar aan om namens een andere Dienstaanbieder de dienst te leveren aan de gebruiker (Dienstafnemer).</p>
+    <p class="lead">Een aparte dienstverlener sluit zich aan als dienstbemiddelaar om namens een andere dienstaanbieder de dienst te leveren aan de gebruiker (de dienstafnemer).</p>
     <p class="src"><a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/aansluiten-als-dienstbemiddelaar" target="_blank" rel="noopener">Aansluiten als dienstbemiddelaar | Afsprakenstelsel eToegang</a></p>
   </div>
   <div class="callout warn">
     <p class="callout-title">Belangrijke beperking in het stelsel:</p>
-    <p>Dienstbemiddeling is momenteel nog beperkt tot eIDAS-outbound.</p>
-    <p class="src"><span>Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a> --&gt; "<i>only available for eIDAS-outbound</i>";</span></p>
-    <p class="src"><span>Bron: <a href="https://docs.rijksapp.nl/docs/3f27cbcd-1ca7-4d34-a3e4-8a8fdc24a55f/" target="_blank" rel="noopener">Analyse e-herkenning - Mijn Bureau Docs</a> --&gt; "<i>Tevens ondersteunt het alleen EIDAS uitgaand. Is dus nog in ontwikkeling en heeft ten opzichte van andere wensen binnen het stelsel minder prio -&gt; lange doorlooptijd</i>."</span></p>
+    <p>Dienstbemiddeling is op dit moment nog beperkt tot eIDAS-outbound.</p>
+    <p class="src"><span>Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a>: "<i>only available for eIDAS-outbound</i>"</span></p>
+    <p class="src"><span>Bron: <a href="https://docs.rijksapp.nl/docs/3f27cbcd-1ca7-4d34-a3e4-8a8fdc24a55f/" target="_blank" rel="noopener">Analyse e-herkenning - Mijn Bureau Docs</a>: "<i>Tevens ondersteunt het alleen EIDAS uitgaand. Is dus nog in ontwikkeling en heeft ten opzichte van andere wensen binnen het stelsel minder prio -&gt; lange doorlooptijd</i>."</span></p>
   </div>
   <div class="q">
-    <p><span class="q-label">Open vraag (3)</span>Wat betekent dit precies? En hoe ziet de tijdlijn van ontwikkelingen omtrent de functionaliteit Dienstbemiddeling eruit?</p>
+    <p><span class="q-label">Open vraag (3)</span>Wat betekent deze beperking precies? En hoe ziet de tijdlijn voor de verdere ontwikkeling van dienstbemiddeling eruit?</p>
   </div>
 </template>
 
 <template id="note-5" data-title="&quot;Loket Zorgtoeslag&quot;">
-  <h3 class="sec-title">Dienstbemiddeling Voorbeeld (huidige situatie)</h3>
+  <h3 class="sec-title">Voorbeeld van dienstbemiddeling (huidige situatie)</h3>
   <div class="callout example">
-    <p>Fictief voorbeeld --&gt; aparte dienstverlener (met eigen website etc.) die namens de Belastingdienst gebruikers helpt met de <i>dienst</i> "Zorgtoeslag aanvragen."</p>
+    <p>Fictief voorbeeld: een aparte dienstverlener met een eigen website helpt gebruikers namens de Belastingdienst met de <i>dienst</i> "Zorgtoeslag aanvragen".</p>
     <ol class="steps">
-      <li>Gebruiker logt (optisch) in op aparte website van de bemiddelaar</li>
-      <li>Bemiddelaar checkt de authenticatie/autorisatie van de gebruiker bij de dienst zelf.</li>
-      <li>Gebruiker is ingelogd op de site van de bemiddelaar die de dienst gaat regelen voor hem.</li>
+      <li>De gebruiker logt ogenschijnlijk in op de website van de bemiddelaar.</li>
+      <li>De bemiddelaar controleert de authenticatie/autorisatie van de gebruiker bij de dienst zelf.</li>
+      <li>De gebruiker is ingelogd op de website van de bemiddelaar, die de dienst namens de gebruiker regelt.</li>
     </ol>
   </div>
   <div class="q">
     <p><span class="q-label">Open vraag (4)</span>Klopt dit (ongeveer)?</p>
   </div>
   <div class="q">
-    <p><span class="q-label">Open vraag (5a)</span>Is het ook mogelijk voor één dienstbemiddelaar om méérdere diensten (van één dienstaanbieder) te bemiddelen?</p>
+    <p><span class="q-label">Open vraag (5a)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p>
   </div>
 </template>
 
 <template id="note-6" data-title="MOZa? — Optie 1">
-  <p class="lead"><span class="tag yes">Zo ja:</span> MOZa Optie 1</p>
-  <h3 class="sec-title">Als bemiddelaar voor meerdere diensten (zonder portaaldienst).</h3>
+  <p class="lead"><span class="tag yes">Zo ja</span> op open vraag (5a) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 1</p>
+  <h3 class="sec-title">MOZa als bemiddelaar voor meerdere diensten (zonder portaaldienst)</h3>
   <div>
     <div class="pc pro">
       <p class="pc-label">Voordeel</p>
-      <p>geen portaaldienst nodig --&gt; portaaldienst registreren voor diensten van <i>verschillende</i> dienstaanbieder is misschien niet mogelijk (Zie "Open vraag (1)").</p>
+      <p>Er is geen portaaldienst nodig. Dat is relevant, omdat een portaaldienst voor diensten van <i>verschillende</i> dienstaanbieders mogelijk niet kan (zie open vraag (1) <sup class="ref" data-ref="3">3</sup>).</p>
     </div>
     <div class="pc con">
       <p class="pc-label">Nadeel</p>
-      <p>Mogelijk (?) moet er voor elke dienst een apart inlogverzoek worden verstuurd (evt. met SSO) (bulk-bevraging niet mogelijk: dit kan alleen bij portaaldiensten).</p>
+      <p>Mogelijk (?) moet per dienst een apart inlogverzoek worden verstuurd (eventueel met SSO), omdat bulkbevraging alleen bij portaaldiensten kan.</p>
     </div>
   </div>
-  <p class="sub-title">Open vragen:</p>
+  <p class="sub-title">Open vragen</p>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (5b)</span>Vervolgvraag op "Open vraag (5a)": Is het ook mogelijk om dienstbemiddelaar te zijn voor meerdere diensten van <i>verschillende</i> dienstaanbieders?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (6a)</span>Kan dit inderdaad zonder portaaldienst waarin de betreffende diensten gebundeld zitten?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (6b)</span>Zo ja: Als de diensten <i>niet</i> in een portaaldienst gebundeld zijn, zoals in dit voorbeeld, dan is de functionaliteit van "machtigingen in bulk opvragen" niet van toepassing; dit geldt alleen voor portaaldiensten namelijk. Betekent dat dus dat er voor elke dienst een apart inlogverzoek moet worden verstuurd vanuit de bemiddelaar naar de diensten om de autorisatie te checken?</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (5b)</span>Vervolg op open vraag (5a): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (6a)</span>Kan dit inderdaad zonder portaaldienst waarin de betreffende diensten gebundeld zijn?</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (6b)</span>Zo ja: als de diensten <i>niet</i> in een portaaldienst gebundeld zijn, kunnen machtigingen niet in bulk worden opgevraagd (dat kan alleen bij portaaldiensten). Moet de bemiddelaar dan voor elke dienst een apart inlogverzoek versturen om de autorisatie te controleren?</p></div>
   </div>
 </template>
 
 <template id="note-7" data-title="MOZa? — Optie 2">
-  <p class="lead"><span class="tag no">Zo nee:</span> MOZa Optie 2</p>
-  <h3 class="sec-title">Als bemiddelaar voor een portaaldienst met meerdere diensten</h3>
+  <p class="lead"><span class="tag no">Zo nee</span> op open vraag (5a) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 2</p>
+  <h3 class="sec-title">MOZa als bemiddelaar voor één portaaldienst met meerdere diensten</h3>
   <div>
     <div class="pc pro">
       <p class="pc-label">Voordeel</p>
-      <p>machtigingen voor alle diensten kunnen mogelijk in bulk worden opgevraagd als de diensten in een portaal gebundeld zijn (zie <sup class="ref" data-ref="2">2</sup>)</p>
+      <p>De machtigingen voor alle diensten kunnen mogelijk in bulk worden opgevraagd, omdat de diensten in een portaal gebundeld zijn (zie <sup class="ref" data-ref="2">2</sup>).</p>
     </div>
     <div class="pc con">
       <p class="pc-label">Nadeel</p>
-      <p>het is niet duidelijk of een portaaldienst diensten van meerdere dienstaanbieders kan bevatten (Zie "Open vraag (1)").</p>
+      <p>Het is onduidelijk of een portaaldienst diensten van meerdere dienstaanbieders kan bevatten (zie open vraag (1) <sup class="ref" data-ref="3">3</sup>).</p>
     </div>
   </div>
-  <p class="sub-title">Open vragen:</p>
+  <p class="sub-title">Open vragen</p>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (7)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders? (Zie "Open vraag (1))?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (8a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>uberhaupt</i> door een dienstbemiddelaar geregeld worden?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (8b)</span>Vervolgvraag: kan dit ook voor portaaldiensten met diensten van meedere dienstaanbieders (deze vraag is afhankelijk van de eerdere antwoorden op Open vraag 7 en 8a)</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (8c)</span>Zo ja, kunnen de machtigingen voor alle diensten binnen het betreffende portaal hier inderdaad ook in bulk worden opgevraagd? Zie <sup class="ref" data-ref="2">2</sup>: dit is normaal gesproken wel mogelijk voor een portaaldienst namelijk. Maar de vraag is dus of dit ook kan als er diensten van meerdere dienstaanbieders in het portaal zitten.</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (7)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders? (Zie open vraag (1) <sup class="ref" data-ref="3">3</sup>.)</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (8a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>überhaupt</i> door een dienstbemiddelaar worden geregeld?</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (8b)</span>Vervolgvraag: kan dit ook voor een portaaldienst met diensten van meerdere dienstaanbieders? (Afhankelijk van de antwoorden op open vraag (7) en (8a).)</p></div>
+    <div class="q"><p><span class="q-label">Open vraag (8c)</span>Zo ja: kunnen de machtigingen voor alle diensten in dat portaal dan ook in bulk worden opgevraagd? Bij een portaaldienst kan dat normaal gesproken wel (zie <sup class="ref" data-ref="2">2</sup>), maar de vraag is of dat ook geldt als het portaal diensten van meerdere dienstaanbieders bevat.</p></div>
   </div>
 </template>
 

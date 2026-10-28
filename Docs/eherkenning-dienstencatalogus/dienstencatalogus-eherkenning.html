@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dienstencatalogus eHerkenning</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #1f2933;
+    --muted: #6b7280;
+    --border: #9aa1ab;
+    --region: #eef0f3;
+    --region-inner: #e2e5ea;
+    --line: #1f2933;
+    --badge: #154273;
+    --badge-text: #ffffff;
+    --rvo-fill: #dae8fc; --rvo-stroke: #6c8ebf;
+    --bd-fill: #d5e8d4;  --bd-stroke: #82b366;
+    --justis-fill: #ffe6cc; --justis-stroke: #d79b00;
+    --opt1: #7c3aed;
+    --opt2: #0e7490;
+    --focus: #f59e0b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111418; --surface: #1b1f24; --text: #e5e7eb; --muted: #9ca3af;
+      --border: #6b7280; --region: #1b1f24; --region-inner: #242a31; --line: #e5e7eb;
+      --badge: #8fb8e8; --badge-text: #0b1520;
+      --rvo-fill: #1e3350; --rvo-stroke: #7fa6d9;
+      --bd-fill: #1f3a24; --bd-stroke: #8cc276;
+      --justis-fill: #4a3214; --justis-stroke: #e0a83a;
+      --opt1: #b39af7; --opt2: #4fc3d9;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111418; --surface: #1b1f24; --text: #e5e7eb; --muted: #9ca3af;
+    --border: #6b7280; --region: #1b1f24; --region-inner: #242a31; --line: #e5e7eb;
+    --badge: #8fb8e8; --badge-text: #0b1520;
+    --rvo-fill: #1e3350; --rvo-stroke: #7fa6d9;
+    --bd-fill: #1f3a24; --bd-stroke: #8cc276;
+    --justis-fill: #4a3214; --justis-stroke: #e0a83a;
+    --opt1: #b39af7; --opt2: #4fc3d9;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "RijksoverheidSans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  .intro { color: var(--muted); margin: 0 0 20px; }
+
+  .toolbar {
+    display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .toolbar h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0 0 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font: inherit; font-size: .85rem; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px 3px 4px;
+  }
+  .chip:hover, .chip:focus-visible { border-color: var(--badge); outline: none; }
+  .chip .num {
+    display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--badge); color: var(--badge-text); font-weight: 700; font-size: .75rem;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85rem; list-style: none; margin: 0; padding: 0; }
+  .legend li { display: flex; align-items: center; gap: 6px; }
+  .legend svg { flex: none; }
+
+  .canvas {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    overflow-x: auto;
+  }
+  .canvas svg { display: block; width: 100%; min-width: 760px; height: auto; }
+
+  /* SVG styling */
+  .region { fill: var(--region); stroke: var(--border); stroke-width: 3; }
+  .region-inner { fill: var(--region-inner); stroke: var(--border); stroke-width: 2.5; }
+  .region-label { fill: var(--muted); font-weight: 700; font-size: 17px; }
+  .lane { stroke-width: 1.5; stroke-dasharray: 2 4; opacity: .9; }
+  .lane-label { font-size: 12px; font-weight: 700; fill: var(--muted); letter-spacing: .05em; }
+  .node text { fill: var(--text); font-size: 13.5px; pointer-events: none; }
+  .node .small { font-size: 11.5px; fill: var(--muted); }
+  .provider rect { stroke-width: 3; }
+  .rvo { fill: var(--rvo-fill); stroke: var(--rvo-stroke); }
+  .bd { fill: var(--bd-fill); stroke: var(--bd-stroke); }
+  .justis { fill: var(--justis-fill); stroke: var(--justis-stroke); }
+  .service rect { stroke-width: 1.5; }
+  .portal rect { stroke-width: 3; }
+  .hypo rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1.8; stroke-dasharray: 6 4; }
+  .hypo text { fill: var(--muted); }
+  .plain rect { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+
+  .edge { fill: none; stroke-width: 2; }
+  .edge.solid { stroke: var(--line); }
+  .edge.opt1 { stroke: var(--opt1); stroke-dasharray: 7 5; }
+  .edge.opt2 { stroke: var(--opt2); stroke-dasharray: 7 5; }
+  .offer { stroke-width: 9; stroke-linecap: butt; }
+  .offer.rvo { stroke: var(--rvo-stroke); }
+  .offer.bd { stroke: var(--bd-stroke); }
+  .offer.justis { stroke: var(--justis-stroke); }
+
+  .badge circle { fill: var(--badge); stroke: var(--surface); stroke-width: 2; }
+  .badge text { fill: var(--badge-text); font-size: 12px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+
+  [data-note] { cursor: pointer; }
+  [data-note]:focus { outline: none; }
+  [data-note]:focus-visible rect, [data-note]:focus-visible circle { stroke: var(--focus); stroke-width: 4; }
+  g[data-note]:hover .badge circle, g[data-note]:focus-visible .badge circle { fill: var(--focus); }
+
+  svg.dimmed .node, svg.dimmed .edge, svg.dimmed .offer { opacity: .18; transition: opacity .15s; }
+  svg.dimmed .hl { opacity: 1 !important; }
+  svg.dimmed .edge.hl { stroke-width: 3; }
+
+  /* Dialog */
+  dialog {
+    width: min(720px, calc(100vw - 32px));
+    max-height: calc(100vh - 48px);
+    padding: 0; border: 1px solid var(--border); border-radius: 14px;
+    background: var(--surface); color: var(--text);
+    box-shadow: 0 20px 50px rgba(0,0,0,.3);
+  }
+  dialog::backdrop { background: rgba(15, 23, 42, .45); }
+  .dlg { display: flex; flex-direction: column; max-height: calc(100vh - 50px); }
+  .dlg header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px; border-bottom: 1px solid var(--region-inner);
+  }
+  .dlg header .num {
+    flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--badge); color: var(--badge-text); font-weight: 700;
+  }
+  .dlg header h2 { font-size: 1.15rem; margin: 0; flex: 1; }
+  .icon-btn {
+    font: inherit; font-size: 1.4rem; line-height: 1; cursor: pointer;
+    background: none; border: none; color: var(--muted); padding: 4px 8px; border-radius: 6px;
+  }
+  .icon-btn:hover, .icon-btn:focus-visible { background: var(--region-inner); color: var(--text); outline: none; }
+  .dlg .body { padding: 16px 20px; overflow-y: auto; }
+  .dlg .body p { margin: 0 0 .7em; }
+  .dlg .body ul { margin: .2em 0 .8em; padding-left: 1.4em; list-style-type: circle; }
+  .dlg .body li { margin: .2em 0; }
+  .dlg .body a { color: var(--badge); }
+  .dlg .body .src { font-size: .9rem; color: var(--muted); }
+  .dlg .body .warn { font-weight: 600; }
+  .dlg .body .gap { height: .6em; }
+  sup.ref {
+    cursor: pointer; color: var(--badge-text); background: var(--badge);
+    border-radius: 999px; padding: 0 5px; font-weight: 700; font-size: .7em;
+  }
+  sup.ref:hover, sup.ref:focus-visible { background: var(--focus); outline: none; }
+  .dlg footer {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 12px 20px; border-top: 1px solid var(--region-inner);
+  }
+  .dlg footer .nav { display: flex; justify-content: space-between; gap: 8px; }
+  .dlg footer .related:empty { display: none; }
+  .dlg footer .related { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .85rem; color: var(--muted); }
+  .nav-btn {
+    font: inherit; font-size: .9rem; cursor: pointer;
+    background: var(--region-inner); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 5px 12px;
+  }
+  .nav-btn:disabled { opacity: .4; cursor: default; }
+  .nav-btn:not(:disabled):hover { border-color: var(--badge); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Dienstencatalogus eHerkenning</h1>
+  <p class="intro">Klik op een element met een nummertje om de bijbehorende toelichting te openen. Beweeg over een element om de verbindingen uit te lichten.</p>
+
+  <div class="toolbar">
+    <div>
+      <h2>Toelichtingen</h2>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div>
+      <h2>Legenda</h2>
+      <ul class="legend">
+        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--rvo-stroke)" stroke-width="8"/></svg>RVO</li>
+        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--bd-stroke)" stroke-width="8"/></svg>BD</li>
+        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--justis-stroke)" stroke-width="8"/></svg>Justis</li>
+        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--line)" stroke-width="2"/></svg>Bestaande relatie</li>
+        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--opt1)" stroke-width="2" stroke-dasharray="7 5"/></svg>MOZa? Optie 1</li>
+        <li><svg width="34" height="12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" stroke="var(--opt2)" stroke-width="2" stroke-dasharray="7 5"/></svg>MOZa? Optie 2 / MOZa portaal</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="canvas">
+    <svg id="diagram" viewBox="0 0 1100 790" role="img" aria-label="Diagram van de dienstencatalogus eHerkenning">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--line)"/>
+        </marker>
+        <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--opt1)"/>
+        </marker>
+        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--opt2)"/>
+        </marker>
+        <marker id="arrRVO" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--rvo-stroke)"/>
+        </marker>
+        <marker id="arrBD" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--bd-stroke)"/>
+        </marker>
+        <marker id="arrJustis" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--justis-stroke)"/>
+        </marker>
+      </defs>
+
+      <!-- ============ Dienstverleners ============ -->
+      <rect class="region" x="10" y="10" width="1080" height="250" rx="32"/>
+      <text class="region-label" x="550" y="40" text-anchor="middle">Dienstverleners</text>
+
+      <!-- Dienstaanbieders -->
+      <rect class="region-inner" x="30" y="58" width="640" height="182" rx="28"/>
+      <text class="region-label" x="350" y="92" text-anchor="middle">Dienstaanbieders</text>
+
+      <g class="node provider" data-id="rvo"><rect class="rvo" x="70" y="135" width="100" height="44" rx="10"/><text x="120" y="162" text-anchor="middle">RVO</text></g>
+      <g class="node provider" data-id="bd"><rect class="bd" x="280" y="135" width="100" height="44" rx="10"/><text x="330" y="162" text-anchor="middle">BD</text></g>
+      <g class="node provider" data-id="justis"><rect class="justis" x="510" y="135" width="100" height="44" rx="10"/><text x="560" y="162" text-anchor="middle">Justis</text></g>
+
+      <!-- Dienstbemiddelaars -->
+      <g data-note="4" tabindex="0" role="button" aria-label="Dienstbemiddelaars, toelichting 4">
+        <rect class="region-inner" x="690" y="58" width="380" height="182" rx="28"/>
+        <text class="region-label" x="870" y="92" text-anchor="middle">Dienstbemiddelaars</text>
+        <g class="badge" transform="translate(965 86)"><circle r="11"/><text>4</text></g>
+      </g>
+
+      <g class="node plain" data-id="loket" data-note="5" tabindex="0" role="button" aria-label="Loket Zorgtoeslag, toelichting 5">
+        <rect x="705" y="125" width="110" height="60" rx="10"/>
+        <text x="760" y="151" text-anchor="middle">"Loket</text>
+        <text x="760" y="168" text-anchor="middle">Zorgtoeslag"</text>
+        <g class="badge" transform="translate(815 125)"><circle r="11"/><text>5</text></g>
+      </g>
+      <g class="node hypo" data-id="opt1" data-note="6" tabindex="0" role="button" aria-label="MOZa? Optie 1, toelichting 6">
+        <rect x="825" y="125" width="110" height="60" rx="10"/>
+        <text x="880" y="151" text-anchor="middle">MOZa?</text>
+        <text class="small" x="880" y="169" text-anchor="middle">Optie 1</text>
+        <g class="badge" transform="translate(935 125)"><circle r="11"/><text>6</text></g>
+      </g>
+      <g class="node hypo" data-id="opt2" data-note="7" tabindex="0" role="button" aria-label="MOZa? Optie 2, toelichting 7">
+        <rect x="945" y="125" width="110" height="60" rx="10"/>
+        <text x="1000" y="151" text-anchor="middle">MOZa?</text>
+        <text class="small" x="1000" y="169" text-anchor="middle">Optie 2</text>
+        <g class="badge" transform="translate(1055 125)"><circle r="11"/><text>7</text></g>
+      </g>
+
+      <!-- ============ Diensten ============ -->
+      <g data-note="1" tabindex="0" role="button" aria-label="Diensten, toelichting 1">
+        <rect class="region" x="10" y="290" width="1080" height="490" rx="32"/>
+        <text class="region-label" x="870" y="322" text-anchor="middle">Diensten</text>
+        <g class="badge" transform="translate(925 316)"><circle r="11"/><text>1</text></g>
+      </g>
+
+      <!-- lanes per dienstaanbieder -->
+      <rect class="lane rvo" x="35" y="340" width="170" height="300" rx="16"/>
+      <rect class="lane bd" x="230" y="340" width="200" height="300" rx="16"/>
+      <rect class="lane justis" x="460" y="340" width="200" height="300" rx="16"/>
+      <text class="lane-label" x="120" y="628" text-anchor="middle">RVO</text>
+      <text class="lane-label" x="330" y="628" text-anchor="middle">BD</text>
+      <text class="lane-label" x="560" y="628" text-anchor="middle">JUSTIS</text>
+
+      <!-- aanbieder -> diensten -->
+      <line class="offer rvo" data-from="rvo" data-to="subsidie" x1="120" y1="181" x2="120" y2="330" marker-end="url(#arrRVO)"/>
+      <line class="offer bd" data-from="bd" data-to="belasting" x1="330" y1="181" x2="330" y2="330" marker-end="url(#arrBD)"/>
+      <line class="offer justis" data-from="justis" data-to="vog" x1="560" y1="181" x2="560" y2="330" marker-end="url(#arrJustis)"/>
+
+      <!-- services -->
+      <g class="node service" data-id="subsidie"><rect class="rvo" x="45" y="358" width="150" height="44" rx="22"/><text x="120" y="385" text-anchor="middle">Subsidie aanvragen</text></g>
+      <g class="node service" data-id="vergunning"><rect class="rvo" x="45" y="418" width="150" height="44" rx="22"/><text x="120" y="437" text-anchor="middle">Vergunning</text><text x="120" y="453" text-anchor="middle">aanvragen</text></g>
+
+      <g class="node service" data-id="belasting"><rect class="bd" x="245" y="358" width="170" height="44" rx="22"/><text x="330" y="385" text-anchor="middle">Belastingaangifte doen</text></g>
+      <g class="node service" data-id="zorgtoeslag"><rect class="bd" x="245" y="418" width="170" height="44" rx="22"/><text x="330" y="445" text-anchor="middle">Zorgtoeslag aanvragen</text></g>
+      <g class="node service" data-id="huurtoeslag"><rect class="bd" x="245" y="478" width="170" height="44" rx="22"/><text x="330" y="505" text-anchor="middle">Huurtoeslag aanvragen</text></g>
+      <g class="node service portal" data-id="mijntoeslagen" data-note="2" tabindex="0" role="button" aria-label="Portaaldienst MijnToeslagen, toelichting 2">
+        <rect class="bd" x="250" y="540" width="160" height="60" rx="30"/>
+        <text x="330" y="565" text-anchor="middle">Portaaldienst:</text>
+        <text x="330" y="583" text-anchor="middle">"MijnToeslagen"</text>
+        <g class="badge" transform="translate(405 545)"><circle r="11"/><text>2</text></g>
+      </g>
+
+      <g class="node service" data-id="vog"><rect class="justis" x="485" y="358" width="150" height="44" rx="22"/><text x="560" y="385" text-anchor="middle">VOG aanvragen</text></g>
+      <g class="node service" data-id="naam"><rect class="justis" x="485" y="418" width="150" height="44" rx="22"/><text x="560" y="437" text-anchor="middle">Naamswijziging</text><text x="560" y="453" text-anchor="middle">doorgeven</text></g>
+
+      <!-- MOZa portaal (hypothese) -->
+      <g class="node hypo" data-id="mozaportaal" data-note="3" tabindex="0" role="button" aria-label="Portaaldienst namens meerdere dienstaanbieders, MOZa portaal, toelichting 3">
+        <rect x="45" y="672" width="615" height="80" rx="40"/>
+        <text x="352" y="705" text-anchor="middle">Portaaldienst namens meerdere dienstaanbieders?</text>
+        <text x="352" y="727" text-anchor="middle">"MOZa portaal"</text>
+        <g class="badge" transform="translate(645 680)"><circle r="11"/><text>3</text></g>
+      </g>
+
+      <!-- ============ Verbindingen ============ -->
+      <!-- Portaaldienst MijnToeslagen -> Zorgtoeslag / Huurtoeslag -->
+      <path class="edge solid" data-from="mijntoeslagen" data-to="zorgtoeslag" d="M250,570 H236 V440 H243" marker-end="url(#arr)"/>
+      <path class="edge solid" data-from="mijntoeslagen" data-to="huurtoeslag" d="M250,570 H236 V500 H243" marker-end="url(#arr)"/>
+
+      <!-- Loket Zorgtoeslag -> Zorgtoeslag aanvragen -->
+      <path class="edge solid" data-from="loket" data-to="zorgtoeslag" d="M760,185 V268 H428 V440 H417" marker-end="url(#arr)"/>
+
+      <!-- MOZa? Optie 1 -> Subsidie / Belastingaangifte / VOG -->
+      <path class="edge opt1" data-from="opt1" data-to="subsidie" d="M880,185 V280 H165 V356" marker-end="url(#arr1)"/>
+      <path class="edge opt1" data-from="opt1" data-to="belasting" d="M880,185 V280 H375 V356" marker-end="url(#arr1)"/>
+      <path class="edge opt1" data-from="opt1" data-to="vog" d="M880,185 V280 H605 V356" marker-end="url(#arr1)"/>
+
+      <!-- MOZa? Optie 2 -> MOZa portaal -->
+      <path class="edge opt2" data-from="opt2" data-to="mozaportaal" d="M1000,185 V712 H662" marker-end="url(#arr2)"/>
+
+      <!-- MOZa portaal -> Subsidie / Belastingaangifte / VOG -->
+      <path class="edge opt2" data-from="mozaportaal" data-to="subsidie" d="M45,712 H22 V388 H43" marker-end="url(#arr2)"/>
+      <path class="edge opt2" data-from="mozaportaal" data-to="belasting" d="M217,672 V388 H243" marker-end="url(#arr2)"/>
+      <path class="edge opt2" data-from="mozaportaal" data-to="vog" d="M447,672 V388 H483" marker-end="url(#arr2)"/>
+    </svg>
+  </div>
+</main>
+
+<!-- ============ Toelichtingen (inhoud ongewijzigd overgenomen) ============ -->
+
+<template id="note-1" data-title="Diensten">
+  <p><u>Bij registreren van een dienst moet de volgende informatie worden geregistreerd:</u></p>
+  <ul>
+    <li>Dienstverlenernaam (OrganizationDisplayName)</li>
+    <li>Dienstnaam (ServiceName)&nbsp;</li>
+    <li>Dienstomschrijving (ServiceDescription)</li>
+    <li>Betrouwbaarheidsniveau (AuthnContextClassRef)</li>
+  </ul>
+  <p class="src">- Bron:&nbsp;<a href="https://www.eherkenning.nl/sites/default/files/2022-02/Handleiding%20Dienstencatalogus%20versie%20VII.pdf" target="_blank" rel="noopener">Communicatie Handleiding eHerkenning versie 2 2017</a></p>
+  <div class="gap"></div>
+  <p>Daarnaast kan (moet?) o.a. aangegeven worden of voor de betreffende dienst SSO ondersteund wordt (SSOSupport), en of de dienst door een Dienstbemiddelaar mag worden ontsloten (ServiceIntermediationAllowed).&nbsp;</p>
+  <p class="src">- Bron:&nbsp;<a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a></p>
+  <div class="gap"></div>
+  <p>Aansluiten op het eHerkenningssteldel gaat via een eHerkenninsmakelaar (marktpartij). Dienstverlener kiest zelf welke.&nbsp;</p>
+</template>
+
+<template id="note-2" data-title="Portaaldiensten">
+  <p><u>Portaaldiensten</u></p>
+  <p>Een dienstaanbieder registreert de losse diensten, maar kan daarnaast ook een portaaldienst registreren (IsPortal = true). Portaaldienst is dus een speciaal type dienst. Hierbij moet worden verwezen naar welke diensten er in dit portaal zitten (met PortalForService -&gt; ServiceID's van de beoogde diensten).</p>
+  <p class="src">-&nbsp;Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a></p>
+  <div class="gap"></div>
+  <p>Voor een portaaldienst kan bij het inloggen in bulk het machtigingenregister bevraagd worden: "Voor welke diensten in dit portaal is deze gebruiker gemachtigd namens zijn onderneming?" Hierdoor hoeft er maar 1x ingelogd te worden, en zijn losse inlogverzoeken voor de onderliggende diensten niet nodig.</p>
+  <p class="src">- Bron:&nbsp;<a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/guc4-3-portaalfunctie" target="_blank" rel="noopener">GUC4.3 Portaalfunctie | Afsprakenstelsel eToegang</a></p>
+  <div class="gap"></div>
+  <p>Dit is mogelijk interessant voor MOZa:</p>
+  <ul>
+    <li>Hypothese: MOZa registreert een Portaaldienst ("MOZa portaal") met verwijzing naar alle bij MOZa aangesloten diensten</li>
+    <li>Bij inloggen op het MOZa portaal wordt het register bevraagd in bulk.</li>
+    <li>MOZa krijgt terug: Gebruiker is gemachtigd voor diensten x,y,z, --&gt; na inloggen worden direct de diensten ingelogd/zichtbaar waarvoor deze gebruiker gemachtigd is, <i>zonder </i>dat hierbij voor de onderliggende diensten losse inlogverzoeken hoeven te worden verstuurd en opnieuw het register moet worden bevraagd op bevoegdheid.</li>
+  </ul>
+  <div class="gap"></div>
+  <p>Maar:</p>
+  <div class="gap"></div>
+  <p class="warn">! Belangrijke beperking in het stelsel:&nbsp;</p>
+  <ul>
+    <li><i>PortalForService MUST ONLY contain existing ServiceIDs referring to service(s) of the same ServiceProvider that the portal belongs to.</i></li>
+    <li>D.w.z.: Een portaaldienst hoort bij één dienstaanbieder; en kan dus alleen diensten bevatten die bij diezelfde dienstaanbieder horen.</li>
+  </ul>
+  <p class="src">- Bron:&nbsp;<a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a></p>
+  <div class="gap"></div>
+  <p>Dus dit leidt tot open vraag --&gt; zie <sup class="ref" data-ref="3">3</sup>.</p>
+</template>
+
+<template id="note-3" data-title="Portaaldienst namens meerdere dienstaanbieders? — &quot;MOZa portaal&quot;">
+  <p><b><u>Open vraag (1)</u></b>:&nbsp; Is het mogelijk om een portaaldienst te registeren met verwijzingen naar diensten van <i>verschillende </i>dienstaanbieders?&nbsp;</p>
+  <ul>
+    <li>Enerzijds lijkt dit uitgesloten door: "<i>PortalForService MUST ONLY contain existing ServiceIDs referring to service(s) of the same ServiceProvider that the portal belongs to.</i>" (Zie <sup class="ref" data-ref="2">2</sup>)</li>
+    <li>Anderzijds lijkt dit wel te bestaan --&gt; zie onderstaand citaat uit pagina&nbsp;<a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/aansluiten-als-dienstbemiddelaar" target="_blank" rel="noopener">Aansluiten als dienstbemiddelaar | Afsprakenstelsel eToegang</a>: "<i>Er is sprake van <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/dienstbemiddeling" target="_blank" rel="noopener">Dienstbemiddeling</a>&nbsp;in de volgende gevallen:&nbsp;1. ... ,&nbsp;2. ... ,&nbsp;3. <b>Hetzelfde portaal/dezelfde aansluiting wordt namens meer dan één dienstverlener aangeboden.</b></i><b>"</b></li>
+  </ul>
+  <div class="gap"></div>
+  <p><u><b>Open vraag (2)</b></u>: Betekent (3) dan ook dat <i>als</i>&nbsp;zo'n portaaldienst namens meerdere dienstaanbieders inderdaad kan bestaan, dat er dus altijd dienstbemiddeling nodig is om de authenticatie/autorisatie te regelen voor zo'n portaal?&nbsp;</p>
+</template>
+
+<template id="note-4" data-title="Dienstbemiddelaars">
+  <p>Een aparte dienstverlener sluit zich als Dienstbemiddelaar aan om namens een andere Dienstaanbieder de dienst te leveren aan de gebruiker (Dienstafnemer).</p>
+  <p><a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/aansluiten-als-dienstbemiddelaar" target="_blank" rel="noopener">Aansluiten als dienstbemiddelaar | Afsprakenstelsel eToegang</a></p>
+  <div class="gap"></div>
+  <p class="warn">!&nbsp; Belangrijke beperking in het stelsel: Dienstbemiddeling is momenteel nog beperkt tot eIDAS-outbound.</p>
+  <ul>
+    <li><u><b>Open vraag (3):&nbsp;</b></u>Wat betekent dit precies? En hoe ziet de tijdlijn van ontwikkelingen omtrent de functionaliteit Dienstbemiddeling eruit?</li>
+  </ul>
+  <div class="gap"></div>
+  <p class="src">- Bron:&nbsp;<a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a>&nbsp;--&gt;&nbsp;&nbsp;"<i>only available for eIDAS-outbound</i>";&nbsp;</p>
+  <p class="src">- Bron:&nbsp;<a href="https://docs.rijksapp.nl/docs/3f27cbcd-1ca7-4d34-a3e4-8a8fdc24a55f/" target="_blank" rel="noopener">Analyse e-herkenning - Mijn Bureau Docs</a>&nbsp;--&gt;&nbsp;"<i>Tevens ondersteunt&nbsp;het alleen EIDAS uitgaand. Is dus nog in ontwikkeling en heeft ten opzichte van&nbsp;andere wensen binnen het stelsel minder prio -&gt; lange doorlooptijd</i>."</p>
+</template>
+
+<template id="note-5" data-title="&quot;Loket Zorgtoeslag&quot;">
+  <p><u>Dienstbemiddeling Voorbeeld (huidige situatie)</u></p>
+  <p>&nbsp;Fictief voorbeeld --&gt; aparte dienstverlener (met eigen website etc.) die namens de Belastingdienst gebruikers helpt met de <i>dienst</i>&nbsp;"Zorgtoeslag aanvragen."</p>
+  <ul>
+    <li>Gebruiker logt (optisch) in op aparte website van de bemiddelaar</li>
+    <li>Bemiddelaar checkt de authenticatie/autorisatie van de gebruiker bij de dienst zelf.</li>
+    <li>Gebruiker is ingelogd op de site van de bemiddelaar die de dienst gaat regelen voor hem.</li>
+  </ul>
+  <p><b>Open vraag (4)</b>: Klopt dit (ongeveer)?</p>
+  <div class="gap"></div>
+  <p><b>Open vraag (5a)</b>:</p>
+  <ul>
+    <li>Is het ook mogelijk voor één dienstbemiddelaar om méérdere diensten (van één dienstaanbieder) te bemiddelen?&nbsp;</li>
+  </ul>
+</template>
+
+<template id="note-6" data-title="MOZa? — Optie 1">
+  <p>Zo ja: MOZa Optie 1</p>
+  <div class="gap"></div>
+  <p><u>Als bemiddelaar voor meerdere diensten (zonder portaaldienst)</u>.</p>
+  <div class="gap"></div>
+  <p><b>Voordeel</b>: geen portaaldienst nodig --&gt; portaaldienst registreren voor diensten van <i>verschillende</i>&nbsp;dienstaanbieder is misschien niet mogelijk&nbsp;(Zie "Open vraag (1)").</p>
+  <div class="gap"></div>
+  <p><b>Nadeel</b>: Mogelijk (?) moet er voor elke dienst een apart inlogverzoek worden verstuurd (evt. met SSO) (bulk-bevraging niet mogelijk: dit kan alleen bij portaaldiensten).</p>
+  <div class="gap"></div>
+  <p>Open vragen:</p>
+  <ul>
+    <li><b><u>Open vraag (5b)</u></b>: Vervolgvraag op "Open vraag (5a)": Is het ook mogelijk om dienstbemiddelaar te zijn voor meerdere diensten van <i>verschillende </i>dienstaanbieders?</li>
+    <li><u><b>Open vraag (6a)</b></u>&nbsp;Kan dit inderdaad zonder portaaldienst waarin de betreffende diensten gebundeld zitten?</li>
+    <li><u><b>Open vraag (6b)&nbsp;</b></u>Zo ja: Als de diensten <i>niet </i>in een portaaldienst gebundeld zijn, zoals in dit voorbeeld, dan is de functionaliteit van "machtigingen in bulk opvragen" niet van toepassing; dit geldt alleen voor portaaldiensten namelijk. Betekent dat dus dat er voor elke dienst een apart inlogverzoek moet worden verstuurd vanuit de bemiddelaar naar de diensten om de autorisatie te checken?</li>
+  </ul>
+</template>
+
+<template id="note-7" data-title="MOZa? — Optie 2">
+  <p>Zo nee: MOZa Optie 2</p>
+  <div class="gap"></div>
+  <p><u>Als bemiddelaar voor een portaaldienst met meerdere diensten</u></p>
+  <div class="gap"></div>
+  <p><b>Voordeel</b>: machtigingen voor alle diensten kunnen mogelijk in bulk worden opgevraagd als de diensten in een portaal gebundeld zijn (zie <sup class="ref" data-ref="2">2</sup>)</p>
+  <div class="gap"></div>
+  <p><b>Nadeel</b>: het is niet duidelijk of een portaaldienst diensten van meerdere dienstaanbieders kan bevatten&nbsp;(Zie "Open vraag (1)").</p>
+  <div class="gap"></div>
+  <p>Open vragen:</p>
+  <ul>
+    <li><u><b>Open vraag (7):</b></u>&nbsp;Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders? (Zie "Open vraag (1))?</li>
+    <li><b>Open vraag (8a)</b>: Kan de authenticatie/autorisatie voor een portaaldienst <i>uberhaupt </i>door een dienstbemiddelaar geregeld worden?</li>
+    <li><b>Open vraag (8b)</b>: Vervolgvraag: kan dit ook voor portaaldiensten met diensten van meedere dienstaanbieders (deze vraag is afhankelijk van de eerdere antwoorden op Open vraag 7 en 8a)</li>
+    <li><b>Open vraag (8c)</b>: Zo ja, kunnen de machtigingen voor alle diensten binnen het betreffende portaal hier inderdaad ook in bulk worden opgevraagd? Zie <sup class="ref" data-ref="2">2</sup>: dit is normaal gesproken wel mogelijk voor een portaaldienst namelijk. Maar de vraag is dus of dit ook kan als er diensten van meerdere dienstaanbieders in het portaal zitten.</li>
+  </ul>
+</template>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <div class="dlg">
+    <header>
+      <span class="num" id="dlg-num"></span>
+      <h2 id="dlg-title"></h2>
+      <button class="icon-btn" id="dlg-close" aria-label="Sluiten">&times;</button>
+    </header>
+    <div class="body" id="dlg-body"></div>
+    <footer>
+      <div class="related" id="dlg-related"></div>
+      <div class="nav">
+        <button class="nav-btn" id="dlg-prev">&larr; Vorige</button>
+        <button class="nav-btn" id="dlg-next">Volgende &rarr;</button>
+      </div>
+    </footer>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  const NOTES = [1, 2, 3, 4, 5, 6, 7];
+  // Verbanden tussen toelichtingen zoals in het oorspronkelijke diagram (o.a. pijlen van 5 naar 6 en 7)
+  const RELATED = { 1: [2], 2: [3, 7], 3: [2, 6, 7], 4: [5], 5: [6, 7], 6: [3, 5], 7: [2, 3, 5] };
+
+  const dlg = document.getElementById('dlg');
+  const numEl = document.getElementById('dlg-num');
+  const titleEl = document.getElementById('dlg-title');
+  const bodyEl = document.getElementById('dlg-body');
+  const relEl = document.getElementById('dlg-related');
+  const prevBtn = document.getElementById('dlg-prev');
+  const nextBtn = document.getElementById('dlg-next');
+  let current = null;
+
+  function titleOf(n) { return document.getElementById('note-' + n).dataset.title; }
+
+  function show(n) {
+    const tpl = document.getElementById('note-' + n);
+    if (!tpl) return;
+    current = n;
+    numEl.textContent = n;
+    titleEl.textContent = tpl.dataset.title;
+    bodyEl.replaceChildren(tpl.content.cloneNode(true));
+    bodyEl.scrollTop = 0;
+    bodyEl.querySelectorAll('sup.ref').forEach(s => {
+      s.tabIndex = 0;
+      s.setAttribute('role', 'button');
+      s.title = 'Open toelichting ' + s.dataset.ref + ': ' + titleOf(s.dataset.ref);
+    });
+    relEl.replaceChildren();
+    const rel = RELATED[n] || [];
+    if (rel.length) {
+      const lbl = document.createElement('span');
+      lbl.textContent = 'Zie ook:';
+      relEl.append(lbl);
+      rel.forEach(r => relEl.append(makeChip(r)));
+    }
+    const i = NOTES.indexOf(n);
+    prevBtn.disabled = i <= 0;
+    nextBtn.disabled = i >= NOTES.length - 1;
+    if (!dlg.open) dlg.showModal();
+  }
+
+  function makeChip(n) {
+    const b = document.createElement('button');
+    b.className = 'chip';
+    b.type = 'button';
+    b.innerHTML = '<span class="num"></span><span class="lbl"></span>';
+    b.querySelector('.num').textContent = n;
+    b.querySelector('.lbl').textContent = titleOf(n);
+    b.addEventListener('click', () => show(n));
+    return b;
+  }
+
+  const chips = document.getElementById('chips');
+  NOTES.forEach(n => chips.append(makeChip(n)));
+
+  document.querySelectorAll('#diagram [data-note]').forEach(el => {
+    el.addEventListener('click', e => { e.stopPropagation(); show(Number(el.dataset.note)); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(Number(el.dataset.note)); }
+    });
+  });
+
+  bodyEl.addEventListener('click', e => {
+    const s = e.target.closest('sup.ref');
+    if (s) show(Number(s.dataset.ref));
+  });
+  bodyEl.addEventListener('keydown', e => {
+    const s = e.target.closest('sup.ref');
+    if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); show(Number(s.dataset.ref)); }
+  });
+
+  prevBtn.addEventListener('click', () => show(NOTES[NOTES.indexOf(current) - 1]));
+  nextBtn.addEventListener('click', () => show(NOTES[NOTES.indexOf(current) + 1]));
+  document.getElementById('dlg-close').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' && !nextBtn.disabled) show(NOTES[NOTES.indexOf(current) + 1]);
+    if (e.key === 'ArrowLeft' && !prevBtn.disabled) show(NOTES[NOTES.indexOf(current) - 1]);
+  });
+
+  // Verbindingen uitlichten bij hover/focus
+  const svg = document.getElementById('diagram');
+  const edges = [...svg.querySelectorAll('[data-from]')];
+  function highlight(id) {
+    const ids = new Set([id]);
+    edges.forEach(e => {
+      const hit = e.dataset.from === id || e.dataset.to === id;
+      e.classList.toggle('hl', hit);
+      if (hit) { ids.add(e.dataset.from); ids.add(e.dataset.to); }
+    });
+    svg.querySelectorAll('.node').forEach(n => n.classList.toggle('hl', ids.has(n.dataset.id)));
+    svg.classList.add('dimmed');
+  }
+  function clear() {
+    svg.classList.remove('dimmed');
+    svg.querySelectorAll('.hl').forEach(n => n.classList.remove('hl'));
+  }
+  svg.querySelectorAll('.node[data-id]').forEach(n => {
+    n.addEventListener('mouseenter', () => highlight(n.dataset.id));
+    n.addEventListener('mouseleave', clear);
+    n.addEventListener('focus', () => highlight(n.dataset.id));
+    n.addEventListener('blur', clear);
+  });
+})();
+</script>
+</body>
+</html>

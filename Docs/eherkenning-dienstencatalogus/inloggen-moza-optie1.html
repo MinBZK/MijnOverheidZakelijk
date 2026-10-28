@@ -386,6 +386,7 @@
   .optblock h4 { margin: 0; font-size: .92rem; }
   .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
   .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
+  .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
   .callout.go { background: color-mix(in srgb, var(--o2) 8%, var(--surface)); border-color: color-mix(in srgb, var(--o2) 40%, transparent); }
 </style>
 </head>
@@ -486,8 +487,11 @@
 </div>
 
 <template id="note-1" data-title="MOZa als dienstbemiddelaar">
-  <p>Of dienstbemiddeling voor méérdere diensten van verschillende dienstverleners bestaat (en mogelijk is), is nog een open vraag.</p>
-  <p class="src"><span>Zie open vraag (5a) en (5b) in de <a href="dienstencatalogus-eherkenning.html">Dienstencatalogus eHerkenning</a> (toelichting 5 en 6).</span></p>
+  <p>Of dienstbemiddeling voor méérdere diensten van verschillende dienstverleners bestaat (en mogelijk is), is nog een open vraag:</p>
+  <div>
+    <div class="q repeat"><p><span class="q-label">Open vraag (5a)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p></div>
+    <div class="q repeat"><p><span class="q-label">Open vraag (5b)</span>Vervolg op open vraag (5a): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
+  </div>
 </template>
 
 <template id="note-2" data-title="Inlogverzoek: welke variant?">

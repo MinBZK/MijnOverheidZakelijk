@@ -225,7 +225,7 @@
   }
   .dlg .body blockquote b { color: var(--text); }
 
-  /* open vragen */
+  /* vragen */
   .q {
     border-radius: 10px; padding: 10px 14px;
     background: color-mix(in srgb, var(--opt1) 8%, var(--surface));
@@ -279,12 +279,19 @@
   }
   .nav-btn:disabled { opacity: .4; cursor: default; }
   .nav-btn:not(:disabled):hover { border-color: var(--badge); }
+  .crumb { margin: 0 0 10px; }
+  .home-btn {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .85rem; font-weight: 600;
+    color: var(--badge); text-decoration: none; border: 1px solid var(--border); border-radius: 999px;
+    padding: 4px 12px; background: var(--surface);
+  }
+  .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
 </style>
 </head>
 <body>
 <div class="layout" id="layout">
 <main>
-  <p style="font-size:.85rem;margin:0 0 8px"><a style="color:var(--badge)" href="inloggen-losse-dienst.html">Zie ook: Bilal logt in bij een losse dienst (bestaande flow) →</a> · <a style="color:var(--badge)" href="inloggen-moza-optie1.html">Bilal logt in bij het MOZa-portaal (optie 1) →</a> · <a style="color:var(--badge)" href="inloggen-moza-optie2.html">Bilal logt in bij het MOZa-portaal (optie 2) →</a></p>
+  <p class="crumb"><a class="home-btn" href="index.html">← Terug naar hoofdpagina</a></p>
   <h1>Dienstencatalogus eHerkenning</h1>
   <p class="intro">Klik op een element met een nummertje om de bijbehorende toelichting naast het diagram te openen. Beweeg over een element om de verbindingen uit te lichten.</p>
 
@@ -498,12 +505,12 @@
     <p>Met andere woorden: een portaaldienst hoort bij één dienstaanbieder en kan alleen diensten van diezelfde dienstaanbieder bevatten.</p>
     <p class="src"><span>Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a></span></p>
   </div>
-  <p><b>Dit leidt tot een open vraag → zie <sup class="ref" data-ref="3">3</sup>.</b></p>
+  <p><b>Dit leidt tot een vraag → zie <sup class="ref" data-ref="3">3</sup>.</b></p>
 </template>
 
 <template id="note-3" data-title="Portaaldienst namens meerdere dienstaanbieders? — &quot;MOZa portaal&quot;">
   <div class="q">
-    <p><span class="q-label">Open vraag (1)</span>Kan een portaaldienst worden geregistreerd die verwijst naar diensten van <i>verschillende</i> dienstaanbieders?</p>
+    <p><span class="q-label">Vraag (1)</span>Kan een portaaldienst worden geregistreerd die verwijst naar diensten van <i>verschillende</i> dienstaanbieders?</p>
     <ul>
       <li>Enerzijds lijkt dit uitgesloten door de regel (zie <sup class="ref" data-ref="2">2</sup>):
         <blockquote>"<i>PortalForService MUST ONLY contain existing ServiceIDs referring to service(s) of the same ServiceProvider that the portal belongs to.</i>"</blockquote>
@@ -514,7 +521,7 @@
     </ul>
   </div>
   <div class="q">
-    <p><span class="q-label">Open vraag (2)</span>Als zo'n portaaldienst namens meerdere dienstaanbieders inderdaad kan bestaan: betekent geval 3 uit dit citaat dan dat er altijd dienstbemiddeling nodig is om de authenticatie/autorisatie voor zo'n portaal te regelen?</p>
+    <p><span class="q-label">Vraag (2)</span>Als zo'n portaaldienst namens meerdere dienstaanbieders inderdaad kan bestaan: betekent geval 3 uit dit citaat dan dat er altijd dienstbemiddeling nodig is om de authenticatie/autorisatie voor zo'n portaal te regelen?</p>
   </div>
 </template>
 
@@ -530,7 +537,7 @@
     <p class="src"><span>Bron: <a href="https://docs.rijksapp.nl/docs/3f27cbcd-1ca7-4d34-a3e4-8a8fdc24a55f/" target="_blank" rel="noopener">Analyse e-herkenning - Mijn Bureau Docs</a>: "<i>Tevens ondersteunt het alleen EIDAS uitgaand. Is dus nog in ontwikkeling en heeft ten opzichte van andere wensen binnen het stelsel minder prio -&gt; lange doorlooptijd</i>."</span></p>
   </div>
   <div class="q">
-    <p><span class="q-label">Open vraag (3)</span>Wat betekent deze beperking precies? En hoe ziet de tijdlijn voor de verdere ontwikkeling van dienstbemiddeling eruit?</p>
+    <p><span class="q-label">Vraag (3)</span>Wat betekent deze beperking precies? En hoe ziet de tijdlijn voor de verdere ontwikkeling van dienstbemiddeling eruit?</p>
   </div>
 </template>
 
@@ -545,36 +552,36 @@
     </ol>
   </div>
   <div class="q">
-    <p><span class="q-label">Open vraag (4)</span>Klopt dit (ongeveer)?</p>
+    <p><span class="q-label">Vraag (4)</span>Klopt dit (ongeveer)?</p>
   </div>
   <div class="q">
-    <p><span class="q-label">Open vraag (5a)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p>
+    <p><span class="q-label">Vraag (5a)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p>
   </div>
 </template>
 
 <template id="note-6" data-title="MOZa? — Optie 1">
-  <p class="lead"><span class="tag yes">Zo ja</span> op open vraag (5a) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 1</p>
+  <p class="lead"><span class="tag yes">Zo ja</span> op vraag (5a) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 1</p>
   <h3 class="sec-title">MOZa als bemiddelaar voor meerdere diensten (zonder portaaldienst)</h3>
   <div>
     <div class="pc pro">
       <p class="pc-label">Voordeel</p>
-      <p>Er is geen portaaldienst nodig. Dat is relevant, omdat een portaaldienst voor diensten van <i>verschillende</i> dienstaanbieders mogelijk niet kan (zie open vraag (1) <sup class="ref" data-ref="3">3</sup>).</p>
+      <p>Er is geen portaaldienst nodig. Dat is relevant, omdat een portaaldienst voor diensten van <i>verschillende</i> dienstaanbieders mogelijk niet kan (zie vraag (1) <sup class="ref" data-ref="3">3</sup>).</p>
     </div>
     <div class="pc con">
       <p class="pc-label">Nadeel</p>
       <p>Mogelijk (?) moet per dienst een apart inlogverzoek worden verstuurd (eventueel met SSO), omdat bulkbevraging alleen bij portaaldiensten kan.</p>
     </div>
   </div>
-  <p class="sub-title">Open vragen</p>
+  <p class="sub-title">Vragen</p>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (5b)</span>Vervolg op open vraag (5a): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (6a)</span>Kan dit inderdaad zonder portaaldienst waarin de betreffende diensten gebundeld zijn?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (6b)</span>Zo ja: als de diensten <i>niet</i> in een portaaldienst gebundeld zijn, kunnen machtigingen niet in bulk worden opgevraagd (dat kan alleen bij portaaldiensten). Moet de bemiddelaar dan voor elke dienst een apart inlogverzoek versturen om de autorisatie te controleren?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (5b)</span>Vervolg op vraag (5a): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (6a)</span>Kan dit inderdaad zonder portaaldienst waarin de betreffende diensten gebundeld zijn?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (6b)</span>Zo ja: als de diensten <i>niet</i> in een portaaldienst gebundeld zijn, kunnen machtigingen niet in bulk worden opgevraagd (dat kan alleen bij portaaldiensten). Moet de bemiddelaar dan voor elke dienst een apart inlogverzoek versturen om de autorisatie te controleren?</p></div>
   </div>
 </template>
 
 <template id="note-7" data-title="MOZa? — Optie 2">
-  <p class="lead"><span class="tag no">Zo nee</span> op open vraag (5a) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 2</p>
+  <p class="lead"><span class="tag no">Zo nee</span> op vraag (5a) <sup class="ref" data-ref="5">5</sup> → MOZa Optie 2</p>
   <h3 class="sec-title">MOZa als bemiddelaar voor één portaaldienst met meerdere diensten</h3>
   <div>
     <div class="pc pro">
@@ -583,15 +590,15 @@
     </div>
     <div class="pc con">
       <p class="pc-label">Nadeel</p>
-      <p>Het is onduidelijk of een portaaldienst diensten van meerdere dienstaanbieders kan bevatten (zie open vraag (1) <sup class="ref" data-ref="3">3</sup>).</p>
+      <p>Het is onduidelijk of een portaaldienst diensten van meerdere dienstaanbieders kan bevatten (zie vraag (1) <sup class="ref" data-ref="3">3</sup>).</p>
     </div>
   </div>
-  <p class="sub-title">Open vragen</p>
+  <p class="sub-title">Vragen</p>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (7)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders? (Zie open vraag (1) <sup class="ref" data-ref="3">3</sup>.)</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (8a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>überhaupt</i> door een dienstbemiddelaar worden geregeld?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (8b)</span>Vervolgvraag: kan dit ook voor een portaaldienst met diensten van meerdere dienstaanbieders? (Afhankelijk van de antwoorden op open vraag (7) en (8a).)</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (8c)</span>Zo ja: kunnen de machtigingen voor alle diensten in dat portaal dan ook in bulk worden opgevraagd? Bij een portaaldienst kan dat normaal gesproken wel (zie <sup class="ref" data-ref="2">2</sup>), maar de vraag is of dat ook geldt als het portaal diensten van meerdere dienstaanbieders bevat.</p></div>
+    <div class="q"><p><span class="q-label">Vraag (7)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders? (Zie vraag (1) <sup class="ref" data-ref="3">3</sup>.)</p></div>
+    <div class="q"><p><span class="q-label">Vraag (8a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>überhaupt</i> door een dienstbemiddelaar worden geregeld?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (8b)</span>Vervolgvraag: kan dit ook voor een portaaldienst met diensten van meerdere dienstaanbieders? (Afhankelijk van de antwoorden op vraag (7) en (8a).)</p></div>
+    <div class="q"><p><span class="q-label">Vraag (8c)</span>Zo ja: kunnen de machtigingen voor alle diensten in dat portaal dan ook in bulk worden opgevraagd? Bij een portaaldienst kan dat normaal gesproken wel (zie <sup class="ref" data-ref="2">2</sup>), maar de vraag is of dat ook geldt als het portaal diensten van meerdere dienstaanbieders bevat.</p></div>
   </div>
 </template>
 

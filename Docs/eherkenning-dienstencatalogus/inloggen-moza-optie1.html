@@ -225,7 +225,7 @@
   }
   .dlg .body blockquote b { color: var(--text); }
 
-  /* open vragen */
+  /* vragen */
   .q {
     border-radius: 10px; padding: 10px 14px;
     background: color-mix(in srgb, var(--opt1) 8%, var(--surface));
@@ -279,6 +279,13 @@
   }
   .nav-btn:disabled { opacity: .4; cursor: default; }
   .nav-btn:not(:disabled):hover { border-color: var(--badge); }
+  .crumb { margin: 0 0 10px; }
+  .home-btn {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .85rem; font-weight: 600;
+    color: var(--badge); text-decoration: none; border: 1px solid var(--border); border-radius: 999px;
+    padding: 4px 12px; background: var(--surface);
+  }
+  .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
 
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
@@ -394,7 +401,7 @@
 <body>
 <div class="layout" id="layout">
 <main>
-  <p class="crumb"><a href="dienstencatalogus-eherkenning.html">← Dienstencatalogus eHerkenning</a> · <a href="inloggen-losse-dienst.html">Bestaande flow: inloggen bij een losse dienst</a> · <a href="inloggen-moza-optie2.html">Gewenste flow: optie 2</a></p>
+  <p class="crumb"><a class="home-btn" href="index.html">← Terug naar hoofdpagina</a></p>
   <h1>Bilal logt in bij het MOZa-portaal</h1>
   <p class="intro">Gewenste flow volgens MOZa optie 1: dienstbemiddeling zónder portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Stap 4 en 11 kennen elk drie mogelijke varianten (A, B of C); na stap 13 gaat alleen variant B verder.</p>
 
@@ -476,20 +483,20 @@
 </div>
 
 <template id="note-1" data-title="MOZa als dienstbemiddelaar">
-  <p>Of dienstbemiddeling voor méérdere diensten van verschillende dienstverleners bestaat (en mogelijk is), is nog een open vraag:</p>
+  <p>Of dienstbemiddeling voor méérdere diensten van verschillende dienstverleners bestaat (en mogelijk is), is nog een vraag:</p>
   <div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (5a)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (5b)</span>Vervolg op open vraag (5a): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (5a)</span>Kan één dienstbemiddelaar ook méérdere diensten (van één dienstaanbieder) bemiddelen?</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (5b)</span>Vervolg op vraag (5a): kan een dienstbemiddelaar ook meerdere diensten van <i>verschillende</i> dienstaanbieders bemiddelen?</p></div>
   </div>
 </template>
 
 <template id="note-2" data-title="Inlogverzoek: welke variant?">
-  <div class="q"><p><span class="q-label">Open vraag (11)</span>Is MOZa hier inderdaad de ServiceProvider (in de rol van dienstbemiddelaar)?</p></div>
+  <div class="q"><p><span class="q-label">Vraag (11)</span>Is MOZa hier inderdaad de ServiceProvider (in de rol van dienstbemiddelaar)?</p></div>
   <p class="sub-title">Welke variant van stap 4?</p>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (12a)</span><span class="opt-tag o1">Variant A</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (12b)</span><span class="opt-tag o2">Variant B</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (12c)</span><span class="opt-tag o3">Variant C</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (12a)</span><span class="opt-tag o1">Variant A</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (12b)</span><span class="opt-tag o2">Variant B</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
+    <div class="q"><p><span class="q-label">Vraag (12c)</span><span class="opt-tag o3">Variant C</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
   </div>
   <div class="callout idea">
     <p class="callout-title">Nog beter zou zijn:</p>
@@ -498,52 +505,52 @@
 </template>
 
 <template id="note-3" data-title="Gecontroleerd niveau">
-  <p>Welk niveau hier wordt gecontroleerd, hangt af van het antwoord op deze eerder gestelde open vragen:</p>
+  <p>Welk niveau hier wordt gecontroleerd, hangt af van het antwoord op deze eerder gestelde vragen:</p>
   <div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12a)</span><span class="opt-tag o1">Variant A</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12b)</span><span class="opt-tag o2">Variant B</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12c)</span><span class="opt-tag o3">Variant C</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12a)</span><span class="opt-tag o1">Variant A</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12b)</span><span class="opt-tag o2">Variant B</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12c)</span><span class="opt-tag o3">Variant C</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
   </div>
 </template>
 
 <template id="note-4" data-title="Machtigingen opvragen per variant">
-  <p>Ook hoe de machtigingen worden opgevraagd, hangt af van het antwoord op open vraag (12a–c). Per variant:</p>
+  <p>Ook hoe de machtigingen worden opgevraagd, hangt af van het antwoord op vraag (12a–c). Per variant:</p>
   <div>
     <div class="optblock o1">
       <h4><span class="opt-tag">Variant A</span>Los verzoek per dienst</h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12a)</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
+      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12a)</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
       <p>Is Bilal gemachtigd voor dienst 1? Voor dienst 2? Voor dienst 3?</p>
-      <div class="q"><p><span class="q-label">Open vraag (13)</span>Er komen dan losse assertions per dienst, die allemaal bij MOZa (als dienstbemiddelaar) terechtkomen, inclusief alle PseudoID's van de verschillende dienstverleners. Gaat dit in tegen privacyoverwegingen, omdat één dienstverlener dan kan zien voor welke diensten Bilal allemaal gemachtigd is?</p></div>
+      <div class="q"><p><span class="q-label">Vraag (13)</span>Er komen dan losse assertions per dienst, die allemaal bij MOZa (als dienstbemiddelaar) terechtkomen, inclusief alle PseudoID's van de verschillende dienstverleners. Gaat dit in tegen privacyoverwegingen, omdat één dienstverlener dan kan zien voor welke diensten Bilal allemaal gemachtigd is?</p></div>
     </div>
     <p class="of-sep">OF</p>
     <div class="optblock o2">
       <h4><span class="opt-tag">Variant B</span>Eén inlogverzoek alleen voor MOZa (leeg portaal)</h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12b)</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
+      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12b)</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
       <p>Op dit punt wordt alleen de machtiging voor de dienst MOZa (leeg portaal) gecontroleerd: is Bilal gemachtigd voor MOZa?</p>
     </div>
     <p class="of-sep">OF</p>
     <div class="optblock o3">
       <h4><span class="opt-tag">Variant C</span>Eén inlogverzoek voor alle diensten tegelijk</h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12c)</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
+      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12c)</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
       <p>Het machtigingenregister wordt in één keer bevraagd voor alle diensten binnen MOZa: is Bilal gemachtigd voor diensten x, y en z?</p>
-      <div class="q"><p><span class="q-label">Open vraag (14)</span>Hoe werkt dit met het PseudoID? Is dat dan nog van toepassing?</p></div>
+      <div class="q"><p><span class="q-label">Vraag (14)</span>Hoe werkt dit met het PseudoID? Is dat dan nog van toepassing?</p></div>
     </div>
   </div>
 </template>
 
 <template id="note-5" data-title="Situatie na inloggen">
-  <p>Afhankelijk van de variant (het antwoord op open vraag 12a–c) is Bilal nu:</p>
+  <p>Afhankelijk van de variant (het antwoord op vraag 12a–c) is Bilal nu:</p>
   <div>
     <div class="optblock o1">
       <h4><span class="opt-tag">Variant A</span><span class="opt-tag o3">Variant C</span></h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12a)</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12c)</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
+      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12a)</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
+      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12c)</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
       <p>Ingelogd op de MOZa-website/het portaal én al ingelogd bij alle onderliggende diensten waarvoor hij gemachtigd is. De flow eindigt hier.</p>
     </div>
     <p class="of-sep">OF</p>
     <div class="optblock o2">
       <h4><span class="opt-tag">Variant B</span></h4>
-      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (12b)</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
+      <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (12b)</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
       <p>Ingelogd op de MOZa-website/het portaal, maar nog niet bij de onderliggende diensten. De inlogverzoeken voor die diensten worden pas bij of na binnenkomst in het portaal verstuurd, met SSO (stap 14–18).</p>
     </div>
   </div>
@@ -552,7 +559,7 @@
 <script>
 (function () {
   const ACT = {"B": {"name": "Bilal", "cls": "a-bilal"}, "Z": {"name": "MOZa", "cls": "a-uwv"}, "M": {"name": "Makelaar (Digidentity)", "cls": "a-mak"}, "L": {"name": "Leverancier (Z-Login)", "cls": "a-lev"}};
-  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op de MOZa-website op \"Inloggen MOZa-website met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Inlogverzoek", "note": 2, "text": "De makelaar stuurt een inlogverzoek naar de leverancier. Hoe dat verzoek eruitziet is nog een open vraag; er zijn drie mogelijke varianten:", "variants": {"1": {"title": "Variant A (12a): een los inlogverzoek per dienst", "groups": [{"title": "Verzoek voor UWV", "rows": ["ServiceProvider: MOZa (namens UWV)", "ServiceName (dienstnaam): \"Ziekmelden werknemer\"", "ServiceID (dienstcode): Service_123", "Vereist niveau: EH2"]}, {"title": "Verzoek voor RVO", "rows": ["ServiceProvider: MOZa (namens RVO)", "ServiceName (dienstnaam): \"Vergunning aanvragen\"", "ServiceID (dienstcode): Service_456", "Vereist niveau: EH3"]}, {"title": "Verzoek voor BD", "rows": ["ServiceProvider: MOZa (namens BD)", "ServiceName (dienstnaam): \"Belasting doorgeven\"", "ServiceID (dienstcode): Service_789", "Vereist niveau: EH3"]}]}, "2": {"title": "Variant B (12b): één inlogverzoek voor MOZa (leeg portaal), later SSO", "groups": [{"title": null, "rows": ["ServiceProvider: MOZa", "ServiceName (dienstnaam): MOZa (leeg portaal)", "ServiceID (dienstcode): MOZa_portal", "Vereist niveau: EH3, vanwege de SSO later in de flow"]}]}, "3": {"title": "Variant C (12c): één inlogverzoek voor alle diensten tegelijk", "groups": [{"title": null, "rows": ["ServiceProvider: MOZa (namens UWV, BD en RVO)", "ServiceName (dienstnaam): Ziekmelden werknemer, Vergunning aanvragen, Belasting doorgeven", "ServiceID (dienstcode): Service_123, Service_456, Service_789", "Vereist niveau: EH2, EH3"]}]}}}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "note": 3, "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft."}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "note": 4, "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal."}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "text": "De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar. Welke variant van toepassing is, hangt af van de variant bij stap 4:", "variants": {"1": {"title": "Variant A: een losse assertion per dienst", "groups": [{"title": "Assertion 1", "rows": ["PseudoID1234 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123"]}, {"title": "Assertion 2", "rows": ["PseudoID5678 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_456"]}, {"title": "Assertion 3", "rows": ["PseudoID9010212 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_789"]}]}, "2": {"title": "Variant B: één assertion voor MOZa (leeg portaal)", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_MOZa (leeg portaal)"]}]}, "3": {"title": "Variant C: één overkoepelende assertion", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123, Service_456, Service_789, enz."]}]}}}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "note": 5, "text": "Bilal krijgt toegang tot het MOZa-portaal.", "end": true}, {"n": 14, "f": "B", "t": "M", "title": "Trigger voor SSO-inlogverzoeken", "only2": true, "text": "Na binnenkomst in het lege MOZa-portaal wordt er (het liefst automatisch) een trigger gestuurd om de SSO-inlogverzoeken voor de losse onderliggende diensten te gaan versturen. Zo krijgt Bilal ook toegang tot die diensten."}, {"n": 15, "f": "M", "t": "L", "title": "SSO-inlogverzoeken", "only2": true, "text": "De makelaar stuurt inlogverzoek(en) voor de onderliggende diensten naar de leverancier, met SSO."}, {"n": 16, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "only2": true, "text": "De leverancier stuurt versleutelde assertion(s) naar de makelaar, met daarin dat:", "groups": [{"title": null, "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_123, Service_456 en Service_789"]}]}, {"n": 17, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "only2": true, "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 18, "f": "Z", "t": "B", "title": "Toegang tot diensten", "only2": true, "text": "Bilal krijgt toegang tot de diensten in het portaal."}];
+  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op de MOZa-website op \"Inloggen MOZa-website met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Inlogverzoek", "note": 2, "text": "De makelaar stuurt een inlogverzoek naar de leverancier. Hoe dat verzoek eruitziet is nog een vraag; er zijn drie mogelijke varianten:", "variants": {"1": {"title": "Variant A (12a): een los inlogverzoek per dienst", "groups": [{"title": "Verzoek voor UWV", "rows": ["ServiceProvider: MOZa (namens UWV)", "ServiceName (dienstnaam): \"Ziekmelden werknemer\"", "ServiceID (dienstcode): Service_123", "Vereist niveau: EH2"]}, {"title": "Verzoek voor RVO", "rows": ["ServiceProvider: MOZa (namens RVO)", "ServiceName (dienstnaam): \"Vergunning aanvragen\"", "ServiceID (dienstcode): Service_456", "Vereist niveau: EH3"]}, {"title": "Verzoek voor BD", "rows": ["ServiceProvider: MOZa (namens BD)", "ServiceName (dienstnaam): \"Belasting doorgeven\"", "ServiceID (dienstcode): Service_789", "Vereist niveau: EH3"]}]}, "2": {"title": "Variant B (12b): één inlogverzoek voor MOZa (leeg portaal), later SSO", "groups": [{"title": null, "rows": ["ServiceProvider: MOZa", "ServiceName (dienstnaam): MOZa (leeg portaal)", "ServiceID (dienstcode): MOZa_portal", "Vereist niveau: EH3, vanwege de SSO later in de flow"]}]}, "3": {"title": "Variant C (12c): één inlogverzoek voor alle diensten tegelijk", "groups": [{"title": null, "rows": ["ServiceProvider: MOZa (namens UWV, BD en RVO)", "ServiceName (dienstnaam): Ziekmelden werknemer, Vergunning aanvragen, Belasting doorgeven", "ServiceID (dienstcode): Service_123, Service_456, Service_789", "Vereist niveau: EH2, EH3"]}]}}}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "note": 3, "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft."}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "note": 4, "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal."}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "text": "De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar. Welke variant van toepassing is, hangt af van de variant bij stap 4:", "variants": {"1": {"title": "Variant A: een losse assertion per dienst", "groups": [{"title": "Assertion 1", "rows": ["PseudoID1234 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123"]}, {"title": "Assertion 2", "rows": ["PseudoID5678 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_456"]}, {"title": "Assertion 3", "rows": ["PseudoID9010212 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_789"]}]}, "2": {"title": "Variant B: één assertion voor MOZa (leeg portaal)", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_MOZa (leeg portaal)"]}]}, "3": {"title": "Variant C: één overkoepelende assertion", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123, Service_456, Service_789, enz."]}]}}}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "note": 5, "text": "Bilal krijgt toegang tot het MOZa-portaal.", "end": true}, {"n": 14, "f": "B", "t": "M", "title": "Trigger voor SSO-inlogverzoeken", "only2": true, "text": "Na binnenkomst in het lege MOZa-portaal wordt er (het liefst automatisch) een trigger gestuurd om de SSO-inlogverzoeken voor de losse onderliggende diensten te gaan versturen. Zo krijgt Bilal ook toegang tot die diensten."}, {"n": 15, "f": "M", "t": "L", "title": "SSO-inlogverzoeken", "only2": true, "text": "De makelaar stuurt inlogverzoek(en) voor de onderliggende diensten naar de leverancier, met SSO."}, {"n": 16, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "only2": true, "text": "De leverancier stuurt versleutelde assertion(s) naar de makelaar, met daarin dat:", "groups": [{"title": null, "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_123, Service_456 en Service_789"]}]}, {"n": 17, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "only2": true, "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 18, "f": "Z", "t": "B", "title": "Toegang tot diensten", "only2": true, "text": "Bilal krijgt toegang tot de diensten in het portaal."}];
   const NOTES = [1, 2, 3, 4, 5];
   const NOTE_STEP = { 2: 4, 3: 7, 4: 10, 5: 13 };
   const OPTNAME = { 1: 'Variant A', 2: 'Variant B', 3: 'Variant C' };

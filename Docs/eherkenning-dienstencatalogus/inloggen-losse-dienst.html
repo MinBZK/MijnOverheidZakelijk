@@ -225,7 +225,7 @@
   }
   .dlg .body blockquote b { color: var(--text); }
 
-  /* open vragen */
+  /* vragen */
   .q {
     border-radius: 10px; padding: 10px 14px;
     background: color-mix(in srgb, var(--opt1) 8%, var(--surface));
@@ -279,6 +279,13 @@
   }
   .nav-btn:disabled { opacity: .4; cursor: default; }
   .nav-btn:not(:disabled):hover { border-color: var(--badge); }
+  .crumb { margin: 0 0 10px; }
+  .home-btn {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .85rem; font-weight: 600;
+    color: var(--badge); text-decoration: none; border: 1px solid var(--border); border-radius: 999px;
+    padding: 4px 12px; background: var(--surface);
+  }
+  .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
 
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
@@ -328,7 +335,7 @@
 <body>
 <div class="layout" id="layout">
 <main>
-  <p class="crumb"><a href="dienstencatalogus-eherkenning.html">← Dienstencatalogus eHerkenning</a></p>
+  <p class="crumb"><a class="home-btn" href="index.html">← Terug naar hoofdpagina</a></p>
   <h1>Bilal logt in bij een losse dienst</h1>
   <p class="intro">Bestaande flow. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Het paneel verschijnt naast het diagram.</p>
 
@@ -438,10 +445,10 @@
     <p class="callout-title">PseudoID per dienst</p>
     <p>Het PseudoID is uniek per dienst: logt Bilal in bij een andere dienst, dan krijgt hij een ander PseudoID. Bij elke inlog op dezelfde dienst is het PseudoID wel steeds hetzelfde.</p>
   </div>
-  <p class="sub-title">Open vragen</p>
+  <p class="sub-title">Vragen</p>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (9)</span>Klopt het dat PseudoID's bestaan zodat de dienst niet ziet "wie" Bilal is (persoonsgegevens)?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (10)</span>Klopt het dat er per dienst(aanbieder) een apart PseudoID wordt aangemaakt? Wat zijn hierbij de privacyoverwegingen en hoe zwaar wegen die? (Bijv.: zo kan nooit worden achterhaald voor welke diensten persoon Bilal allemaal gemachtigd is → waarom is dat belangrijk?)</p></div>
+    <div class="q"><p><span class="q-label">Vraag (9)</span>Klopt het dat PseudoID's bestaan zodat de dienst niet ziet "wie" Bilal is (persoonsgegevens)?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (10)</span>Klopt het dat er per dienst(aanbieder) een apart PseudoID wordt aangemaakt? Wat zijn hierbij de privacyoverwegingen en hoe zwaar wegen die? (Bijv.: zo kan nooit worden achterhaald voor welke diensten persoon Bilal allemaal gemachtigd is → waarom is dat belangrijk?)</p></div>
   </div>
 </template>
 

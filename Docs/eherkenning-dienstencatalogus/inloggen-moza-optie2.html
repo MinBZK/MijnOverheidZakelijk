@@ -225,7 +225,7 @@
   }
   .dlg .body blockquote b { color: var(--text); }
 
-  /* open vragen */
+  /* vragen */
   .q {
     border-radius: 10px; padding: 10px 14px;
     background: color-mix(in srgb, var(--opt1) 8%, var(--surface));
@@ -279,6 +279,13 @@
   }
   .nav-btn:disabled { opacity: .4; cursor: default; }
   .nav-btn:not(:disabled):hover { border-color: var(--badge); }
+  .crumb { margin: 0 0 10px; }
+  .home-btn {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .85rem; font-weight: 600;
+    color: var(--badge); text-decoration: none; border: 1px solid var(--border); border-radius: 999px;
+    padding: 4px 12px; background: var(--surface);
+  }
+  .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
 
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
@@ -398,7 +405,7 @@
 <body>
 <div class="layout" id="layout">
 <main>
-  <p class="crumb"><a href="dienstencatalogus-eherkenning.html">← Dienstencatalogus eHerkenning</a> · <a href="inloggen-losse-dienst.html">Bestaande flow: losse dienst</a> · <a href="inloggen-moza-optie1.html">Gewenste flow: optie 1</a></p>
+  <p class="crumb"><a class="home-btn" href="index.html">← Terug naar hoofdpagina</a></p>
   <h1>Bilal logt in bij het MOZa-portaal</h1>
   <p class="intro">Gewenste flow volgens MOZa optie 2: dienstbemiddeling mét portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.</p>
   <div class="toolbar">
@@ -456,28 +463,28 @@
 </div>
 
 <template id="note-1" data-title="Rol van MOZa">
-  <div class="q"><p><span class="q-label">Open vraag (15)</span>Welke rol speelt MOZa hier? Is MOZa de dienstbemiddelaar voor de portaaldienst?</p></div>
-  <p>Dit raakt aan een eerder gestelde open vraag:</p>
-  <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (2)</span>Als een portaaldienst namens meerdere dienstaanbieders inderdaad kan bestaan: betekent dit dan dat er altijd dienstbemiddeling nodig is om de authenticatie/autorisatie voor zo'n portaal te regelen? (Het afsprakenstelsel noemt als geval van dienstbemiddeling: "<i>Hetzelfde portaal/dezelfde aansluiting wordt namens meer dan één dienstverlener aangeboden.</i>")</p></div>
+  <div class="q"><p><span class="q-label">Vraag (15)</span>Welke rol speelt MOZa hier? Is MOZa de dienstbemiddelaar voor de portaaldienst?</p></div>
+  <p>Dit raakt aan een eerder gestelde vraag:</p>
+  <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (2)</span>Als een portaaldienst namens meerdere dienstaanbieders inderdaad kan bestaan: betekent dit dan dat er altijd dienstbemiddeling nodig is om de authenticatie/autorisatie voor zo'n portaal te regelen? (Het afsprakenstelsel noemt als geval van dienstbemiddeling: "<i>Hetzelfde portaal/dezelfde aansluiting wordt namens meer dan één dienstverlener aangeboden.</i>")</p></div>
 </template>
 
 <template id="note-2" data-title="Namens welke dienstverlener?">
-  <div class="q"><p><span class="q-label">Open vraag (16)</span>Namens welke dienstverlener wordt dit verzoek gestuurd? Namens MOZa als dienstbemiddelaar, of namens de oorspronkelijke dienstverleners?</p></div>
+  <div class="q"><p><span class="q-label">Vraag (16)</span>Namens welke dienstverlener wordt dit verzoek gestuurd? Namens MOZa als dienstbemiddelaar, of namens de oorspronkelijke dienstverleners?</p></div>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (16a)</span>Hoe werkt dit bij normale dienstbemiddeling (voor één dienst)?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (16b)</span>Hoe werkt dit bij dienstbemiddeling voor meerdere dienstverleners?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (16a)</span>Hoe werkt dit bij normale dienstbemiddeling (voor één dienst)?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (16b)</span>Hoe werkt dit bij dienstbemiddeling voor meerdere dienstverleners?</p></div>
   </div>
 </template>
 
 <template id="note-3" data-title="Dienstcode van een portaaldienst">
-  <div class="q"><p><span class="q-label">Open vraag (17)</span>Heeft een portaaldienst een eigen dienstcode (ServiceID)?</p></div>
+  <div class="q"><p><span class="q-label">Vraag (17)</span>Heeft een portaaldienst een eigen dienstcode (ServiceID)?</p></div>
 </template>
 
 <template id="note-4" data-title="Vereist niveau bij een portaaldienst">
-  <div class="q"><p><span class="q-label">Open vraag (18)</span>Hoe werkt het "vereisen" van een niveau bij een portaaldienst?</p></div>
+  <div class="q"><p><span class="q-label">Vraag (18)</span>Hoe werkt het "vereisen" van een niveau bij een portaaldienst?</p></div>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (18a)</span>Wordt er één niveau ingesteld voor het portaal <i>als dienst</i>? Kiest de dienstverlener dat niveau dan zelf?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (18b)</span>Of wordt het vereiste niveau van het portaal automatisch bepaald op basis van het niveau van de onderliggende diensten? Is dat dan het hoogste of het laagste niveau (als het portaal diensten met verschillende niveaus bevat)?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (18a)</span>Wordt er één niveau ingesteld voor het portaal <i>als dienst</i>? Kiest de dienstverlener dat niveau dan zelf?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (18b)</span>Of wordt het vereiste niveau van het portaal automatisch bepaald op basis van het niveau van de onderliggende diensten? Is dat dan het hoogste of het laagste niveau (als het portaal diensten met verschillende niveaus bevat)?</p></div>
   </div>
   <div class="callout warn">
     <p class="callout-title">Gevolg bij het hoogste niveau</p>
@@ -486,28 +493,28 @@
 </template>
 
 <template id="note-5" data-title="Machtigingen voor het hele portaal">
-  <p>Hier zijn de antwoorden op deze eerder gestelde open vragen weer van belang:</p>
+  <p>Hier zijn de antwoorden op deze eerder gestelde vragen weer van belang:</p>
   <div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (7)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders?</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (8a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>überhaupt</i> door een dienstbemiddelaar worden geregeld?</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (8b)</span>Vervolgvraag: kan dit ook voor een portaaldienst met diensten van meerdere dienstaanbieders? (Afhankelijk van de antwoorden op open vraag (7) en (8a).)</p></div>
-    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Open vraag (8c)</span>Zo ja: kunnen de machtigingen voor alle diensten in dat portaal dan ook in bulk worden opgevraagd? Bij een portaaldienst kan dat normaal gesproken wel, maar de vraag is of dat ook geldt als het portaal diensten van meerdere dienstaanbieders bevat.</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (7)</span>Kan een portaaldienst worden geregistreerd voor diensten van meerdere dienstaanbieders?</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (8a)</span>Kan de authenticatie/autorisatie voor een portaaldienst <i>überhaupt</i> door een dienstbemiddelaar worden geregeld?</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (8b)</span>Vervolgvraag: kan dit ook voor een portaaldienst met diensten van meerdere dienstaanbieders? (Afhankelijk van de antwoorden op vraag (7) en (8a).)</p></div>
+    <div class="q repeat"><p><span class="rep-tag">↻ Herhaalde vraag</span><span class="q-label">Vraag (8c)</span>Zo ja: kunnen de machtigingen voor alle diensten in dat portaal dan ook in bulk worden opgevraagd? Bij een portaaldienst kan dat normaal gesproken wel, maar de vraag is of dat ook geldt als het portaal diensten van meerdere dienstaanbieders bevat.</p></div>
   </div>
 </template>
 
 <template id="note-6" data-title="PseudoID in deze context">
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (19a)</span>Hoe werkt dit bij "normale" portaaldiensten? Klopt het dat er één PseudoID is voor alle diensten van dezelfde dienstverlener? Een portaaldienst hoort normaal gesproken bij één dienstverlener, dus dan wordt dat PseudoID ook gebruikt voor het inloggen bij de portaaldienst (net als bij een losse dienst).</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (19b)</span>Het MOZa-portaal bevat juist diensten van meerdere dienstverleners. Welk PseudoID wordt dan gebruikt? Het is niet duidelijk welke "dienstaanbieder" het inlogverzoek doet. Dit hangt samen met open vraag (20a–b).</p></div>
+    <div class="q"><p><span class="q-label">Vraag (19a)</span>Hoe werkt dit bij "normale" portaaldiensten? Klopt het dat er één PseudoID is voor alle diensten van dezelfde dienstverlener? Een portaaldienst hoort normaal gesproken bij één dienstverlener, dus dan wordt dat PseudoID ook gebruikt voor het inloggen bij de portaaldienst (net als bij een losse dienst).</p></div>
+    <div class="q"><p><span class="q-label">Vraag (19b)</span>Het MOZa-portaal bevat juist diensten van meerdere dienstverleners. Welk PseudoID wordt dan gebruikt? Het is niet duidelijk welke "dienstaanbieder" het inlogverzoek doet. Dit hangt samen met vraag (20a–b).</p></div>
   </div>
   <div>
-    <div class="q"><p><span class="q-label">Open vraag (20a)</span>Hoe werkt het PseudoID bij normale dienstbemiddeling (voor één dienst)? Krijgt Bilal een apart PseudoID voor de dienstbemiddelaar? Of doet de dienstbemiddelaar het inlogverzoek "namens" een dienstaanbieder (bijv. UWV), zodat hetzelfde PseudoID wordt gebruikt als bij die dienstaanbieder?</p></div>
-    <div class="q"><p><span class="q-label">Open vraag (20b)</span>In de context van MOZa (een portaal met diensten van meerdere dienstverleners) doet MOZa als bemiddelaar een inlogverzoek namens méérdere dienstaanbieders (UWV, RVO, BD, …). Welk PseudoID komt er dan mee in de assertion?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (20a)</span>Hoe werkt het PseudoID bij normale dienstbemiddeling (voor één dienst)? Krijgt Bilal een apart PseudoID voor de dienstbemiddelaar? Of doet de dienstbemiddelaar het inlogverzoek "namens" een dienstaanbieder (bijv. UWV), zodat hetzelfde PseudoID wordt gebruikt als bij die dienstaanbieder?</p></div>
+    <div class="q"><p><span class="q-label">Vraag (20b)</span>In de context van MOZa (een portaal met diensten van meerdere dienstverleners) doet MOZa als bemiddelaar een inlogverzoek namens méérdere dienstaanbieders (UWV, RVO, BD, …). Welk PseudoID komt er dan mee in de assertion?</p></div>
   </div>
 </template>
 
 <template id="note-7" data-title="Alle machtigingen in één assertion">
-  <p>Of alle machtigingen in één assertion kunnen worden doorgegeven, hangt af van het antwoord op open vraag (7) t/m (8c) <sup class="ref" data-ref="5">5</sup>: kunnen deze machtigingen in bulk worden opgevraagd?</p>
+  <p>Of alle machtigingen in één assertion kunnen worden doorgegeven, hangt af van het antwoord op vraag (7) t/m (8c) <sup class="ref" data-ref="5">5</sup>: kunnen deze machtigingen in bulk worden opgevraagd?</p>
   <div class="callout idea">
     <p class="callout-title">Zo ja:</p>
     <p>Dan is er maar één inlogverzoek nodig om Bilal in te loggen op het MOZa-portaal en hem direct de tegels/informatie te tonen waarvoor hij gemachtigd is.</p>

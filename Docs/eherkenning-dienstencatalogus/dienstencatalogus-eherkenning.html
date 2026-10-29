@@ -149,7 +149,7 @@
   }
   /* actief element in het diagram */
   [data-note].active rect { stroke: var(--focus) !important; stroke-width: 4 !important; }
-  [data-note].active .badge circle { fill: var(--focus); }
+  [data-note].active .ainfo circle { stroke: var(--focus); stroke-width: 3; }
   .dlg header {
     display: flex; align-items: center; gap: 12px;
     padding: 16px 20px; border-bottom: 1px solid var(--region-inner);
@@ -298,6 +298,29 @@
   .tag-mini.existing { background: #3f7d2a; }
   .plate-no { display: inline-block; margin: 6px 0 4px; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--badge-text); background: var(--badge); border-radius: 999px; padding: 3px 12px; }
   .plate-no + h1 { margin-top: 2px; }
+
+  .qflag { cursor: pointer; }
+  .qflag:focus { outline: none; }
+  svg .qflag rect.qf-new { fill: var(--opt1, #7c3aed); stroke: none; }
+  svg .qflag text.qf-new-t { fill: #fff; font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag rect.qf-rep { fill: var(--surface); stroke: var(--opt1, #7c3aed); stroke-width: 1.5; stroke-dasharray: 3 2; }
+  svg .qflag text.sm { font-size: 9.5px; }
+  svg .qflag text.qf-rep-t { fill: var(--opt1, #7c3aed); font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag:hover rect, svg .qflag:focus-visible rect { stroke: var(--focus); stroke-width: 2.5; stroke-dasharray: none; }
+  .actor[data-actor] { cursor: pointer; }
+  .actor[data-actor]:hover rect.abox, .actor[data-actor]:focus-visible rect.abox, .actor.active rect.abox { stroke: var(--focus); stroke-width: 3.5; }
+  .actor[data-actor]:focus { outline: none; }
+  .ainfo circle { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+  .ainfo text { fill: var(--muted); font-size: 12px; font-weight: 800; font-style: italic; font-family: Georgia, serif; text-anchor: middle; dominant-baseline: central; }
+  .note-sec { border-top: 1px solid var(--region-inner); padding-top: 14px; }
+  .note-sec > * + * { margin-top: 12px !important; }
+  .note-h { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; }
+  .dlg .body a.ref-link { font-size: .9em; text-decoration: none; white-space: normal; font-weight: 700; cursor: pointer; border: 1px solid var(--badge); color: var(--badge); background: var(--surface); border-radius: 999px; padding: 0 7px; }
+  .dlg .body a.ref-link:hover { background: var(--badge); color: var(--badge-text); }
+  .q-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .82rem; color: var(--muted); margin: -4px 0 10px; }
+  .q-legend .pill { display: inline-block; border-radius: 999px; padding: 0 8px; font-weight: 800; font-size: .75rem; }
+  .q-legend .pill.n { background: var(--opt1, #7c3aed); color: #fff; }
+  .q-legend .pill.r { border: 1.5px dashed var(--opt1, #7c3aed); color: var(--opt1, #7c3aed); }
 </style>
 </head>
 <body>
@@ -306,14 +329,9 @@
   <p class="crumb"><a class="home-btn" href="index.html">← Terug naar hoofdpagina</a></p>
   <p class="plate-no">Plaat 3</p>
   <h1>Dienstencatalogus eHerkenning</h1>
-  <p class="intro">Klik op een element met een nummertje om de bijbehorende toelichting naast het diagram te openen. Beweeg over een element om de verbindingen uit te lichten.</p>
+  <p class="intro">Klik op een element met een <b>i</b> voor uitleg; beweeg over een element om de verbindingen uit te lichten.</p>
+<p class="q-legend"><span><span class="pill n">? nr</span> vragen bij dit element</span><span><span class="pill r">↻ nr</span> herhaalde vraag (eerder gesteld)</span></p>
 
-  <div class="toolbar">
-    <div>
-      <h2>Toelichtingen</h2>
-      <div class="chips" id="chips"></div>
-    </div>
-  </div>
 
   <div class="canvas">
     <svg id="diagram" viewBox="0 0 1100 790" role="img" aria-label="Diagram van de dienstencatalogus eHerkenning">
@@ -354,33 +372,33 @@
       <g data-note="4" tabindex="0" role="button" aria-label="Dienstbemiddelaars, toelichting 4">
         <rect class="region-inner" x="690" y="58" width="380" height="182" rx="28"/>
         <text class="region-label" x="870" y="92" text-anchor="middle">Dienstbemiddelaars</text>
-        <g class="badge" transform="translate(965 86)"><circle r="11"/><text>4</text></g>
+        <g class="ainfo" transform="translate(965.0 86.0)"><circle r="9"/><text>i</text></g><g class="qflag" data-for-note="4" tabindex="0" role="button" aria-label="Vragen 3"><rect class="qf-new" x="969.0" y="77.0" width="32.9" height="18" rx="9.0"/><text class="qf-new-t" x="985.5" y="90" text-anchor="middle">? 3</text></g>
       </g>
 
       <g class="node plain" data-id="loket" data-note="5" tabindex="0" role="button" aria-label="Loket Zorgtoeslag, toelichting 5">
         <rect x="705" y="125" width="110" height="60" rx="10"/>
         <text x="760" y="151" text-anchor="middle">"Loket</text>
         <text x="760" y="168" text-anchor="middle">Zorgtoeslag"</text>
-        <g class="badge" transform="translate(815 125)"><circle r="11"/><text>5</text></g>
+        <g class="ainfo" transform="translate(815.0 125.0)"><circle r="9"/><text>i</text></g><g class="qflag" data-for-note="5" tabindex="0" role="button" aria-label="Vragen 4, 5"><rect class="qf-new" x="757.2" y="116.0" width="51.8" height="18" rx="9.0"/><text class="qf-new-t" x="783.1" y="129.0" text-anchor="middle">? 4, 5</text></g>
       </g>
       <g class="node hypo" data-id="opt2" data-note="6" tabindex="0" role="button" aria-label="MOZa? Optie 1, toelichting 6">
         <rect x="825" y="125" width="110" height="60" rx="10"/>
         <text x="880" y="151" text-anchor="middle">MOZa?</text>
         <text class="small" x="880" y="169" text-anchor="middle">Optie 1</text>
-        <g class="badge" transform="translate(935 125)"><circle r="11"/><text>6</text></g>
+        <g class="ainfo" transform="translate(935.0 125.0)"><circle r="9"/><text>i</text></g><g class="qflag" data-for-note="6" tabindex="0" role="button" aria-label="Vragen 6, 7a–c"><rect class="qf-new" x="858.3" y="116.0" width="70.7" height="18" rx="9.0"/><text class="qf-new-t" x="893.6" y="129.0" text-anchor="middle">? 6, 7a–c</text></g>
       </g>
       <g class="node hypo" data-id="opt1" data-note="7" tabindex="0" role="button" aria-label="MOZa? Optie 2, toelichting 7">
         <rect x="945" y="125" width="110" height="60" rx="10"/>
         <text x="1000" y="151" text-anchor="middle">MOZa?</text>
         <text class="small" x="1000" y="169" text-anchor="middle">Optie 2</text>
-        <g class="badge" transform="translate(1055 125)"><circle r="11"/><text>7</text></g>
+        <g class="ainfo" transform="translate(1055.0 125.0)"><circle r="9"/><text>i</text></g><g class="qflag" data-for-note="7" tabindex="0" role="button" aria-label="Vragen 8, 9a–b"><rect class="qf-new" x="978.3" y="116.0" width="70.7" height="18" rx="9.0"/><text class="qf-new-t" x="1013.6" y="129.0" text-anchor="middle">? 8, 9a–b</text></g>
       </g>
 
       <!-- ============ Diensten ============ -->
       <g data-note="1" tabindex="0" role="button" aria-label="Diensten, toelichting 1">
         <rect class="region" x="10" y="290" width="1080" height="490" rx="32"/>
         <text class="region-label" x="870" y="322" text-anchor="middle">Diensten</text>
-        <g class="badge" transform="translate(925 316)"><circle r="11"/><text>1</text></g>
+        <g class="ainfo" transform="translate(925.0 316.0)"><circle r="9"/><text>i</text></g>
       </g>
 
       <!-- lanes per dienstaanbieder -->
@@ -407,7 +425,7 @@
         <rect class="bd" x="250" y="540" width="160" height="60" rx="30"/>
         <text x="330" y="565" text-anchor="middle">Portaaldienst:</text>
         <text x="330" y="583" text-anchor="middle">"MijnToeslagen"</text>
-        <g class="badge" transform="translate(405 545)"><circle r="11"/><text>2</text></g>
+        <g class="ainfo" transform="translate(405.0 545.0)"><circle r="9"/><text>i</text></g>
       </g>
 
       <g class="node service" data-id="vog"><rect class="justis" x="485" y="358" width="150" height="44" rx="22"/><text x="560" y="385" text-anchor="middle">VOG aanvragen</text></g>
@@ -418,7 +436,7 @@
         <rect x="45" y="672" width="615" height="80" rx="40"/>
         <text x="352" y="705" text-anchor="middle">Portaaldienst namens meerdere dienstaanbieders?</text>
         <text x="352" y="727" text-anchor="middle">"MOZa portaal"</text>
-        <g class="badge" transform="translate(645 680)"><circle r="11"/><text>3</text></g>
+        <g class="ainfo" transform="translate(645.0 680.0)"><circle r="9"/><text>i</text></g><g class="qflag" data-for-note="3" tabindex="0" role="button" aria-label="Vragen 1, 2"><rect class="qf-new" x="587.2" y="671.0" width="51.8" height="18" rx="9.0"/><text class="qf-new-t" x="613.1" y="684.0" text-anchor="middle">? 1, 2</text></g>
       </g>
 
       <!-- ============ Verbindingen ============ -->
@@ -626,14 +644,15 @@
     const tpl = document.getElementById('note-' + n);
     if (!tpl) return;
     current = n;
-    numEl.textContent = n;
+    numEl.textContent = 'i';
     titleEl.textContent = tpl.dataset.title;
     bodyEl.replaceChildren(tpl.content.cloneNode(true));
     bodyEl.scrollTop = 0;
     bodyEl.querySelectorAll('sup.ref').forEach(s => {
-      s.tabIndex = 0;
-      s.setAttribute('role', 'button');
-      s.title = 'Open toelichting ' + s.dataset.ref + ': ' + titleOf(s.dataset.ref);
+      const b = document.createElement('a');
+      b.href = '#'; b.className = 'ref-link'; b.dataset.ref = s.dataset.ref;
+      b.textContent = titleOf(s.dataset.ref);
+      s.replaceWith(b);
     });
     relEl.replaceChildren();
     const rel = RELATED[n] || [];
@@ -666,14 +685,12 @@
     b.className = 'chip';
     b.type = 'button';
     b.innerHTML = '<span class="num"></span><span class="lbl"></span>';
-    b.querySelector('.num').textContent = n;
+    b.querySelector('.num').textContent = 'i';
     b.querySelector('.lbl').textContent = titleOf(n);
     b.addEventListener('click', () => show(n));
     return b;
   }
 
-  const chips = document.getElementById('chips');
-  NOTES.forEach(n => chips.append(makeChip(n)));
 
   document.querySelectorAll('#diagram [data-note]').forEach(el => {
     el.addEventListener('click', e => { e.stopPropagation(); show(Number(el.dataset.note)); });
@@ -683,11 +700,11 @@
   });
 
   bodyEl.addEventListener('click', e => {
-    const s = e.target.closest('sup.ref');
-    if (s) show(Number(s.dataset.ref));
+    const s = e.target.closest('[data-ref]');
+    if (s) { e.preventDefault(); show(Number(s.dataset.ref)); }
   });
   bodyEl.addEventListener('keydown', e => {
-    const s = e.target.closest('sup.ref');
+    const s = e.target.closest('[data-ref]');
     if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); show(Number(s.dataset.ref)); }
   });
 

@@ -149,7 +149,7 @@
   }
   /* actief element in het diagram */
   [data-note].active rect { stroke: var(--focus) !important; stroke-width: 4 !important; }
-  [data-note].active .badge circle { fill: var(--focus); }
+  [data-note].active .ainfo circle { stroke: var(--focus); stroke-width: 3; }
   .dlg header {
     display: flex; align-items: center; gap: 12px;
     padding: 16px 20px; border-bottom: 1px solid var(--region-inner);
@@ -298,6 +298,29 @@
   .tag-mini.existing { background: #3f7d2a; }
   .plate-no { display: inline-block; margin: 6px 0 4px; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--badge-text); background: var(--badge); border-radius: 999px; padding: 3px 12px; }
   .plate-no + h1 { margin-top: 2px; }
+
+  .qflag { cursor: pointer; }
+  .qflag:focus { outline: none; }
+  svg .qflag rect.qf-new { fill: var(--opt1, #7c3aed); stroke: none; }
+  svg .qflag text.qf-new-t { fill: #fff; font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag rect.qf-rep { fill: var(--surface); stroke: var(--opt1, #7c3aed); stroke-width: 1.5; stroke-dasharray: 3 2; }
+  svg .qflag text.sm { font-size: 9.5px; }
+  svg .qflag text.qf-rep-t { fill: var(--opt1, #7c3aed); font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag:hover rect, svg .qflag:focus-visible rect { stroke: var(--focus); stroke-width: 2.5; stroke-dasharray: none; }
+  .actor[data-actor] { cursor: pointer; }
+  .actor[data-actor]:hover rect.abox, .actor[data-actor]:focus-visible rect.abox, .actor.active rect.abox { stroke: var(--focus); stroke-width: 3.5; }
+  .actor[data-actor]:focus { outline: none; }
+  .ainfo circle { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+  .ainfo text { fill: var(--muted); font-size: 12px; font-weight: 800; font-style: italic; font-family: Georgia, serif; text-anchor: middle; dominant-baseline: central; }
+  .note-sec { border-top: 1px solid var(--region-inner); padding-top: 14px; }
+  .note-sec > * + * { margin-top: 12px !important; }
+  .note-h { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; }
+  .dlg .body a.ref-link { font-size: .9em; text-decoration: none; white-space: normal; font-weight: 700; cursor: pointer; border: 1px solid var(--badge); color: var(--badge); background: var(--surface); border-radius: 999px; padding: 0 7px; }
+  .dlg .body a.ref-link:hover { background: var(--badge); color: var(--badge-text); }
+  .q-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .82rem; color: var(--muted); margin: -4px 0 10px; }
+  .q-legend .pill { display: inline-block; border-radius: 999px; padding: 0 8px; font-weight: 800; font-size: .75rem; }
+  .q-legend .pill.n { background: var(--opt1, #7c3aed); color: #fff; }
+  .q-legend .pill.r { border: 1.5px dashed var(--opt1, #7c3aed); color: var(--opt1, #7c3aed); }
 
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
@@ -490,15 +513,11 @@
   <p class="plate-no">Plaat 1</p>
   <h1>Dienstverlener sluit een dienst aan op eHerkenning</h1>
   <div class="status existing"><span class="st-tag">Bestaande flow</span><p>Zo sluit een dienstverlener nu een dienst aan op het eHerkenningsstelsel, zodat ondernemers voor die dienst kunnen inloggen met eHerkenning.</p></div>
-  <p class="intro">Voorbeeld: Justis registreert de dienst "VOG aanvragen". Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.</p>
+  <p class="intro">Voorbeeld: Justis registreert de dienst "VOG aanvragen". Klik op een stap voor uitleg; klik op een rol met <b>i</b> voor meer over die rol.</p>
   <div class="toolbar">
     <div>
       <h2>Stappen</h2>
       <div class="chips steps" id="step-chips"><button class="chip start" type="button" id="start">Stap voor stap ▸</button></div>
-    </div>
-    <div>
-      <h2>Toelichtingen</h2>
-      <div class="chips" id="chips"></div>
     </div>
   </div>
   <div class="canvas">
@@ -508,9 +527,9 @@
       <marker id="arM" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-mak)"/></marker>
       <marker id="arC" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-cat)"/></marker>
       </defs>
-      <rect class="lane-bg a-uwv" x="50" y="94" width="280" height="546" rx="14"/><line class="lifeline" x1="190" y1="84" x2="190" y2="638"/><g class="actor a-uwv"><rect x="60" y="10" width="260" height="74" rx="12"/><text class="actor-name" x="190" y="36" text-anchor="middle">Dienstverlener</text><text class="actor-sub" x="190" y="58" text-anchor="middle">bijv. RVO, Belastingdienst, Justis</text><text class="actor-sub" x="190" y="72" text-anchor="middle">in dit voorbeeld: Justis</text></g><rect class="lane-bg a-mak" x="400" y="94" width="280" height="546" rx="14"/><line class="lifeline" x1="540" y1="84" x2="540" y2="638"/><g class="actor a-mak"><rect x="410" y="10" width="260" height="74" rx="12"/><text class="actor-name" x="540" y="36" text-anchor="middle">eHerkenningsmakelaar</text><text class="actor-sub" x="540" y="58" text-anchor="middle">marktpartij, bijv. Digidentity</text><text class="actor-sub" x="540" y="72" text-anchor="middle">gekozen door de dienstverlener</text><g class="tbadge" data-note="1" tabindex="0" role="button" aria-label="Toelichting 1" transform="translate(660 18)"><circle r="10"/><text>1</text></g></g><rect class="lane-bg a-cat" x="740" y="94" width="280" height="546" rx="14"/><line class="lifeline" x1="880" y1="84" x2="880" y2="638"/><g class="actor a-cat"><rect x="750" y="10" width="260" height="74" rx="12"/><text class="actor-name" x="880" y="36" text-anchor="middle">Dienstencatalogus</text><text class="actor-sub" x="880" y="58" text-anchor="middle">eHerkenning</text><text class="actor-sub" x="880" y="72" text-anchor="middle">centraal register van alle diensten</text><g class="tbadge" data-note="2" tabindex="0" role="button" aria-label="Toelichting 2" transform="translate(1000 18)"><circle r="10"/><text>2</text></g></g>
+      <rect class="lane-bg a-uwv" x="50" y="94" width="280" height="546" rx="14"/><line class="lifeline" x1="190" y1="84" x2="190" y2="638"/><g class="actor a-uwv"><rect x="60" y="10" width="260" height="74" rx="12"/><text class="actor-name" x="190" y="36" text-anchor="middle">Dienstverlener</text><text class="actor-sub" x="190" y="58" text-anchor="middle">bijv. RVO, Belastingdienst, Justis</text><text class="actor-sub" x="190" y="72" text-anchor="middle">in dit voorbeeld: Justis</text></g><rect class="lane-bg a-mak" x="400" y="94" width="280" height="546" rx="14"/><line class="lifeline" x1="540" y1="84" x2="540" y2="638"/><g class="actor a-mak" data-actor="M" tabindex="0" role="button" aria-label="Meer over Makelaar"><rect class="abox" x="410" y="10" width="260" height="74" rx="12"/><g class="ainfo" transform="translate(424.0 24.0)"><circle r="8"/><text>i</text></g><text class="actor-name" x="540" y="36" text-anchor="middle">eHerkenningsmakelaar</text><text class="actor-sub" x="540" y="58" text-anchor="middle">marktpartij, bijv. Digidentity</text><text class="actor-sub" x="540" y="72" text-anchor="middle">gekozen door de dienstverlener</text></g><rect class="lane-bg a-cat" x="740" y="94" width="280" height="546" rx="14"/><line class="lifeline" x1="880" y1="84" x2="880" y2="638"/><g class="actor a-cat" data-actor="C" tabindex="0" role="button" aria-label="Meer over Dienstencatalogus"><rect class="abox" x="750" y="10" width="260" height="74" rx="12"/><g class="ainfo" transform="translate(764.0 24.0)"><circle r="8"/><text>i</text></g><text class="actor-name" x="880" y="36" text-anchor="middle">Dienstencatalogus</text><text class="actor-sub" x="880" y="58" text-anchor="middle">eHerkenning</text><text class="actor-sub" x="880" y="72" text-anchor="middle">centraal register van alle diensten</text></g>
       <g class="step a-uwv" data-step="1"><line class="msg a-uwv" x1="205" y1="140" x2="537" y2="140" marker-end="url(#arD)"/><text class="msg-label" x="365.0" y="130" text-anchor="middle">om aan te sluiten op het stelsel</text><text class="msg-label" x="365.0" y="115" text-anchor="middle">Justis kiest een makelaar</text><g class="snum" tabindex="0" role="button" aria-label="Stap 1: Makelaar kiezen" transform="translate(190 140)"><circle r="13"/><text>1</text></g></g>
-      <g class="step a-mak" data-step="2"><line class="msg a-mak" x1="525" y1="220" x2="193" y2="220" marker-end="url(#arM)"/><text class="msg-label" x="365.0" y="210" text-anchor="middle">aan van de dienst(en) die je wilt registreren</text><text class="msg-label" x="365.0" y="195" text-anchor="middle">Verzoek aan Justis: lever de gegevens</text><g class="snum" tabindex="0" role="button" aria-label="Stap 2: Gegevens opvragen" transform="translate(540 220)"><circle r="13"/><text>2</text></g><g class="tbadge" data-note="3" tabindex="0" role="button" aria-label="Toelichting 3" transform="translate(530 191)"><circle r="10"/><text>3</text></g></g>
+      <g class="step a-mak" data-step="2"><line class="msg a-mak" x1="525" y1="220" x2="193" y2="220" marker-end="url(#arM)"/><text class="msg-label" x="365.0" y="210" text-anchor="middle">aan van de dienst(en) die je wilt registreren</text><text class="msg-label" x="365.0" y="195" text-anchor="middle">Verzoek aan Justis: lever de gegevens</text><g class="snum" tabindex="0" role="button" aria-label="Stap 2: Gegevens opvragen" transform="translate(540 220)"><circle r="13"/><text>2</text></g></g>
       <g class="step a-uwv" data-step="3"><rect class="card a-uwv" x="220" y="260" width="290" height="96" rx="8"/><text class="card-title" x="232" y="279">Dienstgegevens</text><text class="card-row" x="232" y="298"><tspan class="k">OrganizationDisplayName:</tspan> Justis</text><text class="card-row" x="232" y="314"><tspan class="k">ServiceName:</tspan> VOG aanvragen</text><text class="card-row" x="232" y="330"><tspan class="k">ServiceDescription:</tspan> Aanvragen van een VOG</text><text class="card-row" x="232" y="346"><tspan class="k">AuthnContextClassRef:</tspan> EH3</text><line class="msg a-uwv" x1="205" y1="370" x2="537" y2="370" marker-end="url(#arD)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 3: Gegevens aanleveren" transform="translate(190 370)"><circle r="13"/><text>3</text></g></g>
       <g class="step a-mak" data-step="4"><line class="msg a-mak" x1="555" y1="440" x2="877" y2="440" marker-end="url(#arM)"/><text class="msg-label" x="710.0" y="430" text-anchor="middle">door aan de dienstencatalogus</text><text class="msg-label" x="710.0" y="415" text-anchor="middle">Makelaar geeft de dienstgegevens</text><g class="snum" tabindex="0" role="button" aria-label="Stap 4: Doorgeven aan catalogus" transform="translate(540 440)"><circle r="13"/><text>4</text></g></g>
       <g class="step a-cat" data-step="5"><rect class="activity a-cat" x="900" y="485" width="208" height="50" rx="12"/><text class="act-label" x="912" y="507">Dienst wordt geregistreerd</text><text class="act-label" x="912" y="523">in de dienstencatalogus</text><g class="snum" tabindex="0" role="button" aria-label="Stap 5: Registratie in catalogus" transform="translate(880 510)"><circle r="13"/><text>5</text></g></g>
@@ -654,16 +673,15 @@
 <script>
 (function () {
   const ACT = {"D": {"name": "Dienstverlener (Justis)", "cls": "a-uwv"}, "M": {"name": "Makelaar", "cls": "a-mak"}, "C": {"name": "Dienstencatalogus", "cls": "a-cat"}};
-  const STEPS = [{"n": 1, "f": "D", "t": "M", "title": "Makelaar kiezen", "text": "Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.", "notes": [1]}, {"n": 2, "f": "M", "t": "D", "title": "Gegevens opvragen", "text": "De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.", "notes": [3]}, {"n": 3, "f": "D", "t": "M", "title": "Gegevens aanleveren", "text": "Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:", "rows": ["Dienstverlenernaam (OrganizationDisplayName): Justis", "Dienstnaam (ServiceName): VOG aanvragen", "Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag", "Betrouwbaarheidsniveau (AuthnContextClassRef): EH3"], "notes": [3]}, {"n": 4, "f": "M", "t": "C", "title": "Doorgeven aan catalogus", "text": "De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.", "notes": [2]}, {"n": 5, "f": "C", "t": null, "title": "Registratie in catalogus", "text": "De dienst wordt geregistreerd in de dienstencatalogus: Justis staat er nu in als dienstaanbieder, met \"VOG aanvragen\" als dienst.", "notes": [2], "modal": true}, {"n": 6, "f": "C", "t": "D", "title": "Dienst aangesloten", "text": "De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen."}];
-  const NOTES = [1, 2, 3];
-  const NOTE_TARGET = {"1": "actor eHerkenningsmakelaar", "2": "actor Dienstencatalogus", "3": 2};
+  const STEPS = [{"n": 1, "f": "D", "t": "M", "title": "Makelaar kiezen", "text": "Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.", "notes": ["1"]}, {"n": 2, "f": "M", "t": "D", "title": "Gegevens opvragen", "text": "De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.", "notes": ["3"]}, {"n": 3, "f": "D", "t": "M", "title": "Gegevens aanleveren", "text": "Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:", "rows": ["Dienstverlenernaam (OrganizationDisplayName): Justis", "Dienstnaam (ServiceName): VOG aanvragen", "Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag", "Betrouwbaarheidsniveau (AuthnContextClassRef): EH3"], "notes": ["3"]}, {"n": 4, "f": "M", "t": "C", "title": "Doorgeven aan catalogus", "text": "De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.", "notes": ["2"]}, {"n": 5, "f": "C", "t": null, "title": "Registratie in catalogus", "text": "De dienst wordt geregistreerd in de dienstencatalogus: Justis staat er nu in als dienstaanbieder, met \"VOG aanvragen\" als dienst.", "notes": ["2"], "modal": true, "modalAuto": true, "modalLabel": "Toon waar Justis nu staat in de dienstencatalogus ▸"}, {"n": 6, "f": "C", "t": "D", "title": "Dienst aangesloten", "text": "De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen."}];
+  const ACTOR_NOTES = {"M": ["1"], "C": ["2"]};
+  const OWNER = {"1": ["step", 1], "3": ["step", 2], "2": ["step", 4]};
   const $ = id => document.getElementById(id);
   const dlg = $('dlg'), layout = $('layout'), svg = $('diagram');
   const numEl = $('dlg-num'), kindEl = $('dlg-kind'), titleEl = $('dlg-title');
   const bodyEl = $('dlg-body'), relEl = $('dlg-related'), prevBtn = $('dlg-prev'), nextBtn = $('dlg-next');
   let cur = null;
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-  const noteTitle = n => $('note-' + n).dataset.title;
   const S = n => STEPS.find(s => s.n === n);
   function chip(num, label, onClick) {
     const b = el('button', 'chip'); b.type = 'button';
@@ -671,11 +689,23 @@
     b.addEventListener('click', onClick); return b;
   }
   const actorChip = k => el('span', 'actor-chip ' + ACT[k].cls, ACT[k].name);
+  function goOwner(o) { if (!o) return; if (o[0] === 'step') showStep(o[1]); else showActor(o[1]); }
+  function noteSection(k) {
+    const tpl = $('note-' + k); if (!tpl) return null;
+    const sec = el('section', 'note-sec');
+    sec.append(el('h3', 'note-h', tpl.dataset.title));
+    sec.append(tpl.content.cloneNode(true));
+    sec.querySelectorAll('sup.ref').forEach(sup => {
+      const o = OWNER[sup.dataset.ref];
+      const b = el('a', 'ref-link', o ? (o[0] === 'step' ? 'stap ' + o[1] : ACT[o[1]].name) : 'elders');
+      b.href = '#'; b.addEventListener('click', e => { e.preventDefault(); goOwner(o); }); sup.replaceWith(b);
+    });
+    return sec;
+  }
   function markActive() {
-    svg.querySelectorAll('.step').forEach(g => g.classList.toggle('active', !!cur &&
-      ((cur.kind === 'step' && +g.dataset.step === cur.n) || (cur.kind === 'note' && +g.dataset.step === NOTE_TARGET[cur.n]))));
-    svg.querySelectorAll('.tbadge').forEach(b => b.classList.toggle('active', !!cur && cur.kind === 'note' && +b.dataset.note === cur.n));
-    svg.classList.toggle('focusing', !!cur && !(cur.kind === 'note' && typeof NOTE_TARGET[cur.n] === 'string'));
+    svg.querySelectorAll('.step').forEach(g => g.classList.toggle('active', !!cur && cur.kind === 'step' && +g.dataset.step === cur.n));
+    svg.querySelectorAll('.actor[data-actor]').forEach(a => a.classList.toggle('active', !!cur && cur.kind === 'actor' && a.dataset.actor === cur.k));
+    svg.classList.toggle('focusing', !!cur && cur.kind === 'step');
   }
   function open() { if (dlg.hidden) { dlg.hidden = false; layout.classList.add('panel-open'); } markActive(); }
   function showStep(n) {
@@ -688,54 +718,54 @@
     if (s.t) { route.append(el('span', null, '→')); route.append(actorChip(s.t)); } else route.append(el('span', null, '(interne verwerking)'));
     body.push(route, el('p', 'lead', s.text));
     if (s.rows) { const ul = el('ul', 'fields'); s.rows.forEach(r => ul.append(el('li', null, r))); body.push(ul); }
-    if (s.modal) { const b = el('button', 'chip start', 'Toon waar Justis nu staat in de dienstencatalogus ▸'); b.type = 'button'; b.addEventListener('click', () => openModal('cat-modal')); body.push(b); }
-    if (s.notes) {
-      const box = el('div', 'callout info');
-      box.append(el('p', 'callout-title', 'Meer uitleg'));
-      const p = el('p'); p.style.display = 'flex'; p.style.flexWrap = 'wrap'; p.style.gap = '6px';
-      s.notes.forEach(k => p.append(chip(k, noteTitle(k), () => showNote(k)))); box.append(p); body.push(box);
-    }
+    if (s.modal && $('cat-modal')) { const b = el('button', 'chip start', s.modalLabel || 'Toon in de dienstencatalogus ▸'); b.type = 'button'; b.addEventListener('click', () => openModal('cat-modal')); body.push(b); }
+    (s.notes || []).forEach(k => { const sec = noteSection(k); if (sec) body.push(sec); });
     bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
     prevBtn.disabled = n <= 1; nextBtn.disabled = n >= STEPS.length;
     open();
   }
-  function showNote(n) {
-    const tpl = $('note-' + n); if (!tpl) return;
-    cur = { kind: 'note', n };
-    numEl.className = 'num'; numEl.textContent = n;
-    kindEl.textContent = 'Toelichting ' + n; titleEl.textContent = tpl.dataset.title;
-    bodyEl.replaceChildren(tpl.content.cloneNode(true)); bodyEl.scrollTop = 0;
-    relEl.replaceChildren(el('span', null, 'Hoort bij:'));
-    const t = NOTE_TARGET[n];
-    if (typeof t === 'number') relEl.append(chip(t, 'Stap ' + t + ': ' + S(t).title, () => showStep(t)));
-    else relEl.append(el('span', null, t));
-    const i = NOTES.indexOf(n); prevBtn.disabled = i <= 0; nextBtn.disabled = i >= NOTES.length - 1;
+  function showActor(k) {
+    cur = { kind: 'actor', k };
+    numEl.className = 'num step-num ' + ACT[k].cls; numEl.textContent = 'i';
+    kindEl.textContent = 'Rol in deze flow'; titleEl.textContent = ACT[k].name;
+    const body = [];
+    (ACTOR_NOTES[k] || []).forEach(n => { const sec = noteSection(n); if (sec) body.push(sec); });
+    if (body[0]) body[0].classList.add('first');
+    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
+    prevBtn.disabled = true; nextBtn.disabled = false; nextBtn.dataset.fromActor = '1';
     open();
   }
-  function go(d) { if (!cur) return; if (cur.kind === 'step') showStep(cur.n + d); else showNote(NOTES[NOTES.indexOf(cur.n) + d]); }
+  function go(d) {
+    if (!cur) return;
+    if (cur.kind === 'actor') { showStep(1); return; }
+    showStep(cur.n + d);
+  }
   function closePanel() { dlg.hidden = true; layout.classList.remove('panel-open'); cur = null; markActive(); }
+
+  let modal = null, lastFocus = null;
+  function openModal(id) {
+    const m = $(id); if (!m) return;
+    if (modal) modal.hidden = true;
+    modal = m; lastFocus = document.activeElement; modal.hidden = false;
+    const f = modal.querySelector('.nav-btn'); if (f) f.focus();
+  }
+  function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
+  document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => {
+    if (e.target === m || e.target.closest('[data-close-modal], #cat-modal-close, #cat-modal-ok')) closeModal();
+  }));
+  bodyEl.addEventListener('click', e => { const t = e.target.closest('[data-open-modal]'); if (t) openModal(t.dataset.openModal); });
+
   STEPS.forEach(s => { const c = chip(s.n, null, () => showStep(s.n)); c.title = 'Stap ' + s.n + ': ' + s.title; $('step-chips').append(c); });
   $('start').addEventListener('click', () => showStep(1));
-  NOTES.forEach(n => $('chips').append(chip(n, noteTitle(n), () => showNote(n))));
   function bind(sel, fn) {
     svg.querySelectorAll(sel).forEach(e => {
       e.addEventListener('click', ev => { ev.stopPropagation(); fn(e); });
       e.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); fn(e); } });
     });
   }
-  let modal = null, lastFocus = null;
-  function openModal(id) {
-    if (modal) modal.hidden = true;
-    modal = $(id || 'cat-modal'); lastFocus = document.activeElement; modal.hidden = false;
-    const f = modal.querySelector('.nav-btn'); if (f) f.focus();
-  }
-  function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
-  $('cat-modal-close').addEventListener('click', closeModal);
-  $('cat-modal-ok').addEventListener('click', closeModal);
-  document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close-modal]')) closeModal(); }));
-  bodyEl.addEventListener('click', e => { const t = e.target.closest('[data-open-modal]'); if (t) openModal(t.dataset.openModal); });
-  bind('.snum', e => { const n = +e.closest('.step').dataset.step; showStep(n); if (n === 5) openModal('cat-modal'); });
-  bind('.tbadge', e => showNote(+e.dataset.note));
+  bind('.snum', e => { const n = +e.closest('.step').dataset.step; showStep(n); const s = S(n); if (s && s.modalAuto) openModal('cat-modal'); });
+  bind('.qflag', e => e.dataset.ownerStep ? showStep(+e.dataset.ownerStep) : showActor(e.dataset.ownerActor));
+  bind('.actor[data-actor]', e => showActor(e.dataset.actor));
   prevBtn.addEventListener('click', () => go(-1));
   nextBtn.addEventListener('click', () => go(1));
   $('dlg-close').addEventListener('click', closePanel);

@@ -149,7 +149,7 @@
   }
   /* actief element in het diagram */
   [data-note].active rect { stroke: var(--focus) !important; stroke-width: 4 !important; }
-  [data-note].active .badge circle { fill: var(--focus); }
+  [data-note].active .ainfo circle { stroke: var(--focus); stroke-width: 3; }
   .dlg header {
     display: flex; align-items: center; gap: 12px;
     padding: 16px 20px; border-bottom: 1px solid var(--region-inner);
@@ -299,6 +299,29 @@
   .plate-no { display: inline-block; margin: 6px 0 4px; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--badge-text); background: var(--badge); border-radius: 999px; padding: 3px 12px; }
   .plate-no + h1 { margin-top: 2px; }
 
+  .qflag { cursor: pointer; }
+  .qflag:focus { outline: none; }
+  svg .qflag rect.qf-new { fill: var(--opt1, #7c3aed); stroke: none; }
+  svg .qflag text.qf-new-t { fill: #fff; font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag rect.qf-rep { fill: var(--surface); stroke: var(--opt1, #7c3aed); stroke-width: 1.5; stroke-dasharray: 3 2; }
+  svg .qflag text.sm { font-size: 9.5px; }
+  svg .qflag text.qf-rep-t { fill: var(--opt1, #7c3aed); font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag:hover rect, svg .qflag:focus-visible rect { stroke: var(--focus); stroke-width: 2.5; stroke-dasharray: none; }
+  .actor[data-actor] { cursor: pointer; }
+  .actor[data-actor]:hover rect.abox, .actor[data-actor]:focus-visible rect.abox, .actor.active rect.abox { stroke: var(--focus); stroke-width: 3.5; }
+  .actor[data-actor]:focus { outline: none; }
+  .ainfo circle { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+  .ainfo text { fill: var(--muted); font-size: 12px; font-weight: 800; font-style: italic; font-family: Georgia, serif; text-anchor: middle; dominant-baseline: central; }
+  .note-sec { border-top: 1px solid var(--region-inner); padding-top: 14px; }
+  .note-sec > * + * { margin-top: 12px !important; }
+  .note-h { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; }
+  .dlg .body a.ref-link { font-size: .9em; text-decoration: none; white-space: normal; font-weight: 700; cursor: pointer; border: 1px solid var(--badge); color: var(--badge); background: var(--surface); border-radius: 999px; padding: 0 7px; }
+  .dlg .body a.ref-link:hover { background: var(--badge); color: var(--badge-text); }
+  .q-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .82rem; color: var(--muted); margin: -4px 0 10px; }
+  .q-legend .pill { display: inline-block; border-radius: 999px; padding: 0 8px; font-weight: 800; font-size: .75rem; }
+  .q-legend .pill.n { background: var(--opt1, #7c3aed); color: #fff; }
+  .q-legend .pill.r { border: 1.5px dashed var(--opt1, #7c3aed); color: var(--opt1, #7c3aed); }
+
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
   :root[data-theme="dark"] { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; }
@@ -422,17 +445,14 @@
   <p class="plate-no">Plaat 5</p>
   <h1>MOZa-portaal via dienstbemiddeling mét portaaldienst</h1>
   <div class="status concept"><span class="st-tag">Conceptflow</span><p>Dit is een denkrichting, geen bestaande flow. We weten nog niet of dit binnen het eHerkenningsstelsel allemaal kan: de vragen op deze plaat moeten dat uitwijzen. De bestaande flow staat op plaat 4.</p></div>
-  <p class="intro">Conceptflow voor MOZa optie 1: dienstbemiddeling mét portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.</p>
+  <p class="intro">Conceptflow voor MOZa optie 1: dienstbemiddeling mét portaaldienst. Klik op een stap voor uitleg; klik op een rol met <b>i</b> voor meer over die rol.</p>
   <div class="toolbar">
     <div>
       <h2>Stappen</h2>
       <div class="chips steps" id="step-chips"><button class="chip start" type="button" id="start">Stap voor stap ▸</button></div>
     </div>
-    <div>
-      <h2>Toelichtingen</h2>
-      <div class="chips" id="chips"></div>
-    </div>
   </div>
+  <p class="q-legend"><span><span class="pill n">? nr</span> vragen bij deze stap</span><span><span class="pill r">↻ nr</span> herhaalde vraag (eerder gesteld)</span></p>
   <div class="canvas">
     <svg id="diagram" viewBox="0 0 1120 1168" role="img" aria-label="Volgordediagram: Bilal logt in bij het MOZa-portaal, optie 1">
       <defs>
@@ -441,18 +461,18 @@
       <marker id="arM" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-mak)"/></marker>
       <marker id="arL" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--c-lev)"/></marker>
       </defs>
-      <rect class="lane-bg a-bilal" x="-5" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="120" y1="84" x2="120" y2="1156"/><g class="actor a-bilal"><rect x="5" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="120" y="36" text-anchor="middle">Bilal Yilmaz</text><text class="actor-sub" x="120" y="58" text-anchor="middle">werknemer, op de website</text><text class="actor-sub" x="120" y="72" text-anchor="middle">van het MOZa-portaal</text></g><rect class="lane-bg a-uwv" x="235" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="360" y1="84" x2="360" y2="1156"/><g class="actor a-uwv"><rect x="245" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="360" y="42" text-anchor="middle">MOZa</text><text class="actor-sub" x="360" y="58" text-anchor="middle">dienstbemiddelaar?</text><g class="tbadge" data-note="1" tabindex="0" role="button" aria-label="Toelichting 1" transform="translate(465 18)"><circle r="10"/><text>1</text></g></g><rect class="lane-bg a-mak" x="495" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="620" y1="84" x2="620" y2="1156"/><g class="actor a-mak"><rect x="505" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="620" y="36" text-anchor="middle">eHerkenningsmakelaar</text><text class="actor-sub" x="620" y="58" text-anchor="middle">bijv. Digidentity</text><text class="actor-sub" x="620" y="72" text-anchor="middle">gekozen door MOZa (dienstbemiddelaar)</text></g><rect class="lane-bg a-lev" x="755" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="880" y1="84" x2="880" y2="1156"/><g class="actor a-lev"><rect x="765" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="880" y="36" text-anchor="middle">eHerkenningsleverancier</text><text class="actor-sub" x="880" y="58" text-anchor="middle">bijv. Z-Login</text><text class="actor-sub" x="880" y="72" text-anchor="middle">gekozen door Karin (werkgever)</text></g>
+      <rect class="lane-bg a-bilal" x="-5" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="120" y1="84" x2="120" y2="1156"/><g class="actor a-bilal"><rect x="5" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="120" y="36" text-anchor="middle">Bilal Yilmaz</text><text class="actor-sub" x="120" y="58" text-anchor="middle">werknemer, op de website</text><text class="actor-sub" x="120" y="72" text-anchor="middle">van het MOZa-portaal</text></g><rect class="lane-bg a-uwv" x="235" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="360" y1="84" x2="360" y2="1156"/><g class="actor a-uwv" data-actor="Z" tabindex="0" role="button" aria-label="Meer over MOZa"><rect class="abox" x="245" y="10" width="230" height="74" rx="12"/><g class="ainfo" transform="translate(259.0 24.0)"><circle r="8"/><text>i</text></g><text class="actor-name" x="360" y="42" text-anchor="middle">MOZa</text><text class="actor-sub" x="360" y="58" text-anchor="middle">dienstbemiddelaar?</text><g class="qflag" data-owner-actor="Z" tabindex="0" role="button" aria-label="Vragen 12 · Herhaalde vragen 2"><rect class="qf-new" x="398.9" y="9.0" width="39.2" height="18" rx="9.0"/><text class="qf-new-t" x="418.5" y="22.0" text-anchor="middle">? 12</text><rect class="qf-rep" x="442.1" y="9.0" width="32.9" height="18" rx="9.0"/><text class="qf-rep-t" x="458.5" y="22.0" text-anchor="middle">↻ 2</text></g></g><rect class="lane-bg a-mak" x="495" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="620" y1="84" x2="620" y2="1156"/><g class="actor a-mak"><rect x="505" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="620" y="36" text-anchor="middle">eHerkenningsmakelaar</text><text class="actor-sub" x="620" y="58" text-anchor="middle">bijv. Digidentity</text><text class="actor-sub" x="620" y="72" text-anchor="middle">gekozen door MOZa (dienstbemiddelaar)</text></g><rect class="lane-bg a-lev" x="755" y="94" width="250" height="1064" rx="14"/><line class="lifeline" x1="880" y1="84" x2="880" y2="1156"/><g class="actor a-lev"><rect x="765" y="10" width="230" height="74" rx="12"/><text class="actor-name" x="880" y="36" text-anchor="middle">eHerkenningsleverancier</text><text class="actor-sub" x="880" y="58" text-anchor="middle">bijv. Z-Login</text><text class="actor-sub" x="880" y="72" text-anchor="middle">gekozen door Karin (werkgever)</text></g>
       <g class="step a-bilal" data-step="1"><line class="msg a-bilal" x1="135" y1="140" x2="617" y2="140" marker-end="url(#arB)"/><text class="msg-label" x="370.0" y="130" text-anchor="middle">klikt op &quot;Inloggen MOZa-portaal met eHerkenning&quot;</text><g class="snum" tabindex="0" role="button" aria-label="Stap 1: Inloggen starten" transform="translate(120 140)"><circle r="13"/><text>1</text></g></g>
       <g class="step a-mak" data-step="2"><line class="msg a-mak" x1="605" y1="200" x2="123" y2="200" marker-end="url(#arM)"/><text class="msg-label" x="370.0" y="190" text-anchor="middle">Verzoek aan Bilal: selecteer je leverancier</text><g class="snum" tabindex="0" role="button" aria-label="Stap 2: Verzoek: kies leverancier" transform="translate(620 200)"><circle r="13"/><text>2</text></g></g>
       <g class="step a-bilal" data-step="3"><line class="msg a-bilal" x1="135" y1="260" x2="617" y2="260" marker-end="url(#arB)"/><text class="msg-label" x="370.0" y="250" text-anchor="middle">Bilal selecteert zijn leverancier</text><g class="snum" tabindex="0" role="button" aria-label="Stap 3: Leverancier gekozen" transform="translate(120 260)"><circle r="13"/><text>3</text></g></g>
-      <g class="step a-mak" data-step="4"><rect class="card a-mak" x="634" y="300" width="240" height="96" rx="8"/><text class="card-title" x="646" y="319">Inlogverzoek (anoniem)</text><text class="card-row" x="646" y="338"><tspan class="k">ServiceProvider:</tspan> MOZa</text><g class="tbadge sm" data-note="2" tabindex="0" role="button" aria-label="Toelichting 2" transform="translate(860 334)"><circle r="7.5"/><text>2</text></g><text class="card-row" x="646" y="354"><tspan class="k">ServiceName:</tspan> MOZa-portaaldienst</text><text class="card-row" x="646" y="370"><tspan class="k">ServiceID:</tspan> PortalService_MOZa123</text><g class="tbadge sm" data-note="3" tabindex="0" role="button" aria-label="Toelichting 3" transform="translate(860 366)"><circle r="7.5"/><text>3</text></g><text class="card-row" x="646" y="386"><tspan class="k">Vereist niveau:</tspan> ??</text><g class="tbadge sm" data-note="4" tabindex="0" role="button" aria-label="Toelichting 4" transform="translate(860 382)"><circle r="7.5"/><text>4</text></g><line class="msg a-mak" x1="635" y1="410" x2="877" y2="410" marker-end="url(#arM)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 4: Anoniem inlogverzoek" transform="translate(620 410)"><circle r="13"/><text>4</text></g></g>
+      <g class="step a-mak" data-step="4"><rect class="card a-mak" x="634" y="300" width="240" height="96" rx="8"/><text class="card-title" x="646" y="319">Inlogverzoek (anoniem)</text><text class="card-row" x="646" y="338"><tspan class="k">ServiceProvider:</tspan> MOZa</text><g class="qflag" data-owner-step="4" tabindex="0" role="button" aria-label="Vragen 13, 13a–b"><rect class="qf-new" x="882.0" y="327.0" width="71.6" height="14" rx="7.0"/><text class="qf-new-t sm" x="917.8" y="337.5" text-anchor="middle">? 13, 13a–b</text></g><text class="card-row" x="646" y="354"><tspan class="k">ServiceName:</tspan> MOZa-portaaldienst</text><text class="card-row" x="646" y="370"><tspan class="k">ServiceID:</tspan> PortalService_MOZa123</text><g class="qflag" data-owner-step="4" tabindex="0" role="button" aria-label="Vragen 14"><rect class="qf-new" x="882.0" y="359.0" width="32.4" height="14" rx="7.0"/><text class="qf-new-t sm" x="898.2" y="369.5" text-anchor="middle">? 14</text></g><text class="card-row" x="646" y="386"><tspan class="k">Vereist niveau:</tspan> ??</text><g class="qflag" data-owner-step="4" tabindex="0" role="button" aria-label="Vragen 15, 15a–b"><rect class="qf-new" x="882.0" y="375.0" width="71.6" height="14" rx="7.0"/><text class="qf-new-t sm" x="917.8" y="385.5" text-anchor="middle">? 15, 15a–b</text></g><line class="msg a-mak" x1="635" y1="410" x2="877" y2="410" marker-end="url(#arM)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 4: Anoniem inlogverzoek" transform="translate(620 410)"><circle r="13"/><text>4</text></g></g>
       <g class="step a-lev" data-step="5"><line class="msg a-lev" x1="865" y1="472" x2="123" y2="472" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="462" text-anchor="middle">Verzoek aan Bilal: vul gebruikersnaam en wachtwoord in</text><g class="snum" tabindex="0" role="button" aria-label="Stap 5: Verzoek: inloggegevens" transform="translate(880 472)"><circle r="13"/><text>5</text></g></g>
       <g class="step a-bilal" data-step="6"><line class="msg a-bilal" x1="135" y1="532" x2="877" y2="532" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="522" text-anchor="middle">Bilal logt in met zijn Z-Login-accountgegevens</text><g class="snum" tabindex="0" role="button" aria-label="Stap 6: Inloggen bij Z-Login" transform="translate(120 532)"><circle r="13"/><text>6</text></g></g>
       <g class="step a-lev" data-step="7"><rect class="activity a-lev" x="900" y="572.0" width="208" height="50" rx="12"/><text class="act-label" x="912" y="594.0">Controleert of Bilals account het</text><text class="act-label" x="912" y="610.0">gevraagde niveau heeft</text><g class="snum" tabindex="0" role="button" aria-label="Stap 7: Controle niveau" transform="translate(880 597)"><circle r="13"/><text>7</text></g></g>
       <g class="step a-lev" data-step="8"><line class="msg a-lev" x1="865" y1="667" x2="123" y2="667" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="657" text-anchor="middle">Verzoek aan Bilal: namens welk bedrijf wil je inloggen?</text><g class="snum" tabindex="0" role="button" aria-label="Stap 8: Verzoek: kies bedrijf" transform="translate(880 667)"><circle r="13"/><text>8</text></g></g>
       <g class="step a-bilal" data-step="9"><line class="msg a-bilal" x1="135" y1="727" x2="877" y2="727" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="717" text-anchor="middle">Bilal selecteert Koffiezaak Noon</text><g class="snum" tabindex="0" role="button" aria-label="Stap 9: Bedrijf gekozen" transform="translate(120 727)"><circle r="13"/><text>9</text></g></g>
-      <g class="step a-lev" data-step="10"><rect class="activity a-lev" x="900" y="766.0" width="208" height="66" rx="12"/><text class="act-label" x="912" y="788.0">Controleert of Bilal namens Noon</text><text class="act-label" x="912" y="804.0">gemachtigd is voor de diensten</text><text class="act-label" x="912" y="820.0">in het portaal</text><g class="tbadge" data-note="5" tabindex="0" role="button" aria-label="Toelichting 5" transform="translate(1104 766.0)"><circle r="10"/><text>5</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 10: Controle machtigingen" transform="translate(880 799)"><circle r="13"/><text>10</text></g></g>
-      <g class="step a-lev" data-step="11"><rect class="card a-lev" x="634" y="849" width="240" height="128" rx="8"/><text class="card-title" x="646" y="868">Versleutelde assertion</text><text class="card-row" x="646" y="887">PseudoID1234 is gemachtigd</text><g class="tbadge sm" data-note="6" tabindex="0" role="button" aria-label="Toelichting 6" transform="translate(860 883)"><circle r="7.5"/><text>6</text></g><text class="card-row" x="646" y="903">namens KVK-nummer1234</text><text class="card-row" x="646" y="919">voor Service_ABC123 &amp;</text><g class="tbadge sm" data-note="7" tabindex="0" role="button" aria-label="Toelichting 7" transform="translate(860 915)"><circle r="7.5"/><text>7</text></g><text class="card-row" x="646" y="935">Service_CDF345 &amp;</text><text class="card-row" x="646" y="951">Service_FGH567 &amp;</text><text class="card-row" x="646" y="967">Service_HIJ789 &amp; …</text><line class="msg a-lev" x1="865" y1="991" x2="623" y2="991" marker-end="url(#arL)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 11: Versleutelde assertion" transform="translate(880 991)"><circle r="13"/><text>11</text></g></g>
+      <g class="step a-lev" data-step="10"><rect class="activity a-lev" x="900" y="766.0" width="208" height="66" rx="12"/><text class="act-label" x="912" y="788.0">Controleert of Bilal namens Noon</text><text class="act-label" x="912" y="804.0">gemachtigd is voor de diensten</text><text class="act-label" x="912" y="820.0">in het portaal</text><g class="qflag" data-owner-step="10" tabindex="0" role="button" aria-label="Herhaalde vragen 6, 7a–c"><rect class="qf-rep" x="1043.3" y="757.0" width="70.7" height="18" rx="9.0"/><text class="qf-rep-t" x="1078.6" y="770.0" text-anchor="middle">↻ 6, 7a–c</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 10: Controle machtigingen" transform="translate(880 799)"><circle r="13"/><text>10</text></g></g>
+      <g class="step a-lev" data-step="11"><rect class="card a-lev" x="634" y="849" width="240" height="128" rx="8"/><text class="card-title" x="646" y="868">Versleutelde assertion</text><text class="card-row" x="646" y="887">PseudoID1234 is gemachtigd</text><g class="qflag" data-owner-step="11" tabindex="0" role="button" aria-label="Vragen 16a–b, 17a–b"><rect class="qf-new" x="882.0" y="876.0" width="88.4" height="14" rx="7.0"/><text class="qf-new-t sm" x="926.2" y="886.5" text-anchor="middle">? 16a–b, 17a–b</text></g><text class="card-row" x="646" y="903">namens KVK-nummer1234</text><text class="card-row" x="646" y="919">voor Service_ABC123 &amp;</text><text class="card-row" x="646" y="935">Service_CDF345 &amp;</text><text class="card-row" x="646" y="951">Service_FGH567 &amp;</text><text class="card-row" x="646" y="967">Service_HIJ789 &amp; …</text><line class="msg a-lev" x1="865" y1="991" x2="623" y2="991" marker-end="url(#arL)"/><g class="snum" tabindex="0" role="button" aria-label="Stap 11: Versleutelde assertion" transform="translate(880 991)"><circle r="13"/><text>11</text></g></g>
       <g class="step a-mak" data-step="12"><line class="msg a-mak" x1="605" y1="1063" x2="363" y2="1063" marker-end="url(#arM)"/><text class="msg-label" x="490.0" y="1053" text-anchor="middle">ongeopend door aan MOZa</text><text class="msg-label" x="490.0" y="1038" text-anchor="middle">Makelaar geeft het bericht</text><g class="snum" tabindex="0" role="button" aria-label="Stap 12: Doorgeven aan MOZa" transform="translate(620 1063)"><circle r="13"/><text>12</text></g></g>
       <g class="step a-uwv" data-step="13"><line class="msg a-uwv" x1="345" y1="1128" x2="123" y2="1128" marker-end="url(#arZ)"/><text class="msg-label" x="240.0" y="1118" text-anchor="middle">het MOZa-portaal</text><text class="msg-label" x="240.0" y="1103" text-anchor="middle">Bilal krijgt toegang tot</text><g class="snum" tabindex="0" role="button" aria-label="Stap 13: Toegang tot MOZa-portaal" transform="translate(360 1128)"><circle r="13"/><text>13</text></g></g>
     </svg>
@@ -539,36 +559,41 @@
 <script>
 (function () {
   const ACT = {"B": {"name": "Bilal", "cls": "a-bilal"}, "Z": {"name": "MOZa", "cls": "a-uwv"}, "M": {"name": "Makelaar (Digidentity)", "cls": "a-mak"}, "L": {"name": "Leverancier (Z-Login)", "cls": "a-lev"}};
-  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op het MOZa-portaal op \"Inloggen MOZa-portaal met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Anoniem inlogverzoek", "notes": [2, 3, 4], "text": "De makelaar stuurt een anoniem inlogverzoek voor de MOZa-portaaldienst naar de leverancier:", "rows": ["ServiceProvider (dienstverlener): MOZa", "ServiceName (dienstnaam): \"MOZa-portaaldienst\"", "ServiceID (dienstcode): \"PortalService_MOZa123\"", "Vereist niveau: nog onbekend"]}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "notes": [4], "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft."}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "notes": [5], "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal."}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion", "notes": [6, 7], "text": "De leverancier stuurt één versleutelde assertion (verklaring) naar de makelaar, met daarin dat:", "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_ABC123, Service_CDF345, Service_FGH567, Service_HIJ789, …"]}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "text": "Bilal krijgt toegang tot het MOZa-portaal en ziet direct de diensten waarvoor hij gemachtigd is."}];
-  const NOTES = [1, 2, 3, 4, 5, 6, 7];
-  const NOTE_STEP = {"2": 4, "3": 4, "4": 4, "5": 10, "6": 11, "7": 11};
-  const lab = n => n === 'x' ? '*' : String(n);
-  const key = v => (v === 'x' ? 'x' : +v);
-
+  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op het MOZa-portaal op \"Inloggen MOZa-portaal met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Anoniem inlogverzoek", "text": "De makelaar stuurt een anoniem inlogverzoek voor de MOZa-portaaldienst naar de leverancier:", "rows": ["ServiceProvider (dienstverlener): MOZa", "ServiceName (dienstnaam): \"MOZa-portaaldienst\"", "ServiceID (dienstcode): \"PortalService_MOZa123\"", "Vereist niveau: nog onbekend"], "notes": ["2", "3", "4"]}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft.", "notes": ["4"]}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal.", "notes": ["5"]}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion", "text": "De leverancier stuurt één versleutelde assertion (verklaring) naar de makelaar, met daarin dat:", "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_ABC123, Service_CDF345, Service_FGH567, Service_HIJ789, …"], "notes": ["6", "7"]}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "text": "Bilal krijgt toegang tot het MOZa-portaal en ziet direct de diensten waarvoor hij gemachtigd is."}];
+  const ACTOR_NOTES = {"Z": ["1"]};
+  const OWNER = {"2": ["step", 4], "3": ["step", 4], "4": ["step", 4], "5": ["step", 10], "6": ["step", 11], "7": ["step", 11], "1": ["actor", "Z"]};
   const $ = id => document.getElementById(id);
   const dlg = $('dlg'), layout = $('layout'), svg = $('diagram');
   const numEl = $('dlg-num'), kindEl = $('dlg-kind'), titleEl = $('dlg-title');
   const bodyEl = $('dlg-body'), relEl = $('dlg-related'), prevBtn = $('dlg-prev'), nextBtn = $('dlg-next');
   let cur = null;
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-  const noteTitle = n => $('note-' + n).dataset.title;
   const S = n => STEPS.find(s => s.n === n);
-
-  function chip(num, label, onClick, cls) {
-    const b = el('button', 'chip' + (cls ? ' ' + cls : '')); b.type = 'button';
+  function chip(num, label, onClick) {
+    const b = el('button', 'chip'); b.type = 'button';
     b.append(el('span', 'num', num)); if (label) b.append(el('span', 'lbl', label));
     b.addEventListener('click', onClick); return b;
   }
   const actorChip = k => el('span', 'actor-chip ' + ACT[k].cls, ACT[k].name);
-
+  function goOwner(o) { if (!o) return; if (o[0] === 'step') showStep(o[1]); else showActor(o[1]); }
+  function noteSection(k) {
+    const tpl = $('note-' + k); if (!tpl) return null;
+    const sec = el('section', 'note-sec');
+    sec.append(el('h3', 'note-h', tpl.dataset.title));
+    sec.append(tpl.content.cloneNode(true));
+    sec.querySelectorAll('sup.ref').forEach(sup => {
+      const o = OWNER[sup.dataset.ref];
+      const b = el('a', 'ref-link', o ? (o[0] === 'step' ? 'stap ' + o[1] : ACT[o[1]].name) : 'elders');
+      b.href = '#'; b.addEventListener('click', e => { e.preventDefault(); goOwner(o); }); sup.replaceWith(b);
+    });
+    return sec;
+  }
   function markActive() {
-    svg.querySelectorAll('.step').forEach(g => g.classList.toggle('active', !!cur &&
-      ((cur.kind === 'step' && +g.dataset.step === cur.n) || (cur.kind === 'note' && +g.dataset.step === NOTE_STEP[cur.n]))));
-    svg.querySelectorAll('.tbadge').forEach(b => b.classList.toggle('active', !!cur && cur.kind === 'note' && key(b.dataset.note) === cur.n));
-    svg.classList.toggle('focusing', !!cur);
+    svg.querySelectorAll('.step').forEach(g => g.classList.toggle('active', !!cur && cur.kind === 'step' && +g.dataset.step === cur.n));
+    svg.querySelectorAll('.actor[data-actor]').forEach(a => a.classList.toggle('active', !!cur && cur.kind === 'actor' && a.dataset.actor === cur.k));
+    svg.classList.toggle('focusing', !!cur && cur.kind === 'step');
   }
   function open() { if (dlg.hidden) { dlg.hidden = false; layout.classList.add('panel-open'); } markActive(); }
-
   function showStep(n) {
     const s = S(n); if (!s) return;
     cur = { kind: 'step', n };
@@ -576,57 +601,62 @@
     kindEl.textContent = 'Stap ' + n + ' van ' + STEPS.length; titleEl.textContent = s.title;
     const body = [];
     const route = el('div', 'route'); route.append(actorChip(s.f));
-    if (s.t) { route.append(el('span', null, '→')); route.append(actorChip(s.t)); } else route.append(el('span', null, '(interne controle)'));
+    if (s.t) { route.append(el('span', null, '→')); route.append(actorChip(s.t)); } else route.append(el('span', null, '(interne verwerking)'));
     body.push(route, el('p', 'lead', s.text));
     if (s.rows) { const ul = el('ul', 'fields'); s.rows.forEach(r => ul.append(el('li', null, r))); body.push(ul); }
-    if (s.notes) {
-      const box = el('div', 'callout info');
-      box.append(el('p', 'callout-title', s.notes.length > 1 ? 'Bij deze stap horen toelichtingen' : 'Bij deze stap hoort een toelichting'));
-      const p = el('p'); s.notes.forEach(k => p.append(chip(lab(k), noteTitle(k), () => showNote(k)))); p.style.display = 'flex'; p.style.flexWrap = 'wrap'; p.style.gap = '6px';
-      box.append(p); body.push(box);
-    }
+    if (s.modal && $('cat-modal')) { const b = el('button', 'chip start', s.modalLabel || 'Toon in de dienstencatalogus ▸'); b.type = 'button'; b.addEventListener('click', () => openModal('cat-modal')); body.push(b); }
+    (s.notes || []).forEach(k => { const sec = noteSection(k); if (sec) body.push(sec); });
     bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
     prevBtn.disabled = n <= 1; nextBtn.disabled = n >= STEPS.length;
     open();
   }
-  function showNote(n) {
-    const tpl = $('note-' + n); if (!tpl) return;
-    cur = { kind: 'note', n };
-    numEl.className = 'num'; numEl.textContent = lab(n);
-    kindEl.textContent = 'Toelichting ' + lab(n); titleEl.textContent = tpl.dataset.title;
-    bodyEl.replaceChildren(tpl.content.cloneNode(true)); bodyEl.scrollTop = 0;
-    bodyEl.querySelectorAll('sup.ref').forEach(s => { s.tabIndex = 0; s.setAttribute('role', 'button'); });
-    relEl.replaceChildren();
-    const s = NOTE_STEP[n];
-    if (s) { relEl.append(el('span', null, 'Hoort bij:')); relEl.append(chip(s, 'Stap ' + s + ': ' + S(s).title, () => showStep(s))); }
-    else relEl.append(el('span', null, 'Hoort bij: actor MOZa (dienstbemiddelaar?)'));
-    const i = NOTES.indexOf(n); prevBtn.disabled = i <= 0; nextBtn.disabled = i >= NOTES.length - 1;
+  function showActor(k) {
+    cur = { kind: 'actor', k };
+    numEl.className = 'num step-num ' + ACT[k].cls; numEl.textContent = 'i';
+    kindEl.textContent = 'Rol in deze flow'; titleEl.textContent = ACT[k].name;
+    const body = [];
+    (ACTOR_NOTES[k] || []).forEach(n => { const sec = noteSection(n); if (sec) body.push(sec); });
+    if (body[0]) body[0].classList.add('first');
+    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
+    prevBtn.disabled = true; nextBtn.disabled = false; nextBtn.dataset.fromActor = '1';
     open();
   }
   function go(d) {
     if (!cur) return;
-    if (cur.kind === 'step') showStep(cur.n + d);
-    else showNote(NOTES[NOTES.indexOf(cur.n) + d]);
+    if (cur.kind === 'actor') { showStep(1); return; }
+    showStep(cur.n + d);
   }
   function closePanel() { dlg.hidden = true; layout.classList.remove('panel-open'); cur = null; markActive(); }
 
+  let modal = null, lastFocus = null;
+  function openModal(id) {
+    const m = $(id); if (!m) return;
+    if (modal) modal.hidden = true;
+    modal = m; lastFocus = document.activeElement; modal.hidden = false;
+    const f = modal.querySelector('.nav-btn'); if (f) f.focus();
+  }
+  function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
+  document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => {
+    if (e.target === m || e.target.closest('[data-close-modal], #cat-modal-close, #cat-modal-ok')) closeModal();
+  }));
+  bodyEl.addEventListener('click', e => { const t = e.target.closest('[data-open-modal]'); if (t) openModal(t.dataset.openModal); });
+
   STEPS.forEach(s => { const c = chip(s.n, null, () => showStep(s.n)); c.title = 'Stap ' + s.n + ': ' + s.title; $('step-chips').append(c); });
   $('start').addEventListener('click', () => showStep(1));
-  NOTES.forEach(n => $('chips').append(chip(lab(n), noteTitle(n), () => showNote(n))));
-
   function bind(sel, fn) {
     svg.querySelectorAll(sel).forEach(e => {
       e.addEventListener('click', ev => { ev.stopPropagation(); fn(e); });
       e.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); fn(e); } });
     });
   }
-  bind('.snum', e => showStep(+e.closest('.step').dataset.step));
-  bind('.tbadge', e => showNote(key(e.dataset.note)));
-  bodyEl.addEventListener('click', e => { const s = e.target.closest('sup.ref'); if (s) showNote(key(s.dataset.ref)); });
+  bind('.snum', e => { const n = +e.closest('.step').dataset.step; showStep(n); const s = S(n); if (s && s.modalAuto) openModal('cat-modal'); });
+  bind('.qflag', e => e.dataset.ownerStep ? showStep(+e.dataset.ownerStep) : showActor(e.dataset.ownerActor));
+  bind('.actor[data-actor]', e => showActor(e.dataset.actor));
   prevBtn.addEventListener('click', () => go(-1));
   nextBtn.addEventListener('click', () => go(1));
   $('dlg-close').addEventListener('click', closePanel);
   document.addEventListener('keydown', e => {
+    if (modal) { if (e.key === 'Escape') closeModal(); return; }
     if (dlg.hidden) return;
     if (e.key === 'Escape') closePanel();
     if (e.key === 'ArrowRight' && !nextBtn.disabled) go(1);

@@ -149,7 +149,7 @@
   }
   /* actief element in het diagram */
   [data-note].active rect { stroke: var(--focus) !important; stroke-width: 4 !important; }
-  [data-note].active .badge circle { fill: var(--focus); }
+  [data-note].active .ainfo circle { stroke: var(--focus); stroke-width: 3; }
   .dlg header {
     display: flex; align-items: center; gap: 12px;
     padding: 16px 20px; border-bottom: 1px solid var(--region-inner);
@@ -299,6 +299,29 @@
   .plate-no { display: inline-block; margin: 6px 0 4px; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--badge-text); background: var(--badge); border-radius: 999px; padding: 3px 12px; }
   .plate-no + h1 { margin-top: 2px; }
 
+  .qflag { cursor: pointer; }
+  .qflag:focus { outline: none; }
+  svg .qflag rect.qf-new { fill: var(--opt1, #7c3aed); stroke: none; }
+  svg .qflag text.qf-new-t { fill: #fff; font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag rect.qf-rep { fill: var(--surface); stroke: var(--opt1, #7c3aed); stroke-width: 1.5; stroke-dasharray: 3 2; }
+  svg .qflag text.sm { font-size: 9.5px; }
+  svg .qflag text.qf-rep-t { fill: var(--opt1, #7c3aed); font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag:hover rect, svg .qflag:focus-visible rect { stroke: var(--focus); stroke-width: 2.5; stroke-dasharray: none; }
+  .actor[data-actor] { cursor: pointer; }
+  .actor[data-actor]:hover rect.abox, .actor[data-actor]:focus-visible rect.abox, .actor.active rect.abox { stroke: var(--focus); stroke-width: 3.5; }
+  .actor[data-actor]:focus { outline: none; }
+  .ainfo circle { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+  .ainfo text { fill: var(--muted); font-size: 12px; font-weight: 800; font-style: italic; font-family: Georgia, serif; text-anchor: middle; dominant-baseline: central; }
+  .note-sec { border-top: 1px solid var(--region-inner); padding-top: 14px; }
+  .note-sec > * + * { margin-top: 12px !important; }
+  .note-h { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; }
+  .dlg .body a.ref-link { font-size: .9em; text-decoration: none; white-space: normal; font-weight: 700; cursor: pointer; border: 1px solid var(--badge); color: var(--badge); background: var(--surface); border-radius: 999px; padding: 0 7px; }
+  .dlg .body a.ref-link:hover { background: var(--badge); color: var(--badge-text); }
+  .q-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .82rem; color: var(--muted); margin: -4px 0 10px; }
+  .q-legend .pill { display: inline-block; border-radius: 999px; padding: 0 8px; font-weight: 800; font-size: .75rem; }
+  .q-legend .pill.n { background: var(--opt1, #7c3aed); color: #fff; }
+  .q-legend .pill.r { border: 1.5px dashed var(--opt1, #7c3aed); color: var(--opt1, #7c3aed); }
+
   main { max-width: 1040px; }
   .lede { color: var(--muted); max-width: 720px; margin: 0 0 8px; font-size: 1.02rem; }
   .guide { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: .85rem; color: var(--muted); margin: 0 0 24px; padding: 0; list-style: none; }
@@ -339,7 +362,7 @@
     <li>De platen bouwen op elkaar voort: begin bij 1</li>
     <li>Plaat 1, 2 en 4 zijn bestaande flows; plaat 5 en 6 zijn conceptflows waarvan nog niet vaststaat of ze kunnen</li>
     <li>Vragen zijn over alle platen heen doorgenummerd</li>
-    <li>Op elke plaat: klik op een nummer voor uitleg</li>
+    <li>Klik op een stap (of een <b>i</b>) voor uitleg; paarse vlaggetjes tonen welke vragen erbij horen</li>
   </ul>
   <div class="grid">
     <a class="card " href="aansluiten-dienst.html">
@@ -394,7 +417,7 @@
       <div class="meta"><span class="num">6</span><span class="kind">Conceptflow · MOZa optie 2</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling zónder portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal en MOZa bemiddelt voor elke dienst afzonderlijk. Met drie mogelijke varianten (A, B, C) voor het inlogverzoek en de assertion.</p>
-      <div class="foot"><span class="qs">Vragen 18–23</span><span class="go">Open plaat →</span></div>
+      <div class="foot"><span class="qs">Vragen 18–22</span><span class="go">Open plaat →</span></div>
     </a>
   </div>
 </main>

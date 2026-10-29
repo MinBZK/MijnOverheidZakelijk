@@ -149,7 +149,7 @@
   }
   /* actief element in het diagram */
   [data-note].active rect { stroke: var(--focus) !important; stroke-width: 4 !important; }
-  [data-note].active .badge circle { fill: var(--focus); }
+  [data-note].active .ainfo circle { stroke: var(--focus); stroke-width: 3; }
   .dlg header {
     display: flex; align-items: center; gap: 12px;
     padding: 16px 20px; border-bottom: 1px solid var(--region-inner);
@@ -299,6 +299,29 @@
   .plate-no { display: inline-block; margin: 6px 0 4px; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--badge-text); background: var(--badge); border-radius: 999px; padding: 3px 12px; }
   .plate-no + h1 { margin-top: 2px; }
 
+  .qflag { cursor: pointer; }
+  .qflag:focus { outline: none; }
+  svg .qflag rect.qf-new { fill: var(--opt1, #7c3aed); stroke: none; }
+  svg .qflag text.qf-new-t { fill: #fff; font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag rect.qf-rep { fill: var(--surface); stroke: var(--opt1, #7c3aed); stroke-width: 1.5; stroke-dasharray: 3 2; }
+  svg .qflag text.sm { font-size: 9.5px; }
+  svg .qflag text.qf-rep-t { fill: var(--opt1, #7c3aed); font-size: 11px; font-weight: 800; pointer-events: none; }
+  svg .qflag:hover rect, svg .qflag:focus-visible rect { stroke: var(--focus); stroke-width: 2.5; stroke-dasharray: none; }
+  .actor[data-actor] { cursor: pointer; }
+  .actor[data-actor]:hover rect.abox, .actor[data-actor]:focus-visible rect.abox, .actor.active rect.abox { stroke: var(--focus); stroke-width: 3.5; }
+  .actor[data-actor]:focus { outline: none; }
+  .ainfo circle { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+  .ainfo text { fill: var(--muted); font-size: 12px; font-weight: 800; font-style: italic; font-family: Georgia, serif; text-anchor: middle; dominant-baseline: central; }
+  .note-sec { border-top: 1px solid var(--region-inner); padding-top: 14px; }
+  .note-sec > * + * { margin-top: 12px !important; }
+  .note-h { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; }
+  .dlg .body a.ref-link { font-size: .9em; text-decoration: none; white-space: normal; font-weight: 700; cursor: pointer; border: 1px solid var(--badge); color: var(--badge); background: var(--surface); border-radius: 999px; padding: 0 7px; }
+  .dlg .body a.ref-link:hover { background: var(--badge); color: var(--badge-text); }
+  .q-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .82rem; color: var(--muted); margin: -4px 0 10px; }
+  .q-legend .pill { display: inline-block; border-radius: 999px; padding: 0 8px; font-weight: 800; font-size: .75rem; }
+  .q-legend .pill.n { background: var(--opt1, #7c3aed); color: #fff; }
+  .q-legend .pill.r { border: 1.5px dashed var(--opt1, #7c3aed); color: var(--opt1, #7c3aed); }
+
   :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
   :root[data-theme="dark"] { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; }
@@ -351,19 +374,16 @@
   <p class="plate-no">Plaat 4</p>
   <h1>Bilal logt in bij een losse dienst</h1>
   <div class="status existing"><span class="st-tag">Bestaande flow</span><p>Zo werkt inloggen met eHerkenning nu al bij een losse dienst. Deze plaat beschrijft de huidige situatie en dient als basis voor de conceptflows van MOZa (plaat 5 en 6).</p></div>
-  <p class="intro">Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Het paneel verschijnt naast het diagram.</p>
+  <p class="intro">Klik op een stap voor uitleg.</p>
 
   <div class="toolbar">
     <div>
       <h2>Stappen</h2>
       <div class="chips steps" id="step-chips"><button class="chip start" type="button" id="start">Stap voor stap ▸</button></div>
     </div>
-    <div>
-      <h2>Toelichtingen</h2>
-      <div class="chips" id="chips"></div>
-    </div>
   </div>
 
+  <p class="q-legend"><span><span class="pill n">? nr</span> vragen bij deze stap</span><span><span class="pill r">↻ nr</span> herhaalde vraag (eerder gesteld)</span></p>
   <div class="canvas">
     <svg id="diagram" viewBox="0 0 1120 1120" role="img" aria-label="Volgordediagram: Bilal logt in bij een losse dienst">
       <defs>
@@ -390,11 +410,11 @@
       <g class="step a-mak" data-step="4"><line class="msg a-mak" x1="635" y1="420" x2="877" y2="420" marker-end="url(#arM)"/><rect class="card a-mak" x="642" y="312" width="216" height="96" rx="8"/><text class="card-title" x="654" y="331">Inlogverzoek (anoniem)</text><text class="card-row" x="654" y="350"><tspan class="k">ServiceProvider:</tspan> UWV</text><text class="card-row" x="654" y="366"><tspan class="k">ServiceName:</tspan> Werkgeversportaal</text><text class="card-row" x="654" y="382"><tspan class="k">ServiceID:</tspan> Service_ABC123</text><text class="card-row" x="654" y="398"><tspan class="k">Vereist niveau:</tspan> EH3</text><g class="snum" tabindex="0" role="button" aria-label="Stap 4: Anoniem inlogverzoek" transform="translate(620 420)"><circle r="13"/><text>4</text></g></g>
       <g class="step a-lev" data-step="5"><line class="msg a-lev" x1="865" y1="480" x2="123" y2="480" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="462" text-anchor="middle">Verzoek aan Bilal: vul gebruikersnaam en wachtwoord in</text><g class="snum" tabindex="0" role="button" aria-label="Stap 5: Verzoek: inloggegevens" transform="translate(880 480)"><circle r="13"/><text>5</text></g></g>
       <g class="step a-bilal" data-step="6"><line class="msg a-bilal" x1="135" y1="540" x2="877" y2="540" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="522" text-anchor="middle">Bilal logt in met zijn Z-Login-accountgegevens</text><g class="snum" tabindex="0" role="button" aria-label="Stap 6: Inloggen bij Z-Login" transform="translate(120 540)"><circle r="13"/><text>6</text></g></g>
-      <g class="step a-lev" data-step="7"><rect class="activity a-lev" x="900" y="575" width="208" height="50" rx="12"/><text class="act-label" x="912" y="595">Controleert of Bilals account het</text><text class="act-label" x="912" y="611">vereiste niveau (EH3) heeft</text><g class="tbadge" data-note="1" tabindex="0" role="button" aria-label="Toelichting 1" transform="translate(1104 575)"><circle r="11"/><text>1</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 7: Controle betrouwbaarheidsniveau" transform="translate(880 600)"><circle r="13"/><text>7</text></g></g>
+      <g class="step a-lev" data-step="7"><rect class="activity a-lev" x="900" y="575" width="208" height="50" rx="12"/><text class="act-label" x="912" y="595">Controleert of Bilals account het</text><text class="act-label" x="912" y="611">vereiste niveau (EH3) heeft</text><g class="snum" tabindex="0" role="button" aria-label="Stap 7: Controle betrouwbaarheidsniveau" transform="translate(880 600)"><circle r="13"/><text>7</text></g></g>
       <g class="step a-lev" data-step="8"><line class="msg a-lev" x1="865" y1="670" x2="123" y2="670" marker-end="url(#arL)"/><text class="msg-label" x="500.0" y="652" text-anchor="middle">Verzoek aan Bilal: namens welk bedrijf wil je inloggen?</text><g class="snum" tabindex="0" role="button" aria-label="Stap 8: Verzoek: kies bedrijf" transform="translate(880 670)"><circle r="13"/><text>8</text></g></g>
       <g class="step a-bilal" data-step="9"><line class="msg a-bilal" x1="135" y1="730" x2="877" y2="730" marker-end="url(#arB)"/><text class="msg-label" x="500.0" y="712" text-anchor="middle">Bilal selecteert Koffiezaak Noon</text><g class="snum" tabindex="0" role="button" aria-label="Stap 9: Bedrijf gekozen" transform="translate(120 730)"><circle r="13"/><text>9</text></g></g>
-      <g class="step a-lev" data-step="10"><rect class="activity a-lev" x="900" y="765" width="208" height="50" rx="12"/><text class="act-label" x="912" y="785">Controleert of Bilal namens Noon</text><text class="act-label" x="912" y="801">gemachtigd is voor deze dienst</text><g class="tbadge" data-note="2" tabindex="0" role="button" aria-label="Toelichting 2" transform="translate(1104 765)"><circle r="11"/><text>2</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 10: Controle machtiging" transform="translate(880 790)"><circle r="13"/><text>10</text></g></g>
-      <g class="step a-lev" data-step="11"><line class="msg a-lev" x1="865" y1="930" x2="623" y2="930" marker-end="url(#arL)"/><rect class="card a-lev" x="642" y="838" width="216" height="80" rx="8"/><text class="card-title" x="654" y="857">Versleutelde assertion</text><text class="card-row" x="654" y="876">PseudoID1234 is gemachtigd</text><text class="card-row" x="654" y="892">namens KVK-nummer1234</text><text class="card-row" x="654" y="908">voor Service_ABC123</text><g class="tbadge" data-note="3" tabindex="0" role="button" aria-label="Toelichting 3" transform="translate(844 853)"><circle r="11"/><text>3</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 11: Versleutelde assertion" transform="translate(880 930)"><circle r="13"/><text>11</text></g></g>
+      <g class="step a-lev" data-step="10"><rect class="activity a-lev" x="900" y="765" width="208" height="50" rx="12"/><text class="act-label" x="912" y="785">Controleert of Bilal namens Noon</text><text class="act-label" x="912" y="801">gemachtigd is voor deze dienst</text><g class="snum" tabindex="0" role="button" aria-label="Stap 10: Controle machtiging" transform="translate(880 790)"><circle r="13"/><text>10</text></g></g>
+      <g class="step a-lev" data-step="11"><line class="msg a-lev" x1="865" y1="930" x2="623" y2="930" marker-end="url(#arL)"/><rect class="card a-lev" x="642" y="838" width="216" height="80" rx="8"/><text class="card-title" x="654" y="857">Versleutelde assertion</text><text class="card-row" x="654" y="876">PseudoID1234 is gemachtigd</text><text class="card-row" x="654" y="892">namens KVK-nummer1234</text><text class="card-row" x="654" y="908">voor Service_ABC123</text><g class="qflag" data-owner-step="11" tabindex="0" role="button" aria-label="Vragen 10, 11"><rect class="qf-new" x="789.6" y="829.0" width="64.4" height="18" rx="9.0"/><text class="qf-new-t" x="821.8" y="842.0" text-anchor="middle">? 10, 11</text></g><g class="snum" tabindex="0" role="button" aria-label="Stap 11: Versleutelde assertion" transform="translate(880 930)"><circle r="13"/><text>11</text></g></g>
       <g class="step a-mak" data-step="12"><line class="msg a-mak" x1="605" y1="1000" x2="363" y2="1000" marker-end="url(#arM)"/><text class="msg-label" x="490.0" y="982" text-anchor="middle">Makelaar geeft het bericht ongeopend door aan UWV</text><g class="snum" tabindex="0" role="button" aria-label="Stap 12: Doorgeven aan UWV" transform="translate(620 1000)"><circle r="13"/><text>12</text></g></g>
       <g class="step a-uwv" data-step="13"><line class="msg a-uwv" x1="345" y1="1070" x2="123" y2="1070" marker-end="url(#arU)"/><text class="msg-label" x="240.0" y="1052" text-anchor="middle">Bilal krijgt toegang tot het Werkgeversportaal</text><g class="snum" tabindex="0" role="button" aria-label="Stap 13: Toegang verleend" transform="translate(360 1070)"><circle r="13"/><text>13</text></g></g>
     </svg>
@@ -469,109 +489,104 @@
 <script>
 (function () {
   const ACT = {"B": {"name": "Bilal", "cls": "a-bilal"}, "U": {"name": "UWV", "cls": "a-uwv"}, "M": {"name": "Makelaar (Digidentity)", "cls": "a-mak"}, "L": {"name": "Leverancier (Z-Login)", "cls": "a-lev"}};
-  const STEPS = [{"n": 1, "from_": "B", "to": "M", "title": "Inloggen starten", "text": "Bilal klikt op de website van UWV op \"Inloggen Werkgeversportaal met eHerkenning\".", "payload": null, "note": null}, {"n": 2, "from_": "M", "to": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal om zijn eHerkenningsleverancier te selecteren.", "payload": null, "note": null}, {"n": 3, "from_": "B", "to": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login).", "payload": null, "note": null}, {"n": 4, "from_": "M", "to": "L", "title": "Anoniem inlogverzoek", "text": "De makelaar stuurt een anoniem inlogverzoek naar de leverancier:", "payload": ["ServiceProvider (dienstverlener): \"UWV\"", "ServiceName (dienstnaam): \"Werkgeversportaal\"", "ServiceID (dienstcode): \"Service_ABC123\"", "Vereist niveau: \"EH3\""], "note": null}, {"n": 5, "from_": "L", "to": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen.", "payload": null, "note": null}, {"n": 6, "from_": "B", "to": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login.", "payload": null, "note": null}, {"n": 7, "from_": "L", "to": null, "title": "Controle betrouwbaarheidsniveau", "text": "Z-Login controleert of het account van Bilal het vereiste niveau (EH3) heeft.", "payload": null, "note": 1}, {"n": 8, "from_": "L", "to": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen.", "payload": null, "note": null}, {"n": 9, "from_": "B", "to": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon.", "payload": null, "note": null}, {"n": 10, "from_": "L", "to": null, "title": "Controle machtiging", "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor deze dienst.", "payload": null, "note": 2}, {"n": 11, "from_": "L", "to": "M", "title": "Versleutelde assertion", "text": "De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar, met daarin dat:", "payload": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_ABC123"], "note": 3}, {"n": 12, "from_": "M", "to": "U", "title": "Doorgeven aan UWV", "text": "De makelaar geeft het bericht ongeopend door aan UWV.", "payload": null, "note": null}, {"n": 13, "from_": "U", "to": "B", "title": "Toegang verleend", "text": "Bilal krijgt toegang tot het Werkgeversportaal.", "payload": null, "note": null}];
-  const NOTES = [1, 2, 3];
-  const NOTE_STEP = {};
-  STEPS.forEach(s => { if (s.note) NOTE_STEP[s.note] = s.n; });
-
-  const dlg = document.getElementById('dlg');
-  const layout = document.getElementById('layout');
-  const svg = document.getElementById('diagram');
-  const numEl = document.getElementById('dlg-num');
-  const kindEl = document.getElementById('dlg-kind');
-  const titleEl = document.getElementById('dlg-title');
-  const bodyEl = document.getElementById('dlg-body');
-  const relEl = document.getElementById('dlg-related');
-  const prevBtn = document.getElementById('dlg-prev');
-  const nextBtn = document.getElementById('dlg-next');
+  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op de website van UWV op \"Inloggen Werkgeversportaal met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal om zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Anoniem inlogverzoek", "text": "De makelaar stuurt een anoniem inlogverzoek naar de leverancier:", "rows": ["ServiceProvider (dienstverlener): \"UWV\"", "ServiceName (dienstnaam): \"Werkgeversportaal\"", "ServiceID (dienstcode): \"Service_ABC123\"", "Vereist niveau: \"EH3\""]}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle betrouwbaarheidsniveau", "text": "Z-Login controleert of het account van Bilal het vereiste niveau (EH3) heeft.", "notes": ["1"]}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtiging", "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor deze dienst.", "notes": ["2"]}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion", "text": "De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar, met daarin dat:", "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_ABC123"], "notes": ["3"]}, {"n": 12, "f": "M", "t": "U", "title": "Doorgeven aan UWV", "text": "De makelaar geeft het bericht ongeopend door aan UWV."}, {"n": 13, "f": "U", "t": "B", "title": "Toegang verleend", "text": "Bilal krijgt toegang tot het Werkgeversportaal."}];
+  const ACTOR_NOTES = {};
+  const OWNER = {"1": ["step", 7], "2": ["step", 10], "3": ["step", 11]};
+  const $ = id => document.getElementById(id);
+  const dlg = $('dlg'), layout = $('layout'), svg = $('diagram');
+  const numEl = $('dlg-num'), kindEl = $('dlg-kind'), titleEl = $('dlg-title');
+  const bodyEl = $('dlg-body'), relEl = $('dlg-related'), prevBtn = $('dlg-prev'), nextBtn = $('dlg-next');
   let cur = null;
-
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-  const noteTitle = n => document.getElementById('note-' + n).dataset.title;
-
+  const S = n => STEPS.find(s => s.n === n);
   function chip(num, label, onClick) {
     const b = el('button', 'chip'); b.type = 'button';
-    b.append(el('span', 'num', num));
-    if (label) b.append(el('span', 'lbl', label));
-    b.addEventListener('click', onClick);
-    return b;
+    b.append(el('span', 'num', num)); if (label) b.append(el('span', 'lbl', label));
+    b.addEventListener('click', onClick); return b;
   }
-  function actorChip(k) { return el('span', 'actor-chip ' + ACT[k].cls, ACT[k].name); }
-
+  const actorChip = k => el('span', 'actor-chip ' + ACT[k].cls, ACT[k].name);
+  function goOwner(o) { if (!o) return; if (o[0] === 'step') showStep(o[1]); else showActor(o[1]); }
+  function noteSection(k) {
+    const tpl = $('note-' + k); if (!tpl) return null;
+    const sec = el('section', 'note-sec');
+    sec.append(el('h3', 'note-h', tpl.dataset.title));
+    sec.append(tpl.content.cloneNode(true));
+    sec.querySelectorAll('sup.ref').forEach(sup => {
+      const o = OWNER[sup.dataset.ref];
+      const b = el('a', 'ref-link', o ? (o[0] === 'step' ? 'stap ' + o[1] : ACT[o[1]].name) : 'elders');
+      b.href = '#'; b.addEventListener('click', e => { e.preventDefault(); goOwner(o); }); sup.replaceWith(b);
+    });
+    return sec;
+  }
   function markActive() {
-    svg.querySelectorAll('.step').forEach(g => g.classList.toggle('active',
-      cur && ((cur.kind === 'step' && +g.dataset.step === cur.n) || (cur.kind === 'note' && +g.dataset.step === NOTE_STEP[cur.n]))));
-    svg.querySelectorAll('.tbadge').forEach(b => b.classList.toggle('active', cur && cur.kind === 'note' && +b.dataset.note === cur.n));
-    svg.classList.toggle('focusing', !!cur);
+    svg.querySelectorAll('.step').forEach(g => g.classList.toggle('active', !!cur && cur.kind === 'step' && +g.dataset.step === cur.n));
+    svg.querySelectorAll('.actor[data-actor]').forEach(a => a.classList.toggle('active', !!cur && cur.kind === 'actor' && a.dataset.actor === cur.k));
+    svg.classList.toggle('focusing', !!cur && cur.kind === 'step');
   }
-
   function open() { if (dlg.hidden) { dlg.hidden = false; layout.classList.add('panel-open'); } markActive(); }
-
   function showStep(n) {
-    const s = STEPS.find(x => x.n === n); if (!s) return;
+    const s = S(n); if (!s) return;
     cur = { kind: 'step', n };
-    numEl.className = 'num step-num ' + ACT[s.from_].cls; numEl.textContent = n;
+    numEl.className = 'num step-num ' + ACT[s.f].cls; numEl.textContent = n;
     kindEl.textContent = 'Stap ' + n + ' van ' + STEPS.length; titleEl.textContent = s.title;
     const body = [];
-    const route = el('div', 'route');
-    route.append(actorChip(s.from_));
-    if (s.to) { route.append(el('span', null, '→')); route.append(actorChip(s.to)); }
-    else route.append(el('span', 'muted', '(interne controle)'));
-    body.push(route);
-    body.push(el('p', 'lead', s.text));
-    if (s.payload) {
-      const ul = el('ul', 'fields');
-      s.payload.forEach(p => ul.append(el('li', null, p)));
-      body.push(ul);
-    }
-    if (s.note) {
-      const box = el('div', 'callout info');
-      box.append(el('p', 'callout-title', 'Bij deze stap hoort een toelichting'));
-      const p = el('p'); p.append(chip(s.note, noteTitle(s.note), () => showNote(s.note))); box.append(p);
-      body.push(box);
-    }
-    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0;
-    relEl.replaceChildren();
+    const route = el('div', 'route'); route.append(actorChip(s.f));
+    if (s.t) { route.append(el('span', null, '→')); route.append(actorChip(s.t)); } else route.append(el('span', null, '(interne verwerking)'));
+    body.push(route, el('p', 'lead', s.text));
+    if (s.rows) { const ul = el('ul', 'fields'); s.rows.forEach(r => ul.append(el('li', null, r))); body.push(ul); }
+    if (s.modal && $('cat-modal')) { const b = el('button', 'chip start', s.modalLabel || 'Toon in de dienstencatalogus ▸'); b.type = 'button'; b.addEventListener('click', () => openModal('cat-modal')); body.push(b); }
+    (s.notes || []).forEach(k => { const sec = noteSection(k); if (sec) body.push(sec); });
+    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
     prevBtn.disabled = n <= 1; nextBtn.disabled = n >= STEPS.length;
     open();
   }
-
-  function showNote(n) {
-    const tpl = document.getElementById('note-' + n); if (!tpl) return;
-    cur = { kind: 'note', n };
-    numEl.className = 'num'; numEl.textContent = n;
-    kindEl.textContent = 'Toelichting ' + n; titleEl.textContent = tpl.dataset.title;
-    bodyEl.replaceChildren(tpl.content.cloneNode(true)); bodyEl.scrollTop = 0;
-    relEl.replaceChildren(el('span', null, 'Hoort bij:'));
-    const s = NOTE_STEP[n];
-    relEl.append(chip(s, 'Stap ' + s + ': ' + STEPS[s - 1].title, () => showStep(s)));
-    prevBtn.disabled = n <= 1; nextBtn.disabled = n >= NOTES.length;
+  function showActor(k) {
+    cur = { kind: 'actor', k };
+    numEl.className = 'num step-num ' + ACT[k].cls; numEl.textContent = 'i';
+    kindEl.textContent = 'Rol in deze flow'; titleEl.textContent = ACT[k].name;
+    const body = [];
+    (ACTOR_NOTES[k] || []).forEach(n => { const sec = noteSection(n); if (sec) body.push(sec); });
+    if (body[0]) body[0].classList.add('first');
+    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
+    prevBtn.disabled = true; nextBtn.disabled = false; nextBtn.dataset.fromActor = '1';
     open();
   }
-
-  function go(d) { if (!cur) return; (cur.kind === 'step' ? showStep : showNote)(cur.n + d); }
-
+  function go(d) {
+    if (!cur) return;
+    if (cur.kind === 'actor') { showStep(1); return; }
+    showStep(cur.n + d);
+  }
   function closePanel() { dlg.hidden = true; layout.classList.remove('panel-open'); cur = null; markActive(); }
 
-  const stepChips = document.getElementById('step-chips');
-  STEPS.forEach(s => { const c = chip(s.n, null, () => showStep(s.n)); c.title = 'Stap ' + s.n + ': ' + s.title; stepChips.append(c); });
-  document.getElementById('start').addEventListener('click', () => showStep(1));
-  const chips = document.getElementById('chips');
-  NOTES.forEach(n => chips.append(chip(n, noteTitle(n), () => showNote(n))));
+  let modal = null, lastFocus = null;
+  function openModal(id) {
+    const m = $(id); if (!m) return;
+    if (modal) modal.hidden = true;
+    modal = m; lastFocus = document.activeElement; modal.hidden = false;
+    const f = modal.querySelector('.nav-btn'); if (f) f.focus();
+  }
+  function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
+  document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => {
+    if (e.target === m || e.target.closest('[data-close-modal], #cat-modal-close, #cat-modal-ok')) closeModal();
+  }));
+  bodyEl.addEventListener('click', e => { const t = e.target.closest('[data-open-modal]'); if (t) openModal(t.dataset.openModal); });
 
+  STEPS.forEach(s => { const c = chip(s.n, null, () => showStep(s.n)); c.title = 'Stap ' + s.n + ': ' + s.title; $('step-chips').append(c); });
+  $('start').addEventListener('click', () => showStep(1));
   function bind(sel, fn) {
     svg.querySelectorAll(sel).forEach(e => {
       e.addEventListener('click', ev => { ev.stopPropagation(); fn(e); });
       e.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); fn(e); } });
     });
   }
-  bind('.snum', e => showStep(+e.closest('.step').dataset.step));
-  bind('.tbadge', e => showNote(+e.dataset.note));
-
+  bind('.snum', e => { const n = +e.closest('.step').dataset.step; showStep(n); const s = S(n); if (s && s.modalAuto) openModal('cat-modal'); });
+  bind('.qflag', e => e.dataset.ownerStep ? showStep(+e.dataset.ownerStep) : showActor(e.dataset.ownerActor));
+  bind('.actor[data-actor]', e => showActor(e.dataset.actor));
   prevBtn.addEventListener('click', () => go(-1));
   nextBtn.addEventListener('click', () => go(1));
-  document.getElementById('dlg-close').addEventListener('click', closePanel);
+  $('dlg-close').addEventListener('click', closePanel);
   document.addEventListener('keydown', e => {
+    if (modal) { if (e.key === 'Escape') closeModal(); return; }
     if (dlg.hidden) return;
     if (e.key === 'Escape') closePanel();
     if (e.key === 'ArrowRight' && !nextBtn.disabled) go(1);

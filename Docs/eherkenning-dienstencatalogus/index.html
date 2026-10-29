@@ -325,6 +325,7 @@
   .card p { margin: 0; color: var(--muted); font-size: .92rem; flex: 1; }
   .foot { display: flex; justify-content: space-between; align-items: center; font-size: .85rem; border-top: 1px solid var(--region-inner); padding-top: 10px; }
   .qs { font-weight: 700; color: #7c3aed; }
+  .qs.none { color: var(--muted); font-weight: 600; }
   .go { font-weight: 600; color: var(--badge); }
 </style>
 </head>
@@ -334,16 +335,25 @@
   <p class="lede">Verkenning van hoe inloggen met eHerkenning werkt, en hoe MOZa als dienstbemiddelaar diensten van meerdere dienstverleners in één portaal zou kunnen ontsluiten.</p>
   <ul class="guide">
     <li>De platen bouwen op elkaar voort: begin bij 1</li>
-    <li>Plaat 2 is de bestaande flow; plaat 3 en 4 zijn conceptflows waarvan nog niet vaststaat of ze kunnen</li>
+    <li>Plaat 1 en 3 zijn bestaande flows; plaat 4 en 5 zijn conceptflows waarvan nog niet vaststaat of ze kunnen</li>
     <li>Vragen zijn over alle platen heen doorgenummerd</li>
     <li>Op elke plaat: klik op een nummer voor uitleg</li>
   </ul>
   <div class="grid">
+    <a class="card " href="aansluiten-dienst.html">
+      <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
+<g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
+<g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
+      <div class="meta"><span class="num">1</span><span class="kind">Bestaande flow</span><span class="tag-mini existing">Werkt al zo</span></div>
+      <h2>Dienstverlener sluit een dienst aan op eHerkenning</h2>
+      <p>Hoe een dienstverlener (bijv. Justis) via een eHerkenningsmakelaar een dienst registreert in de dienstencatalogus, zodat ondernemers ervoor kunnen inloggen.</p>
+      <div class="foot"><span class="qs none">Geen vragen</span><span class="go">Open plaat →</span></div>
+    </a>
     <a class="card " href="dienstencatalogus-eherkenning.html">
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><rect class="ic-lane" x="4" y="4" width="112" height="28" rx="12"/><rect class="ic-lane" x="4" y="38" width="112" height="30" rx="12"/>
 <g class="ic-dot"><rect x="14" y="12" width="18" height="12" rx="3"/><rect x="38" y="12" width="18" height="12" rx="3"/><rect x="62" y="12" width="18" height="12" rx="3"/></g>
 <g class="ic-pill"><rect x="12" y="46" width="26" height="8" rx="4"/><rect x="44" y="46" width="26" height="8" rx="4"/><rect x="76" y="46" width="26" height="8" rx="4"/><rect x="12" y="57" width="26" height="8" rx="4"/><rect x="44" y="57" width="26" height="8" rx="4"/></g></svg></div>
-      <div class="meta"><span class="num">1</span><span class="kind">Overzicht</span></div>
+      <div class="meta"><span class="num">2</span><span class="kind">Overzicht</span></div>
       <h2>Dienstencatalogus eHerkenning</h2>
       <p>Hoe dienstaanbieders, diensten, portaaldiensten en dienstbemiddelaars in de dienstencatalogus samenhangen, en waar MOZa daarin zou kunnen passen.</p>
       <div class="foot"><span class="qs">Vragen 1–9b</span><span class="go">Open plaat →</span></div>
@@ -352,7 +362,7 @@
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">2</span><span class="kind">Bestaande flow</span><span class="tag-mini existing">Werkt al zo</span></div>
+      <div class="meta"><span class="num">3</span><span class="kind">Bestaande flow</span><span class="tag-mini existing">Werkt al zo</span></div>
       <h2>Bilal logt in bij een losse dienst</h2>
       <p>Stap voor stap hoe inloggen met eHerkenning nu werkt bij één dienst (UWV Werkgeversportaal): makelaar, leverancier, machtigingen en de assertion.</p>
       <div class="foot"><span class="qs">Vragen 10–11</span><span class="go">Open plaat →</span></div>
@@ -361,7 +371,7 @@
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">3</span><span class="kind">Conceptflow · MOZa optie 1</span><span class="tag-mini concept">Concept</span></div>
+      <div class="meta"><span class="num">4</span><span class="kind">Conceptflow · MOZa optie 1</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling mét portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal als één portaaldienst: één inlogverzoek voor het hele portaal en machtigingen in bulk.</p>
       <div class="foot"><span class="qs">Vragen 12–17</span><span class="go">Open plaat →</span></div>
@@ -370,7 +380,7 @@
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">4</span><span class="kind">Conceptflow · MOZa optie 2</span><span class="tag-mini concept">Concept</span></div>
+      <div class="meta"><span class="num">5</span><span class="kind">Conceptflow · MOZa optie 2</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling zónder portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal en MOZa bemiddelt voor elke dienst afzonderlijk. Met drie mogelijke varianten (A, B, C) voor het inlogverzoek en de assertion.</p>
       <div class="foot"><span class="qs">Vragen 18–21</span><span class="go">Open plaat →</span></div>

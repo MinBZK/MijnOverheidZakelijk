@@ -325,6 +325,7 @@
   .card p { margin: 0; color: var(--muted); font-size: .92rem; flex: 1; }
   .foot { display: flex; justify-content: space-between; align-items: center; font-size: .85rem; border-top: 1px solid var(--region-inner); padding-top: 10px; }
   .qs { font-weight: 700; color: #7c3aed; }
+  .qs.none { color: var(--muted); font-weight: 600; }
   .go { font-weight: 600; color: var(--badge); }
 </style>
   <style>
@@ -339,16 +340,25 @@
   <p class="lede">Verkenning van hoe inloggen met eHerkenning werkt, en hoe MOZa als dienstbemiddelaar diensten van meerdere dienstverleners in één portaal zou kunnen ontsluiten.</p>
   <ul class="guide">
     <li>De platen bouwen op elkaar voort: begin bij 1</li>
-    <li>Plaat 2 is de bestaande flow; plaat 3 en 4 zijn conceptflows waarvan nog niet vaststaat of ze kunnen</li>
+    <li>Plaat 1 en 3 zijn bestaande flows; plaat 4 en 5 zijn conceptflows waarvan nog niet vaststaat of ze kunnen</li>
     <li>Vragen zijn over alle platen heen doorgenummerd</li>
     <li>Op elke plaat: klik op een nummer voor uitleg</li>
   </ul>
   <div class="grid">
+    <a class="card " href="#aansluiten-dienst">
+      <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
+<g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
+<g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
+      <div class="meta"><span class="num">1</span><span class="kind">Bestaande flow</span><span class="tag-mini existing">Werkt al zo</span></div>
+      <h2>Dienstverlener sluit een dienst aan op eHerkenning</h2>
+      <p>Hoe een dienstverlener (bijv. Justis) via een eHerkenningsmakelaar een dienst registreert in de dienstencatalogus, zodat ondernemers ervoor kunnen inloggen.</p>
+      <div class="foot"><span class="qs none">Geen vragen</span><span class="go">Open plaat →</span></div>
+    </a>
     <a class="card " href="#dienstencatalogus-eherkenning">
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><rect class="ic-lane" x="4" y="4" width="112" height="28" rx="12"/><rect class="ic-lane" x="4" y="38" width="112" height="30" rx="12"/>
 <g class="ic-dot"><rect x="14" y="12" width="18" height="12" rx="3"/><rect x="38" y="12" width="18" height="12" rx="3"/><rect x="62" y="12" width="18" height="12" rx="3"/></g>
 <g class="ic-pill"><rect x="12" y="46" width="26" height="8" rx="4"/><rect x="44" y="46" width="26" height="8" rx="4"/><rect x="76" y="46" width="26" height="8" rx="4"/><rect x="12" y="57" width="26" height="8" rx="4"/><rect x="44" y="57" width="26" height="8" rx="4"/></g></svg></div>
-      <div class="meta"><span class="num">1</span><span class="kind">Overzicht</span></div>
+      <div class="meta"><span class="num">2</span><span class="kind">Overzicht</span></div>
       <h2>Dienstencatalogus eHerkenning</h2>
       <p>Hoe dienstaanbieders, diensten, portaaldiensten en dienstbemiddelaars in de dienstencatalogus samenhangen, en waar MOZa daarin zou kunnen passen.</p>
       <div class="foot"><span class="qs">Vragen 1–9b</span><span class="go">Open plaat →</span></div>
@@ -357,7 +367,7 @@
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">2</span><span class="kind">Bestaande flow</span><span class="tag-mini existing">Werkt al zo</span></div>
+      <div class="meta"><span class="num">3</span><span class="kind">Bestaande flow</span><span class="tag-mini existing">Werkt al zo</span></div>
       <h2>Bilal logt in bij een losse dienst</h2>
       <p>Stap voor stap hoe inloggen met eHerkenning nu werkt bij één dienst (UWV Werkgeversportaal): makelaar, leverancier, machtigingen en de assertion.</p>
       <div class="foot"><span class="qs">Vragen 10–11</span><span class="go">Open plaat →</span></div>
@@ -366,7 +376,7 @@
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">3</span><span class="kind">Conceptflow · MOZa optie 1</span><span class="tag-mini concept">Concept</span></div>
+      <div class="meta"><span class="num">4</span><span class="kind">Conceptflow · MOZa optie 1</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling mét portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal als één portaaldienst: één inlogverzoek voor het hele portaal en machtigingen in bulk.</p>
       <div class="foot"><span class="qs">Vragen 12–17</span><span class="go">Open plaat →</span></div>
@@ -375,7 +385,7 @@
       <div class="thumb"><svg viewBox="0 0 120 72" aria-hidden="true"><g class="ic-lane"><rect x="4" y="4" width="24" height="64" rx="5"/><rect x="34" y="4" width="24" height="64" rx="5"/><rect x="64" y="4" width="24" height="64" rx="5"/><rect x="94" y="4" width="22" height="64" rx="5"/></g>
 <g class="ic-line"><line x1="16" y1="18" x2="74" y2="18"/><line x1="74" y1="30" x2="16" y2="30"/><line x1="76" y1="42" x2="104" y2="42"/><line x1="104" y1="54" x2="46" y2="54"/></g>
 <g class="ic-dot"><circle cx="16" cy="18" r="3.5"/><circle cx="76" cy="30" r="3.5"/><circle cx="76" cy="42" r="3.5"/><circle cx="104" cy="54" r="3.5"/></g></svg></div>
-      <div class="meta"><span class="num">4</span><span class="kind">Conceptflow · MOZa optie 2</span><span class="tag-mini concept">Concept</span></div>
+      <div class="meta"><span class="num">5</span><span class="kind">Conceptflow · MOZa optie 2</span><span class="tag-mini concept">Concept</span></div>
       <h2>MOZa-portaal via dienstbemiddeling zónder portaaldienst</h2>
       <p>Bilal logt in bij het MOZa-portaal en MOZa bemiddelt voor elke dienst afzonderlijk. Met drie mogelijke varianten (A, B, C) voor het inlogverzoek en de assertion.</p>
       <div class="foot"><span class="qs">Vragen 18–21</span><span class="go">Open plaat →</span></div>
@@ -383,6 +393,762 @@
   </div>
 </main>
 </div>
+<iframe class="plate" id="f-aansluiten-dienst" title="aansluiten-dienst" hidden data-src="&lt;!doctype html&gt;
+&lt;html lang=&quot;nl&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Dienst aansluiten op eHerkenning&lt;/title&gt;
+&lt;style&gt;
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #1f2933;
+    --muted: #6b7280;
+    --border: #9aa1ab;
+    --region: #eef0f3;
+    --region-inner: #e2e5ea;
+    --line: #1f2933;
+    --badge: #154273;
+    --badge-text: #ffffff;
+    --rvo-fill: #dae8fc; --rvo-stroke: #6c8ebf;
+    --bd-fill: #d5e8d4;  --bd-stroke: #82b366;
+    --justis-fill: #ffe6cc; --justis-stroke: #d79b00;
+    --opt1: #7c3aed;
+    --opt2: #0e7490;
+    --focus: #f59e0b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme=&quot;light&quot;]) {
+      --bg: #111418; --surface: #1b1f24; --text: #e5e7eb; --muted: #9ca3af;
+      --border: #6b7280; --region: #1b1f24; --region-inner: #242a31; --line: #e5e7eb;
+      --badge: #8fb8e8; --badge-text: #0b1520;
+      --rvo-fill: #1e3350; --rvo-stroke: #7fa6d9;
+      --bd-fill: #1f3a24; --bd-stroke: #8cc276;
+      --justis-fill: #4a3214; --justis-stroke: #e0a83a;
+      --opt1: #b39af7; --opt2: #4fc3d9;
+    }
+  }
+  :root[data-theme=&quot;dark&quot;] {
+    --bg: #111418; --surface: #1b1f24; --text: #e5e7eb; --muted: #9ca3af;
+    --border: #6b7280; --region: #1b1f24; --region-inner: #242a31; --line: #e5e7eb;
+    --badge: #8fb8e8; --badge-text: #0b1520;
+    --rvo-fill: #1e3350; --rvo-stroke: #7fa6d9;
+    --bd-fill: #1f3a24; --bd-stroke: #8cc276;
+    --justis-fill: #4a3214; --justis-stroke: #e0a83a;
+    --opt1: #b39af7; --opt2: #4fc3d9;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: &quot;RijksoverheidSans&quot;, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  main { max-width: 1200px; width: 100%; min-width: 0; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  .intro { color: var(--muted); margin: 0 0 20px; }
+
+  .toolbar {
+    display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .toolbar h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0 0 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    text-align: left;
+    font: inherit; font-size: .85rem; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px 3px 4px;
+  }
+  .chip:hover, .chip:focus-visible { border-color: var(--badge); outline: none; }
+  .chip .num {
+    display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--badge); color: var(--badge-text); font-weight: 700; font-size: .75rem;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85rem; list-style: none; margin: 0; padding: 0; }
+  .legend li { display: flex; align-items: center; gap: 6px; }
+  .legend svg { flex: none; }
+
+  .canvas {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    overflow-x: auto;
+  }
+  .canvas svg { display: block; width: 100%; min-width: 760px; height: auto; }
+
+  /* SVG styling */
+  .region { fill: var(--region); stroke: var(--border); stroke-width: 3; }
+  .region-inner { fill: var(--region-inner); stroke: var(--border); stroke-width: 2.5; }
+  .region-label { fill: var(--muted); font-weight: 700; font-size: 17px; }
+  .lane { stroke-width: 1.5; stroke-dasharray: 2 4; opacity: .9; }
+  .lane-label { font-size: 12px; font-weight: 700; fill: var(--muted); letter-spacing: .05em; }
+  .node text { fill: var(--text); font-size: 13.5px; pointer-events: none; }
+  .node .small { font-size: 11.5px; fill: var(--muted); }
+  .provider rect { stroke-width: 3; }
+  .rvo { fill: var(--rvo-fill); stroke: var(--rvo-stroke); }
+  .bd { fill: var(--bd-fill); stroke: var(--bd-stroke); }
+  .justis { fill: var(--justis-fill); stroke: var(--justis-stroke); }
+  .service rect { stroke-width: 1.5; }
+  .portal rect { stroke-width: 3; }
+  .hypo rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1.8; stroke-dasharray: 6 4; }
+  .hypo text { fill: var(--muted); }
+  .plain rect { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+
+  .edge { fill: none; stroke-width: 2; }
+  .edge.solid { stroke: var(--line); }
+  .edge.opt1 { stroke: var(--opt1); stroke-dasharray: 7 5; }
+  .edge.opt2 { stroke: var(--opt2); stroke-dasharray: 7 5; }
+  .offer { stroke-width: 9; stroke-linecap: butt; }
+  .offer.rvo { stroke: var(--rvo-stroke); }
+  .offer.bd { stroke: var(--bd-stroke); }
+  .offer.justis { stroke: var(--justis-stroke); }
+
+  .badge circle { fill: var(--badge); stroke: var(--surface); stroke-width: 2; }
+  .badge text { fill: var(--badge-text); font-size: 12px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+
+  [data-note] { cursor: pointer; }
+  [data-note]:focus { outline: none; }
+  [data-note]:focus-visible rect, [data-note]:focus-visible circle { stroke: var(--focus); stroke-width: 4; }
+  g[data-note]:hover .badge circle, g[data-note]:focus-visible .badge circle { fill: var(--focus); }
+
+  svg.dimmed .node, svg.dimmed .edge, svg.dimmed .offer { opacity: .18; transition: opacity .15s; }
+  svg.dimmed .hl { opacity: 1 !important; }
+  svg.dimmed .edge.hl { stroke-width: 3; }
+
+  /* Layout met zijpaneel */
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .layout.panel-open { grid-template-columns: minmax(0, 1fr) min(460px, 40vw); }
+  .panel {
+    position: sticky; top: 0; height: 100vh;
+    background: var(--surface); color: var(--text);
+    border-left: 1px solid var(--border);
+    box-shadow: -8px 0 24px rgba(0,0,0,.08);
+  }
+  .panel[hidden] { display: none; }
+  .dlg { display: flex; flex-direction: column; height: 100%; }
+  .dlg .body { flex: 1; }
+  @media (max-width: 900px) {
+    .layout.panel-open { grid-template-columns: minmax(0, 1fr); }
+    .layout.panel-open main { padding-bottom: 58vh; }
+    .panel {
+      position: fixed; top: auto; left: 0; right: 0; bottom: 0; height: 55vh; z-index: 10;
+      border-left: none; border-top: 1px solid var(--border);
+      border-radius: 14px 14px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,.2);
+    }
+  }
+  /* actief element in het diagram */
+  [data-note].active rect { stroke: var(--focus) !important; stroke-width: 4 !important; }
+  [data-note].active .badge circle { fill: var(--focus); }
+  .dlg header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px; border-bottom: 1px solid var(--region-inner);
+  }
+  .dlg header .num {
+    flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--badge); color: var(--badge-text); font-weight: 700;
+  }
+  .dlg header h2 { font-size: 1.15rem; margin: 0; flex: 1; }
+  .icon-btn {
+    font: inherit; font-size: 1.4rem; line-height: 1; cursor: pointer;
+    background: none; border: none; color: var(--muted); padding: 4px 8px; border-radius: 6px;
+  }
+  .icon-btn:hover, .icon-btn:focus-visible { background: var(--region-inner); color: var(--text); outline: none; }
+  .dlg .body { padding: 18px 20px 24px; overflow-y: auto; font-size: .95rem; }
+  .dlg .body &gt; * + * { margin-top: 14px !important; }
+  .dlg .body p { margin: 0; }
+  .dlg .body p + p { margin-top: 6px; }
+  .dlg .body ul, .dlg .body ol { margin: 6px 0 0; padding-left: 1.2em; }
+  .dlg .body li { margin: 4px 0; }
+  .dlg .body li::marker { color: var(--muted); }
+  .dlg .body a { color: var(--badge); text-underline-offset: 2px; }
+  .dlg .body code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .82em;
+    background: var(--region-inner); border-radius: 4px; padding: 1px 5px; white-space: nowrap;
+  }
+  .dlg .body .sec-title {
+    font-size: .98rem; font-weight: 700; margin: 0;
+    padding-left: 10px; border-left: 3px solid var(--badge);
+  }
+  .dlg .body .sub-title {
+    font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--muted); margin: 22px 0 0 !important;
+  }
+  .dlg .body .lead { font-size: 1rem; }
+  .dlg .body .tag {
+    display: inline-block; font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 1px 9px; margin-right: 4px;
+    background: var(--region-inner); color: var(--text);
+  }
+  .dlg .body .tag.yes { background: color-mix(in srgb, var(--bd-stroke) 25%, var(--surface)); }
+  .dlg .body .tag.no { background: color-mix(in srgb, #dc2626 18%, var(--surface)); }
+
+  /* veldenlijst */
+  .dlg .body .fields { list-style: none; padding: 0; border: 1px solid var(--region-inner); border-radius: 10px; overflow: hidden; }
+  .dlg .body .fields li { margin: 0; padding: 7px 12px; }
+  .dlg .body .fields li + li { border-top: 1px solid var(--region-inner); }
+
+  /* bronnen */
+  .dlg .body .src {
+    font-size: .82rem; color: var(--muted); margin-top: 6px;
+    display: flex; gap: 6px; align-items: baseline;
+  }
+  .dlg .body .src::before { content: &quot;↗&quot;; flex: none; font-weight: 700; color: var(--badge); }
+  .dlg .body .src i { color: var(--text); }
+
+  /* callouts */
+  .callout { border-radius: 10px; padding: 12px 14px; border: 1px solid; }
+  .callout-title { font-weight: 700; display: flex; gap: 8px; align-items: center; }
+  .callout.info { background: color-mix(in srgb, var(--rvo-stroke) 10%, var(--surface)); border-color: color-mix(in srgb, var(--rvo-stroke) 45%, transparent); }
+  .callout.warn { background: color-mix(in srgb, var(--justis-stroke) 12%, var(--surface)); border-color: color-mix(in srgb, var(--justis-stroke) 55%, transparent); }
+  .callout.warn .callout-title::before {
+    content: &quot;!&quot;; display: grid; place-items: center; flex: none; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--justis-stroke); color: #fff; font-size: .8rem;
+  }
+  .callout.idea { background: color-mix(in srgb, var(--opt2) 9%, var(--surface)); border-color: color-mix(in srgb, var(--opt2) 45%, transparent); }
+  .callout.example { background: var(--region); border-color: var(--region-inner); }
+  .callout &gt; * + * { margin-top: 8px; }
+
+  /* citaten */
+  .dlg .body blockquote {
+    margin: 6px 0 0; padding: 6px 12px; border-left: 3px solid var(--border);
+    color: var(--muted); font-size: .9rem;
+  }
+  .dlg .body blockquote b { color: var(--text); }
+
+  /* vragen */
+  .q {
+    border-radius: 10px; padding: 10px 14px;
+    background: color-mix(in srgb, var(--opt1) 8%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--opt1) 35%, transparent);
+    border-left-width: 4px; border-left-color: var(--opt1);
+  }
+  .q + .q { margin-top: 8px !important; }
+  .q-label {
+    display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .02em;
+    background: var(--opt1); color: #fff; border-radius: 999px; padding: 1px 9px; margin-right: 6px;
+    vertical-align: 1px; white-space: nowrap;
+  }
+
+  /* voordeel / nadeel */
+  .pc { border-radius: 10px; padding: 10px 14px; border: 1px solid; }
+  .pc + .pc { margin-top: 8px !important; }
+  .pc-label { font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px !important; }
+  .pc.pro { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: color-mix(in srgb, var(--bd-stroke) 50%, transparent); }
+  .pc.pro .pc-label { color: color-mix(in srgb, var(--bd-stroke) 70%, var(--text)); }
+  .pc.con { background: color-mix(in srgb, #dc2626 8%, var(--surface)); border-color: color-mix(in srgb, #dc2626 35%, transparent); }
+  .pc.con .pc-label { color: color-mix(in srgb, #dc2626 75%, var(--text)); }
+
+  /* stappen */
+  .dlg .body .steps { list-style: none; padding: 0; counter-reset: st; }
+  .dlg .body .steps li { counter-increment: st; position: relative; padding-left: 34px; min-height: 24px; margin: 8px 0; }
+  .dlg .body .steps li::before {
+    content: counter(st); position: absolute; left: 0; top: 0;
+    width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--region-inner); font-size: .78rem; font-weight: 700;
+  }
+  .dlg .body .divider {
+    display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--muted);
+  }
+  .dlg .body .divider::before, .dlg .body .divider::after { content: &quot;&quot;; flex: 1; height: 1px; background: var(--region-inner); }
+  sup.ref {
+    cursor: pointer; color: var(--badge-text); background: var(--badge);
+    border-radius: 999px; padding: 0 5px; font-weight: 700; font-size: .7em;
+  }
+  sup.ref:hover, sup.ref:focus-visible { background: var(--focus); outline: none; }
+  .dlg footer {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 12px 20px; border-top: 1px solid var(--region-inner);
+  }
+  .dlg footer .nav { display: flex; justify-content: space-between; gap: 8px; }
+  .dlg footer .related:empty { display: none; }
+  .dlg footer .related { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .85rem; color: var(--muted); }
+  .nav-btn {
+    font: inherit; font-size: .9rem; cursor: pointer;
+    background: var(--region-inner); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 5px 12px;
+  }
+  .nav-btn:disabled { opacity: .4; cursor: default; }
+  .nav-btn:not(:disabled):hover { border-color: var(--badge); }
+  .crumb { margin: 0 0 10px; }
+  .home-btn {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .85rem; font-weight: 600;
+    color: var(--badge); text-decoration: none; border: 1px solid var(--border); border-radius: 999px;
+    padding: 4px 12px; background: var(--surface);
+  }
+  .home-btn:hover, .home-btn:focus-visible { border-color: var(--badge); outline: none; }
+  .status { display: flex; gap: 12px; align-items: flex-start; border-radius: 12px; padding: 12px 16px; margin: 0 0 18px; border: 1.5px solid; max-width: 860px; }
+  .status .st-tag { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 10px; color: #fff; margin-top: 2px; }
+  .status p { margin: 0; font-size: .92rem; }
+  .status.concept { background: color-mix(in srgb, #d97706 9%, var(--surface)); border-color: #d97706; border-style: dashed; }
+  .status.concept .st-tag { background: #b45309; }
+  .status.existing { background: color-mix(in srgb, var(--bd-stroke) 12%, var(--surface)); border-color: var(--bd-stroke); }
+  .status.existing .st-tag { background: #3f7d2a; }
+  .tag-mini { display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; color: #fff; margin-left: 6px; vertical-align: 1px; }
+  .tag-mini.concept { background: #b45309; }
+  .tag-mini.existing { background: #3f7d2a; }
+
+  :root { --c-bilal: #6b7280; --c-uwv: #6c8ebf; --c-mak: #d79b00; --c-lev: #82b366; --todo: #dc2626; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; } }
+  :root[data-theme=&quot;dark&quot;] { --c-bilal: #9ca3af; --c-uwv: #7fa6d9; --c-mak: #e0a83a; --c-lev: #8cc276; --todo: #f87171; }
+  .a-bilal { --c: var(--c-bilal); } .a-uwv { --c: var(--c-uwv); } .a-mak { --c: var(--c-mak); } .a-lev { --c: var(--c-lev); }
+  .lane-bg { fill: color-mix(in srgb, var(--c) 7%, var(--surface)); stroke: none; }
+  .lifeline { stroke: var(--border); stroke-width: 1.5; stroke-dasharray: 5 5; }
+  .actor rect { fill: color-mix(in srgb, var(--c) 22%, var(--surface)); stroke: var(--c); stroke-width: 2.5; }
+  .actor-name { font-weight: 700; font-size: 14px; fill: var(--text); }
+  .actor-sub { font-size: 11px; fill: var(--muted); }
+  .msg { stroke: var(--c); stroke-width: 2; }
+  .msg-label { font-size: 12.5px; fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
+  .card { fill: var(--surface); stroke: var(--c); stroke-width: 1.5; }
+  .card-title { font-size: 12.5px; font-weight: 700; fill: var(--text); }
+  .card-row { font-size: 11.5px; fill: var(--text); }
+  .card-row .k { fill: var(--muted); }
+  .activity { fill: color-mix(in srgb, var(--c) 22%, var(--surface)); stroke: var(--c); stroke-width: 1.5; }
+  .act-label { font-size: 12px; fill: var(--text); }
+  .snum circle { fill: color-mix(in srgb, var(--c) 30%, var(--surface)); stroke: var(--c); stroke-width: 2; }
+  .snum text, .tbadge text { font-size: 12px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .snum text { fill: var(--text); }
+  .snum, .tbadge { cursor: pointer; }
+  .snum:focus, .tbadge:focus { outline: none; }
+  .tbadge circle { fill: var(--badge); stroke: var(--surface); stroke-width: 2; }
+  .tbadge text { fill: var(--badge-text); }
+  .snum:hover circle, .snum:focus-visible circle, .step.active .snum circle { stroke: var(--focus); stroke-width: 4; }
+  .tbadge:hover circle, .tbadge:focus-visible circle, .tbadge.active circle { fill: var(--focus); }
+  .step.active .msg { stroke-width: 4; }
+  .step.active .card, .step.active .activity { stroke: var(--focus); stroke-width: 3; }
+  svg.focusing .step:not(.active) { opacity: .35; }
+  .step { transition: opacity .15s; }
+
+  .chips.steps .chip { padding: 3px; }
+  .chip.start { padding: 4px 12px; font-weight: 600; border-color: var(--badge); }
+  .crumb { font-size: .85rem; margin: 0 0 8px; }
+  .crumb a { color: var(--badge); }
+
+  .dlg header .kind { display: block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .dlg header .num.step-num { background: color-mix(in srgb, var(--c) 30%, var(--surface)); color: var(--text); border: 2px solid var(--c); }
+  .route { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: .85rem; }
+  .actor-chip { border-radius: 999px; padding: 2px 10px; font-weight: 600; border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 15%, var(--surface)); }
+  .callout.todo { background: color-mix(in srgb, var(--todo) 7%, var(--surface)); border: 1.5px dashed color-mix(in srgb, var(--todo) 60%, transparent); }
+  .callout.todo .callout-title { color: var(--todo); }
+  .callout.stop { background: color-mix(in srgb, var(--todo) 8%, var(--surface)); border-color: color-mix(in srgb, var(--todo) 35%, transparent); }
+
+  :root { --o1: #7c3aed; --o2: #0e7490; --o3: #be185d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) { --o1: #b39af7; --o2: #4fc3d9; --o3: #f472b6; } }
+  :root[data-theme=&quot;dark&quot;] { --o1: #b39af7; --o2: #4fc3d9; --o3: #f472b6; }
+  .o1 { --o: var(--o1); } .o2 { --o: var(--o2); } .o3 { --o: var(--o3); }
+  .msg-label.sm { font-size: 11.5px; }
+  .msg-label .b, .card-title { font-weight: 700; }
+  .frag-box { fill: none; stroke: var(--text); stroke-width: 1.5; }
+  .frag-tab { fill: var(--text); }
+  .frag-title { fill: var(--surface); font-size: 12px; font-weight: 700; }
+  .sec-bg { fill: color-mix(in srgb, var(--o) 9%, transparent); }
+  .sec-label { fill: var(--o); font-size: 12px; font-weight: 700; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; }
+  .snum.o1 circle, .snum.o2 circle, .snum.o3 circle { stroke: var(--o); stroke-width: 3; }
+  .ofdiv line { stroke: var(--text); stroke-width: 1.5; stroke-dasharray: 6 4; }
+  .ofdiv rect { fill: var(--text); }
+  .ofdiv text { fill: var(--surface); font-size: 11px; font-weight: 800; letter-spacing: .05em; }
+  .endline &gt; line { stroke: var(--todo); stroke-width: 2; stroke-dasharray: 2 5; }
+  .pill rect { stroke-width: 2; }
+  .pill text { font-size: 12.5px; font-weight: 700; }
+  .pill.stop rect { fill: color-mix(in srgb, var(--todo) 12%, var(--surface)); stroke: var(--todo); }
+  .pill.stop text { fill: var(--todo); }
+  .pill.go rect { fill: color-mix(in srgb, var(--o2) 14%, var(--surface)); stroke: var(--o2); }
+  .pill.go text { fill: var(--o2); }
+  .o2frame rect { fill: color-mix(in srgb, var(--o2) 5%, transparent); stroke: var(--o2); stroke-width: 2; stroke-dasharray: 8 5; }
+  .o2frame path { fill: var(--o2); }
+  .o2frame text { fill: #fff; font-size: 12px; font-weight: 700; }
+  .variant, .opt2only, .pill { transition: opacity .2s; }
+  svg[data-opt=&quot;1&quot;] .variant:not(.o1), svg[data-opt=&quot;2&quot;] .variant:not(.o2), svg[data-opt=&quot;3&quot;] .variant:not(.o3) { opacity: .15; }
+  svg[data-opt=&quot;1&quot;] .opt2only, svg[data-opt=&quot;3&quot;] .opt2only, svg[data-opt=&quot;1&quot;] .pill.go, svg[data-opt=&quot;3&quot;] .pill.go { opacity: .15; }
+  svg[data-opt=&quot;2&quot;] .pill.stop { opacity: .25; }
+  svg.focusing .step:not(.active) { opacity: .35; }
+  svg.focusing[data-opt] .variant.step:not(.active) { opacity: .15; }
+
+  .fold.collapsed &gt; .exp { display: none; }
+  .fold:not(.collapsed) &gt; .col { display: none; }
+  .fold-btn { cursor: pointer; }
+  .fold-btn rect { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; }
+  .fold-btn text { font-size: 11px; font-weight: 700; fill: var(--text); pointer-events: none; }
+  .fold-btn:hover rect, .fold-btn:focus-visible rect { stroke: var(--focus); stroke-width: 2.5; }
+  .fold-btn:focus { outline: none; }
+  .fpill { cursor: pointer; }
+  .fpill rect { fill: color-mix(in srgb, var(--o) 14%, var(--surface)); stroke: var(--o); stroke-width: 1.5; }
+  .fpill text { font-size: 11.5px; font-weight: 700; fill: var(--o); pointer-events: none; }
+  .fpill:hover rect, .fpill:focus-visible rect { stroke-width: 3; }
+  .fpill:focus { outline: none; }
+  .of-mini { font-size: 10px; font-weight: 800; fill: var(--muted); letter-spacing: .05em; }
+  .seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .seg button { font: inherit; font-size: .85rem; cursor: pointer; border: none; background: var(--surface); color: var(--text); padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; }
+  .seg button + button { border-left: 1px solid var(--border); }
+  .seg button[aria-pressed=&quot;true&quot;] { background: var(--badge); color: var(--badge-text); }
+  .seg .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--o); }
+  .opt-hint { font-size: .82rem; color: var(--muted); margin-top: 6px; max-width: 520px; }
+  .chip.o2only { border-color: var(--o2); border-style: dashed; }
+  .chip.off { opacity: .35; }
+  .chips.steps .chip.o2only .num { background: var(--o2); }
+
+  .optblock { border-radius: 10px; border: 1px solid color-mix(in srgb, var(--o) 40%, transparent); border-left: 4px solid var(--o); padding: 10px 14px; background: color-mix(in srgb, var(--o) 6%, var(--surface)); }
+  .optblock + .optblock { margin-top: 8px !important; }
+  .optblock &gt; * + * { margin-top: 6px; }
+  .opt-tag { display: inline-block; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--o); color: #fff; margin-right: 6px; vertical-align: 1px; }
+  .optblock h4 { margin: 0; font-size: .92rem; }
+  .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
+  .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
+  .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
+  .rep-tag { display: block; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
+  .callout.go { background: color-mix(in srgb, var(--o2) 8%, var(--surface)); border-color: color-mix(in srgb, var(--o2) 40%, transparent); }
+
+  .tbadge text { font-size: 11px; }
+  .tbadge.sm text { font-size: 9.5px; }
+  .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
+
+  :root { --c-cat: #475569; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) { --c-cat: #94a3b8; } }
+  :root[data-theme=&quot;dark&quot;] { --c-cat: #94a3b8; }
+  .a-cat { --c: var(--c-cat); }
+  .dlg .body a.chip { text-decoration: none; color: var(--text); }
+  svg.schema { display: block; width: 100%; height: auto; }
+  .s-row { fill: color-mix(in srgb, var(--c) 5%, var(--surface)); stroke: var(--border); stroke-width: 1.2; }
+  .s-head { fill: color-mix(in srgb, var(--c) 16%, var(--surface)); stroke: var(--border); stroke-width: 1.2; }
+  .s-h { font-size: 14px; font-weight: 800; fill: var(--text); }
+  .s-d { font-size: 11px; fill: var(--muted); }
+  .s-node rect { fill: color-mix(in srgb, var(--c) 22%, var(--surface)); stroke: var(--c); stroke-width: 2; }
+  .s-node.a-bilal rect { fill: var(--surface); }
+  .s-node.s-dash rect { stroke-dasharray: 5 4; fill: color-mix(in srgb, var(--c) 8%, var(--surface)); }
+  .s-node.s-here rect { stroke: var(--focus); stroke-width: 3; }
+  .s-av { fill: color-mix(in srgb, var(--c-bilal) 25%, var(--surface)); stroke: var(--c-bilal); stroke-width: 1.5; }
+  .s-avt { font-size: 12px; font-weight: 800; fill: var(--text); }
+  .s-n { font-size: 13.5px; font-weight: 700; fill: var(--text); }
+  .s-n.sm { font-size: 12.5px; }
+  .s-k { font-size: 10.5px; fill: var(--muted); }
+  .s-sub { font-size: 11px; fill: var(--muted); }
+  .s-buy { stroke: var(--c-lev); stroke-width: 2.5; }
+  .s-mesh { stroke: var(--border); stroke-width: 1.1; stroke-dasharray: 5 4; }
+  .s-choose { stroke: color-mix(in srgb, var(--c-uwv) 60%, transparent); stroke-width: 1.4; }
+  .s-choose.strong { stroke: var(--c-uwv); stroke-width: 3; }
+  .s-lbl { font-size: 11px; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+  .s-lbl.g { fill: var(--c-lev); font-weight: 600; }
+  .s-lbl.b { fill: var(--c-uwv); font-weight: 600; }
+  .s-lbl.mesh { fill: var(--muted); }
+  .s-tag rect { fill: var(--focus); }
+  .s-tag text { font-size: 10.5px; font-weight: 800; fill: #1f1300; }
+  .schema-thumb { display: block; width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); cursor: zoom-in; }
+  .schema-thumb:hover, .schema-thumb:focus-visible { border-color: var(--badge); outline: none; }
+  .schema-notes { font-size: .82rem; color: var(--muted); margin: 10px 0 0; padding-left: 1.2em; }
+  .modal-card.wide { width: min(1080px, 100%); }
+  .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(15, 23, 42, .5); }
+  .modal[hidden] { display: none; }
+  .modal-card { width: min(780px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--surface); color: var(--text); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  .modal-card header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--region-inner); }
+  .modal-card header .num { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; font-weight: 700; background: color-mix(in srgb, var(--c) 30%, var(--surface)); border: 2px solid var(--c); }
+  .modal-card header h2 { font-size: 1.1rem; margin: 0; flex: 1; }
+  .modal-card header .kind { display: block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .modal-body { padding: 16px 20px; }
+  .modal-card footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--region-inner); }
+  .modal-card a.chip { text-decoration: none; color: var(--text); }
+  svg.mini { display: block; width: 100%; height: auto; }
+  .m-region { fill: var(--region); stroke: var(--border); stroke-width: 2; }
+  .m-inner { fill: var(--region-inner); stroke: var(--border); stroke-width: 1.5; }
+  .m-label { fill: var(--muted); font-weight: 700; font-size: 14px; }
+  .m-lane { stroke-width: 1.2; stroke-dasharray: 2 4; opacity: .55; }
+  .m-lane-hl { opacity: 1; stroke-width: 2; }
+  svg.mini .rvo { fill: var(--rvo-fill); stroke: var(--rvo-stroke); }
+  svg.mini .bd { fill: var(--bd-fill); stroke: var(--bd-stroke); }
+  svg.mini .justis { fill: var(--justis-fill); stroke: var(--justis-stroke); }
+  svg.mini g rect.rvo, svg.mini g rect.bd, svg.mini g rect.justis { stroke-width: 2; }
+  .m-offer { stroke-width: 8; fill: none; }
+  .m-offer.rvo { stroke: var(--rvo-stroke); } .m-offer.bd { stroke: var(--bd-stroke); } .m-offer.justis { stroke: var(--justis-stroke); }
+  .m-t { font-size: 13px; fill: var(--text); } .m-s { font-size: 12px; fill: var(--text); } .b { font-weight: 700; }
+  .m-dim, .m-dimline { opacity: .3; }
+  .m-ring { fill: none; stroke: var(--focus); stroke-width: 3; stroke-dasharray: 7 5; animation: m-dash 1.2s linear infinite; }
+  @keyframes m-dash { to { stroke-dashoffset: -24; } }
+  @media (prefers-reduced-motion: reduce) { .m-ring { animation: none; } }
+  .m-tag rect { fill: var(--focus); }
+  .m-tag text { fill: #1f1300; font-size: 11.5px; font-weight: 800; }
+  .m-legend { margin: 12px 0 6px; padding-left: 1.3em; }
+  .m-legend li { margin: 4px 0; }
+  .m-legend li::marker { color: var(--focus); font-weight: 800; }
+  .m-note { font-size: .82rem; color: var(--muted); margin: 0; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;layout&quot; id=&quot;layout&quot;&gt;
+&lt;main&gt;
+  &lt;p class=&quot;crumb&quot;&gt;&lt;a class=&quot;home-btn&quot; href=&quot;#&quot; data-nav=&quot;home&quot;&gt;← Terug naar hoofdpagina&lt;/a&gt;&lt;/p&gt;
+  &lt;h1&gt;Dienstverlener sluit een dienst aan op eHerkenning&lt;/h1&gt;
+  &lt;div class=&quot;status existing&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Bestaande flow&lt;/span&gt;&lt;p&gt;Zo sluit een dienstverlener nu een dienst aan op het eHerkenningsstelsel, zodat ondernemers voor die dienst kunnen inloggen met eHerkenning.&lt;/p&gt;&lt;/div&gt;
+  &lt;p class=&quot;intro&quot;&gt;Voorbeeld: Justis registreert de dienst &quot;VOG aanvragen&quot;. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.&lt;/p&gt;
+  &lt;div class=&quot;toolbar&quot;&gt;
+    &lt;div&gt;
+      &lt;h2&gt;Stappen&lt;/h2&gt;
+      &lt;div class=&quot;chips steps&quot; id=&quot;step-chips&quot;&gt;&lt;button class=&quot;chip start&quot; type=&quot;button&quot; id=&quot;start&quot;&gt;Stap voor stap ▸&lt;/button&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h2&gt;Toelichtingen&lt;/h2&gt;
+      &lt;div class=&quot;chips&quot; id=&quot;chips&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;canvas&quot;&gt;
+    &lt;svg id=&quot;diagram&quot; viewBox=&quot;0 0 1120 650&quot; role=&quot;img&quot; aria-label=&quot;Volgordediagram: dienstverlener sluit een dienst aan op eHerkenning&quot;&gt;
+      &lt;defs&gt;
+      &lt;marker id=&quot;arD&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--c-uwv)&quot;/&gt;&lt;/marker&gt;
+      &lt;marker id=&quot;arM&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--c-mak)&quot;/&gt;&lt;/marker&gt;
+      &lt;marker id=&quot;arC&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--c-cat)&quot;/&gt;&lt;/marker&gt;
+      &lt;/defs&gt;
+      &lt;rect class=&quot;lane-bg a-uwv&quot; x=&quot;50&quot; y=&quot;94&quot; width=&quot;280&quot; height=&quot;546&quot; rx=&quot;14&quot;/&gt;&lt;line class=&quot;lifeline&quot; x1=&quot;190&quot; y1=&quot;84&quot; x2=&quot;190&quot; y2=&quot;638&quot;/&gt;&lt;g class=&quot;actor a-uwv&quot;&gt;&lt;rect x=&quot;60&quot; y=&quot;10&quot; width=&quot;260&quot; height=&quot;74&quot; rx=&quot;12&quot;/&gt;&lt;text class=&quot;actor-name&quot; x=&quot;190&quot; y=&quot;36&quot; text-anchor=&quot;middle&quot;&gt;Dienstverlener&lt;/text&gt;&lt;text class=&quot;actor-sub&quot; x=&quot;190&quot; y=&quot;58&quot; text-anchor=&quot;middle&quot;&gt;bijv. RVO, Belastingdienst, Justis&lt;/text&gt;&lt;text class=&quot;actor-sub&quot; x=&quot;190&quot; y=&quot;72&quot; text-anchor=&quot;middle&quot;&gt;in dit voorbeeld: Justis&lt;/text&gt;&lt;/g&gt;&lt;rect class=&quot;lane-bg a-mak&quot; x=&quot;400&quot; y=&quot;94&quot; width=&quot;280&quot; height=&quot;546&quot; rx=&quot;14&quot;/&gt;&lt;line class=&quot;lifeline&quot; x1=&quot;540&quot; y1=&quot;84&quot; x2=&quot;540&quot; y2=&quot;638&quot;/&gt;&lt;g class=&quot;actor a-mak&quot;&gt;&lt;rect x=&quot;410&quot; y=&quot;10&quot; width=&quot;260&quot; height=&quot;74&quot; rx=&quot;12&quot;/&gt;&lt;text class=&quot;actor-name&quot; x=&quot;540&quot; y=&quot;36&quot; text-anchor=&quot;middle&quot;&gt;eHerkenningsmakelaar&lt;/text&gt;&lt;text class=&quot;actor-sub&quot; x=&quot;540&quot; y=&quot;58&quot; text-anchor=&quot;middle&quot;&gt;marktpartij, bijv. Digidentity&lt;/text&gt;&lt;text class=&quot;actor-sub&quot; x=&quot;540&quot; y=&quot;72&quot; text-anchor=&quot;middle&quot;&gt;gekozen door de dienstverlener&lt;/text&gt;&lt;g class=&quot;tbadge&quot; data-note=&quot;1&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Toelichting 1&quot; transform=&quot;translate(660 18)&quot;&gt;&lt;circle r=&quot;10&quot;/&gt;&lt;text&gt;1&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;rect class=&quot;lane-bg a-cat&quot; x=&quot;740&quot; y=&quot;94&quot; width=&quot;280&quot; height=&quot;546&quot; rx=&quot;14&quot;/&gt;&lt;line class=&quot;lifeline&quot; x1=&quot;880&quot; y1=&quot;84&quot; x2=&quot;880&quot; y2=&quot;638&quot;/&gt;&lt;g class=&quot;actor a-cat&quot;&gt;&lt;rect x=&quot;750&quot; y=&quot;10&quot; width=&quot;260&quot; height=&quot;74&quot; rx=&quot;12&quot;/&gt;&lt;text class=&quot;actor-name&quot; x=&quot;880&quot; y=&quot;36&quot; text-anchor=&quot;middle&quot;&gt;Dienstencatalogus&lt;/text&gt;&lt;text class=&quot;actor-sub&quot; x=&quot;880&quot; y=&quot;58&quot; text-anchor=&quot;middle&quot;&gt;eHerkenning&lt;/text&gt;&lt;text class=&quot;actor-sub&quot; x=&quot;880&quot; y=&quot;72&quot; text-anchor=&quot;middle&quot;&gt;centraal register van alle diensten&lt;/text&gt;&lt;g class=&quot;tbadge&quot; data-note=&quot;2&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Toelichting 2&quot; transform=&quot;translate(1000 18)&quot;&gt;&lt;circle r=&quot;10&quot;/&gt;&lt;text&gt;2&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+      &lt;g class=&quot;step a-uwv&quot; data-step=&quot;1&quot;&gt;&lt;line class=&quot;msg a-uwv&quot; x1=&quot;205&quot; y1=&quot;140&quot; x2=&quot;537&quot; y2=&quot;140&quot; marker-end=&quot;url(#arD)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;365.0&quot; y=&quot;130&quot; text-anchor=&quot;middle&quot;&gt;om aan te sluiten op het stelsel&lt;/text&gt;&lt;text class=&quot;msg-label&quot; x=&quot;365.0&quot; y=&quot;115&quot; text-anchor=&quot;middle&quot;&gt;Justis kiest een makelaar&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 1: Makelaar kiezen&quot; transform=&quot;translate(190 140)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;1&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+      &lt;g class=&quot;step a-mak&quot; data-step=&quot;2&quot;&gt;&lt;line class=&quot;msg a-mak&quot; x1=&quot;525&quot; y1=&quot;220&quot; x2=&quot;193&quot; y2=&quot;220&quot; marker-end=&quot;url(#arM)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;365.0&quot; y=&quot;210&quot; text-anchor=&quot;middle&quot;&gt;aan van de dienst(en) die je wilt registreren&lt;/text&gt;&lt;text class=&quot;msg-label&quot; x=&quot;365.0&quot; y=&quot;195&quot; text-anchor=&quot;middle&quot;&gt;Verzoek aan Justis: lever de gegevens&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 2: Gegevens opvragen&quot; transform=&quot;translate(540 220)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;2&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;tbadge&quot; data-note=&quot;3&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Toelichting 3&quot; transform=&quot;translate(530 191)&quot;&gt;&lt;circle r=&quot;10&quot;/&gt;&lt;text&gt;3&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+      &lt;g class=&quot;step a-uwv&quot; data-step=&quot;3&quot;&gt;&lt;rect class=&quot;card a-uwv&quot; x=&quot;220&quot; y=&quot;260&quot; width=&quot;290&quot; height=&quot;96&quot; rx=&quot;8&quot;/&gt;&lt;text class=&quot;card-title&quot; x=&quot;232&quot; y=&quot;279&quot;&gt;Dienstgegevens&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;232&quot; y=&quot;298&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;OrganizationDisplayName:&lt;/tspan&gt; Justis&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;232&quot; y=&quot;314&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;ServiceName:&lt;/tspan&gt; VOG aanvragen&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;232&quot; y=&quot;330&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;ServiceDescription:&lt;/tspan&gt; Aanvragen van een VOG&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;232&quot; y=&quot;346&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;AuthnContextClassRef:&lt;/tspan&gt; EH3&lt;/text&gt;&lt;line class=&quot;msg a-uwv&quot; x1=&quot;205&quot; y1=&quot;370&quot; x2=&quot;537&quot; y2=&quot;370&quot; marker-end=&quot;url(#arD)&quot;/&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 3: Gegevens aanleveren&quot; transform=&quot;translate(190 370)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;3&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+      &lt;g class=&quot;step a-mak&quot; data-step=&quot;4&quot;&gt;&lt;line class=&quot;msg a-mak&quot; x1=&quot;555&quot; y1=&quot;440&quot; x2=&quot;877&quot; y2=&quot;440&quot; marker-end=&quot;url(#arM)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;710.0&quot; y=&quot;430&quot; text-anchor=&quot;middle&quot;&gt;door aan de dienstencatalogus&lt;/text&gt;&lt;text class=&quot;msg-label&quot; x=&quot;710.0&quot; y=&quot;415&quot; text-anchor=&quot;middle&quot;&gt;Makelaar geeft de dienstgegevens&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 4: Doorgeven aan catalogus&quot; transform=&quot;translate(540 440)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;4&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+      &lt;g class=&quot;step a-cat&quot; data-step=&quot;5&quot;&gt;&lt;rect class=&quot;activity a-cat&quot; x=&quot;900&quot; y=&quot;485&quot; width=&quot;208&quot; height=&quot;50&quot; rx=&quot;12&quot;/&gt;&lt;text class=&quot;act-label&quot; x=&quot;912&quot; y=&quot;507&quot;&gt;Dienst wordt geregistreerd&lt;/text&gt;&lt;text class=&quot;act-label&quot; x=&quot;912&quot; y=&quot;523&quot;&gt;in de dienstencatalogus&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 5: Registratie in catalogus&quot; transform=&quot;translate(880 510)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;5&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+      &lt;g class=&quot;step a-cat&quot; data-step=&quot;6&quot;&gt;&lt;line class=&quot;msg a-cat&quot; x1=&quot;865&quot; y1=&quot;600&quot; x2=&quot;193&quot; y2=&quot;600&quot; marker-end=&quot;url(#arC)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;535.0&quot; y=&quot;590&quot; text-anchor=&quot;middle&quot;&gt;inloggen en medewerkers voor deze dienst machtigen&lt;/text&gt;&lt;text class=&quot;msg-label&quot; x=&quot;535.0&quot; y=&quot;575&quot; text-anchor=&quot;middle&quot;&gt;Dienst is aangesloten op het stelsel: ondernemers kunnen&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 6: Dienst aangesloten&quot; transform=&quot;translate(880 600)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;6&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+&lt;aside class=&quot;panel&quot; id=&quot;dlg&quot; aria-labelledby=&quot;dlg-title&quot; hidden&gt;
+  &lt;div class=&quot;dlg&quot;&gt;
+    &lt;header&gt;
+      &lt;span class=&quot;num&quot; id=&quot;dlg-num&quot;&gt;&lt;/span&gt;
+      &lt;h2&gt;&lt;span class=&quot;kind&quot; id=&quot;dlg-kind&quot;&gt;&lt;/span&gt;&lt;span id=&quot;dlg-title&quot;&gt;&lt;/span&gt;&lt;/h2&gt;
+      &lt;button class=&quot;icon-btn&quot; id=&quot;dlg-close&quot; aria-label=&quot;Sluiten&quot;&gt;&amp;times;&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;body&quot; id=&quot;dlg-body&quot;&gt;&lt;/div&gt;
+    &lt;footer&gt;
+      &lt;div class=&quot;related&quot; id=&quot;dlg-related&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;nav&quot;&gt;
+        &lt;button class=&quot;nav-btn&quot; id=&quot;dlg-prev&quot;&gt;&amp;larr; Vorige&lt;/button&gt;
+        &lt;button class=&quot;nav-btn&quot; id=&quot;dlg-next&quot;&gt;Volgende &amp;rarr;&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/aside&gt;
+&lt;/div&gt;
+
+&lt;template id=&quot;note-1&quot; data-title=&quot;eHerkenningsmakelaar&quot;&gt;
+  &lt;h3 class=&quot;sec-title&quot;&gt;Wat doet een makelaar?&lt;/h3&gt;
+  &lt;p&gt;De makelaar regelt voor de dienstverlener de aansluiting op het eHerkenningsstelsel.&lt;/p&gt;
+  &lt;div class=&quot;callout info&quot;&gt;
+    &lt;p class=&quot;callout-title&quot;&gt;Eén aansluiting in plaats van vele&lt;/p&gt;
+    &lt;p&gt;Ondernemers kiezen zelf hun eHerkenningsleverancier (bijv. Z-Login), en er zijn meerdere leveranciers. Zonder makelaar zou de dienstverlener met al die leveranciers een eigen koppeling moeten inrichten. De makelaar regelt die koppelingen, zodat de dienstverlener maar één aansluiting nodig heeft.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p&gt;Ook bij het inloggen speelt de makelaar een rol: hij stuurt het inlogverzoek door naar de leverancier van de gebruiker, en geeft het antwoord (de versleutelde assertion) ongeopend door aan de dienstverlener. Zie de bestaande flow &quot;Bilal logt in bij een losse dienst&quot;.&lt;/p&gt;
+  &lt;h3 class=&quot;sec-title&quot;&gt;Marktpartijen&lt;/h3&gt;
+  &lt;p&gt;Makelaars zijn marktpartijen (bijv. Digidentity). De dienstverlener kiest zelf via welke makelaar hij aansluit.&lt;/p&gt;
+  &lt;h3 class=&quot;sec-title&quot;&gt;Hoe hangt het samen?&lt;/h3&gt;
+  &lt;button type=&quot;button&quot; class=&quot;schema-thumb&quot; data-open-modal=&quot;mak-modal&quot; aria-label=&quot;Open schema in groot formaat&quot;&gt;&lt;svg class=&quot;schema&quot; viewBox=&quot;0 0 1000 560&quot; role=&quot;img&quot; aria-label=&quot;Schema: ondernemers, eHerkenningsleveranciers, eHerkenningsmakelaars en dienstverleners&quot;&gt;&lt;defs&gt;&lt;marker id=&quot;tArrG&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--c-lev)&quot;/&gt;&lt;/marker&gt;&lt;marker id=&quot;tArrB&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;12&quot; markerHeight=&quot;12&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--c-uwv)&quot;/&gt;&lt;/marker&gt;&lt;marker id=&quot;tArrBl&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;9&quot; markerHeight=&quot;9&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;color-mix(in srgb, var(--c-uwv) 60%, transparent)&quot;/&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;rect class=&quot;s-row a-bilal&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;980&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;rect class=&quot;s-head a-bilal&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;200&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;38&quot;&gt;Ondernemers&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;60&quot;&gt;Kiezen elk een leverancier en&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;75&quot;&gt;nemen daar eHerkenning af, voor&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;90&quot;&gt;zichzelf en hun werknemers.&lt;/text&gt;&lt;rect class=&quot;s-row a-lev&quot; x=&quot;10&quot; y=&quot;145&quot; width=&quot;980&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;rect class=&quot;s-head a-lev&quot; x=&quot;10&quot; y=&quot;145&quot; width=&quot;200&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;173&quot;&gt;eHerkennings-&lt;/text&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;191&quot;&gt;leveranciers&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;213&quot;&gt;Geven de accounts uit en houden&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;228&quot;&gt;in het machtigingenregister bij&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;243&quot;&gt;wie wat mag.&lt;/text&gt;&lt;rect class=&quot;s-row a-mak&quot; x=&quot;10&quot; y=&quot;280&quot; width=&quot;980&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;rect class=&quot;s-head a-mak&quot; x=&quot;10&quot; y=&quot;280&quot; width=&quot;200&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;308&quot;&gt;eHerkennings-&lt;/text&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;326&quot;&gt;makelaars&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;348&quot;&gt;Regelen de aansluiting voor&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;363&quot;&gt;dienstverleners. Elke makelaar&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;378&quot;&gt;werkt met alle leveranciers.&lt;/text&gt;&lt;rect class=&quot;s-row a-uwv&quot; x=&quot;10&quot; y=&quot;415&quot; width=&quot;980&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;rect class=&quot;s-head a-uwv&quot; x=&quot;10&quot; y=&quot;415&quot; width=&quot;200&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;443&quot;&gt;Dienstverleners&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;465&quot;&gt;Kiezen elk één makelaar en&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;480&quot;&gt;sluiten via die hun diensten aan.&lt;/text&gt;&lt;g class=&quot;s-node a-bilal&quot;&gt;&lt;rect x=&quot;255&quot; y=&quot;35&quot; width=&quot;270&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;circle class=&quot;s-av&quot; cx=&quot;285&quot; cy=&quot;66&quot; r=&quot;18&quot;/&gt;&lt;text class=&quot;s-avt&quot; x=&quot;285&quot; y=&quot;71&quot; text-anchor=&quot;middle&quot;&gt;KJ&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;313&quot; y=&quot;61&quot;&gt;Karin Jansen&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;313&quot; y=&quot;79&quot;&gt;Koffiezaak Noon, werkgever van Bilal&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-bilal&quot;&gt;&lt;rect x=&quot;555&quot; y=&quot;35&quot; width=&quot;270&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;circle class=&quot;s-av&quot; cx=&quot;585&quot; cy=&quot;66&quot; r=&quot;18&quot;/&gt;&lt;text class=&quot;s-avt&quot; x=&quot;585&quot; y=&quot;71&quot; text-anchor=&quot;middle&quot;&gt;YA&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;613&quot; y=&quot;61&quot;&gt;Yassin Amrani&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;613&quot; y=&quot;79&quot;&gt;eenmanszaak&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-lev&quot;&gt;&lt;rect x=&quot;295.0&quot; y=&quot;165&quot; width=&quot;190&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;390&quot; y=&quot;182&quot; text-anchor=&quot;middle&quot;&gt;Leverancier&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;390&quot; y=&quot;200&quot; text-anchor=&quot;middle&quot;&gt;Z-Login&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;390&quot; y=&quot;216&quot; text-anchor=&quot;middle&quot;&gt;gekozen door Karin&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-lev&quot;&gt;&lt;rect x=&quot;595.0&quot; y=&quot;165&quot; width=&quot;190&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;690&quot; y=&quot;182&quot; text-anchor=&quot;middle&quot;&gt;Leverancier&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;690&quot; y=&quot;200&quot; text-anchor=&quot;middle&quot;&gt;Digidentity&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;690&quot; y=&quot;216&quot; text-anchor=&quot;middle&quot;&gt;gekozen door Yassin&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-lev s-dash&quot;&gt;&lt;rect x=&quot;800.0&quot; y=&quot;165&quot; width=&quot;190&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-n&quot; x=&quot;895&quot; y=&quot;192&quot; text-anchor=&quot;middle&quot;&gt;Andere leveranciers&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;895&quot; y=&quot;212&quot; text-anchor=&quot;middle&quot;&gt;KPN, QuoVadis, Reconi, We-ID&lt;/text&gt;&lt;/g&gt;&lt;line class=&quot;s-buy&quot; x1=&quot;390&quot; y1=&quot;97&quot; x2=&quot;390&quot; y2=&quot;162&quot; marker-end=&quot;url(#tArrG)&quot;/&gt;&lt;text class=&quot;s-lbl g&quot; x=&quot;398&quot; y=&quot;134&quot;&gt;neemt eHerkenning af&lt;/text&gt;&lt;line class=&quot;s-buy&quot; x1=&quot;690&quot; y1=&quot;97&quot; x2=&quot;690&quot; y2=&quot;162&quot; marker-end=&quot;url(#tArrG)&quot;/&gt;&lt;text class=&quot;s-lbl g&quot; x=&quot;698&quot; y=&quot;134&quot;&gt;neemt eHerkenning af&lt;/text&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;390&quot; y1=&quot;227&quot; x2=&quot;320&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;390&quot; y1=&quot;227&quot; x2=&quot;500&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;390&quot; y1=&quot;227&quot; x2=&quot;680&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;390&quot; y1=&quot;227&quot; x2=&quot;870&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;690&quot; y1=&quot;227&quot; x2=&quot;320&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;690&quot; y1=&quot;227&quot; x2=&quot;500&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;690&quot; y1=&quot;227&quot; x2=&quot;680&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;690&quot; y1=&quot;227&quot; x2=&quot;870&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;895&quot; y1=&quot;227&quot; x2=&quot;320&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;895&quot; y1=&quot;227&quot; x2=&quot;500&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;895&quot; y1=&quot;227&quot; x2=&quot;680&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;895&quot; y1=&quot;227&quot; x2=&quot;870&quot; y2=&quot;300&quot;/&gt;&lt;text class=&quot;s-lbl mesh&quot; x=&quot;595&quot; y=&quot;292&quot; text-anchor=&quot;middle&quot;&gt;elke makelaar werkt met elke leverancier&lt;/text&gt;&lt;g class=&quot;s-node a-mak&quot;&gt;&lt;rect x=&quot;240&quot; y=&quot;300&quot; width=&quot;160&quot; height=&quot;56&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;320&quot; y=&quot;321&quot; text-anchor=&quot;middle&quot;&gt;Makelaar&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;320&quot; y=&quot;341&quot; text-anchor=&quot;middle&quot;&gt;Digidentity&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-mak&quot;&gt;&lt;rect x=&quot;420&quot; y=&quot;300&quot; width=&quot;160&quot; height=&quot;56&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;500&quot; y=&quot;321&quot; text-anchor=&quot;middle&quot;&gt;Makelaar&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;500&quot; y=&quot;341&quot; text-anchor=&quot;middle&quot;&gt;KPN&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-mak&quot;&gt;&lt;rect x=&quot;600&quot; y=&quot;300&quot; width=&quot;160&quot; height=&quot;56&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;680&quot; y=&quot;321&quot; text-anchor=&quot;middle&quot;&gt;Makelaar&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;680&quot; y=&quot;341&quot; text-anchor=&quot;middle&quot;&gt;Reconi&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-mak&quot;&gt;&lt;rect x=&quot;790&quot; y=&quot;300&quot; width=&quot;160&quot; height=&quot;56&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;870&quot; y=&quot;321&quot; text-anchor=&quot;middle&quot;&gt;Makelaar&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;870&quot; y=&quot;341&quot; text-anchor=&quot;middle&quot;&gt;Signicat&lt;/text&gt;&lt;/g&gt;&lt;line class=&quot;s-choose strong&quot; x1=&quot;320&quot; y1=&quot;440&quot; x2=&quot;320&quot; y2=&quot;360&quot; marker-end=&quot;url(#tArrB)&quot;/&gt;&lt;line class=&quot;s-choose strong&quot; x1=&quot;470&quot; y1=&quot;440&quot; x2=&quot;500&quot; y2=&quot;360&quot; marker-end=&quot;url(#tArrB)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;575&quot; y1=&quot;440&quot; x2=&quot;500&quot; y2=&quot;362&quot; marker-end=&quot;url(#tArrBl)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;650&quot; y1=&quot;440&quot; x2=&quot;500&quot; y2=&quot;362&quot; marker-end=&quot;url(#tArrBl)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;755&quot; y1=&quot;440&quot; x2=&quot;680&quot; y2=&quot;362&quot; marker-end=&quot;url(#tArrBl)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;845&quot; y1=&quot;440&quot; x2=&quot;680&quot; y2=&quot;362&quot; marker-end=&quot;url(#tArrBl)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;940&quot; y1=&quot;440&quot; x2=&quot;870&quot; y2=&quot;362&quot; marker-end=&quot;url(#tArrBl)&quot;/&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;275.0&quot; y=&quot;440&quot; width=&quot;90&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n&quot; x=&quot;320&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;UWV&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;405.0&quot; y=&quot;440&quot; width=&quot;130&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n&quot; x=&quot;470&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;Belastingdienst&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;543.0&quot; y=&quot;440&quot; width=&quot;64&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n sm&quot; x=&quot;575&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;RVO&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;618.0&quot; y=&quot;440&quot; width=&quot;64&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n sm&quot; x=&quot;650&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;KvK&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv s-here&quot;&gt;&lt;rect x=&quot;715.0&quot; y=&quot;440&quot; width=&quot;80&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n&quot; x=&quot;755&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;Justis&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;810.0&quot; y=&quot;440&quot; width=&quot;70&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n sm&quot; x=&quot;845&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;RDW&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;905.0&quot; y=&quot;440&quot; width=&quot;70&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n sm&quot; x=&quot;940&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;CJIB&lt;/text&gt;&lt;/g&gt;&lt;text class=&quot;s-lbl b&quot; x=&quot;328&quot; y=&quot;405&quot;&gt;kiest&lt;/text&gt;&lt;text class=&quot;s-lbl b&quot; x=&quot;447&quot; y=&quot;405&quot;&gt;kiest&lt;/text&gt;&lt;g class=&quot;s-tag&quot;&gt;&lt;rect x=&quot;700&quot; y=&quot;497&quot; width=&quot;110&quot; height=&quot;20&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;755&quot; y=&quot;511&quot; text-anchor=&quot;middle&quot;&gt;in deze plaat&lt;/text&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/button&gt;
+  &lt;p&gt;&lt;button type=&quot;button&quot; class=&quot;chip start&quot; data-open-modal=&quot;mak-modal&quot;&gt;Bekijk schema groot ▸&lt;/button&gt;&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;template id=&quot;note-2&quot; data-title=&quot;Dienstencatalogus eHerkenning&quot;&gt;
+  &lt;p&gt;De dienstencatalogus is het centrale register van alle diensten die op het eHerkenningsstelsel zijn aangesloten. Per dienst staat er onder andere in welke dienstverlener de dienst aanbiedt, wat de dienst is en welk betrouwbaarheidsniveau nodig is.&lt;/p&gt;
+  &lt;p&gt;&lt;a class=&quot;chip&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot; href=&quot;#&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot;&gt;&lt;span class=&quot;num&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;lbl&quot;&gt;Bekijk plaat 2: Dienstencatalogus eHerkenning&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+  &lt;div class=&quot;callout idea&quot;&gt;
+    &lt;p class=&quot;callout-title&quot;&gt;Vooruitblik: medewerkers machtigen&lt;/p&gt;
+    &lt;p&gt;Wanneer een werkgever een werknemer machtigt, selecteert de werkgever de betreffende diensten uit deze dienstencatalogus. Dit wordt uitgewerkt in een aparte plaat.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;template id=&quot;note-3&quot; data-title=&quot;Gegevens voor registratie&quot;&gt;
+  &lt;h3 class=&quot;sec-title&quot;&gt;Bij het registreren van een dienst moet de volgende informatie worden vastgelegd:&lt;/h3&gt;
+  &lt;ul class=&quot;fields&quot;&gt;
+    &lt;li&gt;Dienstverlenernaam (&lt;code&gt;OrganizationDisplayName&lt;/code&gt;)&lt;/li&gt;
+    &lt;li&gt;Dienstnaam (&lt;code&gt;ServiceName&lt;/code&gt;)&lt;/li&gt;
+    &lt;li&gt;Dienstomschrijving (&lt;code&gt;ServiceDescription&lt;/code&gt;)&lt;/li&gt;
+    &lt;li&gt;Betrouwbaarheidsniveau (&lt;code&gt;AuthnContextClassRef&lt;/code&gt;)&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p class=&quot;src&quot;&gt;&lt;span&gt;Bron: &lt;a href=&quot;https://www.eherkenning.nl/sites/default/files/2022-02/Handleiding%20Dienstencatalogus%20versie%20VII.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Communicatie Handleiding eHerkenning versie 2 2017&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+  &lt;p&gt;Daarnaast kan (of moet?) onder andere worden aangegeven of de dienst SSO ondersteunt (&lt;code&gt;SSOSupport&lt;/code&gt;) en of de dienst door een dienstbemiddelaar mag worden ontsloten (&lt;code&gt;ServiceIntermediationAllowed&lt;/code&gt;).&lt;/p&gt;
+  &lt;p class=&quot;src&quot;&gt;&lt;span&gt;Bron: &lt;a href=&quot;https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Service catalog | Afsprakenstelsel eToegang&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;div class=&quot;modal&quot; id=&quot;mak-modal&quot; hidden role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;mak-modal-title&quot;&gt;
+  &lt;div class=&quot;modal-card wide&quot;&gt;
+    &lt;header&gt;
+      &lt;span class=&quot;num&quot; style=&quot;background:var(--badge);color:var(--badge-text);border:none&quot;&gt;1&lt;/span&gt;
+      &lt;h2 id=&quot;mak-modal-title&quot;&gt;&lt;span class=&quot;kind&quot;&gt;Toelichting 1 · schema&lt;/span&gt;Ondernemers, leveranciers, makelaars en dienstverleners&lt;/h2&gt;
+      &lt;button class=&quot;icon-btn&quot; data-close-modal aria-label=&quot;Sluiten&quot;&gt;&amp;times;&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;modal-body&quot;&gt;
+      &lt;svg class=&quot;schema&quot; viewBox=&quot;0 0 1000 560&quot; role=&quot;img&quot; aria-label=&quot;Schema: ondernemers, eHerkenningsleveranciers, eHerkenningsmakelaars en dienstverleners&quot;&gt;&lt;defs&gt;&lt;marker id=&quot;sArrG&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--c-lev)&quot;/&gt;&lt;/marker&gt;&lt;marker id=&quot;sArrB&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;12&quot; markerHeight=&quot;12&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--c-uwv)&quot;/&gt;&lt;/marker&gt;&lt;marker id=&quot;sArrBl&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;9&quot; markerHeight=&quot;9&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;color-mix(in srgb, var(--c-uwv) 60%, transparent)&quot;/&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;rect class=&quot;s-row a-bilal&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;980&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;rect class=&quot;s-head a-bilal&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;200&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;38&quot;&gt;Ondernemers&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;60&quot;&gt;Kiezen elk een leverancier en&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;75&quot;&gt;nemen daar eHerkenning af, voor&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;90&quot;&gt;zichzelf en hun werknemers.&lt;/text&gt;&lt;rect class=&quot;s-row a-lev&quot; x=&quot;10&quot; y=&quot;145&quot; width=&quot;980&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;rect class=&quot;s-head a-lev&quot; x=&quot;10&quot; y=&quot;145&quot; width=&quot;200&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;173&quot;&gt;eHerkennings-&lt;/text&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;191&quot;&gt;leveranciers&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;213&quot;&gt;Geven de accounts uit en houden&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;228&quot;&gt;in het machtigingenregister bij&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;243&quot;&gt;wie wat mag.&lt;/text&gt;&lt;rect class=&quot;s-row a-mak&quot; x=&quot;10&quot; y=&quot;280&quot; width=&quot;980&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;rect class=&quot;s-head a-mak&quot; x=&quot;10&quot; y=&quot;280&quot; width=&quot;200&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;308&quot;&gt;eHerkennings-&lt;/text&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;326&quot;&gt;makelaars&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;348&quot;&gt;Regelen de aansluiting voor&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;363&quot;&gt;dienstverleners. Elke makelaar&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;378&quot;&gt;werkt met alle leveranciers.&lt;/text&gt;&lt;rect class=&quot;s-row a-uwv&quot; x=&quot;10&quot; y=&quot;415&quot; width=&quot;980&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;rect class=&quot;s-head a-uwv&quot; x=&quot;10&quot; y=&quot;415&quot; width=&quot;200&quot; height=&quot;125&quot; rx=&quot;14&quot;/&gt;&lt;text class=&quot;s-h&quot; x=&quot;24&quot; y=&quot;443&quot;&gt;Dienstverleners&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;465&quot;&gt;Kiezen elk één makelaar en&lt;/text&gt;&lt;text class=&quot;s-d&quot; x=&quot;24&quot; y=&quot;480&quot;&gt;sluiten via die hun diensten aan.&lt;/text&gt;&lt;g class=&quot;s-node a-bilal&quot;&gt;&lt;rect x=&quot;255&quot; y=&quot;35&quot; width=&quot;270&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;circle class=&quot;s-av&quot; cx=&quot;285&quot; cy=&quot;66&quot; r=&quot;18&quot;/&gt;&lt;text class=&quot;s-avt&quot; x=&quot;285&quot; y=&quot;71&quot; text-anchor=&quot;middle&quot;&gt;KJ&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;313&quot; y=&quot;61&quot;&gt;Karin Jansen&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;313&quot; y=&quot;79&quot;&gt;Koffiezaak Noon, werkgever van Bilal&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-bilal&quot;&gt;&lt;rect x=&quot;555&quot; y=&quot;35&quot; width=&quot;270&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;circle class=&quot;s-av&quot; cx=&quot;585&quot; cy=&quot;66&quot; r=&quot;18&quot;/&gt;&lt;text class=&quot;s-avt&quot; x=&quot;585&quot; y=&quot;71&quot; text-anchor=&quot;middle&quot;&gt;YA&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;613&quot; y=&quot;61&quot;&gt;Yassin Amrani&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;613&quot; y=&quot;79&quot;&gt;eenmanszaak&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-lev&quot;&gt;&lt;rect x=&quot;295.0&quot; y=&quot;165&quot; width=&quot;190&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;390&quot; y=&quot;182&quot; text-anchor=&quot;middle&quot;&gt;Leverancier&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;390&quot; y=&quot;200&quot; text-anchor=&quot;middle&quot;&gt;Z-Login&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;390&quot; y=&quot;216&quot; text-anchor=&quot;middle&quot;&gt;gekozen door Karin&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-lev&quot;&gt;&lt;rect x=&quot;595.0&quot; y=&quot;165&quot; width=&quot;190&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;690&quot; y=&quot;182&quot; text-anchor=&quot;middle&quot;&gt;Leverancier&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;690&quot; y=&quot;200&quot; text-anchor=&quot;middle&quot;&gt;Digidentity&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;690&quot; y=&quot;216&quot; text-anchor=&quot;middle&quot;&gt;gekozen door Yassin&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-lev s-dash&quot;&gt;&lt;rect x=&quot;800.0&quot; y=&quot;165&quot; width=&quot;190&quot; height=&quot;62&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-n&quot; x=&quot;895&quot; y=&quot;192&quot; text-anchor=&quot;middle&quot;&gt;Andere leveranciers&lt;/text&gt;&lt;text class=&quot;s-sub&quot; x=&quot;895&quot; y=&quot;212&quot; text-anchor=&quot;middle&quot;&gt;KPN, QuoVadis, Reconi, We-ID&lt;/text&gt;&lt;/g&gt;&lt;line class=&quot;s-buy&quot; x1=&quot;390&quot; y1=&quot;97&quot; x2=&quot;390&quot; y2=&quot;162&quot; marker-end=&quot;url(#sArrG)&quot;/&gt;&lt;text class=&quot;s-lbl g&quot; x=&quot;398&quot; y=&quot;134&quot;&gt;neemt eHerkenning af&lt;/text&gt;&lt;line class=&quot;s-buy&quot; x1=&quot;690&quot; y1=&quot;97&quot; x2=&quot;690&quot; y2=&quot;162&quot; marker-end=&quot;url(#sArrG)&quot;/&gt;&lt;text class=&quot;s-lbl g&quot; x=&quot;698&quot; y=&quot;134&quot;&gt;neemt eHerkenning af&lt;/text&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;390&quot; y1=&quot;227&quot; x2=&quot;320&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;390&quot; y1=&quot;227&quot; x2=&quot;500&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;390&quot; y1=&quot;227&quot; x2=&quot;680&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;390&quot; y1=&quot;227&quot; x2=&quot;870&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;690&quot; y1=&quot;227&quot; x2=&quot;320&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;690&quot; y1=&quot;227&quot; x2=&quot;500&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;690&quot; y1=&quot;227&quot; x2=&quot;680&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;690&quot; y1=&quot;227&quot; x2=&quot;870&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;895&quot; y1=&quot;227&quot; x2=&quot;320&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;895&quot; y1=&quot;227&quot; x2=&quot;500&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;895&quot; y1=&quot;227&quot; x2=&quot;680&quot; y2=&quot;300&quot;/&gt;&lt;line class=&quot;s-mesh&quot; x1=&quot;895&quot; y1=&quot;227&quot; x2=&quot;870&quot; y2=&quot;300&quot;/&gt;&lt;text class=&quot;s-lbl mesh&quot; x=&quot;595&quot; y=&quot;292&quot; text-anchor=&quot;middle&quot;&gt;elke makelaar werkt met elke leverancier&lt;/text&gt;&lt;g class=&quot;s-node a-mak&quot;&gt;&lt;rect x=&quot;240&quot; y=&quot;300&quot; width=&quot;160&quot; height=&quot;56&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;320&quot; y=&quot;321&quot; text-anchor=&quot;middle&quot;&gt;Makelaar&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;320&quot; y=&quot;341&quot; text-anchor=&quot;middle&quot;&gt;Digidentity&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-mak&quot;&gt;&lt;rect x=&quot;420&quot; y=&quot;300&quot; width=&quot;160&quot; height=&quot;56&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;500&quot; y=&quot;321&quot; text-anchor=&quot;middle&quot;&gt;Makelaar&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;500&quot; y=&quot;341&quot; text-anchor=&quot;middle&quot;&gt;KPN&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-mak&quot;&gt;&lt;rect x=&quot;600&quot; y=&quot;300&quot; width=&quot;160&quot; height=&quot;56&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;680&quot; y=&quot;321&quot; text-anchor=&quot;middle&quot;&gt;Makelaar&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;680&quot; y=&quot;341&quot; text-anchor=&quot;middle&quot;&gt;Reconi&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-mak&quot;&gt;&lt;rect x=&quot;790&quot; y=&quot;300&quot; width=&quot;160&quot; height=&quot;56&quot; rx=&quot;10&quot;/&gt;&lt;text class=&quot;s-k&quot; x=&quot;870&quot; y=&quot;321&quot; text-anchor=&quot;middle&quot;&gt;Makelaar&lt;/text&gt;&lt;text class=&quot;s-n&quot; x=&quot;870&quot; y=&quot;341&quot; text-anchor=&quot;middle&quot;&gt;Signicat&lt;/text&gt;&lt;/g&gt;&lt;line class=&quot;s-choose strong&quot; x1=&quot;320&quot; y1=&quot;440&quot; x2=&quot;320&quot; y2=&quot;360&quot; marker-end=&quot;url(#sArrB)&quot;/&gt;&lt;line class=&quot;s-choose strong&quot; x1=&quot;470&quot; y1=&quot;440&quot; x2=&quot;500&quot; y2=&quot;360&quot; marker-end=&quot;url(#sArrB)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;575&quot; y1=&quot;440&quot; x2=&quot;500&quot; y2=&quot;362&quot; marker-end=&quot;url(#sArrBl)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;650&quot; y1=&quot;440&quot; x2=&quot;500&quot; y2=&quot;362&quot; marker-end=&quot;url(#sArrBl)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;755&quot; y1=&quot;440&quot; x2=&quot;680&quot; y2=&quot;362&quot; marker-end=&quot;url(#sArrBl)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;845&quot; y1=&quot;440&quot; x2=&quot;680&quot; y2=&quot;362&quot; marker-end=&quot;url(#sArrBl)&quot;/&gt;&lt;line class=&quot;s-choose&quot; x1=&quot;940&quot; y1=&quot;440&quot; x2=&quot;870&quot; y2=&quot;362&quot; marker-end=&quot;url(#sArrBl)&quot;/&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;275.0&quot; y=&quot;440&quot; width=&quot;90&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n&quot; x=&quot;320&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;UWV&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;405.0&quot; y=&quot;440&quot; width=&quot;130&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n&quot; x=&quot;470&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;Belastingdienst&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;543.0&quot; y=&quot;440&quot; width=&quot;64&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n sm&quot; x=&quot;575&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;RVO&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;618.0&quot; y=&quot;440&quot; width=&quot;64&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n sm&quot; x=&quot;650&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;KvK&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv s-here&quot;&gt;&lt;rect x=&quot;715.0&quot; y=&quot;440&quot; width=&quot;80&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n&quot; x=&quot;755&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;Justis&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;810.0&quot; y=&quot;440&quot; width=&quot;70&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n sm&quot; x=&quot;845&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;RDW&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;s-node a-uwv&quot;&gt;&lt;rect x=&quot;905.0&quot; y=&quot;440&quot; width=&quot;70&quot; height=&quot;44&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;s-n sm&quot; x=&quot;940&quot; y=&quot;467&quot; text-anchor=&quot;middle&quot;&gt;CJIB&lt;/text&gt;&lt;/g&gt;&lt;text class=&quot;s-lbl b&quot; x=&quot;328&quot; y=&quot;405&quot;&gt;kiest&lt;/text&gt;&lt;text class=&quot;s-lbl b&quot; x=&quot;447&quot; y=&quot;405&quot;&gt;kiest&lt;/text&gt;&lt;g class=&quot;s-tag&quot;&gt;&lt;rect x=&quot;700&quot; y=&quot;497&quot; width=&quot;110&quot; height=&quot;20&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;755&quot; y=&quot;511&quot; text-anchor=&quot;middle&quot;&gt;in deze plaat&lt;/text&gt;&lt;/g&gt;&lt;/svg&gt;
+      &lt;ul class=&quot;schema-notes&quot;&gt;
+        &lt;li&gt;Doorgetrokken lijnen zijn keuzes: een ondernemer kiest een leverancier, een dienstverlener kiest een makelaar.&lt;/li&gt;
+        &lt;li&gt;De makelaars van UWV (Digidentity) en Belastingdienst (KPN) zijn nagekeken op 20 oktober 2026; de overige koppelingen zijn een voorbeeld.&lt;/li&gt;
+        &lt;li&gt;Digidentity en KPN hebben beide rollen: ze zijn zowel leverancier als makelaar.&lt;/li&gt;
+        &lt;li&gt;Karin is dezelfde werkgever als in de inlogflows; Justis is het voorbeeld uit deze plaat.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;footer&gt;
+      &lt;span&gt;&lt;/span&gt;
+      &lt;button class=&quot;nav-btn&quot; data-close-modal&gt;Sluiten&lt;/button&gt;
+    &lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;modal&quot; id=&quot;cat-modal&quot; hidden role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;cat-modal-title&quot;&gt;
+  &lt;div class=&quot;modal-card&quot;&gt;
+    &lt;header&gt;
+      &lt;span class=&quot;num step-num a-cat&quot;&gt;5&lt;/span&gt;
+      &lt;h2 id=&quot;cat-modal-title&quot;&gt;&lt;span class=&quot;kind&quot;&gt;Stap 5 · resultaat&lt;/span&gt;Zo staat Justis nu in de dienstencatalogus&lt;/h2&gt;
+      &lt;button class=&quot;icon-btn&quot; id=&quot;cat-modal-close&quot; aria-label=&quot;Sluiten&quot;&gt;&amp;times;&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;modal-body&quot;&gt;
+      &lt;svg class=&quot;mini&quot; viewBox=&quot;0 0 700 440&quot; role=&quot;img&quot; aria-label=&quot;Vereenvoudigde dienstencatalogus met Justis en VOG aanvragen gemarkeerd&quot;&gt;
+        &lt;defs&gt;
+          &lt;marker id=&quot;mArr&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;context-stroke&quot;/&gt;&lt;/marker&gt;
+        &lt;/defs&gt;
+        &lt;rect class=&quot;m-region&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;680&quot; height=&quot;160&quot; rx=&quot;22&quot;/&gt;
+        &lt;text class=&quot;m-label&quot; x=&quot;350&quot; y=&quot;34&quot; text-anchor=&quot;middle&quot;&gt;Dienstverleners&lt;/text&gt;
+        &lt;rect class=&quot;m-inner&quot; x=&quot;30&quot; y=&quot;46&quot; width=&quot;640&quot; height=&quot;110&quot; rx=&quot;18&quot;/&gt;
+        &lt;text class=&quot;m-label&quot; x=&quot;240&quot; y=&quot;70&quot; text-anchor=&quot;middle&quot;&gt;Dienstaanbieders&lt;/text&gt;
+        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;rvo&quot; x=&quot;80&quot; y=&quot;95&quot; width=&quot;100&quot; height=&quot;40&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;m-t&quot; x=&quot;130&quot; y=&quot;120&quot; text-anchor=&quot;middle&quot;&gt;RVO&lt;/text&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;bd&quot; x=&quot;300&quot; y=&quot;95&quot; width=&quot;100&quot; height=&quot;40&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;m-t&quot; x=&quot;350&quot; y=&quot;120&quot; text-anchor=&quot;middle&quot;&gt;BD&lt;/text&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-hl&quot;&gt;&lt;rect class=&quot;justis&quot; x=&quot;520&quot; y=&quot;95&quot; width=&quot;100&quot; height=&quot;40&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;m-t b&quot; x=&quot;570&quot; y=&quot;120&quot; text-anchor=&quot;middle&quot;&gt;Justis&lt;/text&gt;
+          &lt;rect class=&quot;m-ring&quot; x=&quot;512&quot; y=&quot;87&quot; width=&quot;116&quot; height=&quot;56&quot; rx=&quot;14&quot;/&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-tag&quot;&gt;&lt;rect x=&quot;472&quot; y=&quot;56&quot; width=&quot;196&quot; height=&quot;22&quot; rx=&quot;11&quot;/&gt;&lt;text x=&quot;570&quot; y=&quot;71&quot; text-anchor=&quot;middle&quot;&gt;① Aangesloten dienstaanbieder&lt;/text&gt;&lt;/g&gt;
+
+        &lt;rect class=&quot;m-region&quot; x=&quot;10&quot; y=&quot;190&quot; width=&quot;680&quot; height=&quot;240&quot; rx=&quot;22&quot;/&gt;
+        &lt;text class=&quot;m-label&quot; x=&quot;40&quot; y=&quot;214&quot;&gt;Diensten&lt;/text&gt;
+        &lt;rect class=&quot;m-lane rvo&quot; x=&quot;40&quot; y=&quot;224&quot; width=&quot;180&quot; height=&quot;190&quot; rx=&quot;12&quot;/&gt;
+        &lt;rect class=&quot;m-lane bd&quot; x=&quot;260&quot; y=&quot;224&quot; width=&quot;180&quot; height=&quot;190&quot; rx=&quot;12&quot;/&gt;
+        &lt;rect class=&quot;m-lane justis m-lane-hl&quot; x=&quot;480&quot; y=&quot;224&quot; width=&quot;180&quot; height=&quot;190&quot; rx=&quot;12&quot;/&gt;
+        &lt;line class=&quot;m-offer rvo m-dimline&quot; x1=&quot;130&quot; y1=&quot;137&quot; x2=&quot;130&quot; y2=&quot;218&quot; marker-end=&quot;url(#mArr)&quot;/&gt;
+        &lt;line class=&quot;m-offer bd m-dimline&quot; x1=&quot;350&quot; y1=&quot;137&quot; x2=&quot;350&quot; y2=&quot;218&quot; marker-end=&quot;url(#mArr)&quot;/&gt;
+        &lt;line class=&quot;m-offer justis&quot; x1=&quot;570&quot; y1=&quot;145&quot; x2=&quot;570&quot; y2=&quot;218&quot; marker-end=&quot;url(#mArr)&quot;/&gt;
+        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;rvo&quot; x=&quot;55&quot; y=&quot;248&quot; width=&quot;150&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;130&quot; y=&quot;270&quot; text-anchor=&quot;middle&quot;&gt;Subsidie aanvragen&lt;/text&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;rvo&quot; x=&quot;55&quot; y=&quot;292&quot; width=&quot;150&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;130&quot; y=&quot;314&quot; text-anchor=&quot;middle&quot;&gt;Vergunning aanvragen&lt;/text&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;bd&quot; x=&quot;268&quot; y=&quot;248&quot; width=&quot;164&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;350&quot; y=&quot;270&quot; text-anchor=&quot;middle&quot;&gt;Belastingaangifte doen&lt;/text&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;bd&quot; x=&quot;268&quot; y=&quot;292&quot; width=&quot;164&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;350&quot; y=&quot;314&quot; text-anchor=&quot;middle&quot;&gt;Zorgtoeslag aanvragen&lt;/text&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;bd&quot; x=&quot;268&quot; y=&quot;336&quot; width=&quot;164&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;350&quot; y=&quot;358&quot; text-anchor=&quot;middle&quot;&gt;Huurtoeslag aanvragen&lt;/text&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-hl&quot;&gt;&lt;rect class=&quot;justis&quot; x=&quot;495&quot; y=&quot;262&quot; width=&quot;150&quot; height=&quot;38&quot; rx=&quot;19&quot;/&gt;&lt;text class=&quot;m-s b&quot; x=&quot;570&quot; y=&quot;286&quot; text-anchor=&quot;middle&quot;&gt;VOG aanvragen&lt;/text&gt;
+          &lt;rect class=&quot;m-ring&quot; x=&quot;487&quot; y=&quot;254&quot; width=&quot;166&quot; height=&quot;54&quot; rx=&quot;27&quot;/&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-tag&quot;&gt;&lt;rect x=&quot;497&quot; y=&quot;230&quot; width=&quot;146&quot; height=&quot;20&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;570&quot; y=&quot;244&quot; text-anchor=&quot;middle&quot;&gt;② Nieuw geregistreerd&lt;/text&gt;&lt;/g&gt;
+        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;justis&quot; x=&quot;495&quot; y=&quot;320&quot; width=&quot;150&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;570&quot; y=&quot;342&quot; text-anchor=&quot;middle&quot; style=&quot;font-size:11px&quot;&gt;Naamswijziging doorgeven&lt;/text&gt;&lt;/g&gt;
+      &lt;/svg&gt;
+      &lt;ol class=&quot;m-legend&quot;&gt;
+        &lt;li&gt;&lt;b&gt;Justis&lt;/b&gt; staat in de dienstencatalogus als &lt;b&gt;dienstaanbieder&lt;/b&gt;.&lt;/li&gt;
+        &lt;li&gt;De dienst &lt;b&gt;VOG aanvragen&lt;/b&gt; is geregistreerd als dienst van Justis, met de gegevens uit stap 3 (o.a. betrouwbaarheidsniveau EH3).&lt;/li&gt;
+      &lt;/ol&gt;
+      &lt;p class=&quot;m-note&quot;&gt;Vereenvoudigde weergave van plaat 2. De andere dienstaanbieders en diensten zijn ter illustratie.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;footer&gt;
+      &lt;a class=&quot;chip&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot; href=&quot;#&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot;&gt;&lt;span class=&quot;num&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;lbl&quot;&gt;Bekijk de volledige plaat 2&lt;/span&gt;&lt;/a&gt;
+      &lt;button class=&quot;nav-btn&quot; id=&quot;cat-modal-ok&quot;&gt;Sluiten&lt;/button&gt;
+    &lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function () {
+  const ACT = {&quot;D&quot;: {&quot;name&quot;: &quot;Dienstverlener (Justis)&quot;, &quot;cls&quot;: &quot;a-uwv&quot;}, &quot;M&quot;: {&quot;name&quot;: &quot;Makelaar&quot;, &quot;cls&quot;: &quot;a-mak&quot;}, &quot;C&quot;: {&quot;name&quot;: &quot;Dienstencatalogus&quot;, &quot;cls&quot;: &quot;a-cat&quot;}};
+  const STEPS = [{&quot;n&quot;: 1, &quot;f&quot;: &quot;D&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Makelaar kiezen&quot;, &quot;text&quot;: &quot;Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.&quot;, &quot;notes&quot;: [1]}, {&quot;n&quot;: 2, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;D&quot;, &quot;title&quot;: &quot;Gegevens opvragen&quot;, &quot;text&quot;: &quot;De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.&quot;, &quot;notes&quot;: [3]}, {&quot;n&quot;: 3, &quot;f&quot;: &quot;D&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Gegevens aanleveren&quot;, &quot;text&quot;: &quot;Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:&quot;, &quot;rows&quot;: [&quot;Dienstverlenernaam (OrganizationDisplayName): Justis&quot;, &quot;Dienstnaam (ServiceName): VOG aanvragen&quot;, &quot;Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag&quot;, &quot;Betrouwbaarheidsniveau (AuthnContextClassRef): EH3&quot;], &quot;notes&quot;: [3]}, {&quot;n&quot;: 4, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;C&quot;, &quot;title&quot;: &quot;Doorgeven aan catalogus&quot;, &quot;text&quot;: &quot;De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.&quot;, &quot;notes&quot;: [2]}, {&quot;n&quot;: 5, &quot;f&quot;: &quot;C&quot;, &quot;t&quot;: null, &quot;title&quot;: &quot;Registratie in catalogus&quot;, &quot;text&quot;: &quot;De dienst wordt geregistreerd in de dienstencatalogus: Justis staat er nu in als dienstaanbieder, met \&quot;VOG aanvragen\&quot; als dienst.&quot;, &quot;notes&quot;: [2], &quot;modal&quot;: true}, {&quot;n&quot;: 6, &quot;f&quot;: &quot;C&quot;, &quot;t&quot;: &quot;D&quot;, &quot;title&quot;: &quot;Dienst aangesloten&quot;, &quot;text&quot;: &quot;De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen.&quot;}];
+  const NOTES = [1, 2, 3];
+  const NOTE_TARGET = {&quot;1&quot;: &quot;actor eHerkenningsmakelaar&quot;, &quot;2&quot;: &quot;actor Dienstencatalogus&quot;, &quot;3&quot;: 2};
+  const $ = id =&gt; document.getElementById(id);
+  const dlg = $(&#x27;dlg&#x27;), layout = $(&#x27;layout&#x27;), svg = $(&#x27;diagram&#x27;);
+  const numEl = $(&#x27;dlg-num&#x27;), kindEl = $(&#x27;dlg-kind&#x27;), titleEl = $(&#x27;dlg-title&#x27;);
+  const bodyEl = $(&#x27;dlg-body&#x27;), relEl = $(&#x27;dlg-related&#x27;), prevBtn = $(&#x27;dlg-prev&#x27;), nextBtn = $(&#x27;dlg-next&#x27;);
+  let cur = null;
+  const el = (tag, cls, text) =&gt; { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const noteTitle = n =&gt; $(&#x27;note-&#x27; + n).dataset.title;
+  const S = n =&gt; STEPS.find(s =&gt; s.n === n);
+  function chip(num, label, onClick) {
+    const b = el(&#x27;button&#x27;, &#x27;chip&#x27;); b.type = &#x27;button&#x27;;
+    b.append(el(&#x27;span&#x27;, &#x27;num&#x27;, num)); if (label) b.append(el(&#x27;span&#x27;, &#x27;lbl&#x27;, label));
+    b.addEventListener(&#x27;click&#x27;, onClick); return b;
+  }
+  const actorChip = k =&gt; el(&#x27;span&#x27;, &#x27;actor-chip &#x27; + ACT[k].cls, ACT[k].name);
+  function markActive() {
+    svg.querySelectorAll(&#x27;.step&#x27;).forEach(g =&gt; g.classList.toggle(&#x27;active&#x27;, !!cur &amp;&amp;
+      ((cur.kind === &#x27;step&#x27; &amp;&amp; +g.dataset.step === cur.n) || (cur.kind === &#x27;note&#x27; &amp;&amp; +g.dataset.step === NOTE_TARGET[cur.n]))));
+    svg.querySelectorAll(&#x27;.tbadge&#x27;).forEach(b =&gt; b.classList.toggle(&#x27;active&#x27;, !!cur &amp;&amp; cur.kind === &#x27;note&#x27; &amp;&amp; +b.dataset.note === cur.n));
+    svg.classList.toggle(&#x27;focusing&#x27;, !!cur &amp;&amp; !(cur.kind === &#x27;note&#x27; &amp;&amp; typeof NOTE_TARGET[cur.n] === &#x27;string&#x27;));
+  }
+  function open() { if (dlg.hidden) { dlg.hidden = false; layout.classList.add(&#x27;panel-open&#x27;); } markActive(); }
+  function showStep(n) {
+    const s = S(n); if (!s) return;
+    cur = { kind: &#x27;step&#x27;, n };
+    numEl.className = &#x27;num step-num &#x27; + ACT[s.f].cls; numEl.textContent = n;
+    kindEl.textContent = &#x27;Stap &#x27; + n + &#x27; van &#x27; + STEPS.length; titleEl.textContent = s.title;
+    const body = [];
+    const route = el(&#x27;div&#x27;, &#x27;route&#x27;); route.append(actorChip(s.f));
+    if (s.t) { route.append(el(&#x27;span&#x27;, null, &#x27;→&#x27;)); route.append(actorChip(s.t)); } else route.append(el(&#x27;span&#x27;, null, &#x27;(interne verwerking)&#x27;));
+    body.push(route, el(&#x27;p&#x27;, &#x27;lead&#x27;, s.text));
+    if (s.rows) { const ul = el(&#x27;ul&#x27;, &#x27;fields&#x27;); s.rows.forEach(r =&gt; ul.append(el(&#x27;li&#x27;, null, r))); body.push(ul); }
+    if (s.modal) { const b = el(&#x27;button&#x27;, &#x27;chip start&#x27;, &#x27;Toon waar Justis nu staat in de dienstencatalogus ▸&#x27;); b.type = &#x27;button&#x27;; b.addEventListener(&#x27;click&#x27;, () =&gt; openModal(&#x27;cat-modal&#x27;)); body.push(b); }
+    if (s.notes) {
+      const box = el(&#x27;div&#x27;, &#x27;callout info&#x27;);
+      box.append(el(&#x27;p&#x27;, &#x27;callout-title&#x27;, &#x27;Meer uitleg&#x27;));
+      const p = el(&#x27;p&#x27;); p.style.display = &#x27;flex&#x27;; p.style.flexWrap = &#x27;wrap&#x27;; p.style.gap = &#x27;6px&#x27;;
+      s.notes.forEach(k =&gt; p.append(chip(k, noteTitle(k), () =&gt; showNote(k)))); box.append(p); body.push(box);
+    }
+    bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
+    prevBtn.disabled = n &lt;= 1; nextBtn.disabled = n &gt;= STEPS.length;
+    open();
+  }
+  function showNote(n) {
+    const tpl = $(&#x27;note-&#x27; + n); if (!tpl) return;
+    cur = { kind: &#x27;note&#x27;, n };
+    numEl.className = &#x27;num&#x27;; numEl.textContent = n;
+    kindEl.textContent = &#x27;Toelichting &#x27; + n; titleEl.textContent = tpl.dataset.title;
+    bodyEl.replaceChildren(tpl.content.cloneNode(true)); bodyEl.scrollTop = 0;
+    relEl.replaceChildren(el(&#x27;span&#x27;, null, &#x27;Hoort bij:&#x27;));
+    const t = NOTE_TARGET[n];
+    if (typeof t === &#x27;number&#x27;) relEl.append(chip(t, &#x27;Stap &#x27; + t + &#x27;: &#x27; + S(t).title, () =&gt; showStep(t)));
+    else relEl.append(el(&#x27;span&#x27;, null, t));
+    const i = NOTES.indexOf(n); prevBtn.disabled = i &lt;= 0; nextBtn.disabled = i &gt;= NOTES.length - 1;
+    open();
+  }
+  function go(d) { if (!cur) return; if (cur.kind === &#x27;step&#x27;) showStep(cur.n + d); else showNote(NOTES[NOTES.indexOf(cur.n) + d]); }
+  function closePanel() { dlg.hidden = true; layout.classList.remove(&#x27;panel-open&#x27;); cur = null; markActive(); }
+  STEPS.forEach(s =&gt; { const c = chip(s.n, null, () =&gt; showStep(s.n)); c.title = &#x27;Stap &#x27; + s.n + &#x27;: &#x27; + s.title; $(&#x27;step-chips&#x27;).append(c); });
+  $(&#x27;start&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; showStep(1));
+  NOTES.forEach(n =&gt; $(&#x27;chips&#x27;).append(chip(n, noteTitle(n), () =&gt; showNote(n))));
+  function bind(sel, fn) {
+    svg.querySelectorAll(sel).forEach(e =&gt; {
+      e.addEventListener(&#x27;click&#x27;, ev =&gt; { ev.stopPropagation(); fn(e); });
+      e.addEventListener(&#x27;keydown&#x27;, ev =&gt; { if (ev.key === &#x27;Enter&#x27; || ev.key === &#x27; &#x27;) { ev.preventDefault(); fn(e); } });
+    });
+  }
+  let modal = null, lastFocus = null;
+  function openModal(id) {
+    if (modal) modal.hidden = true;
+    modal = $(id || &#x27;cat-modal&#x27;); lastFocus = document.activeElement; modal.hidden = false;
+    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus();
+  }
+  function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
+  $(&#x27;cat-modal-close&#x27;).addEventListener(&#x27;click&#x27;, closeModal);
+  $(&#x27;cat-modal-ok&#x27;).addEventListener(&#x27;click&#x27;, closeModal);
+  document.querySelectorAll(&#x27;.modal&#x27;).forEach(m =&gt; m.addEventListener(&#x27;click&#x27;, e =&gt; { if (e.target === m || e.target.closest(&#x27;[data-close-modal]&#x27;)) closeModal(); }));
+  bodyEl.addEventListener(&#x27;click&#x27;, e =&gt; { const t = e.target.closest(&#x27;[data-open-modal]&#x27;); if (t) openModal(t.dataset.openModal); });
+  bind(&#x27;.snum&#x27;, e =&gt; { const n = +e.closest(&#x27;.step&#x27;).dataset.step; showStep(n); if (n === 5) openModal(&#x27;cat-modal&#x27;); });
+  bind(&#x27;.tbadge&#x27;, e =&gt; showNote(+e.dataset.note));
+  prevBtn.addEventListener(&#x27;click&#x27;, () =&gt; go(-1));
+  nextBtn.addEventListener(&#x27;click&#x27;, () =&gt; go(1));
+  $(&#x27;dlg-close&#x27;).addEventListener(&#x27;click&#x27;, closePanel);
+  document.addEventListener(&#x27;keydown&#x27;, e =&gt; {
+    if (modal) { if (e.key === &#x27;Escape&#x27;) closeModal(); return; }
+    if (dlg.hidden) return;
+    if (e.key === &#x27;Escape&#x27;) closePanel();
+    if (e.key === &#x27;ArrowRight&#x27; &amp;&amp; !nextBtn.disabled) go(1);
+    if (e.key === &#x27;ArrowLeft&#x27; &amp;&amp; !prevBtn.disabled) go(-1);
+  });
+})();
+&lt;/script&gt;
+&lt;script&gt;
+document.addEventListener(&#x27;click&#x27;, function (e) {
+  var a = e.target.closest &amp;&amp; e.target.closest(&#x27;a[data-nav]&#x27;);
+  if (!a) return;
+  e.preventDefault();
+  parent.postMessage({ nav: a.getAttribute(&#x27;data-nav&#x27;) }, &#x27;*&#x27;);
+});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
 <iframe class="plate" id="f-dienstencatalogus-eherkenning" title="dienstencatalogus-eherkenning" hidden data-src="&lt;!doctype html&gt;
 &lt;html lang=&quot;nl&quot;&gt;
 &lt;head&gt;
@@ -1483,7 +2249,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
 &lt;main&gt;
   &lt;p class=&quot;crumb&quot;&gt;&lt;a class=&quot;home-btn&quot; href=&quot;#&quot; data-nav=&quot;home&quot;&gt;← Terug naar hoofdpagina&lt;/a&gt;&lt;/p&gt;
   &lt;h1&gt;Bilal logt in bij een losse dienst&lt;/h1&gt;
-  &lt;div class=&quot;status existing&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Bestaande flow&lt;/span&gt;&lt;p&gt;Zo werkt inloggen met eHerkenning nu al bij een losse dienst. Deze plaat beschrijft de huidige situatie en dient als basis voor de conceptflows van MOZa (plaat 3 en 4).&lt;/p&gt;&lt;/div&gt;
+  &lt;div class=&quot;status existing&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Bestaande flow&lt;/span&gt;&lt;p&gt;Zo werkt inloggen met eHerkenning nu al bij een losse dienst. Deze plaat beschrijft de huidige situatie en dient als basis voor de conceptflows van MOZa (plaat 4 en 5).&lt;/p&gt;&lt;/div&gt;
   &lt;p class=&quot;intro&quot;&gt;Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Het paneel verschijnt naast het diagram.&lt;/p&gt;
 
   &lt;div class=&quot;toolbar&quot;&gt;
@@ -2142,7 +2908,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
 &lt;main&gt;
   &lt;p class=&quot;crumb&quot;&gt;&lt;a class=&quot;home-btn&quot; href=&quot;#&quot; data-nav=&quot;home&quot;&gt;← Terug naar hoofdpagina&lt;/a&gt;&lt;/p&gt;
   &lt;h1&gt;MOZa-portaal via dienstbemiddeling mét portaaldienst&lt;/h1&gt;
-  &lt;div class=&quot;status concept&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Conceptflow&lt;/span&gt;&lt;p&gt;Dit is een denkrichting, geen bestaande flow. We weten nog niet of dit binnen het eHerkenningsstelsel allemaal kan: de vragen op deze plaat moeten dat uitwijzen. De bestaande flow staat op plaat 2.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class=&quot;status concept&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Conceptflow&lt;/span&gt;&lt;p&gt;Dit is een denkrichting, geen bestaande flow. We weten nog niet of dit binnen het eHerkenningsstelsel allemaal kan: de vragen op deze plaat moeten dat uitwijzen. De bestaande flow staat op plaat 3.&lt;/p&gt;&lt;/div&gt;
   &lt;p class=&quot;intro&quot;&gt;Conceptflow voor MOZa optie 1: dienstbemiddeling mét portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.&lt;/p&gt;
   &lt;div class=&quot;toolbar&quot;&gt;
     &lt;div&gt;
@@ -2781,7 +3547,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
 &lt;main&gt;
   &lt;p class=&quot;crumb&quot;&gt;&lt;a class=&quot;home-btn&quot; href=&quot;#&quot; data-nav=&quot;home&quot;&gt;← Terug naar hoofdpagina&lt;/a&gt;&lt;/p&gt;
   &lt;h1&gt;MOZa-portaal via dienstbemiddeling zónder portaaldienst&lt;/h1&gt;
-  &lt;div class=&quot;status concept&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Conceptflow&lt;/span&gt;&lt;p&gt;Dit is een denkrichting, geen bestaande flow. We weten nog niet of dit binnen het eHerkenningsstelsel allemaal kan: de vragen op deze plaat moeten dat uitwijzen. De bestaande flow staat op plaat 2.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class=&quot;status concept&quot;&gt;&lt;span class=&quot;st-tag&quot;&gt;Conceptflow&lt;/span&gt;&lt;p&gt;Dit is een denkrichting, geen bestaande flow. We weten nog niet of dit binnen het eHerkenningsstelsel allemaal kan: de vragen op deze plaat moeten dat uitwijzen. De bestaande flow staat op plaat 3.&lt;/p&gt;&lt;/div&gt;
   &lt;p class=&quot;intro&quot;&gt;Conceptflow voor MOZa optie 2: dienstbemiddeling zónder portaaldienst. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting. Stap 4 en 11 kennen elk drie mogelijke varianten (A, B of C); na stap 13 gaat alleen variant B verder.&lt;/p&gt;
 
   &lt;div class=&quot;toolbar&quot;&gt;
@@ -3127,7 +3893,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
 "></iframe>
 <script>
 (function () {
-  var PLATES = ["dienstencatalogus-eherkenning", "inloggen-losse-dienst", "inloggen-moza-optie1", "inloggen-moza-optie2"];
+  var PLATES = ["aansluiten-dienst", "dienstencatalogus-eherkenning", "inloggen-losse-dienst", "inloggen-moza-optie1", "inloggen-moza-optie2"];
   function show() {
     var id = decodeURIComponent(location.hash.slice(1));
     var on = PLATES.indexOf(id) >= 0;

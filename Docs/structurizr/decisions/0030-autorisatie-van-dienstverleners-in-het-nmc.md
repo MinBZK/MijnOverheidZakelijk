@@ -23,8 +23,8 @@ Dienstverleners roepen het Notificatie Management Component (NMC) aan over FSC. 
 FSC regelt de verbinding tussen organisaties:
 
 * een contract per dienst tussen afnemer en aanbieder, met de grant als technische toestemming;
-* wederzijdse identificatie met mTLS op basis van PKIoverheid, met het OIN als PeerID;
-* per verzoek een toegangstoken in de header `Fsc-Authorization`, ondertekend door de Manager van de aanbieder, met `sub` = OIN van de afnemer en gebonden aan diens certificaat (`cnf`). De inway geeft deze header ongewijzigd door aan de service (fsc-core 2.0.0, §4.7.1.3);
+* wederzijdse identificatie met mTLS; de FSC-groep kiest het vertrouwensanker, en het Digikoppeling REST API-profiel schrijft daarvoor PKIoverheid voor met het OIN als PeerID;
+* per verzoek een toegangstoken in de header `Fsc-Authorization`, ondertekend door de Manager van de aanbieder, met `sub` = OIN van de afnemer en gebonden aan diens certificaat (`cnf`). De inway verwijdert deze header niet voordat het verzoek naar de service gaat (fsc-core 2.0.0, §4.7.1.3);
 * logging van de transacties door inway en outway.
 
 FSC beslist op het niveau "deze organisatie mag deze dienst aanroepen" en levert per verzoek een geverifieerde OIN. Wat de afnemer binnen de dienst mag, valt buiten FSC.
@@ -33,15 +33,15 @@ FSC beslist op het niveau "deze organisatie mag deze dienst aanroepen" en levert
 
 Federatieve Toegangsverlening is de methodiek van het Federatief Datastelsel voor autorisatie volgens het patroon Externalized Authorization Management. Toegangsregels staan buiten de applicatiecode in policies, worden centraal beheerd en lokaal afgedwongen, bij elk verzoek en op elk punt in de keten. De onderdelen volgen het XACML-model: een Policy Enforcement Point (PEP) onderschept het verzoek en voert het besluit uit, een Policy Decision Point (PDP) neemt het besluit op basis van de policies, een Policy Administration Point (PAP) beheert de policies en een Policy Information Point (PIP) levert aanvullende gegevens.
 
-FTV bestaat uit drie standaarden, in beheer bij Logius:
+FTV bestaat uit drie standaarden; NLGov AuthZEN en het ADL zijn in beheer bij Logius, het Register Toegangsbeleid ligt nog bij de werkgroep FTV:
 
 | Standaard | Inhoud | Stand |
 |---|---|---|
-| NLGov AuthZEN 1.0 | Profiel op de OpenID AuthZEN Authorization API: het koppelvlak tussen PEP en PDP (subject, action, resource, context; antwoord ja of nee), met verwijzingen naar verwerkingsactiviteiten (aansluitend op het LDV) en het Algoritmeregister | Definitief; in maart 2026 aangemeld bij Forum Standaardisatie |
-| Authorization Decision Log (ADL) 1.0 | Logboek van toegangsbesluiten: per besluit het verzoek en het antwoord in AuthZEN-formaat, gekoppeld aan het LDV en de FSC-logging via W3C Trace Context. Aanbieder en afnemer loggen elk hun eigen besluit | Definitief |
+| NLGov AuthZEN 1.0 | Profiel op de OpenID AuthZEN Authorization API: het koppelvlak tussen PEP en PDP (subject, action, resource, context; antwoord ja of nee), met verwijzingen naar verwerkingsactiviteiten (aansluitend op het LDV) en het Algoritmeregister | Definitief (Logius, juni 2026); in maart 2026 aangemeld bij Forum Standaardisatie, nog niet op de lijst |
+| Authorization Decision Log (ADL) 1.0 | Logboek van toegangsbesluiten: per besluit het verzoek en het antwoord in AuthZEN-formaat, gekoppeld aan het LDV en de FSC-logging via W3C Trace Context. Aanbieder en afnemer loggen elk hun eigen besluit | Definitief (Logius, juni 2026); aangemeld bij Forum Standaardisatie |
 | Register Toegangsbeleid | Publicatie en inzage van toegangsbeleid | In ontwikkeling |
 
-FTV kent geen eigen token. Het toegangstoken per verzoek is onderdeel van FSC. OpenFTV is de referentie-implementatie; de OpenFSC-inway heeft vanaf versie 2.8.0 een AuthZEN-plugin waarmee de inway als PEP een PDP raadpleegt voordat het verzoek de service bereikt.
+FTV kent geen eigen token. Het toegangstoken per verzoek is onderdeel van FSC. OpenFTV is de referentie-implementatie; de OpenFSC-inway heeft sinds versie 1.19.0 een AuthZEN-plugin waarmee de inway als PEP een PDP raadpleegt voordat het verzoek de service bereikt.
 
 ### De toegangsregels van het NMC
 
@@ -85,6 +85,8 @@ Kanttekening: NLGov AuthZEN ligt bij Forum Standaardisatie ter beoordeling. Na o
 * [Authorization Decision Log](https://vng-realisatie.github.io/ftv/methodiek/adl/)
 * [Register Toegangsbeleid](https://vng-realisatie.github.io/ftv/methodiek/register-toegangsbeleid/)
 * [Logius, openbare consultatie NLGov AuthZEN 1.0](https://www.logius.nl/actueel/openbare-consultatie-nlgov-authzen-authorization-api-v10)
-* [FSC-standaard](https://fsc-standaard.nl/): fsc-core 2.0.0 §4.7.1.3 over het doorgeven van `Fsc-Authorization`
+* [NLGov AuthZEN 1.0.0 (Logius)](https://gitdocumentatie.logius.nl/publicatie/ftv/authzen/1.0.0/) en [ADL 1.0.0 (Logius)](https://gitdocumentatie.logius.nl/publicatie/ftv/adl/1.0.0/): de definitieve versies
+* [FSC Core 2.0.0](https://gitdocumentatie.logius.nl/publicatie/fsc/core/2.0.0/): §4.7.1.3 over het doorgeven van `Fsc-Authorization`, §4.1 over het vertrouwensanker per groep
+* [Digikoppeling Koppelvlakstandaard REST API 4.0.1](https://gitdocumentatie.logius.nl/publicatie/dk/restapi/4.0.1/): OIN als PeerID, PKIoverheid als vertrouwensanker
 * [OpenFSC inway, AuthZEN-plugin](https://pkg.go.dev/go.open-fsc.nl/v2/inway/plugins)
 * [Bijlage Logging, Toegang en Doelbinding](addendum/profiel-service-logging-en-toegang.md)

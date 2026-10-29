@@ -21,7 +21,9 @@ De Notificatiedienst wordt samen met Logius binnen het programma OBIS neergezet 
 
 De Notificatiedienst heeft nog geen eigen hostnaam. Ontwikkelversies draaien op ZAD onder hostnamen van het platform: een preview per pull request (`pr-<nummer>`) en een `stable`-omgeving die `main` volgt. Productie komt op de Logius Private Cloud (LPC). Daartussen komen een test-, een acceptatie- en een pre-productieomgeving, die elk een vaste eigen naam nodig hebben omdat NotifyNL, dienstverleners en monitoring die naam vastleggen.
 
-De naam moet de dienst benoemen en niet het portaal: de Notificatiedienst is niet aan MijnOverheid Zakelijk gebonden en wordt ook door dienstverleners buiten MOZa gebruikt. Omdat de dienst binnen OBIS wordt ontwikkeld en dat programma meer voorzieningen kan opleveren, gaat de voorkeur uit naar een naam op programmaniveau met de dienst als laag daaronder. Het Internetdomeinbeleid Rijksoverheid vraagt bovendien om waar mogelijk een bestaand overheidsbreed domein te hergebruiken in plaats van een nieuw domein te registreren.
+De naam moet de dienst benoemen en niet het portaal: de Notificatiedienst is niet aan MijnOverheid Zakelijk gebonden en wordt ook door dienstverleners buiten MOZa gebruikt.
+
+De overheid heeft al te veel domeinnamen in beheer en wil dat aantal terugdringen. Het Internetdomeinbeleid Rijksoverheid vraagt daarom om waar mogelijk een bestaand overheidsbreed domein te hergebruiken en nieuwe diensten als subdomein onder te brengen. Een eigen domein per dienst past daar niet in; een nieuw domein is alleen te verantwoorden als het breder inzetbaar is dan één dienst. De Notificatiedienst is daarom een laag onder een groter geheel: het programma OBIS, dat meer voorzieningen kan opleveren die dezelfde naam delen. De programmanaam hangt op zijn beurt onder een bestaand overheidsdomein.
 
 Overwogen opties, in volgorde van voorkeur:
 
@@ -29,16 +31,17 @@ Overwogen opties, in volgorde van voorkeur:
 | :---- | :-------------------------- | :---------- |
 | 1. Naam onder de uniforme overheidsextensie `.gov.nl` | `notificaties.obis.gov.nl` | Sluit aan op het kabinetsbesluit voor één herkenbare overheidsextensie. De aanvraag is afgewezen: de beheerder van de extensie geeft nog geen namen uit en noemt geen datum waarop dat wel kan. |
 | 2. Subdomein onder `overheid.nl` | `notificaties.obis.overheid.nl` | `overheid.nl` is een bestaand overheidsbreed domein, gehouden door Logius namens de Rijksoverheid, met DNSSEC en beleid op de apex. Hergebruik is wat het Internetdomeinbeleid Rijksoverheid vraagt. `obis.overheid.nl` benoemt het programma en biedt ruimte aan latere voorzieningen van OBIS. |
-| 3. Eigen `.nl`-domein voor het programma | `notificaties.obis-overheid.nl` | De naam is van ons en benoemt programma en dienst. Registratie loopt via de Dienst Publiek en Communicatie (DPC) als registrar van de Rijksoverheid; DNSSEC, SPF, DMARC en CAA worden apart ingericht. Een eigen domein is pas aan de orde als optie 2 wordt afgewezen. |
-| 4. Subdomein onder `mijnoverheidzakelijk.nl` | `nmc.mijnoverheidzakelijk.nl` | Bestaand domein met bestaande gateway. De naam zegt "MijnOverheid Zakelijk" tegen dienstverleners die niets met dat portaal te maken hebben. Afgevallen. |
+| 3. Eigen `.nl`-domein voor het programma | `notificaties.obis-overheid.nl` | De naam is van ons en benoemt programma en dienst. Registratie loopt via de Dienst Publiek en Communicatie (DPC) als registrar van de Rijksoverheid; DNSSEC, SPF, DMARC en CAA worden apart ingericht. Een nieuw domein voegt toe aan het aantal dat de overheid juist wil terugdringen en is pas aan de orde als optie 2 wordt afgewezen; het moet dan voor meer dan één dienst bruikbaar zijn. |
+| 4. Subdomein onder een ander bestaand overheidsdomein | `notificaties.obis.rijksapp.nl` | Hergebruik van een bestaand domein, zonder nieuwe registratie. De naam benoemt een ander product en zegt dienstverleners niets over de Notificatiedienst of OBIS. Alleen als tijdelijk adres denkbaar; afgevallen als hoofdnaam. |
+| 5. Subdomein onder `mijnoverheidzakelijk.nl` | `nmc.mijnoverheidzakelijk.nl` | Bestaand domein met bestaande gateway. De naam zegt "MijnOverheid Zakelijk" tegen dienstverleners die niets met dat portaal te maken hebben. Afgevallen. |
 
 ## Decision
 
 De Notificatiedienst krijgt haar adressen onder `obis.overheid.nl`, met `notificaties.obis.overheid.nl` als hoofdnaam. Komt die naam er niet, dan registreert het programma een eigen `.nl`-domein.
 
-1. **Domein.** Het programma vraagt `obis.overheid.nl` aan bij Logius als houder van `overheid.nl`. Daaronder is `notificaties.obis.overheid.nl` de hoofdnaam van de Notificatiedienst; andere voorzieningen van OBIS krijgen een eigen label onder `obis.overheid.nl`. De componenten van MijnOverheid Zakelijk blijven onder `mijnoverheidzakelijk.nl`.
+1. **Domein.** Het programma vraagt `obis.overheid.nl` aan bij Logius als houder van `overheid.nl`. Daaronder is `notificaties.obis.overheid.nl` de hoofdnaam van de Notificatiedienst; andere voorzieningen van OBIS krijgen een eigen label onder `obis.overheid.nl`. Er wordt geen domein voor de Notificatiedienst alleen geregistreerd. De componenten van MijnOverheid Zakelijk blijven onder `mijnoverheidzakelijk.nl`.
 
-2. **Terugvaloptie.** Wordt de aanvraag onder `overheid.nl` afgewezen, dan registreert het programma via DPC een eigen `.nl`-domein op programmaniveau, zodat het ook voor andere voorzieningen van OBIS bruikbaar is. De werknaam daarvoor is `obis-overheid.nl`; dat is een voorstel, de definitieve naam wordt op dat moment gekozen en getoetst aan het Internetdomeinbeleid Rijksoverheid en op beschikbaarheid bij SIDN. Het naamschema hieronder geldt dan ongewijzigd met `notificaties.obis-overheid.nl` als hoofdnaam.
+2. **Terugvaloptie.** Wordt de aanvraag onder `overheid.nl` afgewezen, dan registreert het programma via DPC één eigen `.nl`-domein op programmaniveau, dat alle voorzieningen van OBIS draagt en niet alleen de Notificatiedienst. De werknaam daarvoor is `obis-overheid.nl`; dat is een voorstel, de definitieve naam wordt op dat moment gekozen in afstemming met de beheerders van het domeinnaambeleid en getoetst aan het Internetdomeinbeleid Rijksoverheid en op beschikbaarheid bij SIDN. Het naamschema hieronder geldt dan ongewijzigd met `notificaties.obis-overheid.nl` als hoofdnaam.
 
 3. **Omgevingen.** De omgevingen hangen onder de hoofdnaam. Productie is de hoofdnaam zelf; een niet-productieomgeving krijgt haar label ervoor. De labels zijn `tst`, `acc` en `preprod`; een adres zonder omgevingslabel betekent altijd productie.
 
@@ -61,6 +64,7 @@ De Notificatiedienst krijgt haar adressen onder `obis.overheid.nl`, met `notific
 
 ## Consequences
 
+* Bij toekenning van `obis.overheid.nl` komt er geen domeinnaam bij in het Register Internetdomeinen Overheid; latere voorzieningen van OBIS krijgen een label onder dezelfde naam en vragen evenmin een domein aan.
 * Dienstverleners, NotifyNL en de FSC Directory zien één naam die programma en dienst benoemt en los staat van MijnOverheid Zakelijk. De callback-URL per omgeving en de adressen in FSC-contracten zijn namen onder ons beheer; een platformwissel van een omgeving is een DNS-wijziging aan onze kant.
 * De keuze hangt af van de toekenning door Logius. Tot `obis.overheid.nl` is toegekend, worden geen adressen van de Notificatiedienst bij NotifyNL of in FSC-contracten vastgelegd; het NMC blijft tot die tijd op de platformhostnamen van ZAD bereikbaar.
 * Onder `overheid.nl` gelden de apex-records en het beleid van Logius; eigen records zijn er alleen voor wat Logius delegeert of op verzoek aanmaakt. Wordt de zone niet gedelegeerd, dan loopt elke DNS-wijziging per omgeving via Logius.

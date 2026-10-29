@@ -11,13 +11,10 @@ Proposed
 * [ADR 0016 Centrale beveiligingsconfiguratie domein en webtoegang](0016-centrale-beveiligingsconfiguratie-domein-en-webtoegang.md): SPF, DMARC, CAA en de centrale security headers voor `mijnoverheidzakelijk.nl`. Dezelfde regels gelden voor de namen van de Notificatiedienst.
 * [ADR 0017 Inrichting testen MOZa](0017-Inrichting-testen-MOZa.md): minimaal een acceptatieomgeving vóór productie. Deze ADR geeft die omgevingen een adres.
 * [ADR 0025 Productiegereedheid van MOZa-backendsystemen](0025-productiegereedheid-backendsystemen.md): of een domein bij Min AZ gemeld moet worden is daar een open besluit.
-* ADR 0027 Koppelingen van het Notificatie Management Component (in voorbereiding): de koppelingen van het NMC krijgen een adres onder de naam uit deze ADR.
 
 ## Context
 
 De Notificatiedienst wordt samen met Logius binnen het programma OBIS neergezet als generieke voorziening voor overheidsdiensten die notificaties willen laten versturen. Partijen die op de dienst aansluiten leggen haar adressen vast in hun eigen configuratie. Die adressen moeten daarom van ons zijn, blijven bestaan en de dienst herkenbaar benoemen. De dienst heeft nog geen eigen domeinnaam.
-
-De Notificatiedienst moet verder los staan van MijnOverheid Zakelijk; een naam onder `mijnoverheidzakelijk.nl` is daarom niet aan de orde.
 
 De overheid heeft al te veel domeinnamen in beheer en wil dat aantal terugdringen. Het Internetdomeinbeleid Rijksoverheid vraagt daarom om waar mogelijk een bestaand overheidsbreed domein te hergebruiken en nieuwe diensten als subdomein onder te brengen. Een eigen domein per dienst past daar niet in; een nieuw domein is alleen te verantwoorden als het breder inzetbaar is dan één dienst. De Notificatiedienst is daarom een laag onder een groter geheel: het programma OBIS, dat meer voorzieningen kan opleveren die dezelfde naam delen. De programmanaam hangt op zijn beurt onder een bestaand overheidsdomein.
 

@@ -480,11 +480,13 @@
   .m-note { font-size: .82rem; color: var(--muted); margin: 0; }
 
   .pc + .pc { margin-top: 8px !important; }
+  .dlg .body a.chip { text-decoration: none; color: var(--text); }
 </style>
 </head>
 <body>
 <div class="layout" id="layout">
 <main>
+  <p class="crumb"><a class="home-btn" href="index.html">← Terug naar hoofdpagina</a></p>
   <h1>Karin neemt eHerkenning af en machtigt Bilal</h1>
   <div class="status existing"><span class="st-tag">Bestaande flow</span><p>Zo regelt een ondernemer nu eHerkenning: een account voor zichzelf, een account voor een werknemer, en een machtiging voor die werknemer voor bepaalde diensten.</p></div>
   <p class="intro">Karin is eigenaar van Koffiezaak Noon; Bilal is haar werknemer. Klik op een stapnummer voor uitleg per stap, of op een blauw bolletje voor een toelichting.</p>
@@ -546,7 +548,7 @@
   <div class="pc con"><p class="pc-label">Lager niveau</p><p>Goedkoper, maar niet bruikbaar voor diensten die een hoger niveau vereisen.</p></div>
   <div class="callout info">
     <p class="callout-title">Waarom dit ertoe doet</p>
-    <p>Elke dienst legt bij aansluiting vast welk niveau minimaal nodig is (zie plaat 1). Bij het inloggen controleert de leverancier of het account dat niveau heeft (zie plaat 3, stap 7). Karin moet dus nadenken voor welke diensten zij en haar medewerkers het middel willen gebruiken, en kiest het niveau op basis daarvan.</p>
+    <p>Elke dienst legt bij aansluiting vast welk niveau minimaal nodig is (zie plaat 1). Bij het inloggen controleert de leverancier of het account dat niveau heeft (zie plaat 4, stap 7). Karin moet dus nadenken voor welke diensten zij en haar medewerkers het middel willen gebruiken, en kiest het niveau op basis daarvan.</p>
   </div>
   <p>Dezelfde keuze maakt Karin bij het aanvragen van een account voor een medewerker (stap 4).</p>
 </template>
@@ -560,7 +562,7 @@
   <p>De leverancier haalt de diensten waarvoor Karin kan machtigen op uit de dienstencatalogus van eHerkenning. Daarin staan alle diensten die dienstverleners via hun makelaar hebben aangesloten.</p>
   <p style="display:flex;flex-wrap:wrap;gap:6px">
     <a class="chip" data-nav="aansluiten-dienst" href="aansluiten-dienst.html"><span class="num">1</span><span class="lbl">Plaat 1: hoe een dienst in de catalogus komt</span></a>
-    <a class="chip" data-nav="dienstencatalogus-eherkenning" href="dienstencatalogus-eherkenning.html"><span class="num">2</span><span class="lbl">Plaat 2: Dienstencatalogus eHerkenning</span></a>
+    <a class="chip" data-nav="dienstencatalogus-eherkenning" href="dienstencatalogus-eherkenning.html"><span class="num">3</span><span class="lbl">Plaat 3: Dienstencatalogus eHerkenning</span></a>
   </p>
 </template>
 
@@ -573,9 +575,9 @@
   </ul>
   <div class="callout info">
     <p class="callout-title">Gebruikt bij het inloggen</p>
-    <p>Wanneer Bilal later inlogt bij het Werkgeversportaal van UWV, raadpleegt Z-Login dit register om te controleren of hij namens Noon gemachtigd is (zie plaat 3, stap 10).</p>
+    <p>Wanneer Bilal later inlogt bij het Werkgeversportaal van UWV, raadpleegt Z-Login dit register om te controleren of hij namens Noon gemachtigd is (zie plaat 4, stap 10).</p>
   </div>
-  <p style="display:flex;flex-wrap:wrap;gap:6px"><a class="chip" data-nav="inloggen-losse-dienst" href="inloggen-losse-dienst.html"><span class="num">3</span><span class="lbl">Plaat 3: Bilal logt in bij een losse dienst</span></a></p>
+  <p style="display:flex;flex-wrap:wrap;gap:6px"><a class="chip" data-nav="inloggen-losse-dienst" href="inloggen-losse-dienst.html"><span class="num">4</span><span class="lbl">Plaat 4: Bilal logt in bij een losse dienst</span></a></p>
 </template>
 
 <script>

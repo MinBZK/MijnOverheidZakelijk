@@ -2,8 +2,11 @@
 
 ### Branching strategie
 
-We maken gebruik van de GitFlow branching strategie. Dat wil zeggen dat er elke feature in zijn eigen feature-branch wordt
-ontwikkeld en na review via een Merge Request naar de `develop` branch wordt gemerged. Nieuwe releases worden via een merge request van `develop` naar een `release/x.x.x` branch gepushed. Om de release naar productie te brengen, wordt de `release/x.x.x` branch naar `main` gemerged.
+We werken trunk-based. `main` is de enige langlevende branch: elke wijziging wordt in een korte feature-branch ontwikkeld en na review via een pull request met squash merge naar `main` gebracht. Er is geen `develop`-branch en geen vaste `release/x.x.x`-stap. Een release is een tag op een commit in `main`.
+
+Een `release/x.y`-branch wordt alleen aangemaakt wanneer een versie die al in productie draait gepatcht moet worden terwijl `main` al verder is. Die branch wordt afgetakt van de betreffende tag, ontvangt de fix via cherry-pick, en levert een patch-release op; dezelfde fix gaat ook naar `main`.
+
+Omdat de titel van de pull request bij squash het commitonderwerp wordt, is die titel de plaats waar de aard van de wijziging wordt vastgelegd, volgens Conventional Commits. Zie [ADR 0022](/workspace/decisions#22) voor de onderbouwing en voor de afspraken over versienummering, publiceren en release-documentatie.
 
 De software wordt via CI/CD-pipelines uitgerold naar de omgevingen. Dit gebeurt binnen een OpenShift 4.x-omgeving.
 De uitrol wordt handmatig gestart via een pipeline in het GitLab-project dat je wilt uitrollen. Deze pipeline downloadt de broncode van de main-branch uit de GitHub-repository, bouwt hieruit een image en pusht deze naar Harbor. Vervolgens wordt ArgoCD genotificeerd dat er een nieuwe sync moet plaatsvinden; Argo synchroniseert daarna de deployment op OpenShift naar de nieuwste versie.

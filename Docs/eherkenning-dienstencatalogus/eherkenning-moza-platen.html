@@ -856,6 +856,7 @@
   .optblock &gt; * + * { margin-top: 6px; }
   .opt-tag { display: inline-block; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--o); color: #fff; margin-right: 6px; vertical-align: 1px; }
   .optblock h4 { margin: 0; font-size: .92rem; }
+  .optblock .q { background: var(--surface); margin-bottom: 10px; }
   .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
   .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
   .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
@@ -900,6 +901,49 @@
   .schema-thumb:hover, .schema-thumb:focus-visible { border-color: var(--badge); outline: none; }
   .schema-notes { font-size: .82rem; color: var(--muted); margin: 10px 0 0; padding-left: 1.2em; }
   .modal-card.wide { width: min(1080px, 100%); }
+
+  svg.catmap { display: block; width: 100%; height: auto;
+    --cm-rvo-fill: #dae8fc; --cm-rvo-stroke: #6c8ebf; --cm-bd-fill: #d5e8d4; --cm-bd-stroke: #82b366;
+    --cm-justis-fill: #ffe6cc; --cm-justis-stroke: #d79b00; --cm-opt1: #7c3aed; --cm-opt2: #0e7490;
+    --cm-region: #eef0f3; --cm-region-inner: #e2e5ea; --cm-border: #9aa1ab; --cm-line: #1f2933; --cm-hl: #d97706; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) svg.catmap {
+    --cm-rvo-fill: #1e3350; --cm-rvo-stroke: #7fa6d9; --cm-bd-fill: #1f3a24; --cm-bd-stroke: #8cc276;
+    --cm-justis-fill: #4a3214; --cm-justis-stroke: #e0a83a; --cm-opt1: #b39af7; --cm-opt2: #4fc3d9;
+    --cm-region: #1b1f24; --cm-region-inner: #242a31; --cm-border: #6b7280; --cm-line: #e5e7eb; --cm-hl: #f59e0b; } }
+  :root[data-theme=&quot;dark&quot;] svg.catmap {
+    --cm-rvo-fill: #1e3350; --cm-rvo-stroke: #7fa6d9; --cm-bd-fill: #1f3a24; --cm-bd-stroke: #8cc276;
+    --cm-justis-fill: #4a3214; --cm-justis-stroke: #e0a83a; --cm-opt1: #b39af7; --cm-opt2: #4fc3d9;
+    --cm-region: #1b1f24; --cm-region-inner: #242a31; --cm-border: #6b7280; --cm-line: #e5e7eb; --cm-hl: #f59e0b; }
+  .catmap .cm-region { fill: var(--cm-region); stroke: var(--cm-border); stroke-width: 3; }
+  .catmap .cm-region-inner { fill: var(--cm-region-inner); stroke: var(--cm-border); stroke-width: 2.5; }
+  .catmap .cm-region-label { fill: var(--muted); font-weight: 700; font-size: 17px; }
+  .catmap .cm-lane { stroke-width: 1.5; stroke-dasharray: 2 4; opacity: .9; }
+  .catmap .cm-lane-label { font-size: 12px; font-weight: 700; fill: var(--muted); letter-spacing: .05em; }
+  .catmap .cm-node text { fill: var(--text); font-size: 13.5px; }
+  .catmap .cm-node .cm-small { font-size: 11.5px; fill: var(--muted); }
+  .catmap .cm-provider rect { stroke-width: 3; }
+  .catmap .cm-rvo { fill: var(--cm-rvo-fill); stroke: var(--cm-rvo-stroke); }
+  .catmap .cm-bd { fill: var(--cm-bd-fill); stroke: var(--cm-bd-stroke); }
+  .catmap .cm-justis { fill: var(--cm-justis-fill); stroke: var(--cm-justis-stroke); }
+  .catmap .cm-service rect { stroke-width: 1.5; }
+  .catmap .cm-portal rect { stroke-width: 3; }
+  .catmap .cm-hypo rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1.8; stroke-dasharray: 6 4; }
+  .catmap .cm-hypo text { fill: var(--muted); }
+  .catmap .cm-plain rect { fill: var(--surface); stroke: var(--cm-line); stroke-width: 1.5; }
+  .catmap .cm-edge { fill: none; stroke-width: 2; }
+  .catmap .cm-edge.cm-solid { stroke: var(--cm-line); }
+  .catmap .cm-edge.cm-opt1 { stroke: var(--cm-opt1); stroke-dasharray: 7 5; }
+  .catmap .cm-edge.cm-opt2 { stroke: var(--cm-opt2); stroke-dasharray: 7 5; }
+  .catmap .cm-offer { stroke-width: 9; stroke-linecap: butt; }
+  .catmap .cm-offer.cm-rvo { stroke: var(--cm-rvo-stroke); }
+  .catmap .cm-offer.cm-bd { stroke: var(--cm-bd-stroke); }
+  .catmap .cm-offer.cm-justis { stroke: var(--cm-justis-stroke); }
+  .catmap .cm-dim { opacity: .35; }
+  .catmap .cm-ring { fill: none; stroke: var(--cm-hl); stroke-width: 4; }
+  .catmap .cm-tag rect { fill: var(--cm-hl); }
+  .catmap .cm-tag text { fill: #fff; font-size: 14px; font-weight: 800; }
+  .catmap-thumb { display: block; width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); cursor: zoom-in; }
+  .catmap-thumb:hover, .catmap-thumb:focus-visible { border-color: var(--badge); outline: none; }
   .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(15, 23, 42, .5); }
   .modal[hidden] { display: none; }
   .modal-card { width: min(780px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--surface); color: var(--text); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 24px 60px rgba(0,0,0,.35); }
@@ -1000,6 +1044,141 @@
   &lt;p&gt;&lt;button type=&quot;button&quot; class=&quot;chip start&quot; data-open-modal=&quot;mak-modal&quot;&gt;Bekijk schema groot ▸&lt;/button&gt;&lt;/p&gt;
 &lt;/template&gt;
 
+&lt;template id=&quot;note-cat&quot; data-title=&quot;Zo staat Justis nu in de dienstencatalogus&quot;&gt;
+  &lt;p&gt;Dit is het diagram van plaat 3 (de dienstencatalogus), met daarin gemarkeerd waar Justis en de nieuwe dienst nu staan. Klik op het diagram om het groter te bekijken.&lt;/p&gt;
+  &lt;button type=&quot;button&quot; class=&quot;catmap-thumb&quot; data-open-modal=&quot;cat-modal&quot; aria-label=&quot;Open de dienstencatalogus in groot formaat&quot;&gt;&lt;svg class=&quot;catmap&quot; viewBox=&quot;0 0 1100 790&quot; role=&quot;img&quot; aria-label=&quot;Dienstencatalogus eHerkenning (plaat 3) met Justis en de dienst VOG aanvragen gemarkeerd&quot;&gt;
+      &lt;defs&gt;
+        &lt;marker id=&quot;ctarr&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-line)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;ctarr1&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-opt1)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;ctarr2&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-opt2)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;ctarrRVO&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-rvo-stroke)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;ctarrBD&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-bd-stroke)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;ctarrJustis&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-justis-stroke)&quot;/&gt;
+        &lt;/marker&gt;
+      &lt;/defs&gt;
+
+      
+      &lt;rect class=&quot;cm-region&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;1080&quot; height=&quot;250&quot; rx=&quot;32&quot;/&gt;
+      &lt;text class=&quot;cm-region-label&quot; x=&quot;550&quot; y=&quot;40&quot; text-anchor=&quot;middle&quot;&gt;Dienstverleners&lt;/text&gt;
+
+      
+      &lt;rect class=&quot;cm-region-inner&quot; x=&quot;30&quot; y=&quot;58&quot; width=&quot;640&quot; height=&quot;182&quot; rx=&quot;28&quot;/&gt;
+      &lt;text class=&quot;cm-region-label&quot; x=&quot;350&quot; y=&quot;92&quot; text-anchor=&quot;middle&quot;&gt;Dienstaanbieders&lt;/text&gt;
+
+      &lt;g class=&quot;cm-node cm-provider cm-dim&quot;&gt;&lt;rect class=&quot;cm-rvo&quot; x=&quot;70&quot; y=&quot;135&quot; width=&quot;100&quot; height=&quot;44&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;120&quot; y=&quot;162&quot; text-anchor=&quot;middle&quot;&gt;RVO&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-provider cm-dim&quot;&gt;&lt;rect class=&quot;cm-bd&quot; x=&quot;280&quot; y=&quot;135&quot; width=&quot;100&quot; height=&quot;44&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;162&quot; text-anchor=&quot;middle&quot;&gt;BD&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-provider&quot;&gt;&lt;rect class=&quot;cm-justis&quot; x=&quot;510&quot; y=&quot;135&quot; width=&quot;100&quot; height=&quot;44&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;560&quot; y=&quot;162&quot; text-anchor=&quot;middle&quot;&gt;Justis&lt;/text&gt;&lt;/g&gt;
+
+      
+      &lt;g&gt;
+        &lt;rect class=&quot;cm-region-inner&quot; x=&quot;690&quot; y=&quot;58&quot; width=&quot;380&quot; height=&quot;182&quot; rx=&quot;28&quot;/&gt;
+        &lt;text class=&quot;cm-region-label&quot; x=&quot;870&quot; y=&quot;92&quot; text-anchor=&quot;middle&quot;&gt;Dienstbemiddelaars&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      &lt;g class=&quot;cm-node cm-plain cm-dim&quot;&gt;
+        &lt;rect x=&quot;705&quot; y=&quot;125&quot; width=&quot;110&quot; height=&quot;60&quot; rx=&quot;10&quot;/&gt;
+        &lt;text x=&quot;760&quot; y=&quot;151&quot; text-anchor=&quot;middle&quot;&gt;&quot;Loket&lt;/text&gt;
+        &lt;text x=&quot;760&quot; y=&quot;168&quot; text-anchor=&quot;middle&quot;&gt;Zorgtoeslag&quot;&lt;/text&gt;
+        
+      &lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-hypo cm-dim&quot;&gt;
+        &lt;rect x=&quot;825&quot; y=&quot;125&quot; width=&quot;110&quot; height=&quot;60&quot; rx=&quot;10&quot;/&gt;
+        &lt;text x=&quot;880&quot; y=&quot;151&quot; text-anchor=&quot;middle&quot;&gt;MOZa?&lt;/text&gt;
+        &lt;text class=&quot;cm-small&quot; x=&quot;880&quot; y=&quot;169&quot; text-anchor=&quot;middle&quot;&gt;Optie 1&lt;/text&gt;
+        
+      &lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-hypo cm-dim&quot;&gt;
+        &lt;rect x=&quot;945&quot; y=&quot;125&quot; width=&quot;110&quot; height=&quot;60&quot; rx=&quot;10&quot;/&gt;
+        &lt;text x=&quot;1000&quot; y=&quot;151&quot; text-anchor=&quot;middle&quot;&gt;MOZa?&lt;/text&gt;
+        &lt;text class=&quot;cm-small&quot; x=&quot;1000&quot; y=&quot;169&quot; text-anchor=&quot;middle&quot;&gt;Optie 2&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      
+      &lt;g&gt;
+        &lt;rect class=&quot;cm-region&quot; x=&quot;10&quot; y=&quot;290&quot; width=&quot;1080&quot; height=&quot;490&quot; rx=&quot;32&quot;/&gt;
+        &lt;text class=&quot;cm-region-label&quot; x=&quot;870&quot; y=&quot;322&quot; text-anchor=&quot;middle&quot;&gt;Diensten&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      
+      &lt;rect class=&quot;cm-lane cm-rvo cm-dim&quot; x=&quot;35&quot; y=&quot;340&quot; width=&quot;170&quot; height=&quot;300&quot; rx=&quot;16&quot;/&gt;
+      &lt;rect class=&quot;cm-lane cm-bd cm-dim&quot; x=&quot;230&quot; y=&quot;340&quot; width=&quot;200&quot; height=&quot;300&quot; rx=&quot;16&quot;/&gt;
+      &lt;rect class=&quot;cm-lane cm-justis&quot; x=&quot;460&quot; y=&quot;340&quot; width=&quot;200&quot; height=&quot;300&quot; rx=&quot;16&quot;/&gt;
+      &lt;text class=&quot;cm-lane-label&quot; x=&quot;120&quot; y=&quot;628&quot; text-anchor=&quot;middle&quot;&gt;RVO&lt;/text&gt;
+      &lt;text class=&quot;cm-lane-label&quot; x=&quot;330&quot; y=&quot;628&quot; text-anchor=&quot;middle&quot;&gt;BD&lt;/text&gt;
+      &lt;text class=&quot;cm-lane-label&quot; x=&quot;560&quot; y=&quot;628&quot; text-anchor=&quot;middle&quot;&gt;JUSTIS&lt;/text&gt;
+
+      
+      &lt;line class=&quot;cm-offer cm-rvo cm-dim&quot; x1=&quot;120&quot; y1=&quot;181&quot; x2=&quot;120&quot; y2=&quot;330&quot; marker-end=&quot;url(#ctarrRVO)&quot;/&gt;
+      &lt;line class=&quot;cm-offer cm-bd cm-dim&quot; x1=&quot;330&quot; y1=&quot;181&quot; x2=&quot;330&quot; y2=&quot;330&quot; marker-end=&quot;url(#ctarrBD)&quot;/&gt;
+      &lt;line class=&quot;cm-offer cm-justis&quot; x1=&quot;560&quot; y1=&quot;181&quot; x2=&quot;560&quot; y2=&quot;330&quot; marker-end=&quot;url(#ctarrJustis)&quot;/&gt;
+
+      
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-rvo&quot; x=&quot;45&quot; y=&quot;358&quot; width=&quot;150&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;120&quot; y=&quot;385&quot; text-anchor=&quot;middle&quot;&gt;Subsidie aanvragen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-rvo&quot; x=&quot;45&quot; y=&quot;418&quot; width=&quot;150&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;120&quot; y=&quot;437&quot; text-anchor=&quot;middle&quot;&gt;Vergunning&lt;/text&gt;&lt;text x=&quot;120&quot; y=&quot;453&quot; text-anchor=&quot;middle&quot;&gt;aanvragen&lt;/text&gt;&lt;/g&gt;
+
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-bd&quot; x=&quot;245&quot; y=&quot;358&quot; width=&quot;170&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;385&quot; text-anchor=&quot;middle&quot;&gt;Belastingaangifte doen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-bd&quot; x=&quot;245&quot; y=&quot;418&quot; width=&quot;170&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;445&quot; text-anchor=&quot;middle&quot;&gt;Zorgtoeslag aanvragen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-bd&quot; x=&quot;245&quot; y=&quot;478&quot; width=&quot;170&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;505&quot; text-anchor=&quot;middle&quot;&gt;Huurtoeslag aanvragen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-portal cm-dim&quot;&gt;
+        &lt;rect class=&quot;cm-bd&quot; x=&quot;250&quot; y=&quot;540&quot; width=&quot;160&quot; height=&quot;60&quot; rx=&quot;30&quot;/&gt;
+        &lt;text x=&quot;330&quot; y=&quot;565&quot; text-anchor=&quot;middle&quot;&gt;Portaaldienst:&lt;/text&gt;
+        &lt;text x=&quot;330&quot; y=&quot;583&quot; text-anchor=&quot;middle&quot;&gt;&quot;MijnToeslagen&quot;&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      &lt;g class=&quot;cm-node cm-service&quot;&gt;&lt;rect class=&quot;cm-justis&quot; x=&quot;485&quot; y=&quot;358&quot; width=&quot;150&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;560&quot; y=&quot;385&quot; text-anchor=&quot;middle&quot;&gt;VOG aanvragen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-justis&quot; x=&quot;485&quot; y=&quot;418&quot; width=&quot;150&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;560&quot; y=&quot;437&quot; text-anchor=&quot;middle&quot;&gt;Naamswijziging&lt;/text&gt;&lt;text x=&quot;560&quot; y=&quot;453&quot; text-anchor=&quot;middle&quot;&gt;doorgeven&lt;/text&gt;&lt;/g&gt;
+
+      
+      &lt;g class=&quot;cm-node cm-hypo cm-dim&quot;&gt;
+        &lt;rect x=&quot;45&quot; y=&quot;672&quot; width=&quot;615&quot; height=&quot;80&quot; rx=&quot;40&quot;/&gt;
+        &lt;text x=&quot;352&quot; y=&quot;705&quot; text-anchor=&quot;middle&quot;&gt;Portaaldienst namens meerdere dienstaanbieders?&lt;/text&gt;
+        &lt;text x=&quot;352&quot; y=&quot;727&quot; text-anchor=&quot;middle&quot;&gt;&quot;MOZa portaal&quot;&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-solid&quot; d=&quot;M250,570 H236 V440 H243&quot; marker-end=&quot;url(#ctarr)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-solid&quot; d=&quot;M250,570 H236 V500 H243&quot; marker-end=&quot;url(#ctarr)&quot;/&gt;
+
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-solid&quot; d=&quot;M760,185 V268 H428 V440 H417&quot; marker-end=&quot;url(#ctarr)&quot;/&gt;
+
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-opt1&quot; d=&quot;M1000,185 V280 H165 V356&quot; marker-end=&quot;url(#ctarr1)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-opt1&quot; d=&quot;M1000,185 V280 H375 V356&quot; marker-end=&quot;url(#ctarr1)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-opt1&quot; d=&quot;M1000,185 V280 H605 V356&quot; marker-end=&quot;url(#ctarr1)&quot;/&gt;
+
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-opt2&quot; d=&quot;M880,185 V712 H662&quot; marker-end=&quot;url(#ctarr2)&quot;/&gt;
+
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-opt2&quot; d=&quot;M45,712 H22 V388 H43&quot; marker-end=&quot;url(#ctarr2)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-opt2&quot; d=&quot;M217,672 V388 H243&quot; marker-end=&quot;url(#ctarr2)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-opt2&quot; d=&quot;M447,672 V388 H483&quot; marker-end=&quot;url(#ctarr2)&quot;/&gt;
+    &lt;rect class=&quot;cm-ring&quot; x=&quot;500&quot; y=&quot;125&quot; width=&quot;120&quot; height=&quot;64&quot; rx=&quot;16&quot;/&gt;&lt;g class=&quot;cm-tag&quot;&gt;&lt;rect x=&quot;440&quot; y=&quot;98&quot; width=&quot;240&quot; height=&quot;26&quot; rx=&quot;13&quot;/&gt;&lt;text x=&quot;560&quot; y=&quot;116&quot; text-anchor=&quot;middle&quot;&gt;① Aangesloten dienstaanbieder&lt;/text&gt;&lt;/g&gt;&lt;rect class=&quot;cm-ring&quot; x=&quot;475&quot; y=&quot;348&quot; width=&quot;170&quot; height=&quot;64&quot; rx=&quot;32&quot;/&gt;&lt;g class=&quot;cm-tag&quot;&gt;&lt;rect x=&quot;652&quot; y=&quot;368&quot; width=&quot;168&quot; height=&quot;26&quot; rx=&quot;13&quot;/&gt;&lt;text x=&quot;736&quot; y=&quot;386&quot; text-anchor=&quot;middle&quot;&gt;② Nieuw geregistreerd&lt;/text&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/button&gt;
+  &lt;ol class=&quot;m-legend&quot;&gt;
+    &lt;li&gt;&lt;b&gt;Justis&lt;/b&gt; staat in de dienstencatalogus als &lt;b&gt;dienstaanbieder&lt;/b&gt;.&lt;/li&gt;
+    &lt;li&gt;De dienst &lt;b&gt;VOG aanvragen&lt;/b&gt; is geregistreerd als dienst van Justis, met de gegevens uit stap 3 (o.a. betrouwbaarheidsniveau EH3).&lt;/li&gt;
+  &lt;/ol&gt;
+  &lt;p&gt;&lt;button type=&quot;button&quot; class=&quot;chip start&quot; data-open-modal=&quot;cat-modal&quot;&gt;Bekijk groot ▸&lt;/button&gt;&lt;/p&gt;
+&lt;/template&gt;
+
 &lt;template id=&quot;note-2&quot; data-title=&quot;Dienstencatalogus eHerkenning&quot;&gt;
   &lt;p&gt;De dienstencatalogus is het centrale register van alle diensten die op het eHerkenningsstelsel zijn aangesloten. Per dienst staat er onder andere in welke dienstverlener de dienst aanbiedt, wat de dienst is en welk betrouwbaarheidsniveau nodig is.&lt;/p&gt;
   &lt;p&gt;&lt;a class=&quot;chip&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot; href=&quot;#&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot;&gt;&lt;span class=&quot;num&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;lbl&quot;&gt;Bekijk plaat 3: Dienstencatalogus eHerkenning&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1047,53 +1226,147 @@
 &lt;/div&gt;
 
 &lt;div class=&quot;modal&quot; id=&quot;cat-modal&quot; hidden role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;cat-modal-title&quot;&gt;
-  &lt;div class=&quot;modal-card&quot;&gt;
+  &lt;div class=&quot;modal-card wide&quot;&gt;
     &lt;header&gt;
       &lt;span class=&quot;num step-num a-cat&quot;&gt;5&lt;/span&gt;
       &lt;h2 id=&quot;cat-modal-title&quot;&gt;&lt;span class=&quot;kind&quot;&gt;Stap 5 · resultaat&lt;/span&gt;Zo staat Justis nu in de dienstencatalogus&lt;/h2&gt;
       &lt;button class=&quot;icon-btn&quot; id=&quot;cat-modal-close&quot; aria-label=&quot;Sluiten&quot;&gt;&amp;times;&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;modal-body&quot;&gt;
-      &lt;svg class=&quot;mini&quot; viewBox=&quot;0 0 700 440&quot; role=&quot;img&quot; aria-label=&quot;Vereenvoudigde dienstencatalogus met Justis en VOG aanvragen gemarkeerd&quot;&gt;
-        &lt;defs&gt;
-          &lt;marker id=&quot;mArr&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;context-stroke&quot;/&gt;&lt;/marker&gt;
-        &lt;/defs&gt;
-        &lt;rect class=&quot;m-region&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;680&quot; height=&quot;160&quot; rx=&quot;22&quot;/&gt;
-        &lt;text class=&quot;m-label&quot; x=&quot;350&quot; y=&quot;34&quot; text-anchor=&quot;middle&quot;&gt;Dienstverleners&lt;/text&gt;
-        &lt;rect class=&quot;m-inner&quot; x=&quot;30&quot; y=&quot;46&quot; width=&quot;640&quot; height=&quot;110&quot; rx=&quot;18&quot;/&gt;
-        &lt;text class=&quot;m-label&quot; x=&quot;240&quot; y=&quot;70&quot; text-anchor=&quot;middle&quot;&gt;Dienstaanbieders&lt;/text&gt;
-        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;rvo&quot; x=&quot;80&quot; y=&quot;95&quot; width=&quot;100&quot; height=&quot;40&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;m-t&quot; x=&quot;130&quot; y=&quot;120&quot; text-anchor=&quot;middle&quot;&gt;RVO&lt;/text&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;bd&quot; x=&quot;300&quot; y=&quot;95&quot; width=&quot;100&quot; height=&quot;40&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;m-t&quot; x=&quot;350&quot; y=&quot;120&quot; text-anchor=&quot;middle&quot;&gt;BD&lt;/text&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-hl&quot;&gt;&lt;rect class=&quot;justis&quot; x=&quot;520&quot; y=&quot;95&quot; width=&quot;100&quot; height=&quot;40&quot; rx=&quot;9&quot;/&gt;&lt;text class=&quot;m-t b&quot; x=&quot;570&quot; y=&quot;120&quot; text-anchor=&quot;middle&quot;&gt;Justis&lt;/text&gt;
-          &lt;rect class=&quot;m-ring&quot; x=&quot;512&quot; y=&quot;87&quot; width=&quot;116&quot; height=&quot;56&quot; rx=&quot;14&quot;/&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-tag&quot;&gt;&lt;rect x=&quot;472&quot; y=&quot;56&quot; width=&quot;196&quot; height=&quot;22&quot; rx=&quot;11&quot;/&gt;&lt;text x=&quot;570&quot; y=&quot;71&quot; text-anchor=&quot;middle&quot;&gt;① Aangesloten dienstaanbieder&lt;/text&gt;&lt;/g&gt;
+      &lt;svg class=&quot;catmap&quot; viewBox=&quot;0 0 1100 790&quot; role=&quot;img&quot; aria-label=&quot;Dienstencatalogus eHerkenning (plaat 3) met Justis en de dienst VOG aanvragen gemarkeerd&quot;&gt;
+      &lt;defs&gt;
+        &lt;marker id=&quot;cbarr&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-line)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;cbarr1&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-opt1)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;cbarr2&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-opt2)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;cbarrRVO&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-rvo-stroke)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;cbarrBD&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-bd-stroke)&quot;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;cbarrJustis&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--cm-justis-stroke)&quot;/&gt;
+        &lt;/marker&gt;
+      &lt;/defs&gt;
 
-        &lt;rect class=&quot;m-region&quot; x=&quot;10&quot; y=&quot;190&quot; width=&quot;680&quot; height=&quot;240&quot; rx=&quot;22&quot;/&gt;
-        &lt;text class=&quot;m-label&quot; x=&quot;40&quot; y=&quot;214&quot;&gt;Diensten&lt;/text&gt;
-        &lt;rect class=&quot;m-lane rvo&quot; x=&quot;40&quot; y=&quot;224&quot; width=&quot;180&quot; height=&quot;190&quot; rx=&quot;12&quot;/&gt;
-        &lt;rect class=&quot;m-lane bd&quot; x=&quot;260&quot; y=&quot;224&quot; width=&quot;180&quot; height=&quot;190&quot; rx=&quot;12&quot;/&gt;
-        &lt;rect class=&quot;m-lane justis m-lane-hl&quot; x=&quot;480&quot; y=&quot;224&quot; width=&quot;180&quot; height=&quot;190&quot; rx=&quot;12&quot;/&gt;
-        &lt;line class=&quot;m-offer rvo m-dimline&quot; x1=&quot;130&quot; y1=&quot;137&quot; x2=&quot;130&quot; y2=&quot;218&quot; marker-end=&quot;url(#mArr)&quot;/&gt;
-        &lt;line class=&quot;m-offer bd m-dimline&quot; x1=&quot;350&quot; y1=&quot;137&quot; x2=&quot;350&quot; y2=&quot;218&quot; marker-end=&quot;url(#mArr)&quot;/&gt;
-        &lt;line class=&quot;m-offer justis&quot; x1=&quot;570&quot; y1=&quot;145&quot; x2=&quot;570&quot; y2=&quot;218&quot; marker-end=&quot;url(#mArr)&quot;/&gt;
-        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;rvo&quot; x=&quot;55&quot; y=&quot;248&quot; width=&quot;150&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;130&quot; y=&quot;270&quot; text-anchor=&quot;middle&quot;&gt;Subsidie aanvragen&lt;/text&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;rvo&quot; x=&quot;55&quot; y=&quot;292&quot; width=&quot;150&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;130&quot; y=&quot;314&quot; text-anchor=&quot;middle&quot;&gt;Vergunning aanvragen&lt;/text&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;bd&quot; x=&quot;268&quot; y=&quot;248&quot; width=&quot;164&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;350&quot; y=&quot;270&quot; text-anchor=&quot;middle&quot;&gt;Belastingaangifte doen&lt;/text&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;bd&quot; x=&quot;268&quot; y=&quot;292&quot; width=&quot;164&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;350&quot; y=&quot;314&quot; text-anchor=&quot;middle&quot;&gt;Zorgtoeslag aanvragen&lt;/text&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;bd&quot; x=&quot;268&quot; y=&quot;336&quot; width=&quot;164&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;350&quot; y=&quot;358&quot; text-anchor=&quot;middle&quot;&gt;Huurtoeslag aanvragen&lt;/text&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-hl&quot;&gt;&lt;rect class=&quot;justis&quot; x=&quot;495&quot; y=&quot;262&quot; width=&quot;150&quot; height=&quot;38&quot; rx=&quot;19&quot;/&gt;&lt;text class=&quot;m-s b&quot; x=&quot;570&quot; y=&quot;286&quot; text-anchor=&quot;middle&quot;&gt;VOG aanvragen&lt;/text&gt;
-          &lt;rect class=&quot;m-ring&quot; x=&quot;487&quot; y=&quot;254&quot; width=&quot;166&quot; height=&quot;54&quot; rx=&quot;27&quot;/&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-tag&quot;&gt;&lt;rect x=&quot;497&quot; y=&quot;230&quot; width=&quot;146&quot; height=&quot;20&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;570&quot; y=&quot;244&quot; text-anchor=&quot;middle&quot;&gt;② Nieuw geregistreerd&lt;/text&gt;&lt;/g&gt;
-        &lt;g class=&quot;m-dim&quot;&gt;&lt;rect class=&quot;justis&quot; x=&quot;495&quot; y=&quot;320&quot; width=&quot;150&quot; height=&quot;34&quot; rx=&quot;17&quot;/&gt;&lt;text class=&quot;m-s&quot; x=&quot;570&quot; y=&quot;342&quot; text-anchor=&quot;middle&quot; style=&quot;font-size:11px&quot;&gt;Naamswijziging doorgeven&lt;/text&gt;&lt;/g&gt;
-      &lt;/svg&gt;
+      
+      &lt;rect class=&quot;cm-region&quot; x=&quot;10&quot; y=&quot;10&quot; width=&quot;1080&quot; height=&quot;250&quot; rx=&quot;32&quot;/&gt;
+      &lt;text class=&quot;cm-region-label&quot; x=&quot;550&quot; y=&quot;40&quot; text-anchor=&quot;middle&quot;&gt;Dienstverleners&lt;/text&gt;
+
+      
+      &lt;rect class=&quot;cm-region-inner&quot; x=&quot;30&quot; y=&quot;58&quot; width=&quot;640&quot; height=&quot;182&quot; rx=&quot;28&quot;/&gt;
+      &lt;text class=&quot;cm-region-label&quot; x=&quot;350&quot; y=&quot;92&quot; text-anchor=&quot;middle&quot;&gt;Dienstaanbieders&lt;/text&gt;
+
+      &lt;g class=&quot;cm-node cm-provider cm-dim&quot;&gt;&lt;rect class=&quot;cm-rvo&quot; x=&quot;70&quot; y=&quot;135&quot; width=&quot;100&quot; height=&quot;44&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;120&quot; y=&quot;162&quot; text-anchor=&quot;middle&quot;&gt;RVO&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-provider cm-dim&quot;&gt;&lt;rect class=&quot;cm-bd&quot; x=&quot;280&quot; y=&quot;135&quot; width=&quot;100&quot; height=&quot;44&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;162&quot; text-anchor=&quot;middle&quot;&gt;BD&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-provider&quot;&gt;&lt;rect class=&quot;cm-justis&quot; x=&quot;510&quot; y=&quot;135&quot; width=&quot;100&quot; height=&quot;44&quot; rx=&quot;10&quot;/&gt;&lt;text x=&quot;560&quot; y=&quot;162&quot; text-anchor=&quot;middle&quot;&gt;Justis&lt;/text&gt;&lt;/g&gt;
+
+      
+      &lt;g&gt;
+        &lt;rect class=&quot;cm-region-inner&quot; x=&quot;690&quot; y=&quot;58&quot; width=&quot;380&quot; height=&quot;182&quot; rx=&quot;28&quot;/&gt;
+        &lt;text class=&quot;cm-region-label&quot; x=&quot;870&quot; y=&quot;92&quot; text-anchor=&quot;middle&quot;&gt;Dienstbemiddelaars&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      &lt;g class=&quot;cm-node cm-plain cm-dim&quot;&gt;
+        &lt;rect x=&quot;705&quot; y=&quot;125&quot; width=&quot;110&quot; height=&quot;60&quot; rx=&quot;10&quot;/&gt;
+        &lt;text x=&quot;760&quot; y=&quot;151&quot; text-anchor=&quot;middle&quot;&gt;&quot;Loket&lt;/text&gt;
+        &lt;text x=&quot;760&quot; y=&quot;168&quot; text-anchor=&quot;middle&quot;&gt;Zorgtoeslag&quot;&lt;/text&gt;
+        
+      &lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-hypo cm-dim&quot;&gt;
+        &lt;rect x=&quot;825&quot; y=&quot;125&quot; width=&quot;110&quot; height=&quot;60&quot; rx=&quot;10&quot;/&gt;
+        &lt;text x=&quot;880&quot; y=&quot;151&quot; text-anchor=&quot;middle&quot;&gt;MOZa?&lt;/text&gt;
+        &lt;text class=&quot;cm-small&quot; x=&quot;880&quot; y=&quot;169&quot; text-anchor=&quot;middle&quot;&gt;Optie 1&lt;/text&gt;
+        
+      &lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-hypo cm-dim&quot;&gt;
+        &lt;rect x=&quot;945&quot; y=&quot;125&quot; width=&quot;110&quot; height=&quot;60&quot; rx=&quot;10&quot;/&gt;
+        &lt;text x=&quot;1000&quot; y=&quot;151&quot; text-anchor=&quot;middle&quot;&gt;MOZa?&lt;/text&gt;
+        &lt;text class=&quot;cm-small&quot; x=&quot;1000&quot; y=&quot;169&quot; text-anchor=&quot;middle&quot;&gt;Optie 2&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      
+      &lt;g&gt;
+        &lt;rect class=&quot;cm-region&quot; x=&quot;10&quot; y=&quot;290&quot; width=&quot;1080&quot; height=&quot;490&quot; rx=&quot;32&quot;/&gt;
+        &lt;text class=&quot;cm-region-label&quot; x=&quot;870&quot; y=&quot;322&quot; text-anchor=&quot;middle&quot;&gt;Diensten&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      
+      &lt;rect class=&quot;cm-lane cm-rvo cm-dim&quot; x=&quot;35&quot; y=&quot;340&quot; width=&quot;170&quot; height=&quot;300&quot; rx=&quot;16&quot;/&gt;
+      &lt;rect class=&quot;cm-lane cm-bd cm-dim&quot; x=&quot;230&quot; y=&quot;340&quot; width=&quot;200&quot; height=&quot;300&quot; rx=&quot;16&quot;/&gt;
+      &lt;rect class=&quot;cm-lane cm-justis&quot; x=&quot;460&quot; y=&quot;340&quot; width=&quot;200&quot; height=&quot;300&quot; rx=&quot;16&quot;/&gt;
+      &lt;text class=&quot;cm-lane-label&quot; x=&quot;120&quot; y=&quot;628&quot; text-anchor=&quot;middle&quot;&gt;RVO&lt;/text&gt;
+      &lt;text class=&quot;cm-lane-label&quot; x=&quot;330&quot; y=&quot;628&quot; text-anchor=&quot;middle&quot;&gt;BD&lt;/text&gt;
+      &lt;text class=&quot;cm-lane-label&quot; x=&quot;560&quot; y=&quot;628&quot; text-anchor=&quot;middle&quot;&gt;JUSTIS&lt;/text&gt;
+
+      
+      &lt;line class=&quot;cm-offer cm-rvo cm-dim&quot; x1=&quot;120&quot; y1=&quot;181&quot; x2=&quot;120&quot; y2=&quot;330&quot; marker-end=&quot;url(#cbarrRVO)&quot;/&gt;
+      &lt;line class=&quot;cm-offer cm-bd cm-dim&quot; x1=&quot;330&quot; y1=&quot;181&quot; x2=&quot;330&quot; y2=&quot;330&quot; marker-end=&quot;url(#cbarrBD)&quot;/&gt;
+      &lt;line class=&quot;cm-offer cm-justis&quot; x1=&quot;560&quot; y1=&quot;181&quot; x2=&quot;560&quot; y2=&quot;330&quot; marker-end=&quot;url(#cbarrJustis)&quot;/&gt;
+
+      
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-rvo&quot; x=&quot;45&quot; y=&quot;358&quot; width=&quot;150&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;120&quot; y=&quot;385&quot; text-anchor=&quot;middle&quot;&gt;Subsidie aanvragen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-rvo&quot; x=&quot;45&quot; y=&quot;418&quot; width=&quot;150&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;120&quot; y=&quot;437&quot; text-anchor=&quot;middle&quot;&gt;Vergunning&lt;/text&gt;&lt;text x=&quot;120&quot; y=&quot;453&quot; text-anchor=&quot;middle&quot;&gt;aanvragen&lt;/text&gt;&lt;/g&gt;
+
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-bd&quot; x=&quot;245&quot; y=&quot;358&quot; width=&quot;170&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;385&quot; text-anchor=&quot;middle&quot;&gt;Belastingaangifte doen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-bd&quot; x=&quot;245&quot; y=&quot;418&quot; width=&quot;170&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;445&quot; text-anchor=&quot;middle&quot;&gt;Zorgtoeslag aanvragen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-bd&quot; x=&quot;245&quot; y=&quot;478&quot; width=&quot;170&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;330&quot; y=&quot;505&quot; text-anchor=&quot;middle&quot;&gt;Huurtoeslag aanvragen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-portal cm-dim&quot;&gt;
+        &lt;rect class=&quot;cm-bd&quot; x=&quot;250&quot; y=&quot;540&quot; width=&quot;160&quot; height=&quot;60&quot; rx=&quot;30&quot;/&gt;
+        &lt;text x=&quot;330&quot; y=&quot;565&quot; text-anchor=&quot;middle&quot;&gt;Portaaldienst:&lt;/text&gt;
+        &lt;text x=&quot;330&quot; y=&quot;583&quot; text-anchor=&quot;middle&quot;&gt;&quot;MijnToeslagen&quot;&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      &lt;g class=&quot;cm-node cm-service&quot;&gt;&lt;rect class=&quot;cm-justis&quot; x=&quot;485&quot; y=&quot;358&quot; width=&quot;150&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;560&quot; y=&quot;385&quot; text-anchor=&quot;middle&quot;&gt;VOG aanvragen&lt;/text&gt;&lt;/g&gt;
+      &lt;g class=&quot;cm-node cm-service cm-dim&quot;&gt;&lt;rect class=&quot;cm-justis&quot; x=&quot;485&quot; y=&quot;418&quot; width=&quot;150&quot; height=&quot;44&quot; rx=&quot;22&quot;/&gt;&lt;text x=&quot;560&quot; y=&quot;437&quot; text-anchor=&quot;middle&quot;&gt;Naamswijziging&lt;/text&gt;&lt;text x=&quot;560&quot; y=&quot;453&quot; text-anchor=&quot;middle&quot;&gt;doorgeven&lt;/text&gt;&lt;/g&gt;
+
+      
+      &lt;g class=&quot;cm-node cm-hypo cm-dim&quot;&gt;
+        &lt;rect x=&quot;45&quot; y=&quot;672&quot; width=&quot;615&quot; height=&quot;80&quot; rx=&quot;40&quot;/&gt;
+        &lt;text x=&quot;352&quot; y=&quot;705&quot; text-anchor=&quot;middle&quot;&gt;Portaaldienst namens meerdere dienstaanbieders?&lt;/text&gt;
+        &lt;text x=&quot;352&quot; y=&quot;727&quot; text-anchor=&quot;middle&quot;&gt;&quot;MOZa portaal&quot;&lt;/text&gt;
+        
+      &lt;/g&gt;
+
+      
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-solid&quot; d=&quot;M250,570 H236 V440 H243&quot; marker-end=&quot;url(#cbarr)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-solid&quot; d=&quot;M250,570 H236 V500 H243&quot; marker-end=&quot;url(#cbarr)&quot;/&gt;
+
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-solid&quot; d=&quot;M760,185 V268 H428 V440 H417&quot; marker-end=&quot;url(#cbarr)&quot;/&gt;
+
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-opt1&quot; d=&quot;M1000,185 V280 H165 V356&quot; marker-end=&quot;url(#cbarr1)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-opt1&quot; d=&quot;M1000,185 V280 H375 V356&quot; marker-end=&quot;url(#cbarr1)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-opt1&quot; d=&quot;M1000,185 V280 H605 V356&quot; marker-end=&quot;url(#cbarr1)&quot;/&gt;
+
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-opt2&quot; d=&quot;M880,185 V712 H662&quot; marker-end=&quot;url(#cbarr2)&quot;/&gt;
+
+      
+      &lt;path class=&quot;cm-dim cm-edge cm-opt2&quot; d=&quot;M45,712 H22 V388 H43&quot; marker-end=&quot;url(#cbarr2)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-opt2&quot; d=&quot;M217,672 V388 H243&quot; marker-end=&quot;url(#cbarr2)&quot;/&gt;
+      &lt;path class=&quot;cm-dim cm-edge cm-opt2&quot; d=&quot;M447,672 V388 H483&quot; marker-end=&quot;url(#cbarr2)&quot;/&gt;
+    &lt;rect class=&quot;cm-ring&quot; x=&quot;500&quot; y=&quot;125&quot; width=&quot;120&quot; height=&quot;64&quot; rx=&quot;16&quot;/&gt;&lt;g class=&quot;cm-tag&quot;&gt;&lt;rect x=&quot;440&quot; y=&quot;98&quot; width=&quot;240&quot; height=&quot;26&quot; rx=&quot;13&quot;/&gt;&lt;text x=&quot;560&quot; y=&quot;116&quot; text-anchor=&quot;middle&quot;&gt;① Aangesloten dienstaanbieder&lt;/text&gt;&lt;/g&gt;&lt;rect class=&quot;cm-ring&quot; x=&quot;475&quot; y=&quot;348&quot; width=&quot;170&quot; height=&quot;64&quot; rx=&quot;32&quot;/&gt;&lt;g class=&quot;cm-tag&quot;&gt;&lt;rect x=&quot;652&quot; y=&quot;368&quot; width=&quot;168&quot; height=&quot;26&quot; rx=&quot;13&quot;/&gt;&lt;text x=&quot;736&quot; y=&quot;386&quot; text-anchor=&quot;middle&quot;&gt;② Nieuw geregistreerd&lt;/text&gt;&lt;/g&gt;&lt;/svg&gt;
       &lt;ol class=&quot;m-legend&quot;&gt;
         &lt;li&gt;&lt;b&gt;Justis&lt;/b&gt; staat in de dienstencatalogus als &lt;b&gt;dienstaanbieder&lt;/b&gt;.&lt;/li&gt;
         &lt;li&gt;De dienst &lt;b&gt;VOG aanvragen&lt;/b&gt; is geregistreerd als dienst van Justis, met de gegevens uit stap 3 (o.a. betrouwbaarheidsniveau EH3).&lt;/li&gt;
       &lt;/ol&gt;
-      &lt;p class=&quot;m-note&quot;&gt;Vereenvoudigde weergave van plaat 3. De andere dienstaanbieders en diensten zijn ter illustratie.&lt;/p&gt;
+      &lt;p class=&quot;m-note&quot;&gt;Dit is het diagram van plaat 3. De gemarkeerde onderdelen horen bij dit voorbeeld; de rest is lichter weergegeven.&lt;/p&gt;
     &lt;/div&gt;
     &lt;footer&gt;
-      &lt;a class=&quot;chip&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot; href=&quot;#&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot;&gt;&lt;span class=&quot;num&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;lbl&quot;&gt;Bekijk de volledige plaat 3&lt;/span&gt;&lt;/a&gt;
+      &lt;a class=&quot;chip&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot; href=&quot;#&quot; data-nav=&quot;dienstencatalogus-eherkenning&quot;&gt;&lt;span class=&quot;num&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;lbl&quot;&gt;Naar plaat 3: Dienstencatalogus eHerkenning&lt;/span&gt;&lt;/a&gt;
       &lt;button class=&quot;nav-btn&quot; id=&quot;cat-modal-ok&quot;&gt;Sluiten&lt;/button&gt;
     &lt;/footer&gt;
   &lt;/div&gt;
@@ -1102,9 +1375,9 @@
 &lt;script&gt;
 (function () {
   const ACT = {&quot;D&quot;: {&quot;name&quot;: &quot;Dienstverlener (Justis)&quot;, &quot;cls&quot;: &quot;a-uwv&quot;}, &quot;M&quot;: {&quot;name&quot;: &quot;Makelaar&quot;, &quot;cls&quot;: &quot;a-mak&quot;}, &quot;C&quot;: {&quot;name&quot;: &quot;Dienstencatalogus&quot;, &quot;cls&quot;: &quot;a-cat&quot;}};
-  const STEPS = [{&quot;n&quot;: 1, &quot;f&quot;: &quot;D&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Makelaar kiezen&quot;, &quot;text&quot;: &quot;Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.&quot;, &quot;notes&quot;: [&quot;1&quot;]}, {&quot;n&quot;: 2, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;D&quot;, &quot;title&quot;: &quot;Gegevens opvragen&quot;, &quot;text&quot;: &quot;De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.&quot;, &quot;notes&quot;: [&quot;3&quot;]}, {&quot;n&quot;: 3, &quot;f&quot;: &quot;D&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Gegevens aanleveren&quot;, &quot;text&quot;: &quot;Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:&quot;, &quot;rows&quot;: [&quot;Dienstverlenernaam (OrganizationDisplayName): Justis&quot;, &quot;Dienstnaam (ServiceName): VOG aanvragen&quot;, &quot;Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag&quot;, &quot;Betrouwbaarheidsniveau (AuthnContextClassRef): EH3&quot;], &quot;notes&quot;: [&quot;3&quot;]}, {&quot;n&quot;: 4, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;C&quot;, &quot;title&quot;: &quot;Doorgeven aan catalogus&quot;, &quot;text&quot;: &quot;De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.&quot;, &quot;notes&quot;: [&quot;2&quot;]}, {&quot;n&quot;: 5, &quot;f&quot;: &quot;C&quot;, &quot;t&quot;: null, &quot;title&quot;: &quot;Registratie in catalogus&quot;, &quot;text&quot;: &quot;De dienst wordt geregistreerd in de dienstencatalogus: Justis staat er nu in als dienstaanbieder, met \&quot;VOG aanvragen\&quot; als dienst.&quot;, &quot;notes&quot;: [&quot;2&quot;], &quot;modal&quot;: true, &quot;modalAuto&quot;: true, &quot;modalLabel&quot;: &quot;Toon waar Justis nu staat in de dienstencatalogus ▸&quot;}, {&quot;n&quot;: 6, &quot;f&quot;: &quot;C&quot;, &quot;t&quot;: &quot;D&quot;, &quot;title&quot;: &quot;Dienst aangesloten&quot;, &quot;text&quot;: &quot;De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen.&quot;}];
+  const STEPS = [{&quot;n&quot;: 1, &quot;f&quot;: &quot;D&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Makelaar kiezen&quot;, &quot;text&quot;: &quot;Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.&quot;, &quot;notes&quot;: [&quot;1&quot;]}, {&quot;n&quot;: 2, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;D&quot;, &quot;title&quot;: &quot;Gegevens opvragen&quot;, &quot;text&quot;: &quot;De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.&quot;, &quot;notes&quot;: [&quot;3&quot;]}, {&quot;n&quot;: 3, &quot;f&quot;: &quot;D&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Gegevens aanleveren&quot;, &quot;text&quot;: &quot;Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:&quot;, &quot;rows&quot;: [&quot;Dienstverlenernaam (OrganizationDisplayName): Justis&quot;, &quot;Dienstnaam (ServiceName): VOG aanvragen&quot;, &quot;Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag&quot;, &quot;Betrouwbaarheidsniveau (AuthnContextClassRef): EH3&quot;], &quot;notes&quot;: [&quot;3&quot;]}, {&quot;n&quot;: 4, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;C&quot;, &quot;title&quot;: &quot;Doorgeven aan catalogus&quot;, &quot;text&quot;: &quot;De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.&quot;, &quot;notes&quot;: [&quot;2&quot;]}, {&quot;n&quot;: 5, &quot;f&quot;: &quot;C&quot;, &quot;t&quot;: null, &quot;title&quot;: &quot;Registratie in catalogus&quot;, &quot;text&quot;: &quot;De dienst wordt geregistreerd in de dienstencatalogus: Justis staat er nu in als dienstaanbieder, met \&quot;VOG aanvragen\&quot; als dienst.&quot;, &quot;notes&quot;: [&quot;cat&quot;, &quot;2&quot;]}, {&quot;n&quot;: 6, &quot;f&quot;: &quot;C&quot;, &quot;t&quot;: &quot;D&quot;, &quot;title&quot;: &quot;Dienst aangesloten&quot;, &quot;text&quot;: &quot;De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen.&quot;}];
   const ACTOR_NOTES = {&quot;M&quot;: [&quot;1&quot;], &quot;C&quot;: [&quot;2&quot;]};
-  const OWNER = {&quot;1&quot;: [&quot;step&quot;, 1], &quot;3&quot;: [&quot;step&quot;, 2], &quot;2&quot;: [&quot;step&quot;, 4]};
+  const OWNER = {&quot;1&quot;: [&quot;step&quot;, 1], &quot;3&quot;: [&quot;step&quot;, 2], &quot;2&quot;: [&quot;step&quot;, 4], &quot;cat&quot;: [&quot;step&quot;, 5]};
   const $ = id =&gt; document.getElementById(id);
   const dlg = $(&#x27;dlg&#x27;), layout = $(&#x27;layout&#x27;), svg = $(&#x27;diagram&#x27;);
   const numEl = $(&#x27;dlg-num&#x27;), kindEl = $(&#x27;dlg-kind&#x27;), titleEl = $(&#x27;dlg-title&#x27;);
@@ -1122,7 +1395,7 @@
   function noteSection(k) {
     const tpl = $(&#x27;note-&#x27; + k); if (!tpl) return null;
     const sec = el(&#x27;section&#x27;, &#x27;note-sec&#x27;);
-    sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
+    if (tpl.dataset.title) sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
     sec.append(tpl.content.cloneNode(true));
     sec.querySelectorAll(&#x27;sup.ref&#x27;).forEach(sup =&gt; {
       const o = OWNER[sup.dataset.ref];
@@ -1147,7 +1420,6 @@
     if (s.t) { route.append(el(&#x27;span&#x27;, null, &#x27;→&#x27;)); route.append(actorChip(s.t)); } else route.append(el(&#x27;span&#x27;, null, &#x27;(interne verwerking)&#x27;));
     body.push(route, el(&#x27;p&#x27;, &#x27;lead&#x27;, s.text));
     if (s.rows) { const ul = el(&#x27;ul&#x27;, &#x27;fields&#x27;); s.rows.forEach(r =&gt; ul.append(el(&#x27;li&#x27;, null, r))); body.push(ul); }
-    if (s.modal &amp;&amp; $(&#x27;cat-modal&#x27;)) { const b = el(&#x27;button&#x27;, &#x27;chip start&#x27;, s.modalLabel || &#x27;Toon in de dienstencatalogus ▸&#x27;); b.type = &#x27;button&#x27;; b.addEventListener(&#x27;click&#x27;, () =&gt; openModal(&#x27;cat-modal&#x27;)); body.push(b); }
     (s.notes || []).forEach(k =&gt; { const sec = noteSection(k); if (sec) body.push(sec); });
     bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
     prevBtn.disabled = n &lt;= 1; nextBtn.disabled = n &gt;= STEPS.length;
@@ -1176,7 +1448,7 @@
     const m = $(id); if (!m) return;
     if (modal) modal.hidden = true;
     modal = m; lastFocus = document.activeElement; modal.hidden = false;
-    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus();
+    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus({ preventScroll: true }); modal.querySelector(&#x27;.modal-card&#x27;).scrollTop = 0;
   }
   function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
   document.querySelectorAll(&#x27;.modal&#x27;).forEach(m =&gt; m.addEventListener(&#x27;click&#x27;, e =&gt; {
@@ -1192,7 +1464,7 @@
       e.addEventListener(&#x27;keydown&#x27;, ev =&gt; { if (ev.key === &#x27;Enter&#x27; || ev.key === &#x27; &#x27;) { ev.preventDefault(); fn(e); } });
     });
   }
-  bind(&#x27;.snum&#x27;, e =&gt; { const n = +e.closest(&#x27;.step&#x27;).dataset.step; showStep(n); const s = S(n); if (s &amp;&amp; s.modalAuto) openModal(&#x27;cat-modal&#x27;); });
+  bind(&#x27;.snum&#x27;, e =&gt; showStep(+e.closest(&#x27;.step&#x27;).dataset.step));
   bind(&#x27;.qflag&#x27;, e =&gt; e.dataset.ownerStep ? showStep(+e.dataset.ownerStep) : showActor(e.dataset.ownerActor));
   bind(&#x27;.actor[data-actor]&#x27;, e =&gt; showActor(e.dataset.actor));
   prevBtn.addEventListener(&#x27;click&#x27;, () =&gt; go(-1));
@@ -1207,6 +1479,75 @@
   });
 })();
 &lt;/script&gt;
+&lt;!--qpost--&gt;&lt;style&gt;
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded=&quot;true&quot;] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+&lt;/style&gt;&lt;script&gt;
+(function () {
+  const Q = {&quot;1&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;2&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;3&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;4&quot;, &quot;where&quot;: &quot;Dienstbemiddelaars&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;4&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;5&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;6&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7c&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;8&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;10&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;11&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;12&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;14&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;18&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;20&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;21&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;22&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19c&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}}, HERE = &#x27;aansluiten-dienst&#x27;;
+  const body = document.getElementById(&#x27;dlg-body&#x27;);
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll(&#x27;.q:not(.repeat)&#x27;)].find(q =&gt; { const l = q.querySelector(&#x27;.q-label&#x27;); return l &amp;&amp; l.textContent === &#x27;Vraag (&#x27; + id + &#x27;)&#x27;; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent(&#x27;click&#x27;, { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById(&#x27;diagram&#x27;);
+    if (o.kind === &#x27;step&#x27;) fire(svg.querySelector(&#x27;.qflag[data-owner-step=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;) || svg.querySelector(&#x27;.step[data-step=&quot;&#x27; + o.id + &#x27;&quot;] .snum&#x27;));
+    else if (o.kind === &#x27;actor&#x27;) fire(svg.querySelector(&#x27;.actor[data-actor=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    else fire(svg.querySelector(&#x27;[data-note=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    setTimeout(() =&gt; { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: &#x27;center&#x27;, behavior: &#x27;smooth&#x27; }); q.classList.remove(&#x27;q-flash&#x27;); void q.offsetWidth; q.classList.add(&#x27;q-flash&#x27;); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, &#x27;*&#x27;);
+    else location.href = o.plate + &#x27;.html#q=&#x27; + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll(&#x27;.q.repeat:not(.rq)&#x27;).forEach(q =&gt; {
+      const p = q.querySelector(&#x27;p&#x27;), lab = p &amp;&amp; p.querySelector(&#x27;.q-label&#x27;); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m &amp;&amp; m[1];
+      q.classList.add(&#x27;rq&#x27;);
+      const tag = p.querySelector(&#x27;.rep-tag&#x27;); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement(&#x27;button&#x27;); btn.type = &#x27;button&#x27;; btn.className = &#x27;rq-btn&#x27;; btn.setAttribute(&#x27;aria-expanded&#x27;, &#x27;false&#x27;);
+      btn.innerHTML = &#x27;&lt;span&gt;↻ Vraag (&#x27; + id + &#x27;)&lt;/span&gt;&lt;span class=&quot;rq-sub&quot;&gt;herhaalde vraag&lt;/span&gt;&lt;span class=&quot;rq-chev&quot;&gt;▸&lt;/span&gt;&#x27;;
+      const box = document.createElement(&#x27;div&#x27;); box.className = &#x27;rq-box&#x27;; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement(&#x27;p&#x27;); org.className = &#x27;rq-origin&#x27;;
+        org.append(&#x27;Oorspronkelijk gesteld bij &#x27;);
+        const a = document.createElement(&#x27;a&#x27;); a.href = &#x27;#&#x27;;
+        a.textContent = (o.plate === HERE ? &#x27;&#x27; : &#x27;plaat &#x27; + o.no + &#x27;, &#x27;) + o.where + &#x27; ↗&#x27;;
+        a.addEventListener(&#x27;click&#x27;, e =&gt; { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener(&#x27;click&#x27;, () =&gt; { box.hidden = !box.hidden; btn.setAttribute(&#x27;aria-expanded&#x27;, String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() =&gt; enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener(&#x27;message&#x27;, e =&gt; { if (e.data &amp;&amp; e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() =&gt; goLocal(decodeURIComponent(h[1])), 50);
+})();
+&lt;/script&gt;&lt;!--/qpost--&gt;
 &lt;script&gt;
 document.addEventListener(&#x27;click&#x27;, function (e) {
   var a = e.target.closest &amp;&amp; e.target.closest(&#x27;a[data-nav]&#x27;);
@@ -1647,6 +1988,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   .optblock &gt; * + * { margin-top: 6px; }
   .opt-tag { display: inline-block; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--o); color: #fff; margin-right: 6px; vertical-align: 1px; }
   .optblock h4 { margin: 0; font-size: .92rem; }
+  .optblock .q { background: var(--surface); margin-bottom: 10px; }
   .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
   .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
   .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
@@ -1691,6 +2033,49 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   .schema-thumb:hover, .schema-thumb:focus-visible { border-color: var(--badge); outline: none; }
   .schema-notes { font-size: .82rem; color: var(--muted); margin: 10px 0 0; padding-left: 1.2em; }
   .modal-card.wide { width: min(1080px, 100%); }
+
+  svg.catmap { display: block; width: 100%; height: auto;
+    --cm-rvo-fill: #dae8fc; --cm-rvo-stroke: #6c8ebf; --cm-bd-fill: #d5e8d4; --cm-bd-stroke: #82b366;
+    --cm-justis-fill: #ffe6cc; --cm-justis-stroke: #d79b00; --cm-opt1: #7c3aed; --cm-opt2: #0e7490;
+    --cm-region: #eef0f3; --cm-region-inner: #e2e5ea; --cm-border: #9aa1ab; --cm-line: #1f2933; --cm-hl: #d97706; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) svg.catmap {
+    --cm-rvo-fill: #1e3350; --cm-rvo-stroke: #7fa6d9; --cm-bd-fill: #1f3a24; --cm-bd-stroke: #8cc276;
+    --cm-justis-fill: #4a3214; --cm-justis-stroke: #e0a83a; --cm-opt1: #b39af7; --cm-opt2: #4fc3d9;
+    --cm-region: #1b1f24; --cm-region-inner: #242a31; --cm-border: #6b7280; --cm-line: #e5e7eb; --cm-hl: #f59e0b; } }
+  :root[data-theme=&quot;dark&quot;] svg.catmap {
+    --cm-rvo-fill: #1e3350; --cm-rvo-stroke: #7fa6d9; --cm-bd-fill: #1f3a24; --cm-bd-stroke: #8cc276;
+    --cm-justis-fill: #4a3214; --cm-justis-stroke: #e0a83a; --cm-opt1: #b39af7; --cm-opt2: #4fc3d9;
+    --cm-region: #1b1f24; --cm-region-inner: #242a31; --cm-border: #6b7280; --cm-line: #e5e7eb; --cm-hl: #f59e0b; }
+  .catmap .cm-region { fill: var(--cm-region); stroke: var(--cm-border); stroke-width: 3; }
+  .catmap .cm-region-inner { fill: var(--cm-region-inner); stroke: var(--cm-border); stroke-width: 2.5; }
+  .catmap .cm-region-label { fill: var(--muted); font-weight: 700; font-size: 17px; }
+  .catmap .cm-lane { stroke-width: 1.5; stroke-dasharray: 2 4; opacity: .9; }
+  .catmap .cm-lane-label { font-size: 12px; font-weight: 700; fill: var(--muted); letter-spacing: .05em; }
+  .catmap .cm-node text { fill: var(--text); font-size: 13.5px; }
+  .catmap .cm-node .cm-small { font-size: 11.5px; fill: var(--muted); }
+  .catmap .cm-provider rect { stroke-width: 3; }
+  .catmap .cm-rvo { fill: var(--cm-rvo-fill); stroke: var(--cm-rvo-stroke); }
+  .catmap .cm-bd { fill: var(--cm-bd-fill); stroke: var(--cm-bd-stroke); }
+  .catmap .cm-justis { fill: var(--cm-justis-fill); stroke: var(--cm-justis-stroke); }
+  .catmap .cm-service rect { stroke-width: 1.5; }
+  .catmap .cm-portal rect { stroke-width: 3; }
+  .catmap .cm-hypo rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1.8; stroke-dasharray: 6 4; }
+  .catmap .cm-hypo text { fill: var(--muted); }
+  .catmap .cm-plain rect { fill: var(--surface); stroke: var(--cm-line); stroke-width: 1.5; }
+  .catmap .cm-edge { fill: none; stroke-width: 2; }
+  .catmap .cm-edge.cm-solid { stroke: var(--cm-line); }
+  .catmap .cm-edge.cm-opt1 { stroke: var(--cm-opt1); stroke-dasharray: 7 5; }
+  .catmap .cm-edge.cm-opt2 { stroke: var(--cm-opt2); stroke-dasharray: 7 5; }
+  .catmap .cm-offer { stroke-width: 9; stroke-linecap: butt; }
+  .catmap .cm-offer.cm-rvo { stroke: var(--cm-rvo-stroke); }
+  .catmap .cm-offer.cm-bd { stroke: var(--cm-bd-stroke); }
+  .catmap .cm-offer.cm-justis { stroke: var(--cm-justis-stroke); }
+  .catmap .cm-dim { opacity: .35; }
+  .catmap .cm-ring { fill: none; stroke: var(--cm-hl); stroke-width: 4; }
+  .catmap .cm-tag rect { fill: var(--cm-hl); }
+  .catmap .cm-tag text { fill: #fff; font-size: 14px; font-weight: 800; }
+  .catmap-thumb { display: block; width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); cursor: zoom-in; }
+  .catmap-thumb:hover, .catmap-thumb:focus-visible { border-color: var(--badge); outline: none; }
   .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(15, 23, 42, .5); }
   .modal[hidden] { display: none; }
   .modal-card { width: min(780px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--surface); color: var(--text); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 24px 60px rgba(0,0,0,.35); }
@@ -1846,7 +2231,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   function noteSection(k) {
     const tpl = $(&#x27;note-&#x27; + k); if (!tpl) return null;
     const sec = el(&#x27;section&#x27;, &#x27;note-sec&#x27;);
-    sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
+    if (tpl.dataset.title) sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
     sec.append(tpl.content.cloneNode(true));
     sec.querySelectorAll(&#x27;sup.ref&#x27;).forEach(sup =&gt; {
       const o = OWNER[sup.dataset.ref];
@@ -1871,7 +2256,6 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     if (s.t) { route.append(el(&#x27;span&#x27;, null, &#x27;→&#x27;)); route.append(actorChip(s.t)); } else route.append(el(&#x27;span&#x27;, null, &#x27;(interne verwerking)&#x27;));
     body.push(route, el(&#x27;p&#x27;, &#x27;lead&#x27;, s.text));
     if (s.rows) { const ul = el(&#x27;ul&#x27;, &#x27;fields&#x27;); s.rows.forEach(r =&gt; ul.append(el(&#x27;li&#x27;, null, r))); body.push(ul); }
-    if (s.modal &amp;&amp; $(&#x27;cat-modal&#x27;)) { const b = el(&#x27;button&#x27;, &#x27;chip start&#x27;, s.modalLabel || &#x27;Toon in de dienstencatalogus ▸&#x27;); b.type = &#x27;button&#x27;; b.addEventListener(&#x27;click&#x27;, () =&gt; openModal(&#x27;cat-modal&#x27;)); body.push(b); }
     (s.notes || []).forEach(k =&gt; { const sec = noteSection(k); if (sec) body.push(sec); });
     bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
     prevBtn.disabled = n &lt;= 1; nextBtn.disabled = n &gt;= STEPS.length;
@@ -1900,7 +2284,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     const m = $(id); if (!m) return;
     if (modal) modal.hidden = true;
     modal = m; lastFocus = document.activeElement; modal.hidden = false;
-    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus();
+    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus({ preventScroll: true }); modal.querySelector(&#x27;.modal-card&#x27;).scrollTop = 0;
   }
   function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
   document.querySelectorAll(&#x27;.modal&#x27;).forEach(m =&gt; m.addEventListener(&#x27;click&#x27;, e =&gt; {
@@ -1916,7 +2300,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
       e.addEventListener(&#x27;keydown&#x27;, ev =&gt; { if (ev.key === &#x27;Enter&#x27; || ev.key === &#x27; &#x27;) { ev.preventDefault(); fn(e); } });
     });
   }
-  bind(&#x27;.snum&#x27;, e =&gt; { const n = +e.closest(&#x27;.step&#x27;).dataset.step; showStep(n); const s = S(n); if (s &amp;&amp; s.modalAuto) openModal(&#x27;cat-modal&#x27;); });
+  bind(&#x27;.snum&#x27;, e =&gt; showStep(+e.closest(&#x27;.step&#x27;).dataset.step));
   bind(&#x27;.qflag&#x27;, e =&gt; e.dataset.ownerStep ? showStep(+e.dataset.ownerStep) : showActor(e.dataset.ownerActor));
   bind(&#x27;.actor[data-actor]&#x27;, e =&gt; showActor(e.dataset.actor));
   prevBtn.addEventListener(&#x27;click&#x27;, () =&gt; go(-1));
@@ -1931,6 +2315,75 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   });
 })();
 &lt;/script&gt;
+&lt;!--qpost--&gt;&lt;style&gt;
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded=&quot;true&quot;] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+&lt;/style&gt;&lt;script&gt;
+(function () {
+  const Q = {&quot;1&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;2&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;3&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;4&quot;, &quot;where&quot;: &quot;Dienstbemiddelaars&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;4&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;5&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;6&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7c&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;8&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;10&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;11&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;12&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;14&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;18&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;20&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;21&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;22&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19c&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}}, HERE = &#x27;karin-machtigt-bilal&#x27;;
+  const body = document.getElementById(&#x27;dlg-body&#x27;);
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll(&#x27;.q:not(.repeat)&#x27;)].find(q =&gt; { const l = q.querySelector(&#x27;.q-label&#x27;); return l &amp;&amp; l.textContent === &#x27;Vraag (&#x27; + id + &#x27;)&#x27;; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent(&#x27;click&#x27;, { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById(&#x27;diagram&#x27;);
+    if (o.kind === &#x27;step&#x27;) fire(svg.querySelector(&#x27;.qflag[data-owner-step=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;) || svg.querySelector(&#x27;.step[data-step=&quot;&#x27; + o.id + &#x27;&quot;] .snum&#x27;));
+    else if (o.kind === &#x27;actor&#x27;) fire(svg.querySelector(&#x27;.actor[data-actor=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    else fire(svg.querySelector(&#x27;[data-note=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    setTimeout(() =&gt; { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: &#x27;center&#x27;, behavior: &#x27;smooth&#x27; }); q.classList.remove(&#x27;q-flash&#x27;); void q.offsetWidth; q.classList.add(&#x27;q-flash&#x27;); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, &#x27;*&#x27;);
+    else location.href = o.plate + &#x27;.html#q=&#x27; + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll(&#x27;.q.repeat:not(.rq)&#x27;).forEach(q =&gt; {
+      const p = q.querySelector(&#x27;p&#x27;), lab = p &amp;&amp; p.querySelector(&#x27;.q-label&#x27;); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m &amp;&amp; m[1];
+      q.classList.add(&#x27;rq&#x27;);
+      const tag = p.querySelector(&#x27;.rep-tag&#x27;); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement(&#x27;button&#x27;); btn.type = &#x27;button&#x27;; btn.className = &#x27;rq-btn&#x27;; btn.setAttribute(&#x27;aria-expanded&#x27;, &#x27;false&#x27;);
+      btn.innerHTML = &#x27;&lt;span&gt;↻ Vraag (&#x27; + id + &#x27;)&lt;/span&gt;&lt;span class=&quot;rq-sub&quot;&gt;herhaalde vraag&lt;/span&gt;&lt;span class=&quot;rq-chev&quot;&gt;▸&lt;/span&gt;&#x27;;
+      const box = document.createElement(&#x27;div&#x27;); box.className = &#x27;rq-box&#x27;; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement(&#x27;p&#x27;); org.className = &#x27;rq-origin&#x27;;
+        org.append(&#x27;Oorspronkelijk gesteld bij &#x27;);
+        const a = document.createElement(&#x27;a&#x27;); a.href = &#x27;#&#x27;;
+        a.textContent = (o.plate === HERE ? &#x27;&#x27; : &#x27;plaat &#x27; + o.no + &#x27;, &#x27;) + o.where + &#x27; ↗&#x27;;
+        a.addEventListener(&#x27;click&#x27;, e =&gt; { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener(&#x27;click&#x27;, () =&gt; { box.hidden = !box.hidden; btn.setAttribute(&#x27;aria-expanded&#x27;, String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() =&gt; enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener(&#x27;message&#x27;, e =&gt; { if (e.data &amp;&amp; e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() =&gt; goLocal(decodeURIComponent(h[1])), 50);
+})();
+&lt;/script&gt;&lt;!--/qpost--&gt;
 &lt;script&gt;
 document.addEventListener(&#x27;click&#x27;, function (e) {
   var a = e.target.closest &amp;&amp; e.target.closest(&#x27;a[data-nav]&#x27;);
@@ -2702,6 +3155,75 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   });
 })();
 &lt;/script&gt;
+&lt;!--qpost--&gt;&lt;style&gt;
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded=&quot;true&quot;] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+&lt;/style&gt;&lt;script&gt;
+(function () {
+  const Q = {&quot;1&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;2&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;3&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;4&quot;, &quot;where&quot;: &quot;Dienstbemiddelaars&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;4&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;5&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;6&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7c&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;8&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;10&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;11&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;12&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;14&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;18&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;20&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;21&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;22&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19c&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}}, HERE = &#x27;dienstencatalogus-eherkenning&#x27;;
+  const body = document.getElementById(&#x27;dlg-body&#x27;);
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll(&#x27;.q:not(.repeat)&#x27;)].find(q =&gt; { const l = q.querySelector(&#x27;.q-label&#x27;); return l &amp;&amp; l.textContent === &#x27;Vraag (&#x27; + id + &#x27;)&#x27;; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent(&#x27;click&#x27;, { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById(&#x27;diagram&#x27;);
+    if (o.kind === &#x27;step&#x27;) fire(svg.querySelector(&#x27;.qflag[data-owner-step=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;) || svg.querySelector(&#x27;.step[data-step=&quot;&#x27; + o.id + &#x27;&quot;] .snum&#x27;));
+    else if (o.kind === &#x27;actor&#x27;) fire(svg.querySelector(&#x27;.actor[data-actor=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    else fire(svg.querySelector(&#x27;[data-note=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    setTimeout(() =&gt; { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: &#x27;center&#x27;, behavior: &#x27;smooth&#x27; }); q.classList.remove(&#x27;q-flash&#x27;); void q.offsetWidth; q.classList.add(&#x27;q-flash&#x27;); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, &#x27;*&#x27;);
+    else location.href = o.plate + &#x27;.html#q=&#x27; + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll(&#x27;.q.repeat:not(.rq)&#x27;).forEach(q =&gt; {
+      const p = q.querySelector(&#x27;p&#x27;), lab = p &amp;&amp; p.querySelector(&#x27;.q-label&#x27;); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m &amp;&amp; m[1];
+      q.classList.add(&#x27;rq&#x27;);
+      const tag = p.querySelector(&#x27;.rep-tag&#x27;); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement(&#x27;button&#x27;); btn.type = &#x27;button&#x27;; btn.className = &#x27;rq-btn&#x27;; btn.setAttribute(&#x27;aria-expanded&#x27;, &#x27;false&#x27;);
+      btn.innerHTML = &#x27;&lt;span&gt;↻ Vraag (&#x27; + id + &#x27;)&lt;/span&gt;&lt;span class=&quot;rq-sub&quot;&gt;herhaalde vraag&lt;/span&gt;&lt;span class=&quot;rq-chev&quot;&gt;▸&lt;/span&gt;&#x27;;
+      const box = document.createElement(&#x27;div&#x27;); box.className = &#x27;rq-box&#x27;; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement(&#x27;p&#x27;); org.className = &#x27;rq-origin&#x27;;
+        org.append(&#x27;Oorspronkelijk gesteld bij &#x27;);
+        const a = document.createElement(&#x27;a&#x27;); a.href = &#x27;#&#x27;;
+        a.textContent = (o.plate === HERE ? &#x27;&#x27; : &#x27;plaat &#x27; + o.no + &#x27;, &#x27;) + o.where + &#x27; ↗&#x27;;
+        a.addEventListener(&#x27;click&#x27;, e =&gt; { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener(&#x27;click&#x27;, () =&gt; { box.hidden = !box.hidden; btn.setAttribute(&#x27;aria-expanded&#x27;, String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() =&gt; enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener(&#x27;message&#x27;, e =&gt; { if (e.data &amp;&amp; e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() =&gt; goLocal(decodeURIComponent(h[1])), 50);
+})();
+&lt;/script&gt;&lt;!--/qpost--&gt;
 &lt;script&gt;
 document.addEventListener(&#x27;click&#x27;, function (e) {
   var a = e.target.closest &amp;&amp; e.target.closest(&#x27;a[data-nav]&#x27;);
@@ -3224,7 +3746,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   function noteSection(k) {
     const tpl = $(&#x27;note-&#x27; + k); if (!tpl) return null;
     const sec = el(&#x27;section&#x27;, &#x27;note-sec&#x27;);
-    sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
+    if (tpl.dataset.title) sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
     sec.append(tpl.content.cloneNode(true));
     sec.querySelectorAll(&#x27;sup.ref&#x27;).forEach(sup =&gt; {
       const o = OWNER[sup.dataset.ref];
@@ -3249,7 +3771,6 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     if (s.t) { route.append(el(&#x27;span&#x27;, null, &#x27;→&#x27;)); route.append(actorChip(s.t)); } else route.append(el(&#x27;span&#x27;, null, &#x27;(interne verwerking)&#x27;));
     body.push(route, el(&#x27;p&#x27;, &#x27;lead&#x27;, s.text));
     if (s.rows) { const ul = el(&#x27;ul&#x27;, &#x27;fields&#x27;); s.rows.forEach(r =&gt; ul.append(el(&#x27;li&#x27;, null, r))); body.push(ul); }
-    if (s.modal &amp;&amp; $(&#x27;cat-modal&#x27;)) { const b = el(&#x27;button&#x27;, &#x27;chip start&#x27;, s.modalLabel || &#x27;Toon in de dienstencatalogus ▸&#x27;); b.type = &#x27;button&#x27;; b.addEventListener(&#x27;click&#x27;, () =&gt; openModal(&#x27;cat-modal&#x27;)); body.push(b); }
     (s.notes || []).forEach(k =&gt; { const sec = noteSection(k); if (sec) body.push(sec); });
     bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
     prevBtn.disabled = n &lt;= 1; nextBtn.disabled = n &gt;= STEPS.length;
@@ -3278,7 +3799,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     const m = $(id); if (!m) return;
     if (modal) modal.hidden = true;
     modal = m; lastFocus = document.activeElement; modal.hidden = false;
-    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus();
+    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus({ preventScroll: true }); modal.querySelector(&#x27;.modal-card&#x27;).scrollTop = 0;
   }
   function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
   document.querySelectorAll(&#x27;.modal&#x27;).forEach(m =&gt; m.addEventListener(&#x27;click&#x27;, e =&gt; {
@@ -3294,7 +3815,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
       e.addEventListener(&#x27;keydown&#x27;, ev =&gt; { if (ev.key === &#x27;Enter&#x27; || ev.key === &#x27; &#x27;) { ev.preventDefault(); fn(e); } });
     });
   }
-  bind(&#x27;.snum&#x27;, e =&gt; { const n = +e.closest(&#x27;.step&#x27;).dataset.step; showStep(n); const s = S(n); if (s &amp;&amp; s.modalAuto) openModal(&#x27;cat-modal&#x27;); });
+  bind(&#x27;.snum&#x27;, e =&gt; showStep(+e.closest(&#x27;.step&#x27;).dataset.step));
   bind(&#x27;.qflag&#x27;, e =&gt; e.dataset.ownerStep ? showStep(+e.dataset.ownerStep) : showActor(e.dataset.ownerActor));
   bind(&#x27;.actor[data-actor]&#x27;, e =&gt; showActor(e.dataset.actor));
   prevBtn.addEventListener(&#x27;click&#x27;, () =&gt; go(-1));
@@ -3309,6 +3830,75 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   });
 })();
 &lt;/script&gt;
+&lt;!--qpost--&gt;&lt;style&gt;
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded=&quot;true&quot;] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+&lt;/style&gt;&lt;script&gt;
+(function () {
+  const Q = {&quot;1&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;2&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;3&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;4&quot;, &quot;where&quot;: &quot;Dienstbemiddelaars&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;4&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;5&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;6&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7c&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;8&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;10&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;11&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;12&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;14&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;18&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;20&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;21&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;22&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19c&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}}, HERE = &#x27;inloggen-losse-dienst&#x27;;
+  const body = document.getElementById(&#x27;dlg-body&#x27;);
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll(&#x27;.q:not(.repeat)&#x27;)].find(q =&gt; { const l = q.querySelector(&#x27;.q-label&#x27;); return l &amp;&amp; l.textContent === &#x27;Vraag (&#x27; + id + &#x27;)&#x27;; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent(&#x27;click&#x27;, { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById(&#x27;diagram&#x27;);
+    if (o.kind === &#x27;step&#x27;) fire(svg.querySelector(&#x27;.qflag[data-owner-step=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;) || svg.querySelector(&#x27;.step[data-step=&quot;&#x27; + o.id + &#x27;&quot;] .snum&#x27;));
+    else if (o.kind === &#x27;actor&#x27;) fire(svg.querySelector(&#x27;.actor[data-actor=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    else fire(svg.querySelector(&#x27;[data-note=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    setTimeout(() =&gt; { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: &#x27;center&#x27;, behavior: &#x27;smooth&#x27; }); q.classList.remove(&#x27;q-flash&#x27;); void q.offsetWidth; q.classList.add(&#x27;q-flash&#x27;); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, &#x27;*&#x27;);
+    else location.href = o.plate + &#x27;.html#q=&#x27; + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll(&#x27;.q.repeat:not(.rq)&#x27;).forEach(q =&gt; {
+      const p = q.querySelector(&#x27;p&#x27;), lab = p &amp;&amp; p.querySelector(&#x27;.q-label&#x27;); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m &amp;&amp; m[1];
+      q.classList.add(&#x27;rq&#x27;);
+      const tag = p.querySelector(&#x27;.rep-tag&#x27;); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement(&#x27;button&#x27;); btn.type = &#x27;button&#x27;; btn.className = &#x27;rq-btn&#x27;; btn.setAttribute(&#x27;aria-expanded&#x27;, &#x27;false&#x27;);
+      btn.innerHTML = &#x27;&lt;span&gt;↻ Vraag (&#x27; + id + &#x27;)&lt;/span&gt;&lt;span class=&quot;rq-sub&quot;&gt;herhaalde vraag&lt;/span&gt;&lt;span class=&quot;rq-chev&quot;&gt;▸&lt;/span&gt;&#x27;;
+      const box = document.createElement(&#x27;div&#x27;); box.className = &#x27;rq-box&#x27;; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement(&#x27;p&#x27;); org.className = &#x27;rq-origin&#x27;;
+        org.append(&#x27;Oorspronkelijk gesteld bij &#x27;);
+        const a = document.createElement(&#x27;a&#x27;); a.href = &#x27;#&#x27;;
+        a.textContent = (o.plate === HERE ? &#x27;&#x27; : &#x27;plaat &#x27; + o.no + &#x27;, &#x27;) + o.where + &#x27; ↗&#x27;;
+        a.addEventListener(&#x27;click&#x27;, e =&gt; { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener(&#x27;click&#x27;, () =&gt; { box.hidden = !box.hidden; btn.setAttribute(&#x27;aria-expanded&#x27;, String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() =&gt; enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener(&#x27;message&#x27;, e =&gt; { if (e.data &amp;&amp; e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() =&gt; goLocal(decodeURIComponent(h[1])), 50);
+})();
+&lt;/script&gt;&lt;!--/qpost--&gt;
 &lt;script&gt;
 document.addEventListener(&#x27;click&#x27;, function (e) {
   var a = e.target.closest &amp;&amp; e.target.closest(&#x27;a[data-nav]&#x27;);
@@ -3749,6 +4339,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   .optblock &gt; * + * { margin-top: 6px; }
   .opt-tag { display: inline-block; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--o); color: #fff; margin-right: 6px; vertical-align: 1px; }
   .optblock h4 { margin: 0; font-size: .92rem; }
+  .optblock .q { background: var(--surface); margin-bottom: 10px; }
   .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
   .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
   .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
@@ -3787,14 +4378,14 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
       &lt;g class=&quot;step a-bilal&quot; data-step=&quot;1&quot;&gt;&lt;line class=&quot;msg a-bilal&quot; x1=&quot;135&quot; y1=&quot;140&quot; x2=&quot;617&quot; y2=&quot;140&quot; marker-end=&quot;url(#arB)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;370.0&quot; y=&quot;130&quot; text-anchor=&quot;middle&quot;&gt;klikt op &amp;quot;Inloggen MOZa-portaal met eHerkenning&amp;quot;&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 1: Inloggen starten&quot; transform=&quot;translate(120 140)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;1&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-mak&quot; data-step=&quot;2&quot;&gt;&lt;line class=&quot;msg a-mak&quot; x1=&quot;605&quot; y1=&quot;200&quot; x2=&quot;123&quot; y2=&quot;200&quot; marker-end=&quot;url(#arM)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;370.0&quot; y=&quot;190&quot; text-anchor=&quot;middle&quot;&gt;Verzoek aan Bilal: selecteer je leverancier&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 2: Verzoek: kies leverancier&quot; transform=&quot;translate(620 200)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;2&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-bilal&quot; data-step=&quot;3&quot;&gt;&lt;line class=&quot;msg a-bilal&quot; x1=&quot;135&quot; y1=&quot;260&quot; x2=&quot;617&quot; y2=&quot;260&quot; marker-end=&quot;url(#arB)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;370.0&quot; y=&quot;250&quot; text-anchor=&quot;middle&quot;&gt;Bilal selecteert zijn leverancier&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 3: Leverancier gekozen&quot; transform=&quot;translate(120 260)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;3&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
-      &lt;g class=&quot;step a-mak&quot; data-step=&quot;4&quot;&gt;&lt;rect class=&quot;card a-mak&quot; x=&quot;634&quot; y=&quot;300&quot; width=&quot;240&quot; height=&quot;96&quot; rx=&quot;8&quot;/&gt;&lt;text class=&quot;card-title&quot; x=&quot;646&quot; y=&quot;319&quot;&gt;Inlogverzoek (anoniem)&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;338&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;ServiceProvider:&lt;/tspan&gt; MOZa&lt;/text&gt;&lt;g class=&quot;qflag&quot; data-owner-step=&quot;4&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Vragen 13, 13a–b&quot;&gt;&lt;rect class=&quot;qf-new&quot; x=&quot;882.0&quot; y=&quot;327.0&quot; width=&quot;71.6&quot; height=&quot;14&quot; rx=&quot;7.0&quot;/&gt;&lt;text class=&quot;qf-new-t sm&quot; x=&quot;917.8&quot; y=&quot;337.5&quot; text-anchor=&quot;middle&quot;&gt;? 13, 13a–b&lt;/text&gt;&lt;/g&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;354&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;ServiceName:&lt;/tspan&gt; MOZa-portaaldienst&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;370&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;ServiceID:&lt;/tspan&gt; PortalService_MOZa123&lt;/text&gt;&lt;g class=&quot;qflag&quot; data-owner-step=&quot;4&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Vragen 14&quot;&gt;&lt;rect class=&quot;qf-new&quot; x=&quot;882.0&quot; y=&quot;359.0&quot; width=&quot;32.4&quot; height=&quot;14&quot; rx=&quot;7.0&quot;/&gt;&lt;text class=&quot;qf-new-t sm&quot; x=&quot;898.2&quot; y=&quot;369.5&quot; text-anchor=&quot;middle&quot;&gt;? 14&lt;/text&gt;&lt;/g&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;386&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;Vereist niveau:&lt;/tspan&gt; ??&lt;/text&gt;&lt;g class=&quot;qflag&quot; data-owner-step=&quot;4&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Vragen 15, 15a–b&quot;&gt;&lt;rect class=&quot;qf-new&quot; x=&quot;882.0&quot; y=&quot;375.0&quot; width=&quot;71.6&quot; height=&quot;14&quot; rx=&quot;7.0&quot;/&gt;&lt;text class=&quot;qf-new-t sm&quot; x=&quot;917.8&quot; y=&quot;385.5&quot; text-anchor=&quot;middle&quot;&gt;? 15, 15a–b&lt;/text&gt;&lt;/g&gt;&lt;line class=&quot;msg a-mak&quot; x1=&quot;635&quot; y1=&quot;410&quot; x2=&quot;877&quot; y2=&quot;410&quot; marker-end=&quot;url(#arM)&quot;/&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 4: Anoniem inlogverzoek&quot; transform=&quot;translate(620 410)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;4&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+      &lt;g class=&quot;step a-mak&quot; data-step=&quot;4&quot;&gt;&lt;rect class=&quot;card a-mak&quot; x=&quot;634&quot; y=&quot;300&quot; width=&quot;240&quot; height=&quot;96&quot; rx=&quot;8&quot;/&gt;&lt;text class=&quot;card-title&quot; x=&quot;646&quot; y=&quot;319&quot;&gt;Inlogverzoek (anoniem)&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;338&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;ServiceProvider:&lt;/tspan&gt; MOZa&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;354&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;ServiceName:&lt;/tspan&gt; MOZa-portaaldienst&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;370&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;ServiceID:&lt;/tspan&gt; PortalService_MOZa123&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;386&quot;&gt;&lt;tspan class=&quot;k&quot;&gt;Vereist niveau:&lt;/tspan&gt; ??&lt;/text&gt;&lt;g class=&quot;qflag&quot; data-owner-step=&quot;4&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Vragen 13, 13a–b, 14, 15, 15a–b&quot;&gt;&lt;rect class=&quot;qf-new&quot; x=&quot;702.2&quot; y=&quot;291.0&quot; width=&quot;177.8&quot; height=&quot;18&quot; rx=&quot;9.0&quot;/&gt;&lt;text class=&quot;qf-new-t&quot; x=&quot;791.1&quot; y=&quot;304.0&quot; text-anchor=&quot;middle&quot;&gt;? 13, 13a–b, 14, 15, 15a–b&lt;/text&gt;&lt;/g&gt;&lt;line class=&quot;msg a-mak&quot; x1=&quot;635&quot; y1=&quot;410&quot; x2=&quot;877&quot; y2=&quot;410&quot; marker-end=&quot;url(#arM)&quot;/&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 4: Anoniem inlogverzoek&quot; transform=&quot;translate(620 410)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;4&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-lev&quot; data-step=&quot;5&quot;&gt;&lt;line class=&quot;msg a-lev&quot; x1=&quot;865&quot; y1=&quot;472&quot; x2=&quot;123&quot; y2=&quot;472&quot; marker-end=&quot;url(#arL)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;500.0&quot; y=&quot;462&quot; text-anchor=&quot;middle&quot;&gt;Verzoek aan Bilal: vul gebruikersnaam en wachtwoord in&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 5: Verzoek: inloggegevens&quot; transform=&quot;translate(880 472)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;5&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-bilal&quot; data-step=&quot;6&quot;&gt;&lt;line class=&quot;msg a-bilal&quot; x1=&quot;135&quot; y1=&quot;532&quot; x2=&quot;877&quot; y2=&quot;532&quot; marker-end=&quot;url(#arB)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;500.0&quot; y=&quot;522&quot; text-anchor=&quot;middle&quot;&gt;Bilal logt in met zijn Z-Login-accountgegevens&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 6: Inloggen bij Z-Login&quot; transform=&quot;translate(120 532)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;6&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-lev&quot; data-step=&quot;7&quot;&gt;&lt;rect class=&quot;activity a-lev&quot; x=&quot;900&quot; y=&quot;572.0&quot; width=&quot;208&quot; height=&quot;50&quot; rx=&quot;12&quot;/&gt;&lt;text class=&quot;act-label&quot; x=&quot;912&quot; y=&quot;594.0&quot;&gt;Controleert of Bilals account het&lt;/text&gt;&lt;text class=&quot;act-label&quot; x=&quot;912&quot; y=&quot;610.0&quot;&gt;gevraagde niveau heeft&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 7: Controle niveau&quot; transform=&quot;translate(880 597)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;7&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-lev&quot; data-step=&quot;8&quot;&gt;&lt;line class=&quot;msg a-lev&quot; x1=&quot;865&quot; y1=&quot;667&quot; x2=&quot;123&quot; y2=&quot;667&quot; marker-end=&quot;url(#arL)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;500.0&quot; y=&quot;657&quot; text-anchor=&quot;middle&quot;&gt;Verzoek aan Bilal: namens welk bedrijf wil je inloggen?&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 8: Verzoek: kies bedrijf&quot; transform=&quot;translate(880 667)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;8&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-bilal&quot; data-step=&quot;9&quot;&gt;&lt;line class=&quot;msg a-bilal&quot; x1=&quot;135&quot; y1=&quot;727&quot; x2=&quot;877&quot; y2=&quot;727&quot; marker-end=&quot;url(#arB)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;500.0&quot; y=&quot;717&quot; text-anchor=&quot;middle&quot;&gt;Bilal selecteert Koffiezaak Noon&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 9: Bedrijf gekozen&quot; transform=&quot;translate(120 727)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;9&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-lev&quot; data-step=&quot;10&quot;&gt;&lt;rect class=&quot;activity a-lev&quot; x=&quot;900&quot; y=&quot;766.0&quot; width=&quot;208&quot; height=&quot;66&quot; rx=&quot;12&quot;/&gt;&lt;text class=&quot;act-label&quot; x=&quot;912&quot; y=&quot;788.0&quot;&gt;Controleert of Bilal namens Noon&lt;/text&gt;&lt;text class=&quot;act-label&quot; x=&quot;912&quot; y=&quot;804.0&quot;&gt;gemachtigd is voor de diensten&lt;/text&gt;&lt;text class=&quot;act-label&quot; x=&quot;912&quot; y=&quot;820.0&quot;&gt;in het portaal&lt;/text&gt;&lt;g class=&quot;qflag&quot; data-owner-step=&quot;10&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Herhaalde vragen 6, 7a–c&quot;&gt;&lt;rect class=&quot;qf-rep&quot; x=&quot;1043.3&quot; y=&quot;757.0&quot; width=&quot;70.7&quot; height=&quot;18&quot; rx=&quot;9.0&quot;/&gt;&lt;text class=&quot;qf-rep-t&quot; x=&quot;1078.6&quot; y=&quot;770.0&quot; text-anchor=&quot;middle&quot;&gt;↻ 6, 7a–c&lt;/text&gt;&lt;/g&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 10: Controle machtigingen&quot; transform=&quot;translate(880 799)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;10&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
-      &lt;g class=&quot;step a-lev&quot; data-step=&quot;11&quot;&gt;&lt;rect class=&quot;card a-lev&quot; x=&quot;634&quot; y=&quot;849&quot; width=&quot;240&quot; height=&quot;128&quot; rx=&quot;8&quot;/&gt;&lt;text class=&quot;card-title&quot; x=&quot;646&quot; y=&quot;868&quot;&gt;Versleutelde assertion&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;887&quot;&gt;PseudoID1234 is gemachtigd&lt;/text&gt;&lt;g class=&quot;qflag&quot; data-owner-step=&quot;11&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Vragen 16a–b, 17a–b&quot;&gt;&lt;rect class=&quot;qf-new&quot; x=&quot;882.0&quot; y=&quot;876.0&quot; width=&quot;88.4&quot; height=&quot;14&quot; rx=&quot;7.0&quot;/&gt;&lt;text class=&quot;qf-new-t sm&quot; x=&quot;926.2&quot; y=&quot;886.5&quot; text-anchor=&quot;middle&quot;&gt;? 16a–b, 17a–b&lt;/text&gt;&lt;/g&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;903&quot;&gt;namens KVK-nummer1234&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;919&quot;&gt;voor Service_ABC123 &amp;amp;&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;935&quot;&gt;Service_CDF345 &amp;amp;&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;951&quot;&gt;Service_FGH567 &amp;amp;&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;967&quot;&gt;Service_HIJ789 &amp;amp; …&lt;/text&gt;&lt;line class=&quot;msg a-lev&quot; x1=&quot;865&quot; y1=&quot;991&quot; x2=&quot;623&quot; y2=&quot;991&quot; marker-end=&quot;url(#arL)&quot;/&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 11: Versleutelde assertion&quot; transform=&quot;translate(880 991)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;11&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
+      &lt;g class=&quot;step a-lev&quot; data-step=&quot;11&quot;&gt;&lt;rect class=&quot;card a-lev&quot; x=&quot;634&quot; y=&quot;849&quot; width=&quot;240&quot; height=&quot;128&quot; rx=&quot;8&quot;/&gt;&lt;text class=&quot;card-title&quot; x=&quot;646&quot; y=&quot;868&quot;&gt;Versleutelde assertion&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;887&quot;&gt;PseudoID1234 is gemachtigd&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;903&quot;&gt;namens KVK-nummer1234&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;919&quot;&gt;voor Service_ABC123 &amp;amp;&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;935&quot;&gt;Service_CDF345 &amp;amp;&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;951&quot;&gt;Service_FGH567 &amp;amp;&lt;/text&gt;&lt;text class=&quot;card-row&quot; x=&quot;646&quot; y=&quot;967&quot;&gt;Service_HIJ789 &amp;amp; …&lt;/text&gt;&lt;g class=&quot;qflag&quot; data-owner-step=&quot;11&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Vragen 16a–b, 17a–b&quot;&gt;&lt;rect class=&quot;qf-new&quot; x=&quot;777.8&quot; y=&quot;840.0&quot; width=&quot;102.2&quot; height=&quot;18&quot; rx=&quot;9.0&quot;/&gt;&lt;text class=&quot;qf-new-t&quot; x=&quot;828.9&quot; y=&quot;853.0&quot; text-anchor=&quot;middle&quot;&gt;? 16a–b, 17a–b&lt;/text&gt;&lt;/g&gt;&lt;line class=&quot;msg a-lev&quot; x1=&quot;865&quot; y1=&quot;991&quot; x2=&quot;623&quot; y2=&quot;991&quot; marker-end=&quot;url(#arL)&quot;/&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 11: Versleutelde assertion&quot; transform=&quot;translate(880 991)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;11&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-mak&quot; data-step=&quot;12&quot;&gt;&lt;line class=&quot;msg a-mak&quot; x1=&quot;605&quot; y1=&quot;1063&quot; x2=&quot;363&quot; y2=&quot;1063&quot; marker-end=&quot;url(#arM)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;490.0&quot; y=&quot;1053&quot; text-anchor=&quot;middle&quot;&gt;ongeopend door aan MOZa&lt;/text&gt;&lt;text class=&quot;msg-label&quot; x=&quot;490.0&quot; y=&quot;1038&quot; text-anchor=&quot;middle&quot;&gt;Makelaar geeft het bericht&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 12: Doorgeven aan MOZa&quot; transform=&quot;translate(620 1063)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;12&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
       &lt;g class=&quot;step a-uwv&quot; data-step=&quot;13&quot;&gt;&lt;line class=&quot;msg a-uwv&quot; x1=&quot;345&quot; y1=&quot;1128&quot; x2=&quot;123&quot; y2=&quot;1128&quot; marker-end=&quot;url(#arZ)&quot;/&gt;&lt;text class=&quot;msg-label&quot; x=&quot;240.0&quot; y=&quot;1118&quot; text-anchor=&quot;middle&quot;&gt;het MOZa-portaal&lt;/text&gt;&lt;text class=&quot;msg-label&quot; x=&quot;240.0&quot; y=&quot;1103&quot; text-anchor=&quot;middle&quot;&gt;Bilal krijgt toegang tot&lt;/text&gt;&lt;g class=&quot;snum&quot; tabindex=&quot;0&quot; role=&quot;button&quot; aria-label=&quot;Stap 13: Toegang tot MOZa-portaal&quot; transform=&quot;translate(360 1128)&quot;&gt;&lt;circle r=&quot;13&quot;/&gt;&lt;text&gt;13&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;
     &lt;/svg&gt;
@@ -3901,7 +4492,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   function noteSection(k) {
     const tpl = $(&#x27;note-&#x27; + k); if (!tpl) return null;
     const sec = el(&#x27;section&#x27;, &#x27;note-sec&#x27;);
-    sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
+    if (tpl.dataset.title) sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
     sec.append(tpl.content.cloneNode(true));
     sec.querySelectorAll(&#x27;sup.ref&#x27;).forEach(sup =&gt; {
       const o = OWNER[sup.dataset.ref];
@@ -3926,7 +4517,6 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     if (s.t) { route.append(el(&#x27;span&#x27;, null, &#x27;→&#x27;)); route.append(actorChip(s.t)); } else route.append(el(&#x27;span&#x27;, null, &#x27;(interne verwerking)&#x27;));
     body.push(route, el(&#x27;p&#x27;, &#x27;lead&#x27;, s.text));
     if (s.rows) { const ul = el(&#x27;ul&#x27;, &#x27;fields&#x27;); s.rows.forEach(r =&gt; ul.append(el(&#x27;li&#x27;, null, r))); body.push(ul); }
-    if (s.modal &amp;&amp; $(&#x27;cat-modal&#x27;)) { const b = el(&#x27;button&#x27;, &#x27;chip start&#x27;, s.modalLabel || &#x27;Toon in de dienstencatalogus ▸&#x27;); b.type = &#x27;button&#x27;; b.addEventListener(&#x27;click&#x27;, () =&gt; openModal(&#x27;cat-modal&#x27;)); body.push(b); }
     (s.notes || []).forEach(k =&gt; { const sec = noteSection(k); if (sec) body.push(sec); });
     bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
     prevBtn.disabled = n &lt;= 1; nextBtn.disabled = n &gt;= STEPS.length;
@@ -3955,7 +4545,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     const m = $(id); if (!m) return;
     if (modal) modal.hidden = true;
     modal = m; lastFocus = document.activeElement; modal.hidden = false;
-    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus();
+    const f = modal.querySelector(&#x27;.nav-btn&#x27;); if (f) f.focus({ preventScroll: true }); modal.querySelector(&#x27;.modal-card&#x27;).scrollTop = 0;
   }
   function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
   document.querySelectorAll(&#x27;.modal&#x27;).forEach(m =&gt; m.addEventListener(&#x27;click&#x27;, e =&gt; {
@@ -3971,7 +4561,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
       e.addEventListener(&#x27;keydown&#x27;, ev =&gt; { if (ev.key === &#x27;Enter&#x27; || ev.key === &#x27; &#x27;) { ev.preventDefault(); fn(e); } });
     });
   }
-  bind(&#x27;.snum&#x27;, e =&gt; { const n = +e.closest(&#x27;.step&#x27;).dataset.step; showStep(n); const s = S(n); if (s &amp;&amp; s.modalAuto) openModal(&#x27;cat-modal&#x27;); });
+  bind(&#x27;.snum&#x27;, e =&gt; showStep(+e.closest(&#x27;.step&#x27;).dataset.step));
   bind(&#x27;.qflag&#x27;, e =&gt; e.dataset.ownerStep ? showStep(+e.dataset.ownerStep) : showActor(e.dataset.ownerActor));
   bind(&#x27;.actor[data-actor]&#x27;, e =&gt; showActor(e.dataset.actor));
   prevBtn.addEventListener(&#x27;click&#x27;, () =&gt; go(-1));
@@ -3986,6 +4576,75 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   });
 })();
 &lt;/script&gt;
+&lt;!--qpost--&gt;&lt;style&gt;
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded=&quot;true&quot;] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+&lt;/style&gt;&lt;script&gt;
+(function () {
+  const Q = {&quot;1&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;2&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;3&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;4&quot;, &quot;where&quot;: &quot;Dienstbemiddelaars&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;4&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;5&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;6&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7c&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;8&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;10&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;11&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;12&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;14&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;18&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;20&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;21&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;22&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19c&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}}, HERE = &#x27;inloggen-moza-optie1&#x27;;
+  const body = document.getElementById(&#x27;dlg-body&#x27;);
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll(&#x27;.q:not(.repeat)&#x27;)].find(q =&gt; { const l = q.querySelector(&#x27;.q-label&#x27;); return l &amp;&amp; l.textContent === &#x27;Vraag (&#x27; + id + &#x27;)&#x27;; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent(&#x27;click&#x27;, { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById(&#x27;diagram&#x27;);
+    if (o.kind === &#x27;step&#x27;) fire(svg.querySelector(&#x27;.qflag[data-owner-step=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;) || svg.querySelector(&#x27;.step[data-step=&quot;&#x27; + o.id + &#x27;&quot;] .snum&#x27;));
+    else if (o.kind === &#x27;actor&#x27;) fire(svg.querySelector(&#x27;.actor[data-actor=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    else fire(svg.querySelector(&#x27;[data-note=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    setTimeout(() =&gt; { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: &#x27;center&#x27;, behavior: &#x27;smooth&#x27; }); q.classList.remove(&#x27;q-flash&#x27;); void q.offsetWidth; q.classList.add(&#x27;q-flash&#x27;); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, &#x27;*&#x27;);
+    else location.href = o.plate + &#x27;.html#q=&#x27; + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll(&#x27;.q.repeat:not(.rq)&#x27;).forEach(q =&gt; {
+      const p = q.querySelector(&#x27;p&#x27;), lab = p &amp;&amp; p.querySelector(&#x27;.q-label&#x27;); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m &amp;&amp; m[1];
+      q.classList.add(&#x27;rq&#x27;);
+      const tag = p.querySelector(&#x27;.rep-tag&#x27;); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement(&#x27;button&#x27;); btn.type = &#x27;button&#x27;; btn.className = &#x27;rq-btn&#x27;; btn.setAttribute(&#x27;aria-expanded&#x27;, &#x27;false&#x27;);
+      btn.innerHTML = &#x27;&lt;span&gt;↻ Vraag (&#x27; + id + &#x27;)&lt;/span&gt;&lt;span class=&quot;rq-sub&quot;&gt;herhaalde vraag&lt;/span&gt;&lt;span class=&quot;rq-chev&quot;&gt;▸&lt;/span&gt;&#x27;;
+      const box = document.createElement(&#x27;div&#x27;); box.className = &#x27;rq-box&#x27;; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement(&#x27;p&#x27;); org.className = &#x27;rq-origin&#x27;;
+        org.append(&#x27;Oorspronkelijk gesteld bij &#x27;);
+        const a = document.createElement(&#x27;a&#x27;); a.href = &#x27;#&#x27;;
+        a.textContent = (o.plate === HERE ? &#x27;&#x27; : &#x27;plaat &#x27; + o.no + &#x27;, &#x27;) + o.where + &#x27; ↗&#x27;;
+        a.addEventListener(&#x27;click&#x27;, e =&gt; { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener(&#x27;click&#x27;, () =&gt; { box.hidden = !box.hidden; btn.setAttribute(&#x27;aria-expanded&#x27;, String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() =&gt; enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener(&#x27;message&#x27;, e =&gt; { if (e.data &amp;&amp; e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() =&gt; goLocal(decodeURIComponent(h[1])), 50);
+})();
+&lt;/script&gt;&lt;!--/qpost--&gt;
 &lt;script&gt;
 document.addEventListener(&#x27;click&#x27;, function (e) {
   var a = e.target.closest &amp;&amp; e.target.closest(&#x27;a[data-nav]&#x27;);
@@ -4426,6 +5085,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   .optblock &gt; * + * { margin-top: 6px; }
   .opt-tag { display: inline-block; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--o); color: #fff; margin-right: 6px; vertical-align: 1px; }
   .optblock h4 { margin: 0; font-size: .92rem; }
+  .optblock .q { background: var(--surface); margin-bottom: 10px; }
   .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
   .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
   .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
@@ -4525,13 +5185,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   &lt;div class=&quot;q&quot;&gt;&lt;p&gt;&lt;span class=&quot;q-label&quot;&gt;Vraag (18)&lt;/span&gt;Bestaan er al voorbeelden van dienstbemiddelaars die diensten van verschillende dienstverleners bemiddelen? Het is moeilijk voor te stellen dat dit nog helemaal niet voorkomt; dat moet nog worden onderzocht. Zo ja: hoe is het daar ingericht?&lt;/p&gt;&lt;/div&gt;
 &lt;/template&gt;
 
-&lt;template id=&quot;note-2&quot; data-title=&quot;Inlogverzoek: welke variant?&quot;&gt;
-  &lt;p class=&quot;sub-title&quot;&gt;Welke variant van stap 4?&lt;/p&gt;
-  &lt;div&gt;
-    &lt;div class=&quot;q&quot;&gt;&lt;p&gt;&lt;span class=&quot;q-label&quot;&gt;Vraag (19a)&lt;/span&gt;&lt;span class=&quot;opt-tag o1&quot;&gt;Variant A&lt;/span&gt;Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?&lt;/p&gt;&lt;/div&gt;
-    &lt;div class=&quot;q&quot;&gt;&lt;p&gt;&lt;span class=&quot;q-label&quot;&gt;Vraag (19b)&lt;/span&gt;&lt;span class=&quot;opt-tag o2&quot;&gt;Variant B&lt;/span&gt;Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst &quot;MOZa&quot; (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.&lt;/p&gt;&lt;/div&gt;
-    &lt;div class=&quot;q&quot;&gt;&lt;p&gt;&lt;span class=&quot;q-label&quot;&gt;Vraag (19c)&lt;/span&gt;&lt;span class=&quot;opt-tag o3&quot;&gt;Variant C&lt;/span&gt;Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?&lt;/p&gt;&lt;/div&gt;
-  &lt;/div&gt;
+&lt;template id=&quot;note-2&quot; data-title=&quot;&quot;&gt;
   &lt;div class=&quot;callout idea&quot;&gt;
     &lt;p class=&quot;callout-title&quot;&gt;Nog beter zou zijn:&lt;/p&gt;
     &lt;p&gt;MOZa weet al vóór het versturen van de inlogverzoeken voor welke diensten Bilal gemachtigd is (die informatie is in principe bekend bij de eHerkenningsleverancier). Dan hoeft er alleen voor de gemachtigde diensten een inlogverzoek te worden verstuurd, wat het systeem minder belast.&lt;/p&gt;
@@ -4591,10 +5245,11 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   &lt;/div&gt;
 &lt;/template&gt;
 
+&lt;script type=&quot;application/json&quot; id=&quot;qextra&quot;&gt;{&quot;19a&quot;:[&quot;step&quot;,4],&quot;19b&quot;:[&quot;step&quot;,4],&quot;19c&quot;:[&quot;step&quot;,4]}&lt;/script&gt;
 &lt;script&gt;
 (function () {
   const ACT = {&quot;B&quot;: {&quot;name&quot;: &quot;Bilal&quot;, &quot;cls&quot;: &quot;a-bilal&quot;}, &quot;Z&quot;: {&quot;name&quot;: &quot;MOZa&quot;, &quot;cls&quot;: &quot;a-uwv&quot;}, &quot;M&quot;: {&quot;name&quot;: &quot;Makelaar (Digidentity)&quot;, &quot;cls&quot;: &quot;a-mak&quot;}, &quot;L&quot;: {&quot;name&quot;: &quot;Leverancier (Z-Login)&quot;, &quot;cls&quot;: &quot;a-lev&quot;}};
-  const STEPS = [{&quot;n&quot;: 1, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Inloggen starten&quot;, &quot;text&quot;: &quot;Bilal klikt op de MOZa-website op \&quot;Inloggen MOZa-website met eHerkenning\&quot;.&quot;}, {&quot;n&quot;: 2, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Verzoek: kies leverancier&quot;, &quot;text&quot;: &quot;De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren.&quot;}, {&quot;n&quot;: 3, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Leverancier gekozen&quot;, &quot;text&quot;: &quot;Bilal selecteert zijn leverancier (Z-Login).&quot;}, {&quot;n&quot;: 4, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;L&quot;, &quot;title&quot;: &quot;Inlogverzoek&quot;, &quot;note&quot;: 2, &quot;text&quot;: &quot;De makelaar stuurt een inlogverzoek naar de leverancier. Hoe dat verzoek eruitziet is nog een vraag; er zijn drie mogelijke varianten:&quot;, &quot;variants&quot;: {&quot;1&quot;: {&quot;title&quot;: &quot;Variant A (19a): een los inlogverzoek per dienst&quot;, &quot;con&quot;: {&quot;label&quot;: &quot;Nadeel: efficiëntie&quot;, &quot;text&quot;: &quot;Alle aangesloten diensten krijgen een inlogverzoek en worden daarmee belast, ook diensten die Bilal in deze sessie niet gebruikt of helemaal niet wil gebruiken.&quot;, &quot;src&quot;: &quot;Bron: gesprek met Martijn&quot;}, &quot;groups&quot;: [{&quot;title&quot;: &quot;Verzoek voor UWV&quot;, &quot;rows&quot;: [&quot;ServiceProvider: MOZa (namens UWV)&quot;, &quot;ServiceName (dienstnaam): \&quot;Ziekmelden werknemer\&quot;&quot;, &quot;ServiceID (dienstcode): Service_123&quot;, &quot;Vereist niveau: EH2&quot;]}, {&quot;title&quot;: &quot;Verzoek voor RVO&quot;, &quot;rows&quot;: [&quot;ServiceProvider: MOZa (namens RVO)&quot;, &quot;ServiceName (dienstnaam): \&quot;Vergunning aanvragen\&quot;&quot;, &quot;ServiceID (dienstcode): Service_456&quot;, &quot;Vereist niveau: EH3&quot;]}, {&quot;title&quot;: &quot;Verzoek voor BD&quot;, &quot;rows&quot;: [&quot;ServiceProvider: MOZa (namens BD)&quot;, &quot;ServiceName (dienstnaam): \&quot;Belasting doorgeven\&quot;&quot;, &quot;ServiceID (dienstcode): Service_789&quot;, &quot;Vereist niveau: EH3&quot;]}]}, &quot;2&quot;: {&quot;title&quot;: &quot;Variant B (19b): één inlogverzoek voor MOZa (leeg portaal), later SSO&quot;, &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;ServiceProvider: MOZa&quot;, &quot;ServiceName (dienstnaam): MOZa (leeg portaal)&quot;, &quot;ServiceID (dienstcode): MOZa_portal&quot;, &quot;Vereist niveau: EH3, vanwege de SSO later in de flow&quot;]}]}, &quot;3&quot;: {&quot;title&quot;: &quot;Variant C (19c): één inlogverzoek voor alle diensten tegelijk&quot;, &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;ServiceProvider: MOZa (namens UWV, BD en RVO)&quot;, &quot;ServiceName (dienstnaam): Ziekmelden werknemer, Vergunning aanvragen, Belasting doorgeven&quot;, &quot;ServiceID (dienstcode): Service_123, Service_456, Service_789&quot;, &quot;Vereist niveau: EH2, EH3&quot;]}]}}}, {&quot;n&quot;: 5, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Verzoek: inloggegevens&quot;, &quot;text&quot;: &quot;De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen.&quot;}, {&quot;n&quot;: 6, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;L&quot;, &quot;title&quot;: &quot;Inloggen bij Z-Login&quot;, &quot;text&quot;: &quot;Bilal logt in met zijn accountgegevens van Z-Login.&quot;}, {&quot;n&quot;: 7, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: null, &quot;title&quot;: &quot;Controle niveau&quot;, &quot;note&quot;: 3, &quot;text&quot;: &quot;Z-Login controleert of het account van Bilal het gevraagde niveau heeft.&quot;}, {&quot;n&quot;: 8, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Verzoek: kies bedrijf&quot;, &quot;text&quot;: &quot;De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen.&quot;}, {&quot;n&quot;: 9, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;L&quot;, &quot;title&quot;: &quot;Bedrijf gekozen&quot;, &quot;text&quot;: &quot;Bilal selecteert Koffiezaak Noon.&quot;}, {&quot;n&quot;: 10, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: null, &quot;title&quot;: &quot;Controle machtigingen&quot;, &quot;note&quot;: 4, &quot;text&quot;: &quot;Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal.&quot;}, {&quot;n&quot;: 11, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Versleutelde assertion(s)&quot;, &quot;text&quot;: &quot;De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar. Welke variant van toepassing is, hangt af van de variant bij stap 4:&quot;, &quot;variants&quot;: {&quot;1&quot;: {&quot;title&quot;: &quot;Variant A: een losse assertion per dienst&quot;, &quot;groups&quot;: [{&quot;title&quot;: &quot;Assertion 1&quot;, &quot;rows&quot;: [&quot;PseudoID1234 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123&quot;]}, {&quot;title&quot;: &quot;Assertion 2&quot;, &quot;rows&quot;: [&quot;PseudoID5678 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_456&quot;]}, {&quot;title&quot;: &quot;Assertion 3&quot;, &quot;rows&quot;: [&quot;PseudoID9010212 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_789&quot;]}]}, &quot;2&quot;: {&quot;title&quot;: &quot;Variant B: één assertion voor MOZa (leeg portaal)&quot;, &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_MOZa (leeg portaal)&quot;]}]}, &quot;3&quot;: {&quot;title&quot;: &quot;Variant C: één overkoepelende assertion&quot;, &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123, Service_456, Service_789, enz.&quot;]}]}}}, {&quot;n&quot;: 12, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;Z&quot;, &quot;title&quot;: &quot;Doorgeven aan MOZa&quot;, &quot;text&quot;: &quot;De makelaar geeft het bericht ongeopend door aan MOZa.&quot;}, {&quot;n&quot;: 13, &quot;f&quot;: &quot;Z&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Toegang tot MOZa-portaal&quot;, &quot;note&quot;: 5, &quot;text&quot;: &quot;Bilal krijgt toegang tot het MOZa-portaal.&quot;, &quot;end&quot;: true}, {&quot;n&quot;: 14, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Trigger voor SSO-inlogverzoeken&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;Na binnenkomst in het lege MOZa-portaal wordt er (het liefst automatisch) een trigger gestuurd om de SSO-inlogverzoeken voor de losse onderliggende diensten te gaan versturen. Zo krijgt Bilal ook toegang tot die diensten.&quot;}, {&quot;n&quot;: 15, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;L&quot;, &quot;title&quot;: &quot;SSO-inlogverzoeken&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;De makelaar stuurt inlogverzoek(en) voor de onderliggende diensten naar de leverancier, met SSO.&quot;}, {&quot;n&quot;: 16, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Versleutelde assertion(s)&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;De leverancier stuurt versleutelde assertion(s) naar de makelaar, met daarin dat:&quot;, &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;PseudoID1234 gemachtigd is om in te loggen&quot;, &quot;namens KVK-nummer1234&quot;, &quot;voor Service_123, Service_456 en Service_789&quot;]}]}, {&quot;n&quot;: 17, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;Z&quot;, &quot;title&quot;: &quot;Doorgeven aan MOZa&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;De makelaar geeft het bericht ongeopend door aan MOZa.&quot;}, {&quot;n&quot;: 18, &quot;f&quot;: &quot;Z&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Toegang tot diensten&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;Bilal krijgt toegang tot de diensten in het portaal.&quot;}];
+  const STEPS = [{&quot;n&quot;: 1, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Inloggen starten&quot;, &quot;text&quot;: &quot;Bilal klikt op de MOZa-website op \&quot;Inloggen MOZa-website met eHerkenning\&quot;.&quot;}, {&quot;n&quot;: 2, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Verzoek: kies leverancier&quot;, &quot;text&quot;: &quot;De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren.&quot;}, {&quot;n&quot;: 3, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Leverancier gekozen&quot;, &quot;text&quot;: &quot;Bilal selecteert zijn leverancier (Z-Login).&quot;}, {&quot;n&quot;: 4, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;L&quot;, &quot;title&quot;: &quot;Inlogverzoek&quot;, &quot;note&quot;: 2, &quot;text&quot;: &quot;De makelaar stuurt een inlogverzoek naar de leverancier. Hoe dat verzoek eruitziet is nog een vraag; er zijn drie mogelijke varianten:&quot;, &quot;variants&quot;: {&quot;1&quot;: {&quot;title&quot;: &quot;Variant A (19a): een los inlogverzoek per dienst&quot;, &quot;q&quot;: [&quot;19a&quot;, &quot;Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?&quot;], &quot;con&quot;: {&quot;label&quot;: &quot;Nadeel: efficiëntie&quot;, &quot;text&quot;: &quot;Alle aangesloten diensten krijgen een inlogverzoek en worden daarmee belast, ook diensten die Bilal in deze sessie niet gebruikt of helemaal niet wil gebruiken.&quot;, &quot;src&quot;: &quot;Bron: gesprek met Martijn&quot;}, &quot;groups&quot;: [{&quot;title&quot;: &quot;Verzoek voor UWV&quot;, &quot;rows&quot;: [&quot;ServiceProvider: MOZa (namens UWV)&quot;, &quot;ServiceName (dienstnaam): \&quot;Ziekmelden werknemer\&quot;&quot;, &quot;ServiceID (dienstcode): Service_123&quot;, &quot;Vereist niveau: EH2&quot;]}, {&quot;title&quot;: &quot;Verzoek voor RVO&quot;, &quot;rows&quot;: [&quot;ServiceProvider: MOZa (namens RVO)&quot;, &quot;ServiceName (dienstnaam): \&quot;Vergunning aanvragen\&quot;&quot;, &quot;ServiceID (dienstcode): Service_456&quot;, &quot;Vereist niveau: EH3&quot;]}, {&quot;title&quot;: &quot;Verzoek voor BD&quot;, &quot;rows&quot;: [&quot;ServiceProvider: MOZa (namens BD)&quot;, &quot;ServiceName (dienstnaam): \&quot;Belasting doorgeven\&quot;&quot;, &quot;ServiceID (dienstcode): Service_789&quot;, &quot;Vereist niveau: EH3&quot;]}]}, &quot;2&quot;: {&quot;title&quot;: &quot;Variant B (19b): één inlogverzoek voor MOZa (leeg portaal), later SSO&quot;, &quot;q&quot;: [&quot;19b&quot;, &quot;Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst \&quot;MOZa\&quot; (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.&quot;], &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;ServiceProvider: MOZa&quot;, &quot;ServiceName (dienstnaam): MOZa (leeg portaal)&quot;, &quot;ServiceID (dienstcode): MOZa_portal&quot;, &quot;Vereist niveau: EH3, vanwege de SSO later in de flow&quot;]}]}, &quot;3&quot;: {&quot;title&quot;: &quot;Variant C (19c): één inlogverzoek voor alle diensten tegelijk&quot;, &quot;q&quot;: [&quot;19c&quot;, &quot;Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?&quot;], &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;ServiceProvider: MOZa (namens UWV, BD en RVO)&quot;, &quot;ServiceName (dienstnaam): Ziekmelden werknemer, Vergunning aanvragen, Belasting doorgeven&quot;, &quot;ServiceID (dienstcode): Service_123, Service_456, Service_789&quot;, &quot;Vereist niveau: EH2, EH3&quot;]}]}}}, {&quot;n&quot;: 5, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Verzoek: inloggegevens&quot;, &quot;text&quot;: &quot;De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen.&quot;}, {&quot;n&quot;: 6, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;L&quot;, &quot;title&quot;: &quot;Inloggen bij Z-Login&quot;, &quot;text&quot;: &quot;Bilal logt in met zijn accountgegevens van Z-Login.&quot;}, {&quot;n&quot;: 7, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: null, &quot;title&quot;: &quot;Controle niveau&quot;, &quot;note&quot;: 3, &quot;text&quot;: &quot;Z-Login controleert of het account van Bilal het gevraagde niveau heeft.&quot;}, {&quot;n&quot;: 8, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Verzoek: kies bedrijf&quot;, &quot;text&quot;: &quot;De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen.&quot;}, {&quot;n&quot;: 9, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;L&quot;, &quot;title&quot;: &quot;Bedrijf gekozen&quot;, &quot;text&quot;: &quot;Bilal selecteert Koffiezaak Noon.&quot;}, {&quot;n&quot;: 10, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: null, &quot;title&quot;: &quot;Controle machtigingen&quot;, &quot;note&quot;: 4, &quot;text&quot;: &quot;Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal.&quot;}, {&quot;n&quot;: 11, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Versleutelde assertion(s)&quot;, &quot;text&quot;: &quot;De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar. Welke variant van toepassing is, hangt af van de variant bij stap 4:&quot;, &quot;variants&quot;: {&quot;1&quot;: {&quot;title&quot;: &quot;Variant A: een losse assertion per dienst&quot;, &quot;groups&quot;: [{&quot;title&quot;: &quot;Assertion 1&quot;, &quot;rows&quot;: [&quot;PseudoID1234 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123&quot;]}, {&quot;title&quot;: &quot;Assertion 2&quot;, &quot;rows&quot;: [&quot;PseudoID5678 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_456&quot;]}, {&quot;title&quot;: &quot;Assertion 3&quot;, &quot;rows&quot;: [&quot;PseudoID9010212 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_789&quot;]}]}, &quot;2&quot;: {&quot;title&quot;: &quot;Variant B: één assertion voor MOZa (leeg portaal)&quot;, &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_MOZa (leeg portaal)&quot;]}]}, &quot;3&quot;: {&quot;title&quot;: &quot;Variant C: één overkoepelende assertion&quot;, &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123, Service_456, Service_789, enz.&quot;]}]}}}, {&quot;n&quot;: 12, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;Z&quot;, &quot;title&quot;: &quot;Doorgeven aan MOZa&quot;, &quot;text&quot;: &quot;De makelaar geeft het bericht ongeopend door aan MOZa.&quot;}, {&quot;n&quot;: 13, &quot;f&quot;: &quot;Z&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Toegang tot MOZa-portaal&quot;, &quot;note&quot;: 5, &quot;text&quot;: &quot;Bilal krijgt toegang tot het MOZa-portaal.&quot;, &quot;end&quot;: true}, {&quot;n&quot;: 14, &quot;f&quot;: &quot;B&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Trigger voor SSO-inlogverzoeken&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;Na binnenkomst in het lege MOZa-portaal wordt er (het liefst automatisch) een trigger gestuurd om de SSO-inlogverzoeken voor de losse onderliggende diensten te gaan versturen. Zo krijgt Bilal ook toegang tot die diensten.&quot;}, {&quot;n&quot;: 15, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;L&quot;, &quot;title&quot;: &quot;SSO-inlogverzoeken&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;De makelaar stuurt inlogverzoek(en) voor de onderliggende diensten naar de leverancier, met SSO.&quot;}, {&quot;n&quot;: 16, &quot;f&quot;: &quot;L&quot;, &quot;t&quot;: &quot;M&quot;, &quot;title&quot;: &quot;Versleutelde assertion(s)&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;De leverancier stuurt versleutelde assertion(s) naar de makelaar, met daarin dat:&quot;, &quot;groups&quot;: [{&quot;title&quot;: null, &quot;rows&quot;: [&quot;PseudoID1234 gemachtigd is om in te loggen&quot;, &quot;namens KVK-nummer1234&quot;, &quot;voor Service_123, Service_456 en Service_789&quot;]}]}, {&quot;n&quot;: 17, &quot;f&quot;: &quot;M&quot;, &quot;t&quot;: &quot;Z&quot;, &quot;title&quot;: &quot;Doorgeven aan MOZa&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;De makelaar geeft het bericht ongeopend door aan MOZa.&quot;}, {&quot;n&quot;: 18, &quot;f&quot;: &quot;Z&quot;, &quot;t&quot;: &quot;B&quot;, &quot;title&quot;: &quot;Toegang tot diensten&quot;, &quot;only2&quot;: true, &quot;text&quot;: &quot;Bilal krijgt toegang tot de diensten in het portaal.&quot;}];
   const ACTOR_NOTES = { Z: [&#x27;1&#x27;] };
   const OWNER = { &#x27;1&#x27;: [&#x27;actor&#x27;, &#x27;Z&#x27;], &#x27;2&#x27;: [&#x27;step&#x27;, 4], &#x27;3&#x27;: [&#x27;step&#x27;, 7], &#x27;4&#x27;: [&#x27;step&#x27;, 10], &#x27;5&#x27;: [&#x27;step&#x27;, 13] };
   const NOTE_STEP = { 2: 4, 3: 7, 4: 10, 5: 13 };
@@ -4653,6 +5308,11 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     const d = el(&#x27;div&#x27;, &#x27;optblock o&#x27; + v);
     const h = el(&#x27;h4&#x27;); h.append(el(&#x27;span&#x27;, &#x27;opt-tag&#x27;, OPTNAME[v])); h.append(document.createTextNode(data.title.replace(/^Variant [A-C]\s*(\([^)]*\))?:\s*/, &#x27;&#x27;)));
     d.append(h);
+    if (data.q) {
+      const q = el(&#x27;div&#x27;, &#x27;q&#x27;), p = el(&#x27;p&#x27;);
+      p.append(el(&#x27;span&#x27;, &#x27;q-label&#x27;, &#x27;Vraag (&#x27; + data.q[0] + &#x27;)&#x27;), document.createTextNode(data.q[1]));
+      q.append(p); d.append(q);
+    }
     data.groups.forEach(gr =&gt; {
       if (gr.title) d.append(el(&#x27;p&#x27;, &#x27;grp-title&#x27;, gr.title));
       const ul = el(&#x27;ul&#x27;, &#x27;fields&#x27;); gr.rows.forEach(r =&gt; ul.append(el(&#x27;li&#x27;, null, r))); d.append(ul);
@@ -4706,7 +5366,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   function noteSection(k) {
     const tpl = $(&#x27;note-&#x27; + k); if (!tpl) return null;
     const sec = el(&#x27;section&#x27;, &#x27;note-sec&#x27;);
-    sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title));
+    if (tpl.dataset.title) sec.append(el(&#x27;h3&#x27;, &#x27;note-h&#x27;, tpl.dataset.title)); else sec.classList.add(&#x27;plain&#x27;);
     sec.append(tpl.content.cloneNode(true));
     sec.querySelectorAll(&#x27;sup.ref&#x27;).forEach(sup =&gt; {
       const o = OWNER[sup.dataset.ref];
@@ -4778,6 +5438,75 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
   relayout();
 })();
 &lt;/script&gt;
+&lt;!--qpost--&gt;&lt;style&gt;
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded=&quot;true&quot;] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+&lt;/style&gt;&lt;script&gt;
+(function () {
+  const Q = {&quot;1&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;2&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;3&quot;, &quot;where&quot;: &quot;Portaaldienst namens meerdere dienstaanbieders? — \&quot;MOZa portaal\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;3&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;4&quot;, &quot;where&quot;: &quot;Dienstbemiddelaars&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;4&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;5&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;5&quot;, &quot;where&quot;: &quot;\&quot;Loket Zorgtoeslag\&quot;&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;6&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;7c&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;6&quot;, &quot;where&quot;: &quot;MOZa? — Optie 1&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;8&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9a&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;9b&quot;: {&quot;kind&quot;: &quot;note&quot;, &quot;id&quot;: &quot;7&quot;, &quot;where&quot;: &quot;MOZa? — Optie 2&quot;, &quot;plate&quot;: &quot;dienstencatalogus-eherkenning&quot;, &quot;no&quot;: 3}, &quot;10&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;11&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-losse-dienst&quot;, &quot;no&quot;: 4}, &quot;12&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;13b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;14&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;15b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;16b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;17b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 11, &quot;where&quot;: &quot;stap 11&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie1&quot;, &quot;no&quot;: 5}, &quot;18&quot;: {&quot;kind&quot;: &quot;actor&quot;, &quot;id&quot;: &quot;Z&quot;, &quot;where&quot;: &quot;MOZa&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;20&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;21&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;22&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 10, &quot;where&quot;: &quot;stap 10&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19a&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19b&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}, &quot;19c&quot;: {&quot;kind&quot;: &quot;step&quot;, &quot;id&quot;: 4, &quot;where&quot;: &quot;stap 4&quot;, &quot;plate&quot;: &quot;inloggen-moza-optie2&quot;, &quot;no&quot;: 6}}, HERE = &#x27;inloggen-moza-optie2&#x27;;
+  const body = document.getElementById(&#x27;dlg-body&#x27;);
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll(&#x27;.q:not(.repeat)&#x27;)].find(q =&gt; { const l = q.querySelector(&#x27;.q-label&#x27;); return l &amp;&amp; l.textContent === &#x27;Vraag (&#x27; + id + &#x27;)&#x27;; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent(&#x27;click&#x27;, { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById(&#x27;diagram&#x27;);
+    if (o.kind === &#x27;step&#x27;) fire(svg.querySelector(&#x27;.qflag[data-owner-step=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;) || svg.querySelector(&#x27;.step[data-step=&quot;&#x27; + o.id + &#x27;&quot;] .snum&#x27;));
+    else if (o.kind === &#x27;actor&#x27;) fire(svg.querySelector(&#x27;.actor[data-actor=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    else fire(svg.querySelector(&#x27;[data-note=&quot;&#x27; + o.id + &#x27;&quot;]&#x27;));
+    setTimeout(() =&gt; { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: &#x27;center&#x27;, behavior: &#x27;smooth&#x27; }); q.classList.remove(&#x27;q-flash&#x27;); void q.offsetWidth; q.classList.add(&#x27;q-flash&#x27;); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, &#x27;*&#x27;);
+    else location.href = o.plate + &#x27;.html#q=&#x27; + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll(&#x27;.q.repeat:not(.rq)&#x27;).forEach(q =&gt; {
+      const p = q.querySelector(&#x27;p&#x27;), lab = p &amp;&amp; p.querySelector(&#x27;.q-label&#x27;); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m &amp;&amp; m[1];
+      q.classList.add(&#x27;rq&#x27;);
+      const tag = p.querySelector(&#x27;.rep-tag&#x27;); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement(&#x27;button&#x27;); btn.type = &#x27;button&#x27;; btn.className = &#x27;rq-btn&#x27;; btn.setAttribute(&#x27;aria-expanded&#x27;, &#x27;false&#x27;);
+      btn.innerHTML = &#x27;&lt;span&gt;↻ Vraag (&#x27; + id + &#x27;)&lt;/span&gt;&lt;span class=&quot;rq-sub&quot;&gt;herhaalde vraag&lt;/span&gt;&lt;span class=&quot;rq-chev&quot;&gt;▸&lt;/span&gt;&#x27;;
+      const box = document.createElement(&#x27;div&#x27;); box.className = &#x27;rq-box&#x27;; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement(&#x27;p&#x27;); org.className = &#x27;rq-origin&#x27;;
+        org.append(&#x27;Oorspronkelijk gesteld bij &#x27;);
+        const a = document.createElement(&#x27;a&#x27;); a.href = &#x27;#&#x27;;
+        a.textContent = (o.plate === HERE ? &#x27;&#x27; : &#x27;plaat &#x27; + o.no + &#x27;, &#x27;) + o.where + &#x27; ↗&#x27;;
+        a.addEventListener(&#x27;click&#x27;, e =&gt; { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener(&#x27;click&#x27;, () =&gt; { box.hidden = !box.hidden; btn.setAttribute(&#x27;aria-expanded&#x27;, String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() =&gt; enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener(&#x27;message&#x27;, e =&gt; { if (e.data &amp;&amp; e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() =&gt; goLocal(decodeURIComponent(h[1])), 50);
+})();
+&lt;/script&gt;&lt;!--/qpost--&gt;
 &lt;script&gt;
 document.addEventListener(&#x27;click&#x27;, function (e) {
   var a = e.target.closest &amp;&amp; e.target.closest(&#x27;a[data-nav]&#x27;);
@@ -4799,7 +5528,7 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     PLATES.forEach(function (p) {
       var f = document.getElementById('f-' + p);
       if (p === id) {
-        if (!f.srcdoc) f.srcdoc = f.getAttribute('data-src');
+        if (!f.srcdoc) { f.addEventListener('load', function () { f.dataset.ready = '1'; if (f._q) { f.contentWindow.postMessage({ gotoQ: f._q }, '*'); f._q = null; } }, { once: true }); f.srcdoc = f.getAttribute('data-src'); }
         f.hidden = false;
       } else f.hidden = true;
     });
@@ -4811,6 +5540,8 @@ document.addEventListener(&#x27;click&#x27;, function (e) {
     location.hash = nav === 'home' ? '' : '#' + nav;
     if (nav === 'home') history.replaceState(null, '', location.pathname + location.search);
     show();
+    var q = e.data.q, f = document.getElementById('f-' + nav);
+    if (q && f) { if (f.dataset.ready) f.contentWindow.postMessage({ gotoQ: q }, '*'); else f._q = q; }
   });
   window.addEventListener('hashchange', show);
   show();

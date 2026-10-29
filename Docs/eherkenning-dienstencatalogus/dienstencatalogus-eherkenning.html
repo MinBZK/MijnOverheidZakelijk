@@ -758,5 +758,74 @@
   });
 })();
 </script>
+<!--qpost--><style>
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded="true"] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+</style><script>
+(function () {
+  const Q = {"1": {"kind": "note", "id": "3", "where": "Portaaldienst namens meerdere dienstaanbieders? — \"MOZa portaal\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "2": {"kind": "note", "id": "3", "where": "Portaaldienst namens meerdere dienstaanbieders? — \"MOZa portaal\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "3": {"kind": "note", "id": "4", "where": "Dienstbemiddelaars", "plate": "dienstencatalogus-eherkenning", "no": 3}, "4": {"kind": "note", "id": "5", "where": "\"Loket Zorgtoeslag\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "5": {"kind": "note", "id": "5", "where": "\"Loket Zorgtoeslag\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "6": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7a": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7b": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7c": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "8": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "9a": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "9b": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "10": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-losse-dienst", "no": 4}, "11": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-losse-dienst", "no": 4}, "12": {"kind": "actor", "id": "Z", "where": "MOZa", "plate": "inloggen-moza-optie1", "no": 5}, "13": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "13a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "13b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "14": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "16a": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "16b": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "17a": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "17b": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "18": {"kind": "actor", "id": "Z", "where": "MOZa", "plate": "inloggen-moza-optie2", "no": 6}, "20": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "21": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "22": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "19a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}, "19b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}, "19c": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}}, HERE = 'dienstencatalogus-eherkenning';
+  const body = document.getElementById('dlg-body');
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll('.q:not(.repeat)')].find(q => { const l = q.querySelector('.q-label'); return l && l.textContent === 'Vraag (' + id + ')'; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent('click', { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById('diagram');
+    if (o.kind === 'step') fire(svg.querySelector('.qflag[data-owner-step="' + o.id + '"]') || svg.querySelector('.step[data-step="' + o.id + '"] .snum'));
+    else if (o.kind === 'actor') fire(svg.querySelector('.actor[data-actor="' + o.id + '"]'));
+    else fire(svg.querySelector('[data-note="' + o.id + '"]'));
+    setTimeout(() => { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: 'center', behavior: 'smooth' }); q.classList.remove('q-flash'); void q.offsetWidth; q.classList.add('q-flash'); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, '*');
+    else location.href = o.plate + '.html#q=' + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll('.q.repeat:not(.rq)').forEach(q => {
+      const p = q.querySelector('p'), lab = p && p.querySelector('.q-label'); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m && m[1];
+      q.classList.add('rq');
+      const tag = p.querySelector('.rep-tag'); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'rq-btn'; btn.setAttribute('aria-expanded', 'false');
+      btn.innerHTML = '<span>↻ Vraag (' + id + ')</span><span class="rq-sub">herhaalde vraag</span><span class="rq-chev">▸</span>';
+      const box = document.createElement('div'); box.className = 'rq-box'; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement('p'); org.className = 'rq-origin';
+        org.append('Oorspronkelijk gesteld bij ');
+        const a = document.createElement('a'); a.href = '#';
+        a.textContent = (o.plate === HERE ? '' : 'plaat ' + o.no + ', ') + o.where + ' ↗';
+        a.addEventListener('click', e => { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener('click', () => { box.hidden = !box.hidden; btn.setAttribute('aria-expanded', String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() => enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener('message', e => { if (e.data && e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() => goLocal(decodeURIComponent(h[1])), 50);
+})();
+</script><!--/qpost-->
 </body>
 </html>

@@ -427,6 +427,7 @@
   .optblock > * + * { margin-top: 6px; }
   .opt-tag { display: inline-block; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--o); color: #fff; margin-right: 6px; vertical-align: 1px; }
   .optblock h4 { margin: 0; font-size: .92rem; }
+  .optblock .q { background: var(--surface); margin-bottom: 10px; }
   .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
   .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
   .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
@@ -471,6 +472,49 @@
   .schema-thumb:hover, .schema-thumb:focus-visible { border-color: var(--badge); outline: none; }
   .schema-notes { font-size: .82rem; color: var(--muted); margin: 10px 0 0; padding-left: 1.2em; }
   .modal-card.wide { width: min(1080px, 100%); }
+
+  svg.catmap { display: block; width: 100%; height: auto;
+    --cm-rvo-fill: #dae8fc; --cm-rvo-stroke: #6c8ebf; --cm-bd-fill: #d5e8d4; --cm-bd-stroke: #82b366;
+    --cm-justis-fill: #ffe6cc; --cm-justis-stroke: #d79b00; --cm-opt1: #7c3aed; --cm-opt2: #0e7490;
+    --cm-region: #eef0f3; --cm-region-inner: #e2e5ea; --cm-border: #9aa1ab; --cm-line: #1f2933; --cm-hl: #d97706; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) svg.catmap {
+    --cm-rvo-fill: #1e3350; --cm-rvo-stroke: #7fa6d9; --cm-bd-fill: #1f3a24; --cm-bd-stroke: #8cc276;
+    --cm-justis-fill: #4a3214; --cm-justis-stroke: #e0a83a; --cm-opt1: #b39af7; --cm-opt2: #4fc3d9;
+    --cm-region: #1b1f24; --cm-region-inner: #242a31; --cm-border: #6b7280; --cm-line: #e5e7eb; --cm-hl: #f59e0b; } }
+  :root[data-theme="dark"] svg.catmap {
+    --cm-rvo-fill: #1e3350; --cm-rvo-stroke: #7fa6d9; --cm-bd-fill: #1f3a24; --cm-bd-stroke: #8cc276;
+    --cm-justis-fill: #4a3214; --cm-justis-stroke: #e0a83a; --cm-opt1: #b39af7; --cm-opt2: #4fc3d9;
+    --cm-region: #1b1f24; --cm-region-inner: #242a31; --cm-border: #6b7280; --cm-line: #e5e7eb; --cm-hl: #f59e0b; }
+  .catmap .cm-region { fill: var(--cm-region); stroke: var(--cm-border); stroke-width: 3; }
+  .catmap .cm-region-inner { fill: var(--cm-region-inner); stroke: var(--cm-border); stroke-width: 2.5; }
+  .catmap .cm-region-label { fill: var(--muted); font-weight: 700; font-size: 17px; }
+  .catmap .cm-lane { stroke-width: 1.5; stroke-dasharray: 2 4; opacity: .9; }
+  .catmap .cm-lane-label { font-size: 12px; font-weight: 700; fill: var(--muted); letter-spacing: .05em; }
+  .catmap .cm-node text { fill: var(--text); font-size: 13.5px; }
+  .catmap .cm-node .cm-small { font-size: 11.5px; fill: var(--muted); }
+  .catmap .cm-provider rect { stroke-width: 3; }
+  .catmap .cm-rvo { fill: var(--cm-rvo-fill); stroke: var(--cm-rvo-stroke); }
+  .catmap .cm-bd { fill: var(--cm-bd-fill); stroke: var(--cm-bd-stroke); }
+  .catmap .cm-justis { fill: var(--cm-justis-fill); stroke: var(--cm-justis-stroke); }
+  .catmap .cm-service rect { stroke-width: 1.5; }
+  .catmap .cm-portal rect { stroke-width: 3; }
+  .catmap .cm-hypo rect { fill: var(--surface); stroke: var(--muted); stroke-width: 1.8; stroke-dasharray: 6 4; }
+  .catmap .cm-hypo text { fill: var(--muted); }
+  .catmap .cm-plain rect { fill: var(--surface); stroke: var(--cm-line); stroke-width: 1.5; }
+  .catmap .cm-edge { fill: none; stroke-width: 2; }
+  .catmap .cm-edge.cm-solid { stroke: var(--cm-line); }
+  .catmap .cm-edge.cm-opt1 { stroke: var(--cm-opt1); stroke-dasharray: 7 5; }
+  .catmap .cm-edge.cm-opt2 { stroke: var(--cm-opt2); stroke-dasharray: 7 5; }
+  .catmap .cm-offer { stroke-width: 9; stroke-linecap: butt; }
+  .catmap .cm-offer.cm-rvo { stroke: var(--cm-rvo-stroke); }
+  .catmap .cm-offer.cm-bd { stroke: var(--cm-bd-stroke); }
+  .catmap .cm-offer.cm-justis { stroke: var(--cm-justis-stroke); }
+  .catmap .cm-dim { opacity: .35; }
+  .catmap .cm-ring { fill: none; stroke: var(--cm-hl); stroke-width: 4; }
+  .catmap .cm-tag rect { fill: var(--cm-hl); }
+  .catmap .cm-tag text { fill: #fff; font-size: 14px; font-weight: 800; }
+  .catmap-thumb { display: block; width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); cursor: zoom-in; }
+  .catmap-thumb:hover, .catmap-thumb:focus-visible { border-color: var(--badge); outline: none; }
   .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(15, 23, 42, .5); }
   .modal[hidden] { display: none; }
   .modal-card { width: min(780px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--surface); color: var(--text); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 24px 60px rgba(0,0,0,.35); }
@@ -571,6 +615,141 @@
   <p><button type="button" class="chip start" data-open-modal="mak-modal">Bekijk schema groot ▸</button></p>
 </template>
 
+<template id="note-cat" data-title="Zo staat Justis nu in de dienstencatalogus">
+  <p>Dit is het diagram van plaat 3 (de dienstencatalogus), met daarin gemarkeerd waar Justis en de nieuwe dienst nu staan. Klik op het diagram om het groter te bekijken.</p>
+  <button type="button" class="catmap-thumb" data-open-modal="cat-modal" aria-label="Open de dienstencatalogus in groot formaat"><svg class="catmap" viewBox="0 0 1100 790" role="img" aria-label="Dienstencatalogus eHerkenning (plaat 3) met Justis en de dienst VOG aanvragen gemarkeerd">
+      <defs>
+        <marker id="ctarr" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-line)"/>
+        </marker>
+        <marker id="ctarr1" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-opt1)"/>
+        </marker>
+        <marker id="ctarr2" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-opt2)"/>
+        </marker>
+        <marker id="ctarrRVO" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-rvo-stroke)"/>
+        </marker>
+        <marker id="ctarrBD" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-bd-stroke)"/>
+        </marker>
+        <marker id="ctarrJustis" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-justis-stroke)"/>
+        </marker>
+      </defs>
+
+      
+      <rect class="cm-region" x="10" y="10" width="1080" height="250" rx="32"/>
+      <text class="cm-region-label" x="550" y="40" text-anchor="middle">Dienstverleners</text>
+
+      
+      <rect class="cm-region-inner" x="30" y="58" width="640" height="182" rx="28"/>
+      <text class="cm-region-label" x="350" y="92" text-anchor="middle">Dienstaanbieders</text>
+
+      <g class="cm-node cm-provider cm-dim"><rect class="cm-rvo" x="70" y="135" width="100" height="44" rx="10"/><text x="120" y="162" text-anchor="middle">RVO</text></g>
+      <g class="cm-node cm-provider cm-dim"><rect class="cm-bd" x="280" y="135" width="100" height="44" rx="10"/><text x="330" y="162" text-anchor="middle">BD</text></g>
+      <g class="cm-node cm-provider"><rect class="cm-justis" x="510" y="135" width="100" height="44" rx="10"/><text x="560" y="162" text-anchor="middle">Justis</text></g>
+
+      
+      <g>
+        <rect class="cm-region-inner" x="690" y="58" width="380" height="182" rx="28"/>
+        <text class="cm-region-label" x="870" y="92" text-anchor="middle">Dienstbemiddelaars</text>
+        
+      </g>
+
+      <g class="cm-node cm-plain cm-dim">
+        <rect x="705" y="125" width="110" height="60" rx="10"/>
+        <text x="760" y="151" text-anchor="middle">"Loket</text>
+        <text x="760" y="168" text-anchor="middle">Zorgtoeslag"</text>
+        
+      </g>
+      <g class="cm-node cm-hypo cm-dim">
+        <rect x="825" y="125" width="110" height="60" rx="10"/>
+        <text x="880" y="151" text-anchor="middle">MOZa?</text>
+        <text class="cm-small" x="880" y="169" text-anchor="middle">Optie 1</text>
+        
+      </g>
+      <g class="cm-node cm-hypo cm-dim">
+        <rect x="945" y="125" width="110" height="60" rx="10"/>
+        <text x="1000" y="151" text-anchor="middle">MOZa?</text>
+        <text class="cm-small" x="1000" y="169" text-anchor="middle">Optie 2</text>
+        
+      </g>
+
+      
+      <g>
+        <rect class="cm-region" x="10" y="290" width="1080" height="490" rx="32"/>
+        <text class="cm-region-label" x="870" y="322" text-anchor="middle">Diensten</text>
+        
+      </g>
+
+      
+      <rect class="cm-lane cm-rvo cm-dim" x="35" y="340" width="170" height="300" rx="16"/>
+      <rect class="cm-lane cm-bd cm-dim" x="230" y="340" width="200" height="300" rx="16"/>
+      <rect class="cm-lane cm-justis" x="460" y="340" width="200" height="300" rx="16"/>
+      <text class="cm-lane-label" x="120" y="628" text-anchor="middle">RVO</text>
+      <text class="cm-lane-label" x="330" y="628" text-anchor="middle">BD</text>
+      <text class="cm-lane-label" x="560" y="628" text-anchor="middle">JUSTIS</text>
+
+      
+      <line class="cm-offer cm-rvo cm-dim" x1="120" y1="181" x2="120" y2="330" marker-end="url(#ctarrRVO)"/>
+      <line class="cm-offer cm-bd cm-dim" x1="330" y1="181" x2="330" y2="330" marker-end="url(#ctarrBD)"/>
+      <line class="cm-offer cm-justis" x1="560" y1="181" x2="560" y2="330" marker-end="url(#ctarrJustis)"/>
+
+      
+      <g class="cm-node cm-service cm-dim"><rect class="cm-rvo" x="45" y="358" width="150" height="44" rx="22"/><text x="120" y="385" text-anchor="middle">Subsidie aanvragen</text></g>
+      <g class="cm-node cm-service cm-dim"><rect class="cm-rvo" x="45" y="418" width="150" height="44" rx="22"/><text x="120" y="437" text-anchor="middle">Vergunning</text><text x="120" y="453" text-anchor="middle">aanvragen</text></g>
+
+      <g class="cm-node cm-service cm-dim"><rect class="cm-bd" x="245" y="358" width="170" height="44" rx="22"/><text x="330" y="385" text-anchor="middle">Belastingaangifte doen</text></g>
+      <g class="cm-node cm-service cm-dim"><rect class="cm-bd" x="245" y="418" width="170" height="44" rx="22"/><text x="330" y="445" text-anchor="middle">Zorgtoeslag aanvragen</text></g>
+      <g class="cm-node cm-service cm-dim"><rect class="cm-bd" x="245" y="478" width="170" height="44" rx="22"/><text x="330" y="505" text-anchor="middle">Huurtoeslag aanvragen</text></g>
+      <g class="cm-node cm-service cm-portal cm-dim">
+        <rect class="cm-bd" x="250" y="540" width="160" height="60" rx="30"/>
+        <text x="330" y="565" text-anchor="middle">Portaaldienst:</text>
+        <text x="330" y="583" text-anchor="middle">"MijnToeslagen"</text>
+        
+      </g>
+
+      <g class="cm-node cm-service"><rect class="cm-justis" x="485" y="358" width="150" height="44" rx="22"/><text x="560" y="385" text-anchor="middle">VOG aanvragen</text></g>
+      <g class="cm-node cm-service cm-dim"><rect class="cm-justis" x="485" y="418" width="150" height="44" rx="22"/><text x="560" y="437" text-anchor="middle">Naamswijziging</text><text x="560" y="453" text-anchor="middle">doorgeven</text></g>
+
+      
+      <g class="cm-node cm-hypo cm-dim">
+        <rect x="45" y="672" width="615" height="80" rx="40"/>
+        <text x="352" y="705" text-anchor="middle">Portaaldienst namens meerdere dienstaanbieders?</text>
+        <text x="352" y="727" text-anchor="middle">"MOZa portaal"</text>
+        
+      </g>
+
+      
+      
+      <path class="cm-dim cm-edge cm-solid" d="M250,570 H236 V440 H243" marker-end="url(#ctarr)"/>
+      <path class="cm-dim cm-edge cm-solid" d="M250,570 H236 V500 H243" marker-end="url(#ctarr)"/>
+
+      
+      <path class="cm-dim cm-edge cm-solid" d="M760,185 V268 H428 V440 H417" marker-end="url(#ctarr)"/>
+
+      
+      <path class="cm-dim cm-edge cm-opt1" d="M1000,185 V280 H165 V356" marker-end="url(#ctarr1)"/>
+      <path class="cm-dim cm-edge cm-opt1" d="M1000,185 V280 H375 V356" marker-end="url(#ctarr1)"/>
+      <path class="cm-dim cm-edge cm-opt1" d="M1000,185 V280 H605 V356" marker-end="url(#ctarr1)"/>
+
+      
+      <path class="cm-dim cm-edge cm-opt2" d="M880,185 V712 H662" marker-end="url(#ctarr2)"/>
+
+      
+      <path class="cm-dim cm-edge cm-opt2" d="M45,712 H22 V388 H43" marker-end="url(#ctarr2)"/>
+      <path class="cm-dim cm-edge cm-opt2" d="M217,672 V388 H243" marker-end="url(#ctarr2)"/>
+      <path class="cm-dim cm-edge cm-opt2" d="M447,672 V388 H483" marker-end="url(#ctarr2)"/>
+    <rect class="cm-ring" x="500" y="125" width="120" height="64" rx="16"/><g class="cm-tag"><rect x="440" y="98" width="240" height="26" rx="13"/><text x="560" y="116" text-anchor="middle">① Aangesloten dienstaanbieder</text></g><rect class="cm-ring" x="475" y="348" width="170" height="64" rx="32"/><g class="cm-tag"><rect x="652" y="368" width="168" height="26" rx="13"/><text x="736" y="386" text-anchor="middle">② Nieuw geregistreerd</text></g></svg></button>
+  <ol class="m-legend">
+    <li><b>Justis</b> staat in de dienstencatalogus als <b>dienstaanbieder</b>.</li>
+    <li>De dienst <b>VOG aanvragen</b> is geregistreerd als dienst van Justis, met de gegevens uit stap 3 (o.a. betrouwbaarheidsniveau EH3).</li>
+  </ol>
+  <p><button type="button" class="chip start" data-open-modal="cat-modal">Bekijk groot ▸</button></p>
+</template>
+
 <template id="note-2" data-title="Dienstencatalogus eHerkenning">
   <p>De dienstencatalogus is het centrale register van alle diensten die op het eHerkenningsstelsel zijn aangesloten. Per dienst staat er onder andere in welke dienstverlener de dienst aanbiedt, wat de dienst is en welk betrouwbaarheidsniveau nodig is.</p>
   <p><a class="chip" data-nav="dienstencatalogus-eherkenning" href="dienstencatalogus-eherkenning.html"><span class="num">3</span><span class="lbl">Bekijk plaat 3: Dienstencatalogus eHerkenning</span></a></p>
@@ -618,53 +797,147 @@
 </div>
 
 <div class="modal" id="cat-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cat-modal-title">
-  <div class="modal-card">
+  <div class="modal-card wide">
     <header>
       <span class="num step-num a-cat">5</span>
       <h2 id="cat-modal-title"><span class="kind">Stap 5 · resultaat</span>Zo staat Justis nu in de dienstencatalogus</h2>
       <button class="icon-btn" id="cat-modal-close" aria-label="Sluiten">&times;</button>
     </header>
     <div class="modal-body">
-      <svg class="mini" viewBox="0 0 700 440" role="img" aria-label="Vereenvoudigde dienstencatalogus met Justis en VOG aanvragen gemarkeerd">
-        <defs>
-          <marker id="mArr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker>
-        </defs>
-        <rect class="m-region" x="10" y="10" width="680" height="160" rx="22"/>
-        <text class="m-label" x="350" y="34" text-anchor="middle">Dienstverleners</text>
-        <rect class="m-inner" x="30" y="46" width="640" height="110" rx="18"/>
-        <text class="m-label" x="240" y="70" text-anchor="middle">Dienstaanbieders</text>
-        <g class="m-dim"><rect class="rvo" x="80" y="95" width="100" height="40" rx="9"/><text class="m-t" x="130" y="120" text-anchor="middle">RVO</text></g>
-        <g class="m-dim"><rect class="bd" x="300" y="95" width="100" height="40" rx="9"/><text class="m-t" x="350" y="120" text-anchor="middle">BD</text></g>
-        <g class="m-hl"><rect class="justis" x="520" y="95" width="100" height="40" rx="9"/><text class="m-t b" x="570" y="120" text-anchor="middle">Justis</text>
-          <rect class="m-ring" x="512" y="87" width="116" height="56" rx="14"/></g>
-        <g class="m-tag"><rect x="472" y="56" width="196" height="22" rx="11"/><text x="570" y="71" text-anchor="middle">① Aangesloten dienstaanbieder</text></g>
+      <svg class="catmap" viewBox="0 0 1100 790" role="img" aria-label="Dienstencatalogus eHerkenning (plaat 3) met Justis en de dienst VOG aanvragen gemarkeerd">
+      <defs>
+        <marker id="cbarr" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-line)"/>
+        </marker>
+        <marker id="cbarr1" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-opt1)"/>
+        </marker>
+        <marker id="cbarr2" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-opt2)"/>
+        </marker>
+        <marker id="cbarrRVO" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-rvo-stroke)"/>
+        </marker>
+        <marker id="cbarrBD" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-bd-stroke)"/>
+        </marker>
+        <marker id="cbarrJustis" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--cm-justis-stroke)"/>
+        </marker>
+      </defs>
 
-        <rect class="m-region" x="10" y="190" width="680" height="240" rx="22"/>
-        <text class="m-label" x="40" y="214">Diensten</text>
-        <rect class="m-lane rvo" x="40" y="224" width="180" height="190" rx="12"/>
-        <rect class="m-lane bd" x="260" y="224" width="180" height="190" rx="12"/>
-        <rect class="m-lane justis m-lane-hl" x="480" y="224" width="180" height="190" rx="12"/>
-        <line class="m-offer rvo m-dimline" x1="130" y1="137" x2="130" y2="218" marker-end="url(#mArr)"/>
-        <line class="m-offer bd m-dimline" x1="350" y1="137" x2="350" y2="218" marker-end="url(#mArr)"/>
-        <line class="m-offer justis" x1="570" y1="145" x2="570" y2="218" marker-end="url(#mArr)"/>
-        <g class="m-dim"><rect class="rvo" x="55" y="248" width="150" height="34" rx="17"/><text class="m-s" x="130" y="270" text-anchor="middle">Subsidie aanvragen</text></g>
-        <g class="m-dim"><rect class="rvo" x="55" y="292" width="150" height="34" rx="17"/><text class="m-s" x="130" y="314" text-anchor="middle">Vergunning aanvragen</text></g>
-        <g class="m-dim"><rect class="bd" x="268" y="248" width="164" height="34" rx="17"/><text class="m-s" x="350" y="270" text-anchor="middle">Belastingaangifte doen</text></g>
-        <g class="m-dim"><rect class="bd" x="268" y="292" width="164" height="34" rx="17"/><text class="m-s" x="350" y="314" text-anchor="middle">Zorgtoeslag aanvragen</text></g>
-        <g class="m-dim"><rect class="bd" x="268" y="336" width="164" height="34" rx="17"/><text class="m-s" x="350" y="358" text-anchor="middle">Huurtoeslag aanvragen</text></g>
-        <g class="m-hl"><rect class="justis" x="495" y="262" width="150" height="38" rx="19"/><text class="m-s b" x="570" y="286" text-anchor="middle">VOG aanvragen</text>
-          <rect class="m-ring" x="487" y="254" width="166" height="54" rx="27"/></g>
-        <g class="m-tag"><rect x="497" y="230" width="146" height="20" rx="10"/><text x="570" y="244" text-anchor="middle">② Nieuw geregistreerd</text></g>
-        <g class="m-dim"><rect class="justis" x="495" y="320" width="150" height="34" rx="17"/><text class="m-s" x="570" y="342" text-anchor="middle" style="font-size:11px">Naamswijziging doorgeven</text></g>
-      </svg>
+      
+      <rect class="cm-region" x="10" y="10" width="1080" height="250" rx="32"/>
+      <text class="cm-region-label" x="550" y="40" text-anchor="middle">Dienstverleners</text>
+
+      
+      <rect class="cm-region-inner" x="30" y="58" width="640" height="182" rx="28"/>
+      <text class="cm-region-label" x="350" y="92" text-anchor="middle">Dienstaanbieders</text>
+
+      <g class="cm-node cm-provider cm-dim"><rect class="cm-rvo" x="70" y="135" width="100" height="44" rx="10"/><text x="120" y="162" text-anchor="middle">RVO</text></g>
+      <g class="cm-node cm-provider cm-dim"><rect class="cm-bd" x="280" y="135" width="100" height="44" rx="10"/><text x="330" y="162" text-anchor="middle">BD</text></g>
+      <g class="cm-node cm-provider"><rect class="cm-justis" x="510" y="135" width="100" height="44" rx="10"/><text x="560" y="162" text-anchor="middle">Justis</text></g>
+
+      
+      <g>
+        <rect class="cm-region-inner" x="690" y="58" width="380" height="182" rx="28"/>
+        <text class="cm-region-label" x="870" y="92" text-anchor="middle">Dienstbemiddelaars</text>
+        
+      </g>
+
+      <g class="cm-node cm-plain cm-dim">
+        <rect x="705" y="125" width="110" height="60" rx="10"/>
+        <text x="760" y="151" text-anchor="middle">"Loket</text>
+        <text x="760" y="168" text-anchor="middle">Zorgtoeslag"</text>
+        
+      </g>
+      <g class="cm-node cm-hypo cm-dim">
+        <rect x="825" y="125" width="110" height="60" rx="10"/>
+        <text x="880" y="151" text-anchor="middle">MOZa?</text>
+        <text class="cm-small" x="880" y="169" text-anchor="middle">Optie 1</text>
+        
+      </g>
+      <g class="cm-node cm-hypo cm-dim">
+        <rect x="945" y="125" width="110" height="60" rx="10"/>
+        <text x="1000" y="151" text-anchor="middle">MOZa?</text>
+        <text class="cm-small" x="1000" y="169" text-anchor="middle">Optie 2</text>
+        
+      </g>
+
+      
+      <g>
+        <rect class="cm-region" x="10" y="290" width="1080" height="490" rx="32"/>
+        <text class="cm-region-label" x="870" y="322" text-anchor="middle">Diensten</text>
+        
+      </g>
+
+      
+      <rect class="cm-lane cm-rvo cm-dim" x="35" y="340" width="170" height="300" rx="16"/>
+      <rect class="cm-lane cm-bd cm-dim" x="230" y="340" width="200" height="300" rx="16"/>
+      <rect class="cm-lane cm-justis" x="460" y="340" width="200" height="300" rx="16"/>
+      <text class="cm-lane-label" x="120" y="628" text-anchor="middle">RVO</text>
+      <text class="cm-lane-label" x="330" y="628" text-anchor="middle">BD</text>
+      <text class="cm-lane-label" x="560" y="628" text-anchor="middle">JUSTIS</text>
+
+      
+      <line class="cm-offer cm-rvo cm-dim" x1="120" y1="181" x2="120" y2="330" marker-end="url(#cbarrRVO)"/>
+      <line class="cm-offer cm-bd cm-dim" x1="330" y1="181" x2="330" y2="330" marker-end="url(#cbarrBD)"/>
+      <line class="cm-offer cm-justis" x1="560" y1="181" x2="560" y2="330" marker-end="url(#cbarrJustis)"/>
+
+      
+      <g class="cm-node cm-service cm-dim"><rect class="cm-rvo" x="45" y="358" width="150" height="44" rx="22"/><text x="120" y="385" text-anchor="middle">Subsidie aanvragen</text></g>
+      <g class="cm-node cm-service cm-dim"><rect class="cm-rvo" x="45" y="418" width="150" height="44" rx="22"/><text x="120" y="437" text-anchor="middle">Vergunning</text><text x="120" y="453" text-anchor="middle">aanvragen</text></g>
+
+      <g class="cm-node cm-service cm-dim"><rect class="cm-bd" x="245" y="358" width="170" height="44" rx="22"/><text x="330" y="385" text-anchor="middle">Belastingaangifte doen</text></g>
+      <g class="cm-node cm-service cm-dim"><rect class="cm-bd" x="245" y="418" width="170" height="44" rx="22"/><text x="330" y="445" text-anchor="middle">Zorgtoeslag aanvragen</text></g>
+      <g class="cm-node cm-service cm-dim"><rect class="cm-bd" x="245" y="478" width="170" height="44" rx="22"/><text x="330" y="505" text-anchor="middle">Huurtoeslag aanvragen</text></g>
+      <g class="cm-node cm-service cm-portal cm-dim">
+        <rect class="cm-bd" x="250" y="540" width="160" height="60" rx="30"/>
+        <text x="330" y="565" text-anchor="middle">Portaaldienst:</text>
+        <text x="330" y="583" text-anchor="middle">"MijnToeslagen"</text>
+        
+      </g>
+
+      <g class="cm-node cm-service"><rect class="cm-justis" x="485" y="358" width="150" height="44" rx="22"/><text x="560" y="385" text-anchor="middle">VOG aanvragen</text></g>
+      <g class="cm-node cm-service cm-dim"><rect class="cm-justis" x="485" y="418" width="150" height="44" rx="22"/><text x="560" y="437" text-anchor="middle">Naamswijziging</text><text x="560" y="453" text-anchor="middle">doorgeven</text></g>
+
+      
+      <g class="cm-node cm-hypo cm-dim">
+        <rect x="45" y="672" width="615" height="80" rx="40"/>
+        <text x="352" y="705" text-anchor="middle">Portaaldienst namens meerdere dienstaanbieders?</text>
+        <text x="352" y="727" text-anchor="middle">"MOZa portaal"</text>
+        
+      </g>
+
+      
+      
+      <path class="cm-dim cm-edge cm-solid" d="M250,570 H236 V440 H243" marker-end="url(#cbarr)"/>
+      <path class="cm-dim cm-edge cm-solid" d="M250,570 H236 V500 H243" marker-end="url(#cbarr)"/>
+
+      
+      <path class="cm-dim cm-edge cm-solid" d="M760,185 V268 H428 V440 H417" marker-end="url(#cbarr)"/>
+
+      
+      <path class="cm-dim cm-edge cm-opt1" d="M1000,185 V280 H165 V356" marker-end="url(#cbarr1)"/>
+      <path class="cm-dim cm-edge cm-opt1" d="M1000,185 V280 H375 V356" marker-end="url(#cbarr1)"/>
+      <path class="cm-dim cm-edge cm-opt1" d="M1000,185 V280 H605 V356" marker-end="url(#cbarr1)"/>
+
+      
+      <path class="cm-dim cm-edge cm-opt2" d="M880,185 V712 H662" marker-end="url(#cbarr2)"/>
+
+      
+      <path class="cm-dim cm-edge cm-opt2" d="M45,712 H22 V388 H43" marker-end="url(#cbarr2)"/>
+      <path class="cm-dim cm-edge cm-opt2" d="M217,672 V388 H243" marker-end="url(#cbarr2)"/>
+      <path class="cm-dim cm-edge cm-opt2" d="M447,672 V388 H483" marker-end="url(#cbarr2)"/>
+    <rect class="cm-ring" x="500" y="125" width="120" height="64" rx="16"/><g class="cm-tag"><rect x="440" y="98" width="240" height="26" rx="13"/><text x="560" y="116" text-anchor="middle">① Aangesloten dienstaanbieder</text></g><rect class="cm-ring" x="475" y="348" width="170" height="64" rx="32"/><g class="cm-tag"><rect x="652" y="368" width="168" height="26" rx="13"/><text x="736" y="386" text-anchor="middle">② Nieuw geregistreerd</text></g></svg>
       <ol class="m-legend">
         <li><b>Justis</b> staat in de dienstencatalogus als <b>dienstaanbieder</b>.</li>
         <li>De dienst <b>VOG aanvragen</b> is geregistreerd als dienst van Justis, met de gegevens uit stap 3 (o.a. betrouwbaarheidsniveau EH3).</li>
       </ol>
-      <p class="m-note">Vereenvoudigde weergave van plaat 3. De andere dienstaanbieders en diensten zijn ter illustratie.</p>
+      <p class="m-note">Dit is het diagram van plaat 3. De gemarkeerde onderdelen horen bij dit voorbeeld; de rest is lichter weergegeven.</p>
     </div>
     <footer>
-      <a class="chip" data-nav="dienstencatalogus-eherkenning" href="dienstencatalogus-eherkenning.html"><span class="num">3</span><span class="lbl">Bekijk de volledige plaat 3</span></a>
+      <a class="chip" data-nav="dienstencatalogus-eherkenning" href="dienstencatalogus-eherkenning.html"><span class="num">3</span><span class="lbl">Naar plaat 3: Dienstencatalogus eHerkenning</span></a>
       <button class="nav-btn" id="cat-modal-ok">Sluiten</button>
     </footer>
   </div>
@@ -673,9 +946,9 @@
 <script>
 (function () {
   const ACT = {"D": {"name": "Dienstverlener (Justis)", "cls": "a-uwv"}, "M": {"name": "Makelaar", "cls": "a-mak"}, "C": {"name": "Dienstencatalogus", "cls": "a-cat"}};
-  const STEPS = [{"n": 1, "f": "D", "t": "M", "title": "Makelaar kiezen", "text": "Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.", "notes": ["1"]}, {"n": 2, "f": "M", "t": "D", "title": "Gegevens opvragen", "text": "De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.", "notes": ["3"]}, {"n": 3, "f": "D", "t": "M", "title": "Gegevens aanleveren", "text": "Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:", "rows": ["Dienstverlenernaam (OrganizationDisplayName): Justis", "Dienstnaam (ServiceName): VOG aanvragen", "Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag", "Betrouwbaarheidsniveau (AuthnContextClassRef): EH3"], "notes": ["3"]}, {"n": 4, "f": "M", "t": "C", "title": "Doorgeven aan catalogus", "text": "De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.", "notes": ["2"]}, {"n": 5, "f": "C", "t": null, "title": "Registratie in catalogus", "text": "De dienst wordt geregistreerd in de dienstencatalogus: Justis staat er nu in als dienstaanbieder, met \"VOG aanvragen\" als dienst.", "notes": ["2"], "modal": true, "modalAuto": true, "modalLabel": "Toon waar Justis nu staat in de dienstencatalogus ▸"}, {"n": 6, "f": "C", "t": "D", "title": "Dienst aangesloten", "text": "De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen."}];
+  const STEPS = [{"n": 1, "f": "D", "t": "M", "title": "Makelaar kiezen", "text": "Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.", "notes": ["1"]}, {"n": 2, "f": "M", "t": "D", "title": "Gegevens opvragen", "text": "De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.", "notes": ["3"]}, {"n": 3, "f": "D", "t": "M", "title": "Gegevens aanleveren", "text": "Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:", "rows": ["Dienstverlenernaam (OrganizationDisplayName): Justis", "Dienstnaam (ServiceName): VOG aanvragen", "Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag", "Betrouwbaarheidsniveau (AuthnContextClassRef): EH3"], "notes": ["3"]}, {"n": 4, "f": "M", "t": "C", "title": "Doorgeven aan catalogus", "text": "De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.", "notes": ["2"]}, {"n": 5, "f": "C", "t": null, "title": "Registratie in catalogus", "text": "De dienst wordt geregistreerd in de dienstencatalogus: Justis staat er nu in als dienstaanbieder, met \"VOG aanvragen\" als dienst.", "notes": ["cat", "2"]}, {"n": 6, "f": "C", "t": "D", "title": "Dienst aangesloten", "text": "De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen."}];
   const ACTOR_NOTES = {"M": ["1"], "C": ["2"]};
-  const OWNER = {"1": ["step", 1], "3": ["step", 2], "2": ["step", 4]};
+  const OWNER = {"1": ["step", 1], "3": ["step", 2], "2": ["step", 4], "cat": ["step", 5]};
   const $ = id => document.getElementById(id);
   const dlg = $('dlg'), layout = $('layout'), svg = $('diagram');
   const numEl = $('dlg-num'), kindEl = $('dlg-kind'), titleEl = $('dlg-title');
@@ -693,7 +966,7 @@
   function noteSection(k) {
     const tpl = $('note-' + k); if (!tpl) return null;
     const sec = el('section', 'note-sec');
-    sec.append(el('h3', 'note-h', tpl.dataset.title));
+    if (tpl.dataset.title) sec.append(el('h3', 'note-h', tpl.dataset.title));
     sec.append(tpl.content.cloneNode(true));
     sec.querySelectorAll('sup.ref').forEach(sup => {
       const o = OWNER[sup.dataset.ref];
@@ -718,7 +991,6 @@
     if (s.t) { route.append(el('span', null, '→')); route.append(actorChip(s.t)); } else route.append(el('span', null, '(interne verwerking)'));
     body.push(route, el('p', 'lead', s.text));
     if (s.rows) { const ul = el('ul', 'fields'); s.rows.forEach(r => ul.append(el('li', null, r))); body.push(ul); }
-    if (s.modal && $('cat-modal')) { const b = el('button', 'chip start', s.modalLabel || 'Toon in de dienstencatalogus ▸'); b.type = 'button'; b.addEventListener('click', () => openModal('cat-modal')); body.push(b); }
     (s.notes || []).forEach(k => { const sec = noteSection(k); if (sec) body.push(sec); });
     bodyEl.replaceChildren(...body); bodyEl.scrollTop = 0; relEl.replaceChildren();
     prevBtn.disabled = n <= 1; nextBtn.disabled = n >= STEPS.length;
@@ -747,7 +1019,7 @@
     const m = $(id); if (!m) return;
     if (modal) modal.hidden = true;
     modal = m; lastFocus = document.activeElement; modal.hidden = false;
-    const f = modal.querySelector('.nav-btn'); if (f) f.focus();
+    const f = modal.querySelector('.nav-btn'); if (f) f.focus({ preventScroll: true }); modal.querySelector('.modal-card').scrollTop = 0;
   }
   function closeModal() { if (!modal) return; modal.hidden = true; modal = null; if (lastFocus) lastFocus.focus(); }
   document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => {
@@ -763,7 +1035,7 @@
       e.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); fn(e); } });
     });
   }
-  bind('.snum', e => { const n = +e.closest('.step').dataset.step; showStep(n); const s = S(n); if (s && s.modalAuto) openModal('cat-modal'); });
+  bind('.snum', e => showStep(+e.closest('.step').dataset.step));
   bind('.qflag', e => e.dataset.ownerStep ? showStep(+e.dataset.ownerStep) : showActor(e.dataset.ownerActor));
   bind('.actor[data-actor]', e => showActor(e.dataset.actor));
   prevBtn.addEventListener('click', () => go(-1));
@@ -778,5 +1050,74 @@
   });
 })();
 </script>
+<!--qpost--><style>
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded="true"] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+</style><script>
+(function () {
+  const Q = {"1": {"kind": "note", "id": "3", "where": "Portaaldienst namens meerdere dienstaanbieders? — \"MOZa portaal\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "2": {"kind": "note", "id": "3", "where": "Portaaldienst namens meerdere dienstaanbieders? — \"MOZa portaal\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "3": {"kind": "note", "id": "4", "where": "Dienstbemiddelaars", "plate": "dienstencatalogus-eherkenning", "no": 3}, "4": {"kind": "note", "id": "5", "where": "\"Loket Zorgtoeslag\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "5": {"kind": "note", "id": "5", "where": "\"Loket Zorgtoeslag\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "6": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7a": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7b": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7c": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "8": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "9a": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "9b": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "10": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-losse-dienst", "no": 4}, "11": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-losse-dienst", "no": 4}, "12": {"kind": "actor", "id": "Z", "where": "MOZa", "plate": "inloggen-moza-optie1", "no": 5}, "13": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "13a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "13b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "14": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "16a": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "16b": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "17a": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "17b": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "18": {"kind": "actor", "id": "Z", "where": "MOZa", "plate": "inloggen-moza-optie2", "no": 6}, "20": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "21": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "22": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "19a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}, "19b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}, "19c": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}}, HERE = 'aansluiten-dienst';
+  const body = document.getElementById('dlg-body');
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll('.q:not(.repeat)')].find(q => { const l = q.querySelector('.q-label'); return l && l.textContent === 'Vraag (' + id + ')'; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent('click', { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById('diagram');
+    if (o.kind === 'step') fire(svg.querySelector('.qflag[data-owner-step="' + o.id + '"]') || svg.querySelector('.step[data-step="' + o.id + '"] .snum'));
+    else if (o.kind === 'actor') fire(svg.querySelector('.actor[data-actor="' + o.id + '"]'));
+    else fire(svg.querySelector('[data-note="' + o.id + '"]'));
+    setTimeout(() => { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: 'center', behavior: 'smooth' }); q.classList.remove('q-flash'); void q.offsetWidth; q.classList.add('q-flash'); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, '*');
+    else location.href = o.plate + '.html#q=' + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll('.q.repeat:not(.rq)').forEach(q => {
+      const p = q.querySelector('p'), lab = p && p.querySelector('.q-label'); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m && m[1];
+      q.classList.add('rq');
+      const tag = p.querySelector('.rep-tag'); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'rq-btn'; btn.setAttribute('aria-expanded', 'false');
+      btn.innerHTML = '<span>↻ Vraag (' + id + ')</span><span class="rq-sub">herhaalde vraag</span><span class="rq-chev">▸</span>';
+      const box = document.createElement('div'); box.className = 'rq-box'; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement('p'); org.className = 'rq-origin';
+        org.append('Oorspronkelijk gesteld bij ');
+        const a = document.createElement('a'); a.href = '#';
+        a.textContent = (o.plate === HERE ? '' : 'plaat ' + o.no + ', ') + o.where + ' ↗';
+        a.addEventListener('click', e => { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener('click', () => { box.hidden = !box.hidden; btn.setAttribute('aria-expanded', String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() => enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener('message', e => { if (e.data && e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() => goLocal(decodeURIComponent(h[1])), 50);
+})();
+</script><!--/qpost-->
 </body>
 </html>

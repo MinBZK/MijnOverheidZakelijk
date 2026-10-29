@@ -427,6 +427,7 @@
   .optblock > * + * { margin-top: 6px; }
   .opt-tag { display: inline-block; font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; background: var(--o); color: #fff; margin-right: 6px; vertical-align: 1px; }
   .optblock h4 { margin: 0; font-size: .92rem; }
+  .optblock .q { background: var(--surface); margin-bottom: 10px; }
   .optblock .grp-title { font-weight: 600; font-size: .85rem; margin-top: 8px; }
   .of-sep { text-align: center; font-weight: 800; font-size: .75rem; color: var(--muted); letter-spacing: .1em; margin: 6px 0 !important; }
   .q.repeat { border-style: dashed; border-left-style: solid; background: var(--surface); }
@@ -526,13 +527,7 @@
   <div class="q"><p><span class="q-label">Vraag (18)</span>Bestaan er al voorbeelden van dienstbemiddelaars die diensten van verschillende dienstverleners bemiddelen? Het is moeilijk voor te stellen dat dit nog helemaal niet voorkomt; dat moet nog worden onderzocht. Zo ja: hoe is het daar ingericht?</p></div>
 </template>
 
-<template id="note-2" data-title="Inlogverzoek: welke variant?">
-  <p class="sub-title">Welke variant van stap 4?</p>
-  <div>
-    <div class="q"><p><span class="q-label">Vraag (19a)</span><span class="opt-tag o1">Variant A</span>Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?</p></div>
-    <div class="q"><p><span class="q-label">Vraag (19b)</span><span class="opt-tag o2">Variant B</span>Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst "MOZa" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten.</p></div>
-    <div class="q"><p><span class="q-label">Vraag (19c)</span><span class="opt-tag o3">Variant C</span>Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?</p></div>
-  </div>
+<template id="note-2" data-title="">
   <div class="callout idea">
     <p class="callout-title">Nog beter zou zijn:</p>
     <p>MOZa weet al vóór het versturen van de inlogverzoeken voor welke diensten Bilal gemachtigd is (die informatie is in principe bekend bij de eHerkenningsleverancier). Dan hoeft er alleen voor de gemachtigde diensten een inlogverzoek te worden verstuurd, wat het systeem minder belast.</p>
@@ -592,10 +587,11 @@
   </div>
 </template>
 
+<script type="application/json" id="qextra">{"19a":["step",4],"19b":["step",4],"19c":["step",4]}</script>
 <script>
 (function () {
   const ACT = {"B": {"name": "Bilal", "cls": "a-bilal"}, "Z": {"name": "MOZa", "cls": "a-uwv"}, "M": {"name": "Makelaar (Digidentity)", "cls": "a-mak"}, "L": {"name": "Leverancier (Z-Login)", "cls": "a-lev"}};
-  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op de MOZa-website op \"Inloggen MOZa-website met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Inlogverzoek", "note": 2, "text": "De makelaar stuurt een inlogverzoek naar de leverancier. Hoe dat verzoek eruitziet is nog een vraag; er zijn drie mogelijke varianten:", "variants": {"1": {"title": "Variant A (19a): een los inlogverzoek per dienst", "con": {"label": "Nadeel: efficiëntie", "text": "Alle aangesloten diensten krijgen een inlogverzoek en worden daarmee belast, ook diensten die Bilal in deze sessie niet gebruikt of helemaal niet wil gebruiken.", "src": "Bron: gesprek met Martijn"}, "groups": [{"title": "Verzoek voor UWV", "rows": ["ServiceProvider: MOZa (namens UWV)", "ServiceName (dienstnaam): \"Ziekmelden werknemer\"", "ServiceID (dienstcode): Service_123", "Vereist niveau: EH2"]}, {"title": "Verzoek voor RVO", "rows": ["ServiceProvider: MOZa (namens RVO)", "ServiceName (dienstnaam): \"Vergunning aanvragen\"", "ServiceID (dienstcode): Service_456", "Vereist niveau: EH3"]}, {"title": "Verzoek voor BD", "rows": ["ServiceProvider: MOZa (namens BD)", "ServiceName (dienstnaam): \"Belasting doorgeven\"", "ServiceID (dienstcode): Service_789", "Vereist niveau: EH3"]}]}, "2": {"title": "Variant B (19b): één inlogverzoek voor MOZa (leeg portaal), later SSO", "groups": [{"title": null, "rows": ["ServiceProvider: MOZa", "ServiceName (dienstnaam): MOZa (leeg portaal)", "ServiceID (dienstcode): MOZa_portal", "Vereist niveau: EH3, vanwege de SSO later in de flow"]}]}, "3": {"title": "Variant C (19c): één inlogverzoek voor alle diensten tegelijk", "groups": [{"title": null, "rows": ["ServiceProvider: MOZa (namens UWV, BD en RVO)", "ServiceName (dienstnaam): Ziekmelden werknemer, Vergunning aanvragen, Belasting doorgeven", "ServiceID (dienstcode): Service_123, Service_456, Service_789", "Vereist niveau: EH2, EH3"]}]}}}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "note": 3, "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft."}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "note": 4, "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal."}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "text": "De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar. Welke variant van toepassing is, hangt af van de variant bij stap 4:", "variants": {"1": {"title": "Variant A: een losse assertion per dienst", "groups": [{"title": "Assertion 1", "rows": ["PseudoID1234 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123"]}, {"title": "Assertion 2", "rows": ["PseudoID5678 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_456"]}, {"title": "Assertion 3", "rows": ["PseudoID9010212 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_789"]}]}, "2": {"title": "Variant B: één assertion voor MOZa (leeg portaal)", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_MOZa (leeg portaal)"]}]}, "3": {"title": "Variant C: één overkoepelende assertion", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123, Service_456, Service_789, enz."]}]}}}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "note": 5, "text": "Bilal krijgt toegang tot het MOZa-portaal.", "end": true}, {"n": 14, "f": "B", "t": "M", "title": "Trigger voor SSO-inlogverzoeken", "only2": true, "text": "Na binnenkomst in het lege MOZa-portaal wordt er (het liefst automatisch) een trigger gestuurd om de SSO-inlogverzoeken voor de losse onderliggende diensten te gaan versturen. Zo krijgt Bilal ook toegang tot die diensten."}, {"n": 15, "f": "M", "t": "L", "title": "SSO-inlogverzoeken", "only2": true, "text": "De makelaar stuurt inlogverzoek(en) voor de onderliggende diensten naar de leverancier, met SSO."}, {"n": 16, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "only2": true, "text": "De leverancier stuurt versleutelde assertion(s) naar de makelaar, met daarin dat:", "groups": [{"title": null, "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_123, Service_456 en Service_789"]}]}, {"n": 17, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "only2": true, "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 18, "f": "Z", "t": "B", "title": "Toegang tot diensten", "only2": true, "text": "Bilal krijgt toegang tot de diensten in het portaal."}];
+  const STEPS = [{"n": 1, "f": "B", "t": "M", "title": "Inloggen starten", "text": "Bilal klikt op de MOZa-website op \"Inloggen MOZa-website met eHerkenning\"."}, {"n": 2, "f": "M", "t": "B", "title": "Verzoek: kies leverancier", "text": "De makelaar vraagt Bilal zijn eHerkenningsleverancier te selecteren."}, {"n": 3, "f": "B", "t": "M", "title": "Leverancier gekozen", "text": "Bilal selecteert zijn leverancier (Z-Login)."}, {"n": 4, "f": "M", "t": "L", "title": "Inlogverzoek", "note": 2, "text": "De makelaar stuurt een inlogverzoek naar de leverancier. Hoe dat verzoek eruitziet is nog een vraag; er zijn drie mogelijke varianten:", "variants": {"1": {"title": "Variant A (19a): een los inlogverzoek per dienst", "q": ["19a", "Als er geen portaaldienst is: moet er op dit punt een inlogverzoek worden verstuurd voor élke losse dienst die op MOZa is aangesloten?"], "con": {"label": "Nadeel: efficiëntie", "text": "Alle aangesloten diensten krijgen een inlogverzoek en worden daarmee belast, ook diensten die Bilal in deze sessie niet gebruikt of helemaal niet wil gebruiken.", "src": "Bron: gesprek met Martijn"}, "groups": [{"title": "Verzoek voor UWV", "rows": ["ServiceProvider: MOZa (namens UWV)", "ServiceName (dienstnaam): \"Ziekmelden werknemer\"", "ServiceID (dienstcode): Service_123", "Vereist niveau: EH2"]}, {"title": "Verzoek voor RVO", "rows": ["ServiceProvider: MOZa (namens RVO)", "ServiceName (dienstnaam): \"Vergunning aanvragen\"", "ServiceID (dienstcode): Service_456", "Vereist niveau: EH3"]}, {"title": "Verzoek voor BD", "rows": ["ServiceProvider: MOZa (namens BD)", "ServiceName (dienstnaam): \"Belasting doorgeven\"", "ServiceID (dienstcode): Service_789", "Vereist niveau: EH3"]}]}, "2": {"title": "Variant B (19b): één inlogverzoek voor MOZa (leeg portaal), later SSO", "q": ["19b", "Of kan er op dit punt één inlogverzoek worden verstuurd voor alleen de dienst \"MOZa\" (een leeg portaal)? Daarna worden alle stappen doorlopen, en na binnenkomst volgen (via SSO) nieuwe inlogverzoeken voor alle onderliggende diensten."], "groups": [{"title": null, "rows": ["ServiceProvider: MOZa", "ServiceName (dienstnaam): MOZa (leeg portaal)", "ServiceID (dienstcode): MOZa_portal", "Vereist niveau: EH3, vanwege de SSO later in de flow"]}]}, "3": {"title": "Variant C (19c): één inlogverzoek voor alle diensten tegelijk", "q": ["19c", "Of kan er in één keer één inlogverzoek worden verstuurd voor alle diensten?"], "groups": [{"title": null, "rows": ["ServiceProvider: MOZa (namens UWV, BD en RVO)", "ServiceName (dienstnaam): Ziekmelden werknemer, Vergunning aanvragen, Belasting doorgeven", "ServiceID (dienstcode): Service_123, Service_456, Service_789", "Vereist niveau: EH2, EH3"]}]}}}, {"n": 5, "f": "L", "t": "B", "title": "Verzoek: inloggegevens", "text": "De leverancier vraagt Bilal zijn gebruikersnaam en wachtwoord in te vullen."}, {"n": 6, "f": "B", "t": "L", "title": "Inloggen bij Z-Login", "text": "Bilal logt in met zijn accountgegevens van Z-Login."}, {"n": 7, "f": "L", "t": null, "title": "Controle niveau", "note": 3, "text": "Z-Login controleert of het account van Bilal het gevraagde niveau heeft."}, {"n": 8, "f": "L", "t": "B", "title": "Verzoek: kies bedrijf", "text": "De leverancier vraagt Bilal namens welk bedrijf hij wil inloggen."}, {"n": 9, "f": "B", "t": "L", "title": "Bedrijf gekozen", "text": "Bilal selecteert Koffiezaak Noon."}, {"n": 10, "f": "L", "t": null, "title": "Controle machtigingen", "note": 4, "text": "Z-Login controleert of Bilal namens Noon gemachtigd is voor de diensten in het portaal."}, {"n": 11, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "text": "De leverancier stuurt een versleutelde assertion (verklaring) naar de makelaar. Welke variant van toepassing is, hangt af van de variant bij stap 4:", "variants": {"1": {"title": "Variant A: een losse assertion per dienst", "groups": [{"title": "Assertion 1", "rows": ["PseudoID1234 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123"]}, {"title": "Assertion 2", "rows": ["PseudoID5678 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_456"]}, {"title": "Assertion 3", "rows": ["PseudoID9010212 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_789"]}]}, "2": {"title": "Variant B: één assertion voor MOZa (leeg portaal)", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_MOZa (leeg portaal)"]}]}, "3": {"title": "Variant C: één overkoepelende assertion", "groups": [{"title": null, "rows": ["PseudoID8888 is gemachtigd om in te loggen namens KVK-nummer1234 voor Service_123, Service_456, Service_789, enz."]}]}}}, {"n": 12, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 13, "f": "Z", "t": "B", "title": "Toegang tot MOZa-portaal", "note": 5, "text": "Bilal krijgt toegang tot het MOZa-portaal.", "end": true}, {"n": 14, "f": "B", "t": "M", "title": "Trigger voor SSO-inlogverzoeken", "only2": true, "text": "Na binnenkomst in het lege MOZa-portaal wordt er (het liefst automatisch) een trigger gestuurd om de SSO-inlogverzoeken voor de losse onderliggende diensten te gaan versturen. Zo krijgt Bilal ook toegang tot die diensten."}, {"n": 15, "f": "M", "t": "L", "title": "SSO-inlogverzoeken", "only2": true, "text": "De makelaar stuurt inlogverzoek(en) voor de onderliggende diensten naar de leverancier, met SSO."}, {"n": 16, "f": "L", "t": "M", "title": "Versleutelde assertion(s)", "only2": true, "text": "De leverancier stuurt versleutelde assertion(s) naar de makelaar, met daarin dat:", "groups": [{"title": null, "rows": ["PseudoID1234 gemachtigd is om in te loggen", "namens KVK-nummer1234", "voor Service_123, Service_456 en Service_789"]}]}, {"n": 17, "f": "M", "t": "Z", "title": "Doorgeven aan MOZa", "only2": true, "text": "De makelaar geeft het bericht ongeopend door aan MOZa."}, {"n": 18, "f": "Z", "t": "B", "title": "Toegang tot diensten", "only2": true, "text": "Bilal krijgt toegang tot de diensten in het portaal."}];
   const ACTOR_NOTES = { Z: ['1'] };
   const OWNER = { '1': ['actor', 'Z'], '2': ['step', 4], '3': ['step', 7], '4': ['step', 10], '5': ['step', 13] };
   const NOTE_STEP = { 2: 4, 3: 7, 4: 10, 5: 13 };
@@ -654,6 +650,11 @@
     const d = el('div', 'optblock o' + v);
     const h = el('h4'); h.append(el('span', 'opt-tag', OPTNAME[v])); h.append(document.createTextNode(data.title.replace(/^Variant [A-C]\s*(\([^)]*\))?:\s*/, '')));
     d.append(h);
+    if (data.q) {
+      const q = el('div', 'q'), p = el('p');
+      p.append(el('span', 'q-label', 'Vraag (' + data.q[0] + ')'), document.createTextNode(data.q[1]));
+      q.append(p); d.append(q);
+    }
     data.groups.forEach(gr => {
       if (gr.title) d.append(el('p', 'grp-title', gr.title));
       const ul = el('ul', 'fields'); gr.rows.forEach(r => ul.append(el('li', null, r))); d.append(ul);
@@ -707,7 +708,7 @@
   function noteSection(k) {
     const tpl = $('note-' + k); if (!tpl) return null;
     const sec = el('section', 'note-sec');
-    sec.append(el('h3', 'note-h', tpl.dataset.title));
+    if (tpl.dataset.title) sec.append(el('h3', 'note-h', tpl.dataset.title)); else sec.classList.add('plain');
     sec.append(tpl.content.cloneNode(true));
     sec.querySelectorAll('sup.ref').forEach(sup => {
       const o = OWNER[sup.dataset.ref];
@@ -779,5 +780,74 @@
   relayout();
 })();
 </script>
+<!--qpost--><style>
+  .q.repeat.rq { background: none; border: none; padding: 0; }
+  .rq-btn { font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1.5px dashed var(--opt1, #7c3aed);
+    background: var(--surface); color: var(--opt1, #7c3aed); border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 800; }
+  .rq-btn:hover, .rq-btn:focus-visible { background: color-mix(in srgb, var(--opt1, #7c3aed) 12%, var(--surface)); outline: none; }
+  .rq-btn .rq-sub { font-weight: 600; color: var(--muted); }
+  .rq-btn .rq-chev { display: inline-block; transition: transform .15s; }
+  .rq-btn[aria-expanded="true"] .rq-chev { transform: rotate(90deg); }
+  .rq-box { margin-top: 6px; border-radius: 10px; padding: 10px 14px; background: var(--surface);
+    border: 1px dashed color-mix(in srgb, var(--opt1, #7c3aed) 55%, transparent); border-left: 4px solid var(--opt1, #7c3aed); }
+  .rq-box[hidden] { display: none; }
+  .rq-box .rq-origin { margin-top: 8px !important; font-size: .82rem; color: var(--muted); }
+  .rq-box .rq-origin a { font-weight: 700; color: var(--opt1, #7c3aed); cursor: pointer; }
+  .q.q-flash { animation: qflash 1.8s ease-out; }
+  @keyframes qflash { 0%, 40% { box-shadow: 0 0 0 4px var(--focus, #f59e0b); } 100% { box-shadow: 0 0 0 0 transparent; } }
+</style><script>
+(function () {
+  const Q = {"1": {"kind": "note", "id": "3", "where": "Portaaldienst namens meerdere dienstaanbieders? — \"MOZa portaal\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "2": {"kind": "note", "id": "3", "where": "Portaaldienst namens meerdere dienstaanbieders? — \"MOZa portaal\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "3": {"kind": "note", "id": "4", "where": "Dienstbemiddelaars", "plate": "dienstencatalogus-eherkenning", "no": 3}, "4": {"kind": "note", "id": "5", "where": "\"Loket Zorgtoeslag\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "5": {"kind": "note", "id": "5", "where": "\"Loket Zorgtoeslag\"", "plate": "dienstencatalogus-eherkenning", "no": 3}, "6": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7a": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7b": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "7c": {"kind": "note", "id": "6", "where": "MOZa? — Optie 1", "plate": "dienstencatalogus-eherkenning", "no": 3}, "8": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "9a": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "9b": {"kind": "note", "id": "7", "where": "MOZa? — Optie 2", "plate": "dienstencatalogus-eherkenning", "no": 3}, "10": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-losse-dienst", "no": 4}, "11": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-losse-dienst", "no": 4}, "12": {"kind": "actor", "id": "Z", "where": "MOZa", "plate": "inloggen-moza-optie1", "no": 5}, "13": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "13a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "13b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "14": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "15b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie1", "no": 5}, "16a": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "16b": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "17a": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "17b": {"kind": "step", "id": 11, "where": "stap 11", "plate": "inloggen-moza-optie1", "no": 5}, "18": {"kind": "actor", "id": "Z", "where": "MOZa", "plate": "inloggen-moza-optie2", "no": 6}, "20": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "21": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "22": {"kind": "step", "id": 10, "where": "stap 10", "plate": "inloggen-moza-optie2", "no": 6}, "19a": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}, "19b": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}, "19c": {"kind": "step", "id": 4, "where": "stap 4", "plate": "inloggen-moza-optie2", "no": 6}}, HERE = 'inloggen-moza-optie2';
+  const body = document.getElementById('dlg-body');
+  if (!body) return;
+  function findQ(id) {
+    return [...body.querySelectorAll('.q:not(.repeat)')].find(q => { const l = q.querySelector('.q-label'); return l && l.textContent === 'Vraag (' + id + ')'; });
+  }
+  function fire(el) { if (el) el.dispatchEvent(new MouseEvent('click', { bubbles: true })); }
+  function goLocal(id) {
+    const o = Q[id]; if (!o) return;
+    const svg = document.getElementById('diagram');
+    if (o.kind === 'step') fire(svg.querySelector('.qflag[data-owner-step="' + o.id + '"]') || svg.querySelector('.step[data-step="' + o.id + '"] .snum'));
+    else if (o.kind === 'actor') fire(svg.querySelector('.actor[data-actor="' + o.id + '"]'));
+    else fire(svg.querySelector('[data-note="' + o.id + '"]'));
+    setTimeout(() => { const q = findQ(id); if (!q) return; q.scrollIntoView({ block: 'center', behavior: 'smooth' }); q.classList.remove('q-flash'); void q.offsetWidth; q.classList.add('q-flash'); }, 60);
+  }
+  function go(id) {
+    const o = Q[id]; if (!o) return;
+    if (o.plate === HERE) return goLocal(id);
+    if (window.parent !== window) parent.postMessage({ nav: o.plate, q: id }, '*');
+    else location.href = o.plate + '.html#q=' + encodeURIComponent(id);
+  }
+  function enhance(root) {
+    root.querySelectorAll('.q.repeat:not(.rq)').forEach(q => {
+      const p = q.querySelector('p'), lab = p && p.querySelector('.q-label'); if (!lab) return;
+      const m = lab.textContent.match(/Vraag \(([^)]+)\)/), id = m && m[1];
+      q.classList.add('rq');
+      const tag = p.querySelector('.rep-tag'); if (tag) tag.remove();
+      lab.remove();
+      const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'rq-btn'; btn.setAttribute('aria-expanded', 'false');
+      btn.innerHTML = '<span>↻ Vraag (' + id + ')</span><span class="rq-sub">herhaalde vraag</span><span class="rq-chev">▸</span>';
+      const box = document.createElement('div'); box.className = 'rq-box'; box.hidden = true;
+      box.append(p);
+      const o = Q[id];
+      if (o) {
+        const org = document.createElement('p'); org.className = 'rq-origin';
+        org.append('Oorspronkelijk gesteld bij ');
+        const a = document.createElement('a'); a.href = '#';
+        a.textContent = (o.plate === HERE ? '' : 'plaat ' + o.no + ', ') + o.where + ' ↗';
+        a.addEventListener('click', e => { e.preventDefault(); go(id); });
+        org.append(a); box.append(org);
+      }
+      btn.addEventListener('click', () => { box.hidden = !box.hidden; btn.setAttribute('aria-expanded', String(!box.hidden)); });
+      q.replaceChildren(btn, box);
+    });
+  }
+  new MutationObserver(() => enhance(body)).observe(body, { childList: true, subtree: true });
+  enhance(body);
+  window.addEventListener('message', e => { if (e.data && e.data.gotoQ) goLocal(e.data.gotoQ); });
+  const h = location.hash.match(/^#q=(.+)$/);
+  if (h) setTimeout(() => goLocal(decodeURIComponent(h[1])), 50);
+})();
+</script><!--/qpost-->
 </body>
 </html>

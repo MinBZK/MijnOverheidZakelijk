@@ -416,6 +416,39 @@
   :root[data-theme="dark"] { --c-cat: #94a3b8; }
   .a-cat { --c: var(--c-cat); }
   .dlg .body a.chip { text-decoration: none; color: var(--text); }
+  .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(15, 23, 42, .5); }
+  .modal[hidden] { display: none; }
+  .modal-card { width: min(780px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--surface); color: var(--text); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  .modal-card header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--region-inner); }
+  .modal-card header .num { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; font-weight: 700; background: color-mix(in srgb, var(--c) 30%, var(--surface)); border: 2px solid var(--c); }
+  .modal-card header h2 { font-size: 1.1rem; margin: 0; flex: 1; }
+  .modal-card header .kind { display: block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .modal-body { padding: 16px 20px; }
+  .modal-card footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--region-inner); }
+  .modal-card a.chip { text-decoration: none; color: var(--text); }
+  svg.mini { display: block; width: 100%; height: auto; }
+  .m-region { fill: var(--region); stroke: var(--border); stroke-width: 2; }
+  .m-inner { fill: var(--region-inner); stroke: var(--border); stroke-width: 1.5; }
+  .m-label { fill: var(--muted); font-weight: 700; font-size: 14px; }
+  .m-lane { stroke-width: 1.2; stroke-dasharray: 2 4; opacity: .55; }
+  .m-lane-hl { opacity: 1; stroke-width: 2; }
+  svg.mini .rvo { fill: var(--rvo-fill); stroke: var(--rvo-stroke); }
+  svg.mini .bd { fill: var(--bd-fill); stroke: var(--bd-stroke); }
+  svg.mini .justis { fill: var(--justis-fill); stroke: var(--justis-stroke); }
+  svg.mini g rect.rvo, svg.mini g rect.bd, svg.mini g rect.justis { stroke-width: 2; }
+  .m-offer { stroke-width: 8; fill: none; }
+  .m-offer.rvo { stroke: var(--rvo-stroke); } .m-offer.bd { stroke: var(--bd-stroke); } .m-offer.justis { stroke: var(--justis-stroke); }
+  .m-t { font-size: 13px; fill: var(--text); } .m-s { font-size: 12px; fill: var(--text); } .b { font-weight: 700; }
+  .m-dim, .m-dimline { opacity: .3; }
+  .m-ring { fill: none; stroke: var(--focus); stroke-width: 3; stroke-dasharray: 7 5; animation: m-dash 1.2s linear infinite; }
+  @keyframes m-dash { to { stroke-dashoffset: -24; } }
+  @media (prefers-reduced-motion: reduce) { .m-ring { animation: none; } }
+  .m-tag rect { fill: var(--focus); }
+  .m-tag text { fill: #1f1300; font-size: 11.5px; font-weight: 800; }
+  .m-legend { margin: 12px 0 6px; padding-left: 1.3em; }
+  .m-legend li { margin: 4px 0; }
+  .m-legend li::marker { color: var(--focus); font-weight: 800; }
+  .m-note { font-size: .82rem; color: var(--muted); margin: 0; }
 </style>
 </head>
 <body>
@@ -504,10 +537,64 @@
   <p class="src"><span>Bron: <a href="https://afsprakenstelsel.etoegang.nl/Startpagina/as/service-catalog" target="_blank" rel="noopener">Service catalog | Afsprakenstelsel eToegang</a></span></p>
 </template>
 
+
+<div class="modal" id="cat-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cat-modal-title">
+  <div class="modal-card">
+    <header>
+      <span class="num step-num a-cat">5</span>
+      <h2 id="cat-modal-title"><span class="kind">Stap 5 · resultaat</span>Zo staat Justis nu in de dienstencatalogus</h2>
+      <button class="icon-btn" id="cat-modal-close" aria-label="Sluiten">&times;</button>
+    </header>
+    <div class="modal-body">
+      <svg class="mini" viewBox="0 0 700 440" role="img" aria-label="Vereenvoudigde dienstencatalogus met Justis en VOG aanvragen gemarkeerd">
+        <defs>
+          <marker id="mArr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker>
+        </defs>
+        <rect class="m-region" x="10" y="10" width="680" height="160" rx="22"/>
+        <text class="m-label" x="350" y="34" text-anchor="middle">Dienstverleners</text>
+        <rect class="m-inner" x="30" y="46" width="640" height="110" rx="18"/>
+        <text class="m-label" x="240" y="70" text-anchor="middle">Dienstaanbieders</text>
+        <g class="m-dim"><rect class="rvo" x="80" y="95" width="100" height="40" rx="9"/><text class="m-t" x="130" y="120" text-anchor="middle">RVO</text></g>
+        <g class="m-dim"><rect class="bd" x="300" y="95" width="100" height="40" rx="9"/><text class="m-t" x="350" y="120" text-anchor="middle">BD</text></g>
+        <g class="m-hl"><rect class="justis" x="520" y="95" width="100" height="40" rx="9"/><text class="m-t b" x="570" y="120" text-anchor="middle">Justis</text>
+          <rect class="m-ring" x="512" y="87" width="116" height="56" rx="14"/></g>
+        <g class="m-tag"><rect x="472" y="56" width="196" height="22" rx="11"/><text x="570" y="71" text-anchor="middle">① Aangesloten dienstaanbieder</text></g>
+
+        <rect class="m-region" x="10" y="190" width="680" height="240" rx="22"/>
+        <text class="m-label" x="40" y="214">Diensten</text>
+        <rect class="m-lane rvo" x="40" y="224" width="180" height="190" rx="12"/>
+        <rect class="m-lane bd" x="260" y="224" width="180" height="190" rx="12"/>
+        <rect class="m-lane justis m-lane-hl" x="480" y="224" width="180" height="190" rx="12"/>
+        <line class="m-offer rvo m-dimline" x1="130" y1="137" x2="130" y2="218" marker-end="url(#mArr)"/>
+        <line class="m-offer bd m-dimline" x1="350" y1="137" x2="350" y2="218" marker-end="url(#mArr)"/>
+        <line class="m-offer justis" x1="570" y1="145" x2="570" y2="218" marker-end="url(#mArr)"/>
+        <g class="m-dim"><rect class="rvo" x="55" y="248" width="150" height="34" rx="17"/><text class="m-s" x="130" y="270" text-anchor="middle">Subsidie aanvragen</text></g>
+        <g class="m-dim"><rect class="rvo" x="55" y="292" width="150" height="34" rx="17"/><text class="m-s" x="130" y="314" text-anchor="middle">Vergunning aanvragen</text></g>
+        <g class="m-dim"><rect class="bd" x="268" y="248" width="164" height="34" rx="17"/><text class="m-s" x="350" y="270" text-anchor="middle">Belastingaangifte doen</text></g>
+        <g class="m-dim"><rect class="bd" x="268" y="292" width="164" height="34" rx="17"/><text class="m-s" x="350" y="314" text-anchor="middle">Zorgtoeslag aanvragen</text></g>
+        <g class="m-dim"><rect class="bd" x="268" y="336" width="164" height="34" rx="17"/><text class="m-s" x="350" y="358" text-anchor="middle">Huurtoeslag aanvragen</text></g>
+        <g class="m-hl"><rect class="justis" x="495" y="262" width="150" height="38" rx="19"/><text class="m-s b" x="570" y="286" text-anchor="middle">VOG aanvragen</text>
+          <rect class="m-ring" x="487" y="254" width="166" height="54" rx="27"/></g>
+        <g class="m-tag"><rect x="497" y="230" width="146" height="20" rx="10"/><text x="570" y="244" text-anchor="middle">② Nieuw geregistreerd</text></g>
+        <g class="m-dim"><rect class="justis" x="495" y="320" width="150" height="34" rx="17"/><text class="m-s" x="570" y="342" text-anchor="middle" style="font-size:11px">Naamswijziging doorgeven</text></g>
+      </svg>
+      <ol class="m-legend">
+        <li><b>Justis</b> staat in de dienstencatalogus als <b>dienstaanbieder</b>.</li>
+        <li>De dienst <b>VOG aanvragen</b> is geregistreerd als dienst van Justis, met de gegevens uit stap 3 (o.a. betrouwbaarheidsniveau EH3).</li>
+      </ol>
+      <p class="m-note">Vereenvoudigde weergave van plaat 1. De andere dienstaanbieders en diensten zijn ter illustratie.</p>
+    </div>
+    <footer>
+      <a class="chip" data-nav="dienstencatalogus-eherkenning" href="dienstencatalogus-eherkenning.html"><span class="num">1</span><span class="lbl">Bekijk de volledige plaat 1</span></a>
+      <button class="nav-btn" id="cat-modal-ok">Sluiten</button>
+    </footer>
+  </div>
+</div>
+
 <script>
 (function () {
   const ACT = {"D": {"name": "Dienstverlener (Justis)", "cls": "a-uwv"}, "M": {"name": "Makelaar", "cls": "a-mak"}, "C": {"name": "Dienstencatalogus", "cls": "a-cat"}};
-  const STEPS = [{"n": 1, "f": "D", "t": "M", "title": "Makelaar kiezen", "text": "Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.", "notes": [1]}, {"n": 2, "f": "M", "t": "D", "title": "Gegevens opvragen", "text": "De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.", "notes": [3]}, {"n": 3, "f": "D", "t": "M", "title": "Gegevens aanleveren", "text": "Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:", "rows": ["Dienstverlenernaam (OrganizationDisplayName): Justis", "Dienstnaam (ServiceName): VOG aanvragen", "Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag", "Betrouwbaarheidsniveau (AuthnContextClassRef): EH3"], "notes": [3]}, {"n": 4, "f": "M", "t": "C", "title": "Doorgeven aan catalogus", "text": "De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.", "notes": [2]}, {"n": 5, "f": "C", "t": null, "title": "Registratie in catalogus", "text": "De dienst wordt geregistreerd in de dienstencatalogus.", "notes": [2]}, {"n": 6, "f": "C", "t": "D", "title": "Dienst aangesloten", "text": "De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen."}];
+  const STEPS = [{"n": 1, "f": "D", "t": "M", "title": "Makelaar kiezen", "text": "Justis wil een dienst via eHerkenning aanbieden en kiest daarvoor zelf een eHerkenningsmakelaar. Via die makelaar sluit Justis aan op het eHerkenningsstelsel.", "notes": [1]}, {"n": 2, "f": "M", "t": "D", "title": "Gegevens opvragen", "text": "De makelaar vraagt Justis de gegevens aan te leveren van de dienst(en) die Justis wil registreren.", "notes": [3]}, {"n": 3, "f": "D", "t": "M", "title": "Gegevens aanleveren", "text": "Justis levert de ingevulde dienstgegevens aan bij de makelaar, bijvoorbeeld:", "rows": ["Dienstverlenernaam (OrganizationDisplayName): Justis", "Dienstnaam (ServiceName): VOG aanvragen", "Dienstomschrijving (ServiceDescription): Aanvragen van een Verklaring Omtrent het Gedrag", "Betrouwbaarheidsniveau (AuthnContextClassRef): EH3"], "notes": [3]}, {"n": 4, "f": "M", "t": "C", "title": "Doorgeven aan catalogus", "text": "De makelaar geeft de dienstgegevens door aan de dienstencatalogus van eHerkenning.", "notes": [2]}, {"n": 5, "f": "C", "t": null, "title": "Registratie in catalogus", "text": "De dienst wordt geregistreerd in de dienstencatalogus: Justis staat er nu in als dienstaanbieder, met \"VOG aanvragen\" als dienst.", "notes": [2], "modal": true}, {"n": 6, "f": "C", "t": "D", "title": "Dienst aangesloten", "text": "De dienst is aangesloten op het eHerkenningsstelsel. Ondernemers kunnen nu voor deze dienst inloggen met eHerkenning, en werkgevers kunnen hun medewerkers voor deze dienst machtigen."}];
   const NOTES = [1, 2, 3];
   const NOTE_TARGET = {"1": "actor eHerkenningsmakelaar", "2": "actor Dienstencatalogus", "3": 2};
   const $ = id => document.getElementById(id);
@@ -541,6 +628,7 @@
     if (s.t) { route.append(el('span', null, '→')); route.append(actorChip(s.t)); } else route.append(el('span', null, '(interne verwerking)'));
     body.push(route, el('p', 'lead', s.text));
     if (s.rows) { const ul = el('ul', 'fields'); s.rows.forEach(r => ul.append(el('li', null, r))); body.push(ul); }
+    if (s.modal) { const b = el('button', 'chip start', 'Toon waar Justis nu staat in de dienstencatalogus ▸'); b.type = 'button'; b.addEventListener('click', openModal); body.push(b); }
     if (s.notes) {
       const box = el('div', 'callout info');
       box.append(el('p', 'callout-title', 'Meer uitleg'));
@@ -575,12 +663,20 @@
       e.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); fn(e); } });
     });
   }
-  bind('.snum', e => showStep(+e.closest('.step').dataset.step));
+  const modal = $('cat-modal');
+  let lastFocus = null;
+  function openModal() { lastFocus = document.activeElement; modal.hidden = false; $('cat-modal-ok').focus(); }
+  function closeModal() { modal.hidden = true; if (lastFocus) lastFocus.focus(); }
+  $('cat-modal-close').addEventListener('click', closeModal);
+  $('cat-modal-ok').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  bind('.snum', e => { const n = +e.closest('.step').dataset.step; showStep(n); if (n === 5) openModal(); });
   bind('.tbadge', e => showNote(+e.dataset.note));
   prevBtn.addEventListener('click', () => go(-1));
   nextBtn.addEventListener('click', () => go(1));
   $('dlg-close').addEventListener('click', closePanel);
   document.addEventListener('keydown', e => {
+    if (!modal.hidden) { if (e.key === 'Escape') closeModal(); return; }
     if (dlg.hidden) return;
     if (e.key === 'Escape') closePanel();
     if (e.key === 'ArrowRight' && !nextBtn.disabled) go(1);

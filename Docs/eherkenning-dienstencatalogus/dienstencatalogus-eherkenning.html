@@ -315,13 +315,13 @@
   <div class="canvas">
     <svg id="diagram" viewBox="0 0 1100 790" role="img" aria-label="Diagram van de dienstencatalogus eHerkenning">
       <defs>
-        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="var(--line)"/>
         </marker>
-        <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="var(--opt1)"/>
         </marker>
-        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="var(--opt2)"/>
         </marker>
         <marker id="arrRVO" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto">
@@ -701,13 +701,28 @@
   // Verbindingen uitlichten bij hover/focus
   const svg = document.getElementById('diagram');
   const edges = [...svg.querySelectorAll('[data-from]')];
+  // Diensten per dienstaanbieder, en knooppunten waar het uitlichten doorloopt
+  const GROUP = { rvo: ['subsidie', 'vergunning'], bd: ['belasting', 'zorgtoeslag', 'huurtoeslag', 'mijntoeslagen'], justis: ['vog', 'naam'] };
+  const VIA = { opt2: ['mozaportaal'] };
   function highlight(id) {
     const ids = new Set([id]);
-    edges.forEach(e => {
-      const hit = e.dataset.from === id || e.dataset.to === id;
-      e.classList.toggle('hl', hit);
-      if (hit) { ids.add(e.dataset.from); ids.add(e.dataset.to); }
+    const hit = new Set();
+    const touch = x => edges.forEach(e => {
+      if (e.dataset.from === x || e.dataset.to === x) { hit.add(e); ids.add(e.dataset.from); ids.add(e.dataset.to); }
     });
+    touch(id);
+    (VIA[id] || []).forEach(touch);
+    Object.entries(GROUP).forEach(([prov, services]) => {
+      if (prov === id) {
+        services.forEach(sv => ids.add(sv));
+        edges.forEach(e => { if (services.includes(e.dataset.from) && services.includes(e.dataset.to)) hit.add(e); });
+      }
+      if (services.includes(id)) {
+        ids.add(prov);
+        edges.forEach(e => { if (e.dataset.from === prov && e.classList.contains('offer')) hit.add(e); });
+      }
+    });
+    edges.forEach(e => e.classList.toggle('hl', hit.has(e)));
     svg.querySelectorAll('.node').forEach(n => n.classList.toggle('hl', ids.has(n.dataset.id)));
     svg.classList.add('dimmed');
   }

@@ -700,13 +700,13 @@
   &lt;div class=&quot;canvas&quot;&gt;
     &lt;svg id=&quot;diagram&quot; viewBox=&quot;0 0 1100 790&quot; role=&quot;img&quot; aria-label=&quot;Diagram van de dienstencatalogus eHerkenning&quot;&gt;
       &lt;defs&gt;
-        &lt;marker id=&quot;arr&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; orient=&quot;auto-start-reverse&quot;&gt;
+        &lt;marker id=&quot;arr&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
           &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--line)&quot;/&gt;
         &lt;/marker&gt;
-        &lt;marker id=&quot;arr1&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; orient=&quot;auto-start-reverse&quot;&gt;
+        &lt;marker id=&quot;arr1&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
           &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--opt1)&quot;/&gt;
         &lt;/marker&gt;
-        &lt;marker id=&quot;arr2&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; orient=&quot;auto-start-reverse&quot;&gt;
+        &lt;marker id=&quot;arr2&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerUnits=&quot;userSpaceOnUse&quot; markerWidth=&quot;11&quot; markerHeight=&quot;11&quot; orient=&quot;auto-start-reverse&quot;&gt;
           &lt;path d=&quot;M0,0 L10,5 L0,10 z&quot; fill=&quot;var(--opt2)&quot;/&gt;
         &lt;/marker&gt;
         &lt;marker id=&quot;arrRVO&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;5&quot; refY=&quot;5&quot; markerWidth=&quot;3.2&quot; markerHeight=&quot;3.2&quot; orient=&quot;auto&quot;&gt;
@@ -1086,13 +1086,28 @@
   // Verbindingen uitlichten bij hover/focus
   const svg = document.getElementById(&#x27;diagram&#x27;);
   const edges = [...svg.querySelectorAll(&#x27;[data-from]&#x27;)];
+  // Diensten per dienstaanbieder, en knooppunten waar het uitlichten doorloopt
+  const GROUP = { rvo: [&#x27;subsidie&#x27;, &#x27;vergunning&#x27;], bd: [&#x27;belasting&#x27;, &#x27;zorgtoeslag&#x27;, &#x27;huurtoeslag&#x27;, &#x27;mijntoeslagen&#x27;], justis: [&#x27;vog&#x27;, &#x27;naam&#x27;] };
+  const VIA = { opt2: [&#x27;mozaportaal&#x27;] };
   function highlight(id) {
     const ids = new Set([id]);
-    edges.forEach(e =&gt; {
-      const hit = e.dataset.from === id || e.dataset.to === id;
-      e.classList.toggle(&#x27;hl&#x27;, hit);
-      if (hit) { ids.add(e.dataset.from); ids.add(e.dataset.to); }
+    const hit = new Set();
+    const touch = x =&gt; edges.forEach(e =&gt; {
+      if (e.dataset.from === x || e.dataset.to === x) { hit.add(e); ids.add(e.dataset.from); ids.add(e.dataset.to); }
     });
+    touch(id);
+    (VIA[id] || []).forEach(touch);
+    Object.entries(GROUP).forEach(([prov, services]) =&gt; {
+      if (prov === id) {
+        services.forEach(sv =&gt; ids.add(sv));
+        edges.forEach(e =&gt; { if (services.includes(e.dataset.from) &amp;&amp; services.includes(e.dataset.to)) hit.add(e); });
+      }
+      if (services.includes(id)) {
+        ids.add(prov);
+        edges.forEach(e =&gt; { if (e.dataset.from === prov &amp;&amp; e.classList.contains(&#x27;offer&#x27;)) hit.add(e); });
+      }
+    });
+    edges.forEach(e =&gt; e.classList.toggle(&#x27;hl&#x27;, hit.has(e)));
     svg.querySelectorAll(&#x27;.node&#x27;).forEach(n =&gt; n.classList.toggle(&#x27;hl&#x27;, ids.has(n.dataset.id)));
     svg.classList.add(&#x27;dimmed&#x27;);
   }

@@ -34,11 +34,11 @@ De criteria voor die keuze, toegepast op het NMC:
 
 Het NMC wordt op FSC ontsloten via **internet**. De FSC-inway van de Notificatiedienst is vanaf internet bereikbaar en staat met dat adres in de Directory. Er komt geen inway op Diginetwerk.
 
-Het volume geeft de doorslag. Bij de verwachte pieken is de capaciteit van een Diginetwerk-aansluiting een risico dat alleen via een change bij de koppelnetwerkaanbieder is weg te nemen; een internetuplink schaalt mee.
+Vier punten geven samen de doorslag; geen ervan is op zichzelf beslissend:
 
-Twee punten ondersteunen die keuze:
-
+* **Volume.** Bij de verwachte pieken is de capaciteit van een Diginetwerk-aansluiting een aandachtspunt. Meer capaciteit is aan te vragen, maar dat is een change bij de koppelnetwerkaanbieder met een eigen doorlooptijd, en de aansluiting blijft gedeeld met de andere koppelingen van het platform. Een internetuplink schaalt mee zonder zo'n stap.
 * **Voorkeur van de afnemers.** Dienstverleners en hun leveranciers sluiten liever via internet aan. Dat vergt geen Diginetwerk-aansluiting voor de leverancier en geen tweede route naast Diginetwerk.
+* **Inrichting, kosten en doorlooptijd.** Internetconnectiviteit is in de Kubernetes-omgeving al aanwezig. Diginetwerk vraagt per omgeving een aansluiting via een koppelnetwerkaanbieder, op offertebasis, met routering, DNS en firewallwijzigingen als change bij die aanbieder. Op internet sluit een nieuwe peer of omgeving aan zonder netwerkstap.
 * **Gevoeligheid van de gegevens.** De personalisation bevat gewone persoonsgegevens zoals naam en zaaknummer. Bijzondere en strafrechtelijke persoonsgegevens horen er niet in; dat is een aansluitvoorwaarde. Een BSN met contactgegevens, een berichttype en zulke gewone gegevens vraagt niet om netwerkscheiding als aanvullende maatregel bovenop FSC-mTLS en het OAuth2-token op berichtniveau.
 
 Deze keuze wordt heroverwogen zodra een dienstverlener of keten Diginetwerk als aansluitvoorwaarde stelt, of een risicoanalyse netwerkscheiding als aanvullende maatregel voorschrijft. Een aanvullende inway op Diginetwerk komt dan in een eigen FSC-groep, met gescheiden Directory-registraties en certificaten.

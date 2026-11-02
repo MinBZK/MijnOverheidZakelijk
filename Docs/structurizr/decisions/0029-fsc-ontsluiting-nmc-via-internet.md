@@ -21,24 +21,25 @@ Dienstverleners roepen het Notificatie Management Component (NMC) aan over FSC (
 
 De criteria voor die keuze, toegepast op het NMC:
 
-1. **Bereikbaarheid voor de peers.** De inway-adressen in de Directory moeten bereikbaar zijn vanaf de outways van alle peers in de FSC-groep. Diginetwerk is alleen toegankelijk voor overheidsorganisaties en organisaties met een publieke taak. Bij decentrale regie roept de OMC van de dienstverlener het NMC aan, en die OMC draait vaak bij een leverancier. Voor zulke partijen zou naast Diginetwerk een tweede route nodig zijn.
+1. **Bereikbaarheid voor de peers.** De inway-adressen in de Directory moeten bereikbaar zijn vanaf de outways van alle peers in de FSC-groep. Diginetwerk is bedoeld voor overheidsorganisaties en organisaties met een publieke taak; een leverancier kan alleen in opdracht van zo'n organisatie en met toestemming van Logius een aansluiting krijgen. Bij decentrale regie roept de OMC van de dienstverlener het NMC aan, en die OMC draait soms bij een leverancier. Zo'n leverancier heeft dan een eigen Diginetwerk-aansluiting nodig, of de dienstverlener moet naast Diginetwerk een tweede route bieden.
 2. **Aansluitvoorwaarden van wederpartijen.** Geen wederpartij of keten van het NMC eist een besloten netwerk.
-3. **Risicoanalyse en classificatie (BIO).** Het NMC ontvangt per notificatie een e-mailadres of een identificerend nummer, een berichttype en de waarden voor de personalisation. Bij gecentraliseerde regie kan dat nummer een BSN zijn (ADR 0021). De personalisation is vrije inhoud van de dienstverlener (ADR 0024); het NMC kan niet afdwingen wat daarin staat. De combinatie die om netwerkscheiding kan vragen, BSN met bijzondere persoonsgegevens, ontstaat dus alleen als een dienstverlener bijzondere persoonsgegevens in de personalisation zet. Diginetwerk is besloten, maar versleutelt niet uit zichzelf; FSC-mTLS is op beide netwerken nodig. Netwerkscheiding zou een aanvullende laag zijn, geen vervanging van de versleuteling.
+3. **Risicoanalyse en classificatie (BIO).** Het NMC ontvangt per notificatie een e-mailadres of een identificerend nummer, een berichttype en de waarden voor de personalisation. Bij gecentraliseerde regie kan dat nummer een BSN zijn (ADR 0021). De personalisation is vrije inhoud van de dienstverlener (ADR 0024); het NMC kan niet afdwingen wat daarin staat. In de praktijk staan daar gewone persoonsgegevens in: naam, aanhef, een zaaknummer, een bedrag of een termijn. Bijzondere persoonsgegevens in de zin van artikel 9 AVG (gezondheid, religie, etnische afkomst, politieke opvattingen, seksuele geaardheid, biometrie en genetica) en strafrechtelijke gegevens (artikel 10 AVG) horen daar niet in. De combinatie die om netwerkscheiding kan vragen, BSN met bijzondere of strafrechtelijke gegevens, ontstaat dus alleen als een dienstverlener zulke gegevens in de personalisation zet. Diginetwerk is besloten, maar versleutelt niet uit zichzelf; FSC-mTLS is op beide netwerken nodig. Netwerkscheiding zou een aanvullende laag zijn, geen vervanging van de versleuteling.
 4. **Aanvalsoppervlak.** Een inway op internet is publiek bereikbaar voor scans, DDoS en misbruik van kwetsbaarheden in de TLS-stack of de inway zelf. Zonder geldig certificaat en contract komt een aanvaller niet bij het NMC. Op Diginetwerk is de blootstelling kleiner.
-5. **Beschikbaarheid.** Diginetwerk borgt beschikbaarheid via een SLA; internet is best-effort. Met Diginetwerk wordt het NMC afhankelijk van de koppelnetwerkleverancier en diens wijzigingsprocessen. De verzending via NotifyNL en de receipt-callback van NotifyNL lopen over internet zolang NotifyNL buiten de LPC draait (ADR 0024; open besluit in ADR 0025).
-6. **Hosting en inrichting.** Vanuit een Kubernetes-omgeving is internetconnectiviteit standaard aanwezig. Diginetwerk vraagt aparte routering, eigen adresruimte of NAT, DNS-inrichting en firewallwijzigingen via een leverancier, per koppeling en per omgeving (test, acceptatie, productie).
-7. **Kosten en doorlooptijd.** Diginetwerk heeft aansluit- en abonnementskosten, en elke netwerkwijziging is een change bij de leverancier. Op internet sluit een nieuwe peer aan met alleen een FSC-contract.
-8. **Volume.** Eén dienstverlener heeft een piek van 2,2 miljoen notificaties in één maand opgegeven (ADR 0024). Een Diginetwerk-aansluiting is doorgaans kleiner gedimensioneerd dan een internetuplink, en bij zulke volumes is de bandbreedte van die aansluiting een risico.
+5. **Beschikbaarheid.** Diginetwerk borgt beschikbaarheid via een SLA; internet is best-effort. Met Diginetwerk wordt het NMC afhankelijk van de koppelnetwerkaanbieder en diens wijzigingsprocessen.
+6. **Hosting en inrichting.** Vanuit een Kubernetes-omgeving is internetconnectiviteit standaard aanwezig. Diginetwerk vraagt aparte routering, eigen adresruimte of NAT, DNS-inrichting en firewallwijzigingen via de koppelnetwerkaanbieder, per koppeling en per omgeving (test, acceptatie, productie).
+7. **Kosten en doorlooptijd.** Een Diginetwerk-aansluiting wordt op offertebasis geleverd door een koppelnetwerkaanbieder (voor de Rijksoverheid de Haagsche Ring van Logius), die ook de beschikbaarheid en capaciteit van de aansluiting beheert; een netwerkwijziging is een change bij die aanbieder. Op internet is er geen netwerkstap: een nieuwe peer sluit aan met een PKIoverheid-certificaat, een registratie in de Directory en een FSC-contract.
+8. **Volume.** Eén dienstverlener heeft een piek van 2,2 miljoen notificaties in één maand opgegeven (ADR 0024). Het NMC neemt zo'n piek aan in het tempo waarin de dienstverlener hem aanbiedt en buffert hem; de aanname moet die stoot dus aankunnen. Een Diginetwerk-aansluiting is een vaste lijn met een afgesproken capaciteit, gedeeld met alle andere koppelingen van het platform over dat netwerk, en kleiner gedimensioneerd dan een internetuplink. Bij zulke pieken is die capaciteit een risico, en opschalen is een change bij de koppelnetwerkaanbieder.
 
 ## Decision
 
 Het NMC wordt op FSC ontsloten via **internet**. De FSC-inway van de Notificatiedienst is vanaf internet bereikbaar en staat met dat adres in de Directory. Er komt geen inway op Diginetwerk.
 
-De doorslag geven drie punten:
+Het volume geeft de doorslag. Bij de verwachte pieken is de capaciteit van een Diginetwerk-aansluiting een risico dat alleen via een change bij de koppelnetwerkaanbieder is weg te nemen; een internetuplink schaalt mee.
 
-* **Volume.** Bij de verwachte pieken is de capaciteit van een Diginetwerk-aansluiting een risico; een internetuplink schaalt mee.
-* **Voorkeur van de afnemers.** Dienstverleners en hun leveranciers sluiten liever via internet aan. Dat vergt geen Diginetwerk-aansluiting en geen tweede route voor partijen zonder toegang tot Diginetwerk.
-* **Gevoeligheid van de gegevens.** Dienstverleners zetten geen bijzondere persoonsgegevens in de personalisation; dat is een aansluitvoorwaarde. Een BSN met contactgegevens en een berichttype vraagt dan niet om netwerkscheiding als aanvullende maatregel bovenop FSC-mTLS en het OAuth2-token op berichtniveau.
+Twee punten ondersteunen die keuze:
+
+* **Voorkeur van de afnemers.** Dienstverleners en hun leveranciers sluiten liever via internet aan. Dat vergt geen Diginetwerk-aansluiting voor de leverancier en geen tweede route naast Diginetwerk.
+* **Gevoeligheid van de gegevens.** De personalisation bevat gewone persoonsgegevens zoals naam en zaaknummer. Bijzondere en strafrechtelijke persoonsgegevens horen er niet in; dat is een aansluitvoorwaarde. Een BSN met contactgegevens, een berichttype en zulke gewone gegevens vraagt niet om netwerkscheiding als aanvullende maatregel bovenop FSC-mTLS en het OAuth2-token op berichtniveau.
 
 Deze keuze wordt heroverwogen zodra een dienstverlener of keten Diginetwerk als aansluitvoorwaarde stelt, of een risicoanalyse netwerkscheiding als aanvullende maatregel voorschrijft. Een aanvullende inway op Diginetwerk komt dan in een eigen FSC-groep, met gescheiden Directory-registraties en certificaten.
 
@@ -46,9 +47,9 @@ Deze keuze wordt heroverwogen zodra een dienstverlener of keten Diginetwerk als 
 
 * De inway is publiek bereikbaar en krijgt DDoS-bescherming en rate limiting aan de rand van het platform. Kwetsbaarheden in de inway en de TLS-stack worden met voorrang gepatcht.
 * De toegang steunt volledig op FSC: mTLS met PKIoverheid-certificaten, contracten in de Directory, het FSC-toegangstoken met het OIN van de dienstverlener (ADR 0030) en het OAuth2-token op berichtniveau (ADR 0024). Het netwerk telt niet als beveiligingsmaatregel.
-* De beschikbaarheid van de route naar de dienstverleners is best-effort, net als de route naar NotifyNL.
-* Er zijn geen aansluitkosten of netwerkchanges bij een koppelnetwerkleverancier. Een nieuwe dienstverlener of omgeving sluit aan met een FSC-contract.
-* De aansluitvoorwaarden van de Notificatiedienst verbieden bijzondere persoonsgegevens in de personalisation. Een dienstverlener die ze toch nodig heeft, is aanleiding om deze keuze te heroverwegen.
+* De beschikbaarheid van de route naar de dienstverleners is best-effort.
+* Er is geen aansluiting bij en geen netwerkchange via een koppelnetwerkaanbieder. Een nieuwe dienstverlener of omgeving sluit aan met een certificaat, een Directory-registratie en een FSC-contract.
+* De aansluitvoorwaarden van de Notificatiedienst verbieden bijzondere persoonsgegevens (artikel 9 AVG) en strafrechtelijke gegevens (artikel 10 AVG) in de personalisation. Gewone persoonsgegevens zoals naam, aanhef en zaaknummer zijn toegestaan. Een dienstverlener die bijzondere of strafrechtelijke gegevens toch nodig heeft, is aanleiding om deze keuze te heroverwegen.
 * Dienstverleners die alleen via Diginetwerk naar buiten kunnen, hebben een outway nodig die internet bereikt.
 
 ## Verwijzingen
@@ -56,4 +57,5 @@ Deze keuze wordt heroverwogen zodra een dienstverlener of keten Diginetwerk als 
 * [FSC, Federated Service Connectivity](https://fsc-standaard.nl/): inway, outway, Directory en contracten
 * [Digikoppeling Koppelvlakstandaard REST API 4.0.1](https://gitdocumentatie.logius.nl/publicatie/dk/restapi/4.0.1/): FSC verplicht binnen het profiel, OIN als PeerID, PKIoverheid als vertrouwensanker
 * [Standaarden op developer.overheid.nl](https://developer.overheid.nl/kennisbank/infra/standaarden): FSC als onderdeel van het Digikoppeling REST API-profiel
+* [Aansluiten op Diginetwerk (Logius)](https://www.logius.nl/onze-dienstverlening/infrastructuur/diginetwerk/aansluiten): koppelnetwerkaanbieders, aansluiting op offertebasis, toestemming voor leveranciers
 * [Diginetwerk Architectuurdocument v1.4 (Logius)](https://test-dictu.logius.nl/sites/default/files/bestanden/website/Diginetwerk%20Architectuurdocument%20v1.4.pdf): Basiskoppelnetwerk, aangesloten netwerken en SLA

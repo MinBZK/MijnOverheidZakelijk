@@ -14,19 +14,19 @@ Proposed
 
 ## Context
 
-De Profielservice en het Notificatie Management Component (NMC) leggen hun verwerkingen vast in het Logboek Dataverwerkingen via de LDV-wrapper (`moza-logboekdataverwerking`). ADR 0010 koos ClickHouse als database voor het logboek. Voor het testen is PostgreSQL aantrekkelijker, omdat dat aanzienlijk minder resources vraagt.
+Het Notificatie Management Component (NMC) legt zijn verwerkingen vast in het Logboek Dataverwerkingen via de LDV-wrapper (`moza-logboekdataverwerking`), vóór elke externe aanroep (ADR 0024). ADR 0010 koos ClickHouse als database voor het logboek. Het NMC draait zelf op PostgreSQL (ADR 0024). Voor het testen is PostgreSQL aantrekkelijker, omdat dat aanzienlijk minder resources vraagt.
 
 De wrapper ondersteunt beide backends achter één `SpanRepository`, gekozen met `logboekdataverwerking.dbms` (`clickhouse` is de standaard, `postgresql` het alternatief). Beide JDBC-drivers zijn optioneel; een service declareert alleen de driver van de gekozen backend. De PostgreSQL-backend slaat `attributes` en `resource` op als `jsonb`, heeft een primary key op `(trace_id, span_id)`, schrijft elke export als één transactie, alles of niets, en doet dat over één JDBC-verbinding waarop exports na elkaar lopen.
 
 Drie eigenschappen van ons gebruik bepalen de keuze:
 
 * **Schrijfpatroon.** De standaardinstelling `span-processor=simple` met `write-failure-policy=fail-closed` is de enige combinatie die aan de acknowledgement-eis van de LDV-standaard voldoet. De wrapper exporteert dan elke logregel synchroon zodra die afsluit, binnen de request, en wacht op de bevestiging van de database. Die export valt binnen de transactie van de service: een geweigerde logregel rolt de verwerking terug. Een verwerking schrijft een actie-regel en bij meerdere betrokkenen een regel per betrokkene, elk als eigen insert; een mislukte verwerking schrijft daarna nog een uitkomst-regel. Het patroon is daarmee een stroom van kleine, losse, transactionele inserts met een synchrone bevestiging. ClickHouse is ontworpen voor grote, gebundelde inserts; veel kleine losse inserts leggen merge-druk op de MergeTree-tabel. PostgreSQL is gebouwd voor precies dit patroon.
-* **Volume.** De verwerkingen van de Profielservice en het NMC volgen uit handelingen van ondernemers en uit notificaties van dienstverleners. Dat volume ligt ordes van grootte onder de schaal waarvoor ClickHouse zijn compressie en analytische snelheid inzet.
-* **Beheer.** De Profielservice en het NMC draaien al op PostgreSQL. Back-up, monitoring en kennis van PostgreSQL zijn daardoor al ingericht; ClickHouse is een tweede database-engine met eigen beheer, alleen voor het logboek.
+* **Volume.** De verwerkingen van het NMC volgen uit notificaties van dienstverleners: per notificatie een registratie vóór het ophalen van de voorkeur en vóór het verzenden, en een registratie per opgevraagde pagina van de statusfeed. Ook bij de opgegeven piek van 2,2 miljoen notificaties in een maand (ADR 0024) ligt dat ordes van grootte onder de schaal waarvoor ClickHouse zijn compressie en analytische snelheid inzet.
+* **Beheer.** Met het logboek in PostgreSQL heeft het NMC één databasetype, en daarmee één set beheerafspraken: back-upprotocol en hersteltest, monitoring en alarmering, patching en versiebeheer, toegangsbeheer van de databaserollen en versleuteling in rust. Die afspraken zijn voor PostgreSQL al ingericht en gelden dan ook voor het logboek. ClickHouse zou een tweede engine zijn met een eigen versie van elk van die afspraken, alleen voor het logboek, en met kennis die het team verder nergens gebruikt.
 
 ## Decision
 
-Het Logboek Dataverwerkingen van MOZa slaat zijn logregels op in PostgreSQL, op alle omgevingen.
+Het NMC slaat zijn logregels van het Logboek Dataverwerkingen op in PostgreSQL, op alle omgevingen.
 
 * Services zetten `logboekdataverwerking.dbms=postgresql` en configureren alleen de `logboekdataverwerking.postgresql.*`-properties. De `clickhouse.*`-properties en de bijbehorende secrets vervallen.
 * Het logboek krijgt een eigen PostgreSQL-database, gescheiden van de databases van de services. Het logboek is insert-only en kent andere bewaartermijnen en andere lezers dan de applicatiedata.
@@ -42,9 +42,9 @@ De afweging kantelt bij een volume waarbij PostgreSQL de inserts of de opslag ni
 
 ## Consequences
 
-* Services declareren de PostgreSQL-driver en niet de ClickHouse-driver. Hun lokale ontwikkelomgeving draait PostgreSQL voor het logboek.
+* Het NMC declareert de PostgreSQL-driver en niet de ClickHouse-driver. De lokale ontwikkelomgeving draait PostgreSQL voor het logboek.
 * Per omgeving is een PostgreSQL-database voor het logboek nodig. De wrapper maakt bij het eerste gebruik zelf de tabel aan (`CREATE TABLE IF NOT EXISTS`), dus de databaserol van de wrapper heeft rechten om in die database een tabel aan te maken.
-* Met `fail-closed` faalt een verwerking als het logboek niet bereikbaar is. De beschikbaarheid van de logboekdatabase bepaalt daarmee mede de beschikbaarheid van de Profielservice en het NMC.
+* Met `fail-closed` faalt een verwerking als het logboek niet bereikbaar is. De beschikbaarheid van de logboekdatabase bepaalt daarmee mede de beschikbaarheid van het NMC. De logboekdatabase valt onder dezelfde beschikbaarheidsafspraken als de database van het NMC zelf.
 * De wrapper schrijft over één verbinding en binnen de transactie van de service. Gelijktijdige verwerkingen wachten daardoor op elkaar bij het schrijven van hun logregels, en die wachttijd telt mee voor de transactietimeout van de service. Bij een piek is de latency van de logboekdatabase dus direct zichtbaar in de doorlooptijd van de verwerkingen.
 * PostgreSQL heeft geen ingebouwde TTL zoals ClickHouse. Het opschonen van logregels na de bewaartermijn gebeurt met een periodieke delete of met partitionering op tijd.
 * De wrapper maakt alleen een primary key op `(trace_id, span_id)` aan. Het tonen van de verwerkingen per ondernemer in het portaal (ADR 0010) bevraagt het logboek op betrokkene; daarvoor is een index op het betrokkene-attribuut in `attributes` nodig.

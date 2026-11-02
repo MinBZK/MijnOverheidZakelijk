@@ -14,17 +14,15 @@ Proposed
 
 ## Context
 
-De Profielservice en het Notificatie Management Component (NMC) leggen hun verwerkingen vast in het Logboek Dataverwerkingen via de LDV-wrapper (`moza-logboekdataverwerking`). Tot nu toe was ClickHouse de beoogde database voor productie; de lokale `docker-compose` van de Profielservice draait er ook een. Voor het testen is PostgreSQL aantrekkelijker, omdat dat aanzienlijk minder resources vraagt.
+De Profielservice en het Notificatie Management Component (NMC) leggen hun verwerkingen vast in het Logboek Dataverwerkingen via de LDV-wrapper (`moza-logboekdataverwerking`). ADR 0010 koos ClickHouse als database voor het logboek. Voor het testen is PostgreSQL aantrekkelijker, omdat dat aanzienlijk minder resources vraagt.
 
-De wrapper ondersteunt sinds versie 1.0.0 beide backends achter één `SpanRepository`, gekozen met `logboekdataverwerking.dbms` (`clickhouse` is de standaard, `postgresql` het alternatief). Beide JDBC-drivers zijn optioneel; een service declareert alleen de driver van de gekozen backend. De PostgreSQL-backend slaat `attributes` en `resource` op als `jsonb`, heeft een primary key op `(trace_id, span_id)` en schrijft elke export als één transactie, alles of niets.
+De wrapper ondersteunt beide backends achter één `SpanRepository`, gekozen met `logboekdataverwerking.dbms` (`clickhouse` is de standaard, `postgresql` het alternatief). Beide JDBC-drivers zijn optioneel; een service declareert alleen de driver van de gekozen backend. De PostgreSQL-backend slaat `attributes` en `resource` op als `jsonb`, heeft een primary key op `(trace_id, span_id)`, schrijft elke export als één transactie, alles of niets, en doet dat over één JDBC-verbinding waarop exports na elkaar lopen.
 
 Drie eigenschappen van ons gebruik bepalen de keuze:
 
-* **Schrijfpatroon.** De standaardinstelling `span-processor=simple` met `write-failure-policy=fail-closed` is de enige combinatie die aan de acknowledgement-eis van de LDV-standaard voldoet. Elke span wordt dan synchroon en los weggeschreven binnen de request, en een verwerking met N betrokkenen doet N+1 inserts. ClickHouse is ontworpen voor grote, gebundelde inserts; veel kleine losse inserts leggen merge-druk op de MergeTree-tabel. PostgreSQL is gebouwd voor precies dit patroon van kleine transactionele schrijfacties.
+* **Schrijfpatroon.** De standaardinstelling `span-processor=simple` met `write-failure-policy=fail-closed` is de enige combinatie die aan de acknowledgement-eis van de LDV-standaard voldoet. De wrapper exporteert dan elke logregel synchroon zodra die afsluit, binnen de request, en wacht op de bevestiging van de database. Die export valt binnen de transactie van de service: een geweigerde logregel rolt de verwerking terug. Een verwerking schrijft een actie-regel en bij meerdere betrokkenen een regel per betrokkene, elk als eigen insert; een mislukte verwerking schrijft daarna nog een uitkomst-regel. Het patroon is daarmee een stroom van kleine, losse, transactionele inserts met een synchrone bevestiging. ClickHouse is ontworpen voor grote, gebundelde inserts; veel kleine losse inserts leggen merge-druk op de MergeTree-tabel. PostgreSQL is gebouwd voor precies dit patroon.
 * **Volume.** De verwerkingen van de Profielservice en het NMC volgen uit handelingen van ondernemers en uit notificaties van dienstverleners. Dat volume ligt ordes van grootte onder de schaal waarvoor ClickHouse zijn compressie en analytische snelheid inzet.
 * **Beheer.** De Profielservice en het NMC draaien al op PostgreSQL. Back-up, monitoring en kennis van PostgreSQL zijn daardoor al ingericht; ClickHouse is een tweede database-engine met eigen beheer, alleen voor het logboek.
-
-Bij het NMC staat LDV uit (`logboekdataverwerking.enabled=false`), in afwachting van een werkende ClickHouse-configuratie. Bij de Profielservice komt `logboekdataverwerking.enabled` voor acc en prod uit de sealed secret, en voor de Profielservice is een ClickHouse-database ingericht (ADR 0010). Of daar al logregels in staan, staat niet in de configuratie.
 
 ## Decision
 
@@ -44,16 +42,15 @@ De afweging kantelt bij een volume waarbij PostgreSQL de inserts of de opslag ni
 
 ## Consequences
 
-* De Profielservice en het NMC gebruiken wrapper 1.1.0, die de PostgreSQL-backend al heeft. Overstappen betekent `dbms=postgresql` zetten en de `clickhouse.*`-properties, -environmentvariabelen en sealed secrets vervangen door `postgresql.*`. Beide services hebben de PostgreSQL-driver al als dependency; geen van beide declareert de ClickHouse-driver, zodat het logboek met de huidige configuratie bij inschakelen ook niet naar ClickHouse zou kunnen schrijven.
-* Als de ClickHouse-database van de Profielservice op acc of prod al logregels bevat, worden die bij de overstap naar PostgreSQL gemigreerd of tot het einde van hun bewaartermijn in ClickHouse bewaard.
-* De lokale `docker-compose` van de Profielservice draait PostgreSQL in plaats van ClickHouse voor het logboek.
+* Services declareren de PostgreSQL-driver en niet de ClickHouse-driver. Hun lokale ontwikkelomgeving draait PostgreSQL voor het logboek.
 * Per omgeving is een PostgreSQL-database voor het logboek nodig. De wrapper maakt bij het eerste gebruik zelf de tabel aan (`CREATE TABLE IF NOT EXISTS`), dus de databaserol van de wrapper heeft rechten om in die database een tabel aan te maken.
 * Met `fail-closed` faalt een verwerking als het logboek niet bereikbaar is. De beschikbaarheid van de logboekdatabase bepaalt daarmee mede de beschikbaarheid van de Profielservice en het NMC.
+* De wrapper schrijft over één verbinding en binnen de transactie van de service. Gelijktijdige verwerkingen wachten daardoor op elkaar bij het schrijven van hun logregels, en die wachttijd telt mee voor de transactietimeout van de service. Bij een piek is de latency van de logboekdatabase dus direct zichtbaar in de doorlooptijd van de verwerkingen.
 * PostgreSQL heeft geen ingebouwde TTL zoals ClickHouse. Het opschonen van logregels na de bewaartermijn gebeurt met een periodieke delete of met partitionering op tijd.
 * De wrapper maakt alleen een primary key op `(trace_id, span_id)` aan. Het tonen van de verwerkingen per ondernemer in het portaal (ADR 0010) bevraagt het logboek op betrokkene; daarvoor is een index op het betrokkene-attribuut in `attributes` nodig.
 * De beschrijving van het LDV-systeem in `workspace.dsl` ("Verwerkingslog van MOZa (ClickHouse)") en de consequentie over ClickHouse in ADR 0010 volgen deze beslissing.
 
 ## Verwijzingen
 
-* [moza-logboekdataverwerking](https://github.com/MinBZK/moza-logboekdataverwerking): README, secties over `dbms`, `span-processor` en `write-failure-policy`.
+* [moza-logboekdataverwerking](https://github.com/MinBZK/moza-logboekdataverwerking): README, secties over `dbms`, `span-processor` en `write-failure-policy`, "Interceptorvolgorde en transacties" en "Logregel vooraf, uitkomst achteraf".
 * [ClickHouse: asynchronous inserts](https://clickhouse.com/docs/optimize/asynchronous-inserts)

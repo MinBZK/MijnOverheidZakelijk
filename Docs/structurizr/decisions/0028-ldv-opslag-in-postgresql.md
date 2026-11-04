@@ -40,6 +40,22 @@ Het NMC slaat zijn logregels van het Logboek Dataverwerkingen op in PostgreSQL, 
 
 De afweging kantelt bij een volume waarbij PostgreSQL de inserts of de opslag niet meer bijhoudt, of bij een centrale analytische bevraging van het logboek over grote periodes. De wrapper ondersteunt dan nog steeds ClickHouse als backend.
 
+## Migratie tussen de backends
+
+Als de afweging later kantelt moet de data worden verhuisd naar de andere variant. Beide varianten slaan dezelfde logregel op in dezelfde kolommen: trace-id, span-id, status, naam, begin- en eindtijd in milliseconden sinds epoch, parent-span-id en de twee platte sleutel-waardeverzamelingen `attributes` en `resource`. De verschillen zijn het type van die laatste twee kolommen (`Map(String, String)` in ClickHouse, `jsonb` in PostgreSQL), de parent-span-id van een rootregel (de nul-id in ClickHouse, `NULL` in PostgreSQL) en de kolomnamen (`traceId` tegenover `trace_id`). Elk van die verschillen is in beide richtingen zonder verlies te vertalen. Het logboek is bovendien insert-only en de sleutel `(trace_id, span_id)` is in beide backends dezelfde. Een migratie is daarmee een eenmalige kopie van rijen, in drie stappen:
+
+1. **Bulkkopie.** De wrapper maakt de doeltabel aan bij het eerste gebruik; een eenmalig script zet daarna de bestaande rijen over. Van PostgreSQL naar ClickHouse leest ClickHouse de brontabel rechtstreeks met de `postgresql()`-tabelfunctie in één `INSERT ... SELECT`, waarbij de `jsonb`-kolommen met `JSONExtract` naar `Map` gaan. Van ClickHouse naar PostgreSQL exporteert ClickHouse de tabel als `JSONEachRow` of CSV en laadt PostgreSQL die met `COPY`. In beide richtingen bestaat de vertaling uit het hernoemen van kolommen en het omzetten van de parent-span-id.
+2. **Omschakelen.** De service wisselt `logboekdataverwerking.dbms`, declareert de andere JDBC-driver en krijgt de bijbehorende properties en secrets. Omdat de wrapper synchroon en fail-closed schrijft, is er geen buffer of wachtrij die eerst leeg moet lopen: na de herstart schrijft de service alleen nog naar de nieuwe backend.
+3. **Nakopie.** Indien we de service gedurende de migratie niet uit zouden zetten moet er een nakopie plaatsvinden: rijen die tussen de bulkkopie en de herstart zijn geschreven, worden op `start_time` geselecteerd en alsnog overgezet. Naar PostgreSQL is dat idempotent met `ON CONFLICT DO NOTHING` op de sleutel; naar ClickHouse wordt de selectie op tijd begrensd, omdat MergeTree geen unieke sleutel afdwingt.
+
+Het werk zit vooral rondom de tabel:
+
+* De index op het betrokkene-attribuut en de bevraging vanuit het portaal zijn per backend anders (`jsonb`-operatoren tegenover `Map`-toegang, en in ClickHouse een skip-index of een andere `ORDER BY` bij het aanmaken van de tabel). Die worden opnieuw gemaakt.
+* Het opschonen na de bewaartermijn gaat mee: `TTL` in ClickHouse, een periodieke delete of partitionering in PostgreSQL.
+* De beheerafspraken uit de contextsectie (back-up en hersteltest, monitoring en alarmering, patching, toegangsbeheer, versleuteling in rust) moeten voor de nieuwe engine staan vóór de omschakeling. Bij een overstap naar ClickHouse is dit het grootste deel van het werk.
+
+De data zet de keuze niet vast. De omvang van een latere overstap wordt bepaald door de beheerinrichting van de nieuwe engine en de aanpassingen aan de bevragingen; de migratie van de logregels zelf is daarvan het kleinste deel.
+
 ## Consequences
 
 * Het NMC declareert de PostgreSQL-driver en niet de ClickHouse-driver. De lokale ontwikkelomgeving draait PostgreSQL voor het logboek.
@@ -54,3 +70,4 @@ De afweging kantelt bij een volume waarbij PostgreSQL de inserts of de opslag ni
 
 * [moza-logboekdataverwerking](https://github.com/MinBZK/moza-logboekdataverwerking): README, secties over `dbms`, `span-processor` en `write-failure-policy`, "Interceptorvolgorde en transacties" en "Logregel vooraf, uitkomst achteraf".
 * [ClickHouse: asynchronous inserts](https://clickhouse.com/docs/optimize/asynchronous-inserts)
+* [ClickHouse: postgresql table function](https://clickhouse.com/docs/sql-reference/table-functions/postgresql)

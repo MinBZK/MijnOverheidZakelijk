@@ -12,14 +12,14 @@ Het document gaat naar Accepted zodra de punten onder *Open besluiten* zijn geno
 
 Deze ADR geldt voor **backendsystemen** van MOZa: systemen zonder eigen gebruikersinterface die een API aanbieden aan andere systemen. Voorbeelden zijn de Notificatie Management Component (NMC), de Profielservice en Contactherstel. Frontends en websites vallen erbuiten.
 
-De ADR is onafhankelijk van het hostingplatform en van wie een dienst beheert. Wat een specifiek backendsysteem met deze besluiten doet (op welk platform het draait, welke stories, welke status, welke afwijkingen), staat in een eigen productiegereedheidsdocument per systeem. Voor de NMC is dat [Productiegereedheid van de NMC](../notificatiedocs/14-productiegereedheid.md).
+De ADR is onafhankelijk van het hostingplatform en van wie een dienst beheert. Wat een specifiek backendsysteem met deze besluiten doet (op welk platform het draait, welke stories, welke status, welke afwijkingen), staat in een eigen productiegereedheidsdocument per systeem. Voor de NMC is dat [Productiegereedheid van de NMC](https://docs.mijnoverheidzakelijk.nl/main/notificatiedienst/sections/productiegereedheid-van-de-nmc/).
 
 ## Gerelateerde ADRs
 
 * [ADR 0006 Federatieve authenticatie en autorisatie](0006-federatieve-authenticatie-en-autorisatie-op-basis-van-oidc-en-eidas.md): authenticatie van gebruikers richting services.
 * [ADR 0007 Logboek Dataverwerkingen](0007-logboek-dataverwer.md) en [ADR 0010 LDV-implementatie](0010-ldv-implementatie.md): verwerkingslogging.
 * [ADR 0016 Centrale beveiligingsconfiguratie domein en webtoegang](0016-centrale-beveiligingsconfiguratie-domein-en-webtoegang.md): de publieke website, met internet.nl en CSP. Deze ADR legt vast waarom dat voor backendsystemen anders is.
-* [ADR 0017 Inrichting testen MOZa](0017-Inrichting-testen-MOZa.md) en [hoofdstuk 12 Testen](../docs/12-testen.md): teststrategie, waaronder de vastgestelde tooling voor DAST (OWASP ZAP) en performance (k6 of Gatling).
+* [ADR 0017 Inrichting testen MOZa](0017-Inrichting-testen-MOZa.md) en [hoofdstuk 12 Testen](https://docs.mijnoverheidzakelijk.nl/main/testen/): teststrategie, waaronder de vastgestelde tooling voor DAST (OWASP ZAP) en performance (k6 of Gatling).
 * [ADR 0019 Database-migratiestrategie](0019-database-migratiestrategie.md): het expand/contract-patroon.
 * ADR 0022 Releasemanagement MOZa (Proposed, [PR #1175](https://github.com/MinBZK/MijnOverheidZakelijk/pull/1175)): releasen, rollback-mechaniek en open punt O1 (hoe een release op de LPC landt).
 * ADR 0023 Keuze tooling voor het testen van de API's (Proposed, [PR #1135](https://github.com/MinBZK/MijnOverheidZakelijk/pull/1135)): Bruno voor handmatig en nachtelijk e2e-testen.
@@ -68,7 +68,7 @@ Daarnaast zijn een aantal punten geen technische keuze van het bouwende team, ma
 ### Open standaarden en authenticatie
 
 17. **De pas-toe-of-leg-uit-standaarden worden systematisch getoetst.** Minimaal de OpenAPI Specification en de API Design Rules, en waar van toepassing het NL GOV-profiel voor CloudEvents. De beslisboom van Forum Standaardisatie wordt handmatig doorlopen ter bevestiging.
-18. **Het systeem authenticeert en autoriseert elke aanroep zelf, ook achter FSC.** Dat de Inway een aanroep doorlaat, is niet genoeg. De enige uitzondering is de OpenAPI-spec (besluit 19). Een afnemer werkt uitsluitend binnen zijn eigen gegevens; gegevens van een andere afnemer bestaan voor hem niet. Het mechanisme verschilt per systeem en wordt per systeem vastgelegd: voor aanroepen namens gebruikers is dat ADR 0006, voor de NMC ADR 0024 §9, en de Profielservice hervalideert het FSC-token zelf ([§09 Infrastructuur](../profielservicedocs/09-infrastructuur-architectuur.md)).
+18. **Het systeem authenticeert en autoriseert elke aanroep zelf, ook achter FSC.** Dat de Inway een aanroep doorlaat, is niet genoeg. De enige uitzondering is de OpenAPI-spec (besluit 19). Een afnemer werkt uitsluitend binnen zijn eigen gegevens; gegevens van een andere afnemer bestaan voor hem niet. Het mechanisme verschilt per systeem en wordt per systeem vastgelegd: voor aanroepen namens gebruikers is dat ADR 0006, voor de NMC ADR 0024 §9, en de Profielservice hervalideert het FSC-token zelf ([§09 Infrastructuur](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/infrastructuur-architectuur/)).
 19. **De OpenAPI-spec staat op `/openapi.json` binnen FSC.** Dat is de standaardlocatie uit de API Design Rules, zonder extra authenticatie bovenop FSC. Een CORS-header is niet nodig: er is geen browser die de spec cross-origin ophaalt. Een aparte publieke kopie is niet nodig: de code is open source, en wie vóór een FSC-contract wil zien wat een systeem biedt, kan daar terecht.
 
 ### Operationele gereedheid

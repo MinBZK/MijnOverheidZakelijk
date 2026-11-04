@@ -18,11 +18,11 @@ Bij een permanent falende reactie van een kanaal pakt de OMC dit ook op. In dat 
 
 ### Notify
 
-Notify verstuurt de daadwerkelijke attenderingen en kennisgevingen naar de eindgebruiker, via e-mail, sms en/of brief. De precieze invulling van deze service wordt nog onderzocht; zie hiervoor ook [ADR-0002](/workspace/decisions#2).
+Notify verstuurt de daadwerkelijke attenderingen en kennisgevingen naar de eindgebruiker, via e-mail, sms en/of brief. De precieze invulling van deze service wordt nog onderzocht; zie hiervoor ook [ADR-0002](https://docs.mijnoverheidzakelijk.nl/main/decisions/2/).
 
 ### Vakapplicatie
 
-De vakapplicatie simuleert een systeem dat draait bij een externe partij die zakelijke gebruikers moet notificeren, zoals het UWV of de Belastingdienst. In de gemockte variant die wij beschikbaar stellen, is het mogelijk om een paar scenario’s te testen: scenario 2, scenario 8 en scenario 9. Voor meer uitleg over deze scenario’s, zie ook [ADR-0003](/workspace/decisions#3) en Scenario beschrijvingen in dit hoofdstuk.
+De vakapplicatie simuleert een systeem dat draait bij een externe partij die zakelijke gebruikers moet notificeren, zoals het UWV of de Belastingdienst. In de gemockte variant die wij beschikbaar stellen, is het mogelijk om een paar scenario’s te testen: scenario 2, scenario 8 en scenario 9. Voor meer uitleg over deze scenario’s, zie ook [ADR-0003](https://docs.mijnoverheidzakelijk.nl/main/decisions/3/) en Scenario beschrijvingen in dit hoofdstuk.
 
 ### Historie service
 
@@ -36,7 +36,7 @@ De meest actuele UX-designs zijn terug te vinden in Figma: [figmalink hier]
 
 Functionele beschrijving van de werking van onze vakapplicatie: de twee opties worden in de frontend weergegeven als een reeks knoppen.
 
-Voor meer informatie zie [decision scenario bepaling](/workspace/decisions#3)
+Voor meer informatie zie [decision scenario bepaling](https://docs.mijnoverheidzakelijk.nl/main/decisions/3/)
 
 #### Scenario 2
 

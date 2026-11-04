@@ -1,10 +1,10 @@
 ## Infrastructuur Architectuur
 
-Deze sectie beschrijft de infrastructuurkeuzes die specifiek zijn voor de Profiel Service. Voor de algemene MOZa-infrastructuur (Standaard Platform van Logius, Kubernetes, klantomgeving, multi-DC) wordt verwezen naar het systeemwijde [§09 Infrastructuur Architectuur](../docs/09-infrastructuur-architectuur.md).
+Deze sectie beschrijft de infrastructuurkeuzes die specifiek zijn voor de Profiel Service. Voor de algemene MOZa-infrastructuur (Standaard Platform van Logius, Kubernetes, klantomgeving, multi-DC) wordt verwezen naar het systeemwijde [§09 Infrastructuur Architectuur](https://docs.mijnoverheidzakelijk.nl/main/infrastructuur-architectuur/).
 
 ### Hostingomgeving
 
-De Profiel Service draait op het Standaard Platform van Logius. Concrete cluster- en namespace-toewijzing staat beschreven in [§10 Deployment](10-deployment.md). Deze sectie richt zich uitsluitend op infrastructuurelementen die voor de Profiel Service architectonisch significant zijn.
+De Profiel Service draait op het Standaard Platform van Logius. Concrete cluster- en namespace-toewijzing staat beschreven in [§10 Deployment](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/deployment/). Deze sectie richt zich uitsluitend op infrastructuurelementen die voor de Profiel Service architectonisch significant zijn.
 
 ### Authenticatie en autorisatie
 
@@ -26,12 +26,12 @@ De gateway valideert vervolgens op basis van:
 
 Elke aanroep van de Profiel Service is daarmee een service-to-service-aanroep, ook wanneer er uiteindelijk een ingelogde eindgebruiker achter zit. Twee typen aanroepers zijn relevant:
 
-- **Het MOZa-portaal of een vakapplicatie**, dat handelt namens een ingelogde burger of ondernemer. De eindgebruiker is daar aan de voorkant geauthenticeerd via DigiD, eHerkenning of eIDAS; het portaal verkrijgt in die flow een subject-JWT voor de eindgebruiker en stuurt dat mee in de aanroep naar de Profiel Service. De inlogflow aan de voorkant is buiten scope voor de Profiel Service en wordt beschreven in [§07 Code, Authenticatie](07-code.md#authenticatie).
+- **Het MOZa-portaal of een vakapplicatie**, dat handelt namens een ingelogde burger of ondernemer. De eindgebruiker is daar aan de voorkant geauthenticeerd via DigiD, eHerkenning of eIDAS; het portaal verkrijgt in die flow een subject-JWT voor de eindgebruiker en stuurt dat mee in de aanroep naar de Profiel Service. De inlogflow aan de voorkant is buiten scope voor de Profiel Service en wordt beschreven in [§07 Code, Authenticatie](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/code/).
 - **Dienstverleners en ketenpartners** roepen de Profiel Service in de regel op eigen titel aan, bijvoorbeeld om contactgegevens op te halen voor het versturen van een notificatie. Voor zulke aanroepen sturen zij geen subject-JWT mee: de aanroeper-authenticatie via FSC/FTV en de autorisatie op dienstverlenerniveau zijn dan voldoende, en de partij-identificatie komt uit het verzoek zelf. Zodra een dienstverlener een handeling uitvoert die door of namens een specifieke eindgebruiker wordt gedaan, stuurt hij wél het subject-JWT van die eindgebruiker mee, zodat de Profiel Service die identiteit valideert. Dat geldt ook wanneer een dienstverlener een eigen portaal aanbiedt waarin de eindgebruiker met DigiD of eHerkenning inlogt en daar profielgegevens inziet of wijzigt: elke aanroep vanuit zo'n portaal is een namens-aanroep, voor lezen én schrijven.
 
 In beide gevallen handhaaft de gateway op basis van het FSC-contract van de aanroepende partij en het bijbehorende FTV-token. De Profiel Service zelf maakt geen onderscheid op netwerkniveau tussen "portaalverkeer" en "dienstverlenerverkeer".
 
-Een uitgebreide beschrijving van FSC, FTV en hun samenhang met FDS en LDV staat in de [bijlage Logging, Toegang en Doelbinding](../decisions/addendum/profiel-service-logging-en-toegang.md).
+Een uitgebreide beschrijving van FSC, FTV en hun samenhang met FDS en LDV staat in de [bijlage Logging, Toegang en Doelbinding](https://github.com/MinBZK/MijnOverheidZakelijk/blob/main/Docs/structurizr/decisions/addendum/profiel-service-logging-en-toegang.md).
 
 #### Autorisatie van de handelende dienstverlener
 
@@ -71,7 +71,7 @@ Subject-validatie geldt voor elke aanroep die namens een eindgebruiker plaatsvin
 De Profiel Service maakt gebruik van enkele soorten Kubernetes `Secret`-resources:
 
 - Databasecredentials voor PostgreSQL.
-- Versleutelingssleutels voor column-level encryption van `IDENTIFICATIE.IdentificatieNummer` en `CONTACTGEGEVEN.Waarde` (zie [§08 Data, Encryptie en opslag](08-data.md#encryptie-en-opslag)).
+- Versleutelingssleutels voor column-level encryption van `IDENTIFICATIE.IdentificatieNummer` en `CONTACTGEGEVEN.Waarde` (zie [§08 Data, Encryptie en opslag](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/data/)).
 - Credentials voor externe API's (BSNk, KvK, EmailVerificatieService).
 
 Al deze secrets worden opgeslagen als [Sealed Secrets](https://sealed-secrets.netlify.app/) in de infrastructuur-repository van het Standaard Platform op GitLab. De werking is als volgt:
@@ -124,7 +124,7 @@ De Profiel Service verwerkt persoonsgegevens en valt daarmee onder de [Baseline 
 | Integriteit       | TBD             | Foutieve contactgegevens leiden tot foutieve afhandeling bij dienstverleners; richtinggevend BBN 2. |
 | Vertrouwelijkheid | TBD             | BSN en contactgegevens zijn persoonsgegevens met verhoogd risicoprofiel; richtinggevend BBN 2.      |
 
-De definitieve classificatie volgt uit de DPIA (zie [§08 Data, Doelbinding en grondslag](08-data.md#doelbinding-en-grondslag)) en uit de risicoanalyse die conform BIO wordt uitgevoerd. De uitkomsten worden vastgelegd in een ADR en gepubliceerd bij het verwerkingsregister.
+De definitieve classificatie volgt uit de DPIA (zie [§08 Data, Doelbinding en grondslag](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/data/)) en uit de risicoanalyse die conform BIO wordt uitgevoerd. De uitkomsten worden vastgelegd in een ADR en gepubliceerd bij het verwerkingsregister.
 
 **TBD:** definitieve BBN-classificatie per aspect, plus de bijbehorende maatregelenmatrix.
 

@@ -26,7 +26,7 @@ Drie eigenschappen van ons gebruik bepalen de keuze:
 
 ## Decision
 
-Het NMC slaat zijn logregels van het Logboek Dataverwerkingen op in PostgreSQL, op alle omgevingen.
+Het NMC slaat zijn logregels van het Logboek Dataverwerkingen op in PostgreSQL, op alle omgevingen. Deze keuze geldt voor nu: op grond van de bovenstaande argumenten zien we op dit moment geen noodzaak voor ClickHouse. De keuze is later terug te draaien, zie de sectie over migratie tussen de backends.
 
 * Services zetten `logboekdataverwerking.dbms=postgresql` en configureren alleen de `logboekdataverwerking.postgresql.*`-properties. De `clickhouse.*`-properties en de bijbehorende secrets vervallen.
 * Het logboek krijgt een eigen PostgreSQL-database, gescheiden van de databases van de services. Het logboek is insert-only en kent andere bewaartermijnen en andere lezers dan de applicatiedata.

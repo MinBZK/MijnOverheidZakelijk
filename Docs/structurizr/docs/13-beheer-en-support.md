@@ -96,7 +96,7 @@ Voor het installeren van een certificaat in OpenShift is een .key en een .crt be
 
 - Kibana & Grafana: bouwstenen van het Standaard Platform.
 
-> Zie [deployment](Deployment) voor URL's.
+> Zie [deployment](https://docs.mijnoverheidzakelijk.nl/main/deployment/) voor URL's.
 
 ### Logging
 
@@ -104,7 +104,7 @@ Voor de logging strategie maken we een onderscheid in gebruikte standaard servic
 
 Wanneer er bijzonderheden zijn in de logging van een van onze services, kan dat hier worden beschreven.
 
-> Zie [deployment](Deployment) voor URL's.
+> Zie [deployment](https://docs.mijnoverheidzakelijk.nl/main/deployment/) voor URL's.
 
 ### Meest voorkomende storingen en oplossingen
 

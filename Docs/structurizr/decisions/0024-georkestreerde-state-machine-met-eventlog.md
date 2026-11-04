@@ -240,9 +240,9 @@ Waarom niet als eindontwerp: de geschiedenis is per notificatie geordend en heef
 
 ## Verwijzingen
 
-* [notificatiedocs §02 Functioneel overzicht](../notificatiedocs/02-functioneel-overzicht.md)
-* [notificatiedocs §06 Software architectuur](../notificatiedocs/06-software-architectuur.md)
-* [notificatiedocs §08 Data](../notificatiedocs/08-data.md)
+* [notificatiedocs §02 Functioneel overzicht](https://docs.mijnoverheidzakelijk.nl/main/notificatiedienst/sections/functioneel-overzicht/)
+* [notificatiedocs §06 Software architectuur](https://docs.mijnoverheidzakelijk.nl/main/notificatiedienst/sections/software-architectuur/)
+* [notificatiedocs §08 Data](https://docs.mijnoverheidzakelijk.nl/main/notificatiedienst/sections/data/)
 * [GOV.UK Notify REST API](https://docs.notifications.service.gov.uk/rest-api.html): callbacks, statussen, limieten, bewaartermijn
 * [PgBouncer features](https://www.pgbouncer.org/features.html): beperkingen van transaction pooling
 * [RabbitMQ delayed message exchange](https://github.com/rabbitmq/rabbitmq-delayed-message-exchange): beperkingen voor grote aantallen uitgestelde berichten

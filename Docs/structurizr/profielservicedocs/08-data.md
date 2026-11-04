@@ -19,7 +19,7 @@ Hieronder volgen eerst enkele overkoepelende ontwerpkeuzes, en daarna een tabel 
 
 ##### Doelbinding en grondslag
 
-Het centraal opslaan van een BSN of KVK valt onder de AVG en, voor BSN, onder de Wet algemene bepalingen burgerservicenummer (Wabb). De grondslag per verwerking is vastgelegd in het verwerkingsregister waar `dpl.core.processing_activity_id` naar verwijst. Aanvullend beschrijft [ADR 0011: Positionering en gebruik van de Profiel Service](../decisions/0011-positionering-en-gebruik-van-profiel-service.md) welk gebruik wel en niet binnen de doelbinding valt. Op dit gegevensmodel wordt een DPIA uitgevoerd; de uitkomsten daarvan worden bij het verwerkingsregister gepubliceerd.
+Het centraal opslaan van een BSN of KVK valt onder de AVG en, voor BSN, onder de Wet algemene bepalingen burgerservicenummer (Wabb). De grondslag per verwerking is vastgelegd in het verwerkingsregister waar `dpl.core.processing_activity_id` naar verwijst. Aanvullend beschrijft [ADR 0011: Positionering en gebruik van de Profiel Service](https://docs.mijnoverheidzakelijk.nl/main/decisions/11/) welk gebruik wel en niet binnen de doelbinding valt. Op dit gegevensmodel wordt een DPIA uitgevoerd; de uitkomsten daarvan worden bij het verwerkingsregister gepubliceerd.
 
 ##### Identifiers
 
@@ -27,7 +27,7 @@ Alle entiteit-`Id`'s in dit model zijn UUID's en worden in API's en logs als opa
 
 ##### Encryptie en opslag
 
-`IdentificatieNummer` (BSN/KVK/RSIN) en Contactgegeven `Waarde` (e-mailadres, telefoonnummer, applicatie-id) worden versleuteld opgeslagen via column-level encryption. Voor BSN geldt aanvullend dat de waarde eerst wordt gepseudonimiseerd via de BSNk-module (BSN-koppelnummer) van Logius en pas daarna versleuteld opgeslagen. De Profiel Service bewaart dus geen ruw BSN. Voor andere identificatienummers (KVK, RSIN, etc) wordt onderzocht in welke mate dezelfde pseudonimisering-aanpak toepasbaar is. De sleutelmanagement-keuzes en de exacte BIO-classificatie staan beschreven in [§09 Infrastructuurarchitectuur](09-infrastructuur-architectuur.md).
+`IdentificatieNummer` (BSN/KVK/RSIN) en Contactgegeven `Waarde` (e-mailadres, telefoonnummer, applicatie-id) worden versleuteld opgeslagen via column-level encryption. Voor BSN geldt aanvullend dat de waarde eerst wordt gepseudonimiseerd via de BSNk-module (BSN-koppelnummer) van Logius en pas daarna versleuteld opgeslagen. De Profiel Service bewaart dus geen ruw BSN. Voor andere identificatienummers (KVK, RSIN, etc) wordt onderzocht in welke mate dezelfde pseudonimisering-aanpak toepasbaar is. De sleutelmanagement-keuzes en de exacte BIO-classificatie staan beschreven in [§09 Infrastructuurarchitectuur](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/infrastructuur-architectuur/).
 
 ##### Logging en redactie
 

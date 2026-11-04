@@ -21,7 +21,7 @@ De Notificatiedienst bestaat uit het NMC en NotifyNL en verhoudt zich tot de Pro
 
 ![NMC Componenten](embed:NMCComponents)
 
-Het NMC voert de notificatielevenscyclus uit als een georkestreerde state machine in PostgreSQL met een transactioneel eventlog ([ADR 0024](/workspace/decisions#24)). Er is geen message broker en geen workflow-engine; timers zijn `due`-tijdstippen op taken en "event" betekent een rij in het eventlog, gelezen onder een visibiliteitswatermerk. Contactherstel wordt later aan het model toegevoegd; het model beschrijft de levenscyclus tot en met de terugkoppeling van de afleverstatus.
+Het NMC voert de notificatielevenscyclus uit als een georkestreerde state machine in PostgreSQL met een transactioneel eventlog ([ADR 0024](https://docs.mijnoverheidzakelijk.nl/main/decisions/24/)). Er is geen message broker en geen workflow-engine; timers zijn `due`-tijdstippen op taken en "event" betekent een rij in het eventlog, gelezen onder een visibiliteitswatermerk. Contactherstel wordt later aan het model toegevoegd; het model beschrijft de levenscyclus tot en met de terugkoppeling van de afleverstatus.
 
 Koppelvlakken naar de dienstverlener:
 

@@ -2,9 +2,9 @@
 
 Stand per 2026-10-07. Dit document wordt bijgewerkt zolang de stories lopen.
 
-Dit document past [ADR 0025 Productiegereedheid van MOZa-backendsystemen](../decisions/0025-productiegereedheid-backendsystemen.md) toe op de Notificatie Management Component (NMC). Per besluit uit die ADR staat hier wat de NMC ermee doet, in welke story en met welke status. De NMC moet in januari in productie draaien op de LPC; tot nu toe draait hij alleen op ZAD, als preview per pull request en als `stable`-omgeving op `main`.
+Dit document past [ADR 0025 Productiegereedheid van MOZa-backendsystemen](https://docs.mijnoverheidzakelijk.nl/main/decisions/25/) toe op de Notificatie Management Component (NMC). Per besluit uit die ADR staat hier wat de NMC ermee doet, in welke story en met welke status. De NMC moet in januari in productie draaien op de LPC; tot nu toe draait hij alleen op ZAD, als preview per pull request en als `stable`-omgeving op `main`.
 
-Het ontwerp van de NMC zelf staat in [ADR 0024](../decisions/0024-georkestreerde-state-machine-met-eventlog.md).
+Het ontwerp van de NMC zelf staat in [ADR 0024](https://docs.mijnoverheidzakelijk.nl/main/decisions/24/).
 
 ## Functionele scope voor januari
 

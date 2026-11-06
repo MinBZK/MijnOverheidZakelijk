@@ -7,7 +7,7 @@ Accepted
 
 ## Gerelateerde documenten
 * [ADR 0023 Keuze tooling voor het testen van de API's](0023-keuze-api-testtooling.md)
-* [Handleiding Digilab Chat (Mattermost - bots](https://digilab.overheid.nl/docs/mattermost/#bots)
+* [Handleiding Digilab Chat (Mattermost - bots)](https://digilab.overheid.nl/docs/mattermost/#bots)
 
 ## Context
 
@@ -28,7 +28,7 @@ De bot wordt geconfigureerd met de volgende informatie:
 ## Consequenties
 
 1. De URL is een bearer credential. Geaccepteerd risico: wie de URL heeft, kan in dat kanaal posten. 
-2. Er wordt alleen bij rood gemeldt. Geaccepteerd risico: een cron die stilvalt is stil.\
-Mitigatie - een wekelijkse bevestiging dát er gedraaid is (vervolg ticket).
+2. Er wordt alleen bij rood gemeld. Geaccepteerd risico: een cron die stilvalt is stil.\
+Mitigatie - een waakhond die wekelijks controleert of er nog een scheduled run heeft gedraaid (gebouwd, e2e-waakhond.yml).
 3. Geen gegevens in de melding. Alleen journeynaam, uitkomst en run-URL - geen journal-inhoud, geen e-mailadressen, ook geen testadressen. 
 4. Deze keuze betreft vooralsnog alleen testmeldingen.

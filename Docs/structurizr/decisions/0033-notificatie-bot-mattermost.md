@@ -28,7 +28,7 @@ De bot wordt geconfigureerd met de volgende informatie:
 ## Consequenties
 
 1. De URL is een bearer credential. Geaccepteerd risico: wie de URL heeft, kan in dat kanaal posten. 
-2. Er wordt alleen bij rood gemeld. Geaccepteerd risico: een cron die stilvalt is stil.\
+2. Er wordt alleen bij rood gemeld. Geaccepteerd risico: een cron die stilvalt wordt niet opgemerkt.\
 Mitigatie - een waakhond die wekelijks controleert of er nog een scheduled run heeft gedraaid (gebouwd, e2e-waakhond.yml).
-3. Geen gegevens in de melding. Alleen journeynaam, uitkomst en run-URL - geen journal-inhoud, geen e-mailadressen, ook geen testadressen. 
-4. Deze keuze betreft vooralsnog alleen testmeldingen.
+3. Geen gegevens in de melding. Alleen journeynaam, uitkomst en run-URL. 
+4. Deze keuze betreft vooralsnog alleen meldingen vanuit de e2e nachtrun test.

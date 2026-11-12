@@ -206,7 +206,7 @@ Heeft de test een omgeving nodig, dan zit hij in de verkeerde laag.
 **Alleen de end-to-end-laag hangt van een gedeployde omgeving af**\
 De e2e laag moet kunnen falen zonder een merge te blokkeren. Anders legt een omgevingsprobleem alle levering stil.
 
-Welke omgevingen er zijn en hoe erop wordt uitgerold, staat in [Deployment](/workspace/documentation#deployment).
+Welke omgevingen er zijn en hoe erop wordt uitgerold, staat in [Deployment](https://docs.mijnoverheidzakelijk.nl/main/deployment/).
 
 #### Afrondingscriteria
 
@@ -250,7 +250,7 @@ Deze strategie dient door het team te worden herzien wanneer een service aan MOZ
 
 #### Verhouding tot ADR-0017
 
-[ADR-0017](/workspace/decisions#17) *Inrichting testen MOZa* beschrijft een eerder testkader. Deze strategie en het testplan hieronder wijken daar op onderstaande punten bewust van af.\
+[ADR-0017](https://docs.mijnoverheidzakelijk.nl/main/decisions/17/) *Inrichting testen MOZa* beschrijft een eerder testkader. Deze strategie en het testplan hieronder wijken daar op onderstaande punten bewust van af.\
 Er dient bepaald te worden of ADR-0017 hiermee vervalt of opgevolgd dient te worden door een nieuw ADR.\
 Tot dan legt deze sectie de afwijkingen vast.
 
@@ -423,7 +423,7 @@ De gate moet gebonden zijn aan een fase die de CI-pipeline daadwerkelijk bereikt
 Een gate die niet kan afgaan is geen gate.
 - **Meet op LINE en BRANCH** op bundle-niveau. Niet op INSTRUCTION: dat is gevoelig voor
   bytecode-details en niet vergelijkbaar tussen services.
-- **Ondergrens**: minimaal 80% line / 70% branch. Dit wijkt bewust af van de 80%-eis uit [ADR-0017](/workspace/decisions#17); zie *Verhouding tot ADR 0017* in de teststrategie.\
+- **Ondergrens**: minimaal 80% line / 70% branch. Dit wijkt bewust af van de 80%-eis uit [ADR-0017](https://docs.mijnoverheidzakelijk.nl/main/decisions/17/); zie *Verhouding tot ADR 0017* in de teststrategie.\
 Een nieuwe service begint op het niveau dat ze bij oplevering haalt en verlaagt dat nooit. Een bestaande service die er nog onder zit groeit ernaartoe in stappen van ~5%.
 - **Ratchet**: de drempel gaat alleen omhoog.
 - **Gegenereerde code is uitgesloten** van de meting.
@@ -527,7 +527,7 @@ H2 test niet het PostgreSQL-dialect, de Flyway-SQL of het Envers-gedrag dat daad
   Leg per service vast welke verwerkingen gelogd moeten worden en dek dat af met minstens één
   componenttest waarin LDV aanstaat. Dit is het schoolvoorbeeld van "de interactie *is* het
   contract".\
-  Zie ook [ADR-0007](/workspace/decisions#7) en [ADR-0010](/workspace/decisions#10).
+  Zie ook [ADR-0007](https://docs.mijnoverheidzakelijk.nl/main/decisions/7/) en [ADR-0010](https://docs.mijnoverheidzakelijk.nl/main/decisions/10/).
 
 ***De laag betaalbaar houden***\
 Een componenttest kost ordes van grootte meer dan een unittest en is tevens de laag die bepaalt of de
@@ -796,7 +796,7 @@ Pipeline-principes: testresultaten (Surefire-/Failsafe-XML, JaCoCo, Pact, k6) wo
 Een rode nachtelijke build wordt de volgende ochtend getriageerd en kan releases blokkeren.\
 Tests in quarantaine worden als issue gevolgd met een eigenaar en een deadline.
 
-> Zie [Deployment](/workspace/documentation#deployment) voor de omgevingen en de gebruikte CI/CD-tooling.
+> Zie [Deployment](https://docs.mijnoverheidzakelijk.nl/main/deployment/) voor de omgevingen en de gebruikte CI/CD-tooling.
 
 #### Grondregels voor testautomatisering
 

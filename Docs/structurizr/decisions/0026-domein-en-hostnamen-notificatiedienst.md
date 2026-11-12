@@ -22,14 +22,20 @@ Overwogen opties, in volgorde van voorkeur:
 
 | Optie | Hoofdnaam Notificatiedienst | Beoordeling |
 | :---- | :-------------------------- | :---------- |
-| 1. Subdomein onder de uniforme overheidsextensie `.gov.nl` | `notificaties.obis.gov.nl` | Sluit aan op het kabinetsbesluit voor één herkenbare overheidsextensie. De aanvraag is afgewezen: de beheerder van de extensie geeft nog geen namen uit en noemt geen datum waarop dat wel kan. |
+| 1. Subdomein onder de uniforme overheidsextensie `.gov.nl` | `notificaties.obis.gov.nl` | Sluit aan op het kabinetsbesluit voor één herkenbare overheidsextensie. Nu niet beschikbaar: onder de extensie worden nog geen namen uitgegeven en er is geen datum genoemd waarop dat wel kan. |
 | 2. Subdomein onder `overheid.nl` | `notificaties.obis.overheid.nl` | `overheid.nl` is een bestaand overheidsbreed domein, gehouden door Logius namens de Rijksoverheid. Hergebruik is wat het Internetdomeinbeleid Rijksoverheid vraagt. `obis.overheid.nl` benoemt het programma en biedt ruimte aan latere voorzieningen van OBIS. |
 | 3. Subdomein onder `rijksapps.nl` | `notificaties.obis.rijksapps.nl` | Eveneens hergebruik van een bestaand overheidsdomein, zonder nieuwe registratie. Alleen aan de orde als optie 2 wordt afgewezen. |
 | 4. Eigen `.nl`-domein voor het programma | `notificaties.obis-overheid.nl` | De naam is van ons en benoemt programma en dienst. Registratie loopt via de Dienst Publiek en Communicatie (DPC) als registrar van de Rijksoverheid; DNSSEC, SPF, DMARC en CAA worden apart ingericht. Een nieuw domein voegt toe aan het aantal dat de overheid juist wil terugdringen en is pas aan de orde als ook optie 3 afvalt; het moet dan voor meer dan één dienst bruikbaar zijn. |
 
+### Waarom niet optie 1
+
+Optie 1 heeft de voorkeur en is op dit moment niet te krijgen. `.gov.nl` is de extensie die het kabinet voor alle overheidsdiensten heeft aangewezen. Wij hebben verkend of een naam onder `.gov.nl` mogelijk is. Het antwoord was dat onder de extensie op dit moment nog geen namen worden uitgegeven; een datum waarop dat wel kan is niet genoemd.
+
+De Notificatiedienst kan daar niet op wachten. Aansluitende partijen leggen de adressen vast in hun eigen configuratie zodra zij aansluiten, en de test- en acceptatieomgevingen uit ADR 0017 hebben een adres nodig voordat de dienst in productie gaat. Zonder domeinnaam kan geen partij aansluiten, en een wachttijd zonder einddatum is niet te plannen.
+
 ## Decision
 
-Dit is een voorstel ter besluitvorming. Voorgesteld wordt de Notificatiedienst haar adressen te geven onder `obis.overheid.nl`, met `notificaties.obis.overheid.nl` als hoofdnaam, en bij afwijzing de voorkeursvolgorde hierboven te volgen.
+Dit is een voorstel ter besluitvorming. Voorgesteld wordt de Notificatiedienst haar adressen te geven onder `obis.overheid.nl`, met `notificaties.obis.overheid.nl` als hoofdnaam, en bij afwijzing de voorkeursvolgorde hierboven te volgen. De voorkeursoptie `.gov.nl` is nu niet beschikbaar; zie de toelichting hierboven.
 
 1. **Domein.** Voorgesteld wordt `obis.overheid.nl` aan te vragen bij Logius als houder van `overheid.nl`. Daaronder wordt `notificaties.obis.overheid.nl` de hoofdnaam van de Notificatiedienst; andere voorzieningen van OBIS krijgen een eigen label onder `obis.overheid.nl`. Er wordt geen domein voor de Notificatiedienst alleen geregistreerd.
 

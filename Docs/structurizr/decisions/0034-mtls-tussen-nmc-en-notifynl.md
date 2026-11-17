@@ -11,9 +11,9 @@ Proposed
 * [ADR 0002 Notify Onderzoek](0002-notify-onderzoek.md): NotifyNL als verzendkanaal.
 * [ADR 0024 Georkestreerde state machine met eventlog](0024-georkestreerde-state-machine-met-eventlog.md): de twee koppelingen met NotifyNL en hun authenticatie met een JWT en een bearer-token. Deze ADR vervangt de zin "De authenticatie richting NotifyNL is een JWT, geen mTLS" uit de Consequences van ADR 0024.
 * [ADR 0025 Productiegereedheid van MOZa-backendsystemen](0025-productiegereedheid-backendsystemen.md): besluit 5 (naast de inway geen eigen publiek bereikbaar endpoint), besluit 10 (BIO-toetsing als formele toets) en het open besluit of verkeer tussen componenten via FSC loopt, met NotifyNL als voorbeeld.
-* ADR 0027 Koppelingen van het Notificatie Management Component (in voorbereiding): de koppelingen 2 en 3 met NotifyNL.
-* ADR 0029 FSC-ontsluiting van het NMC via internet (in voorbereiding): het netwerk telt niet als beveiligingsmaatregel.
-* ADR 0032 Beheer van TLS-certificaten (in voorbereiding): cert-manager voor uitgifte en vernieuwing van certificaten, en de bewaking van vervaldata.
+* [ADR 0027 Koppelingen van het Notificatie Management Component](0027-koppelingen-van-het-nmc.md): de koppelingen 2 en 3 met NotifyNL.
+* [ADR 0029 FSC-ontsluiting van het NMC via internet](0029-fsc-ontsluiting-nmc-via-internet.md): het netwerk telt niet als beveiligingsmaatregel.
+* [ADR 0032 Beheer van TLS-certificaten](0032-acme-voor-certificaatbeheer.md): cert-manager voor uitgifte en vernieuwing van certificaten, en de bewaking van vervaldata.
 
 ## Context
 

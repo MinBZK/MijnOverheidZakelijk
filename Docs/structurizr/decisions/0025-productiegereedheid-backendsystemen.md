@@ -17,7 +17,7 @@ De ADR is onafhankelijk van het hostingplatform en van wie een dienst beheert. W
 ## Gerelateerde ADRs
 
 * [ADR 0006 Federatieve authenticatie en autorisatie](0006-federatieve-authenticatie-en-autorisatie-op-basis-van-oidc-en-eidas.md): authenticatie van gebruikers richting services.
-* [ADR 0007 Logboek Dataverwerkingen](0007-logboek-dataverwer.md) en [ADR 0010 LDV-implementatie](0010-ldv-implementatie.md): verwerkingslogging.
+* [ADR 0007 Logboek Dataverwerkingen](https://docs.mijnoverheidzakelijk.nl/main/decisions/7/) en [ADR 0010 LDV-implementatie](0010-ldv-implementatie.md): verwerkingslogging.
 * [ADR 0016 Centrale beveiligingsconfiguratie domein en webtoegang](0016-centrale-beveiligingsconfiguratie-domein-en-webtoegang.md): de publieke website, met internet.nl en CSP. Deze ADR legt vast waarom dat voor backendsystemen anders is.
 * [ADR 0017 Inrichting testen MOZa](0017-Inrichting-testen-MOZa.md) en [hoofdstuk 12 Testen](https://docs.mijnoverheidzakelijk.nl/main/testen/): teststrategie, waaronder de vastgestelde tooling voor DAST (OWASP ZAP) en performance (k6 of Gatling).
 * [ADR 0019 Database-migratiestrategie](0019-database-migratiestrategie.md): het expand/contract-patroon.

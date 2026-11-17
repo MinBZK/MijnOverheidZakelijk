@@ -31,7 +31,7 @@ Alle entiteit-`Id`'s in dit model zijn UUID's en worden in API's en logs als opa
 
 ##### Logging en redactie
 
-Persoonsgegevens komen niet voor in applicatielogs. Identificatie van de betrokkene voor traceability gebeurt uitsluitend via LDV-attributen (zie [Logboek Dataverwerkingen (LDV)](#logboek-dataverwerkingen-ldv) hieronder). Applicatielogs hanteren een redactie-regel die deze velden vervangt door een vaste placeholder.
+Persoonsgegevens komen niet voor in applicatielogs. Identificatie van de betrokkene voor traceability gebeurt uitsluitend via LDV-attributen (zie Logboek Dataverwerkingen (LDV) hieronder). Applicatielogs hanteren een redactie-regel die deze velden vervangt door een vaste placeholder.
 
 ##### Data bij de bron
 
@@ -68,7 +68,7 @@ Op verzoek van de betrokkene, conform met AVG (Art. 17), wordt een PARTIJ inclus
 | VerificatieReferentieId | Referentie naar de lopende verificatieaanvraag (alleen relevant voor Email)                                   |
 | CreatedAt               | Tijdstip van aanmaken                                                                                         |
 | LastUpdated             | Tijdstip van laatste wijziging                                                                                |
-| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie [Ontwerpkeuzes](#lastusedat-en-profilering)) |
+| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie Ontwerpkeuzes) |
 | IsDefault               | Markeert dit contactgegeven als de standaard voor de combinatie (PARTIJ, ContactType). Per (PARTIJ, ContactType) is maximaal één contactgegeven `IsDefault = true`; een partij kan dus bijvoorbeeld één standaard `Email` én één standaard `Telefoonnummer` hebben |
 
 **Constraints**
@@ -84,7 +84,7 @@ Op verzoek van de betrokkene, conform met AVG (Art. 17), wordt een PARTIJ inclus
 | Id                  | Unieke identificator van deze identificatie (UUID)                                                                                                                                                                                 |
 | PartijId            | UUID van de PARTIJ aan wie deze IDENTIFICATIE toebehoort                                                                                                                                                                           |
 | IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: `BSN`, `KVK`, `RSIN` of ander identificatiesysteem                                                                                                                            |
-| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType; versleuteld opgeslagen. Syntactische validatie (zoals elf-proef voor BSN, lengte voor KVK) gebeurt bij invoer; voor authoritative waarden geldt het [bronsysteem](#data-bij-de-bron) |
+| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType; versleuteld opgeslagen. Syntactische validatie (zoals elf-proef voor BSN, lengte voor KVK) gebeurt bij invoer; voor authoritative waarden geldt het bronsysteem |
 
 **Constraints**
 
@@ -98,10 +98,10 @@ Op verzoek van de betrokkene, conform met AVG (Art. 17), wordt een PARTIJ inclus
 | Id           | Unieke identificator van voorkeur (UUID)                                                                                                                                                                                                           |
 | PartijId     | UUID van de PARTIJ waarvoor de voorkeur geldt                                                                                                                                                                                                      |
 | VoorkeurType | Het type voorkeur (enum): `WebsiteTaal`, `MagGebeldWorden`, `WebsiteThema`, `Aanhef`, `OntvangViaBerichtenbox`                                                                                                                                      |
-| Waarde       | De waarde van de voorkeur, getypeerd per `VoorkeurType` (zie [VoorkeurTypes](#voorkeurtypes) voor toegestane vormen)                                                                                                              |
+| Waarde       | De waarde van de voorkeur, getypeerd per `VoorkeurType` (zie VoorkeurTypes voor toegestane vormen)                                                                                                              |
 | CreatedAt    | Tijdstip van aanmaken                                                                                                                                                                                                                              |
 | LastUpdated  | Tijdstip van laatste wijziging                                                                                                                                                                                                                     |
-| LastUsedAt   | Tijdstip waarop de voorkeur voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie [Ontwerpkeuzes](#lastusedat-en-profilering))                          |
+| LastUsedAt   | Tijdstip waarop de voorkeur voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie Ontwerpkeuzes)                          |
 
 **Constraints**
 

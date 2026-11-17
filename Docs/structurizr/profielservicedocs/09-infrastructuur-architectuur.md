@@ -132,4 +132,4 @@ De definitieve classificatie volgt uit de DPIA (zie [§08 Data, Doelbinding en g
 
 - Applicatie-eigenaar: het Profiel Service-team binnen MOZa.
 - Platformeigenaar: Logius (Standaard Platform).
-- Secret management: zie [Secret management](#secret-management). De Sealed Secrets-controller wordt door het Standaard Platform beheerd; de versleutelde manifesten met de secrets worden door het Profiel Service-team onderhouden in de eigen infrastructuur-repository.
+- Secret management: zie Secret management hierboven. De Sealed Secrets-controller wordt door het Standaard Platform beheerd; de versleutelde manifesten met de secrets worden door het Profiel Service-team onderhouden in de eigen infrastructuur-repository.

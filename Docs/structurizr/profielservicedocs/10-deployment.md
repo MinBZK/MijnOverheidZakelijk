@@ -34,6 +34,8 @@ De POC-deployment is gehost op het Standaard Platform, specifiek in het TEST clu
 
 Productie is voorzien op de Logius Private Cloud (LPC), zie [Infrastructuur Architectuur](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/infrastructuur-architectuur/). Het image gaat daarvoor ongewijzigd van GHCR naar Harbor van de LPC. Die route staat in [Deployment](https://docs.mijnoverheidzakelijk.nl/main/deployment/).
 
+Of de Profiel Service zonder aanpassingen op de LPC kan draaien, moet nog verder worden uitgezocht. Een open punt is de health check, die op ZAD op de publieke poort staat.
+
 ### Broncode
 
 De broncode van de applicatie is open-source beschikbaar op [GitHub](https://www.github.com/MinBZK/moza-profiel-service).

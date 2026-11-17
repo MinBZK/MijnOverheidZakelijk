@@ -79,7 +79,6 @@ Door ons gehosten applicaties
 | --------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Landingspagina  | https://www.mijnoverheidzakelijk.nl/           | Landingspagina voor overzicht van de applicaties                                   |
 | Voorkant        | https://moza.mijnoverheidzakelijk.nl/          | Voorkant voor de profiel & historie service                                        |
-| Proefomgeving   | https://proef.moza.rijksapp.dev/moza/          | MOZa-proefomgeving op ZAD                                                          |
 | Vakapplicatie   | https://vakapplicatie.mijnoverheidzakelijk.nl/ | Mock van een vakapplicatie waar notificatie process wordt gestart                  |
 | Profiel Service | https://profiel.mijnoverheidzakelijk.nl/       | Hier worden profiel gegevens opgeslagen                                            |
 | Structurizr     | https://docs.mijnoverheidzakelijk.nl/          | Documentatie wordt hier gehost                                                     |

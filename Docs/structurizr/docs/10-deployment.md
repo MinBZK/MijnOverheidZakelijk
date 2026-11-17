@@ -21,7 +21,7 @@ De backendsystemen en de ondersteunende tooling worden vanuit GitHub Actions uit
 - De workflow bouwt het image, pusht het naar de GitHub Container Registry (`ghcr.io/minbzk/<repository>`) en rolt het uit op de digest van dat image.
 - Een uitrol geldt als geslaagd wanneer het health endpoint van de applicatie bereikbaar is.
 
-ZAD rolt alleen een container-image uit. Configuratie en secrets staan per deployment in de ZAD Operations Manager en zitten niet in de workflow of in de repository. Bij de backendsystemen erft een preview zijn configuratie via `clone-from` van de deployment `feature`; `stable` heeft een eigen configuratie.
+ZAD rolt alleen een container-image uit. De configuratie en secrets van de applicatie staan per deployment in de ZAD Operations Manager en zitten niet in de workflow of in de repository. De workflow zelf gebruikt GitHub repository secrets, zoals de API-key voor ZAD. Bij de backendsystemen erft een preview zijn configuratie via `clone-from` van de deployment `feature`; `stable` heeft een eigen configuratie.
 
 | Component       | Repository                                                                                              | ZAD-project | ZAD-component    | Persistente omgeving                                                   |
 | --------------- | ------------------------------------------------------------------------------------------------------- | ----------- | ---------------- | ---------------------------------------------------------------------- |

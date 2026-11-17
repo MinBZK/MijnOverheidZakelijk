@@ -54,7 +54,6 @@ Het NMC en NotifyNL communiceren in beide richtingen over mTLS. Dat geldt voor h
 | Route | Internet: het publieke adres van NotifyNL en het publiek bereikbare callback-pad van het NMC | Adressen binnen de LPC |
 | Uitgaand (NMC naar NotifyNL) | Clientcertificaat van het NMC, servercertificaat van NotifyNL gevalideerd | Hetzelfde |
 | Inkomend (NotifyNL naar NMC) | Clientcertificaat van NotifyNL, afgedwongen op het callback-adres | Hetzelfde |
-| Publiek callback-pad | Blijft nodig; zonder clientcertificaat van NotifyNL wordt een verzoek op het callback-pad geweigerd | NotifyNL bereikt de callback op een adres binnen de LPC, ook daar met clientcertificaat |
 | Bescherming op netwerkniveau | Aanroeplimiet op de ingress (ADR 0024) | Geen vervanging van mTLS: het netwerk telt niet als beveiligingsmaatregel |
 
 ### Technische oplossingen
@@ -87,7 +86,6 @@ Niet gekozen. Dit geeft twee oplossingen voor dezelfde koppeling: de omgevingen 
 
 * De authenticatie van beide koppelingen steunt op twee factoren: het certificaat op de verbinding en het secret in het verzoek. Een gelekte API-key of een gelekt callback-token is zonder de private sleutel niet bruikbaar.
 * Voor de koppeling tussen het NMC en NotifyNL is het open besluit uit ADR 0025 hiermee genomen: dit verkeer loopt niet over FSC. Voor de overige koppelingen tussen componenten blijft dat besluit open.
-* Zodra beide systemen binnen Logius draaien, heeft het NMC naast de inway geen publiek bereikbaar endpoint meer, in lijn met besluit 5 uit ADR 0025. Tot dat moment blijft het callback-adres vanaf internet bereikbaar, met mTLS als toegangseis.
 * Er komt een eigen CA bij. Wie de private sleutel van die CA beheert, wordt vastgelegd in het cryptografiebeleid, zoals de BIO vraagt. De vervaldata van de CA en van de clientcertificaten vallen onder de bewaking uit ADR 0032.
 * De koppeling hangt af van cert-manager op het platform en van de afspraak met het beheerteam van NotifyNL om de eigen CA te vertrouwen.
 * Een verlopen of geweigerd certificaat stopt het verzenden en de delivery receipts tegelijk. Het NMC behandelt dat als een storing bij NotifyNL: de verzendtaken wachten en worden hervat, en de Afleverstatus-navraag haalt de statussen op van pogingen waarvoor geen receipt is binnengekomen.

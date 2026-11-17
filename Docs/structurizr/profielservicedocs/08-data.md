@@ -19,7 +19,7 @@ Hieronder volgen eerst enkele overkoepelende ontwerpkeuzes, en daarna een tabel 
 
 ##### Doelbinding en grondslag
 
-Het centraal opslaan van een BSN of KVK valt onder de AVG en, voor BSN, onder de Wet algemene bepalingen burgerservicenummer (Wabb). De grondslag per verwerking is vastgelegd in het verwerkingsregister waar `dpl.core.processing_activity_id` naar verwijst. Aanvullend beschrijft [ADR 0011: Positionering en gebruik van de Profiel Service](../decisions/0011-positionering-en-gebruik-van-profiel-service.md) welk gebruik wel en niet binnen de doelbinding valt. Op dit gegevensmodel wordt een DPIA uitgevoerd; de uitkomsten daarvan worden bij het verwerkingsregister gepubliceerd.
+Het centraal opslaan van een BSN of KVK valt onder de AVG en, voor BSN, onder de Wet algemene bepalingen burgerservicenummer (Wabb). De grondslag per verwerking is vastgelegd in het verwerkingsregister waar `dpl.core.processing_activity_id` naar verwijst. Aanvullend beschrijft [ADR 0011: Positionering en gebruik van de Profiel Service](https://docs.mijnoverheidzakelijk.nl/main/decisions/11/) welk gebruik wel en niet binnen de doelbinding valt. Op dit gegevensmodel wordt een DPIA uitgevoerd; de uitkomsten daarvan worden bij het verwerkingsregister gepubliceerd.
 
 ##### Identifiers
 
@@ -27,11 +27,11 @@ Alle entiteit-`Id`'s in dit model zijn UUID's en worden in API's en logs als opa
 
 ##### Encryptie en opslag
 
-`IdentificatieNummer` (BSN/KVK/RSIN) en Contactgegeven `Waarde` (e-mailadres, telefoonnummer, applicatie-id) worden versleuteld opgeslagen via column-level encryption. Voor BSN geldt aanvullend dat de waarde eerst wordt gepseudonimiseerd via de BSNk-module (BSN-koppelnummer) van Logius en pas daarna versleuteld opgeslagen. De Profiel Service bewaart dus geen ruw BSN. Voor andere identificatienummers (KVK, RSIN, etc) wordt onderzocht in welke mate dezelfde pseudonimisering-aanpak toepasbaar is. De sleutelmanagement-keuzes en de exacte BIO-classificatie staan beschreven in [§09 Infrastructuurarchitectuur](09-infrastructuur-architectuur.md).
+`IdentificatieNummer` (BSN/KVK/RSIN) en Contactgegeven `Waarde` (e-mailadres, telefoonnummer, applicatie-id) worden versleuteld opgeslagen via column-level encryption. Voor BSN geldt aanvullend dat de waarde eerst wordt gepseudonimiseerd via de BSNk-module (BSN-koppelnummer) van Logius en pas daarna versleuteld opgeslagen. De Profiel Service bewaart dus geen ruw BSN. Voor andere identificatienummers (KVK, RSIN, etc) wordt onderzocht in welke mate dezelfde pseudonimisering-aanpak toepasbaar is. De sleutelmanagement-keuzes en de exacte BIO-classificatie staan beschreven in [§09 Infrastructuurarchitectuur](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/infrastructuur-architectuur/).
 
 ##### Logging en redactie
 
-Persoonsgegevens komen niet voor in applicatielogs. Identificatie van de betrokkene voor traceability gebeurt uitsluitend via LDV-attributen (zie [Logboek Dataverwerkingen (LDV)](#logboek-dataverwerkingen-ldv) hieronder). Applicatielogs hanteren een redactie-regel die deze velden vervangt door een vaste placeholder.
+Persoonsgegevens komen niet voor in applicatielogs. Identificatie van de betrokkene voor traceability gebeurt uitsluitend via LDV-attributen (zie Logboek Dataverwerkingen (LDV) hieronder). Applicatielogs hanteren een redactie-regel die deze velden vervangt door een vaste placeholder.
 
 ##### Data bij de bron
 
@@ -68,7 +68,7 @@ Op verzoek van de betrokkene, conform met AVG (Art. 17), wordt een PARTIJ inclus
 | VerificatieReferentieId | Referentie naar de lopende verificatieaanvraag (alleen relevant voor Email)                                   |
 | CreatedAt               | Tijdstip van aanmaken                                                                                         |
 | LastUpdated             | Tijdstip van laatste wijziging                                                                                |
-| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie [Ontwerpkeuzes](#lastusedat-en-profilering)) |
+| LastUsedAt              | Tijdstip waarop het contactgegeven voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie Ontwerpkeuzes) |
 | IsDefault               | Markeert dit contactgegeven als de standaard voor de combinatie (PARTIJ, ContactType). Per (PARTIJ, ContactType) is maximaal één contactgegeven `IsDefault = true`; een partij kan dus bijvoorbeeld één standaard `Email` én één standaard `Telefoonnummer` hebben |
 
 **Constraints**
@@ -84,7 +84,7 @@ Op verzoek van de betrokkene, conform met AVG (Art. 17), wordt een PARTIJ inclus
 | Id                  | Unieke identificator van deze identificatie (UUID)                                                                                                                                                                                 |
 | PartijId            | UUID van de PARTIJ aan wie deze IDENTIFICATIE toebehoort                                                                                                                                                                           |
 | IdentificatieType   | Wijze waarop PARTIJ uniek kan worden geïdentificeerd: `BSN`, `KVK`, `RSIN` of ander identificatiesysteem                                                                                                                            |
-| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType; versleuteld opgeslagen. Syntactische validatie (zoals elf-proef voor BSN, lengte voor KVK) gebeurt bij invoer; voor authoritative waarden geldt het [bronsysteem](#data-bij-de-bron) |
+| IdentificatieNummer | Nummer waarmee PARTIJ uniek identificeerbaar is binnen het opgegeven IdentificatieType; versleuteld opgeslagen. Syntactische validatie (zoals elf-proef voor BSN, lengte voor KVK) gebeurt bij invoer; voor authoritative waarden geldt het bronsysteem |
 
 **Constraints**
 
@@ -98,10 +98,10 @@ Op verzoek van de betrokkene, conform met AVG (Art. 17), wordt een PARTIJ inclus
 | Id           | Unieke identificator van voorkeur (UUID)                                                                                                                                                                                                           |
 | PartijId     | UUID van de PARTIJ waarvoor de voorkeur geldt                                                                                                                                                                                                      |
 | VoorkeurType | Het type voorkeur (enum): `WebsiteTaal`, `MagGebeldWorden`, `WebsiteThema`, `Aanhef`, `OntvangViaBerichtenbox`                                                                                                                                      |
-| Waarde       | De waarde van de voorkeur, getypeerd per `VoorkeurType` (zie [VoorkeurTypes](#voorkeurtypes) voor toegestane vormen)                                                                                                              |
+| Waarde       | De waarde van de voorkeur, getypeerd per `VoorkeurType` (zie VoorkeurTypes voor toegestane vormen)                                                                                                              |
 | CreatedAt    | Tijdstip van aanmaken                                                                                                                                                                                                                              |
 | LastUpdated  | Tijdstip van laatste wijziging                                                                                                                                                                                                                     |
-| LastUsedAt   | Tijdstip waarop de voorkeur voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie [Ontwerpkeuzes](#lastusedat-en-profilering))                          |
+| LastUsedAt   | Tijdstip waarop de voorkeur voor het laatst is opgehaald. Uitsluitend voor opschoningsbeleid; niet voor analytics of profilering en niet via de publieke API uitgeleverd (zie Ontwerpkeuzes)                          |
 
 **Constraints**
 

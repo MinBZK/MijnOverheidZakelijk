@@ -22,4 +22,4 @@ De Email Verificatie Service faciliteert het verifiëren van e‑mailadressen vo
 5. Email Verificatie Service → Aanroepende dienst: Bevestigt of de code correct en (nog) geldig is.
 6. Admin → Email Verificatie Service: Opvragen van verificatiestatistieken via `GET /api/v1/admin/statistics`.
 
-Zie hoofdstuk [Code](07-code.md) voor sequentie diagrammen van dit proces.
+Zie hoofdstuk [Code](https://docs.mijnoverheidzakelijk.nl/main/verificatie-service/sections/code/) voor sequentie diagrammen van dit proces.

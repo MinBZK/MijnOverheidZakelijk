@@ -59,5 +59,5 @@ Migraties draaien geautomatiseerd bij applicatiestart; er is geen aparte migrati
 
 ## Verwijzingen
 
-- [§08 Data](../profielservicedocs/08-data.md)
-- [§09 Infrastructuurarchitectuur](../profielservicedocs/09-infrastructuur-architectuur.md)
+- [§08 Data](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/data/)
+- [§09 Infrastructuurarchitectuur](https://docs.mijnoverheidzakelijk.nl/main/profiel-service/sections/infrastructuur-architectuur/)

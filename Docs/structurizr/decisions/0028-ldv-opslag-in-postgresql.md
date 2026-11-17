@@ -8,7 +8,7 @@ Proposed
 
 ## Gerelateerde ADRs
 
-* [ADR 0007 Logboek dataverwerking](0007-logboek-dataverwer.md) en [ADR 0010 Logboek dataverwerking implementeren](0010-ldv-implementatie.md): MOZa implementeert LDV met de eigen wrapper. ADR 0010 noemt ClickHouse als database voor de logging; deze ADR wijzigt dat.
+* [ADR 0007 Logboek dataverwerking](https://docs.mijnoverheidzakelijk.nl/main/decisions/7/) en [ADR 0010 Logboek dataverwerking implementeren](0010-ldv-implementatie.md): MOZa implementeert LDV met de eigen wrapper. ADR 0010 noemt ClickHouse als database voor de logging; deze ADR wijzigt dat.
 * [ADR 0015 LDV overzetten naar Kotlin](0015-LDV-overzetten-kotlin.md): de wrapper waarin de backendkeuze zit.
 * [ADR 0024 Georkestreerde state machine met eventlog](0024-georkestreerde-state-machine-met-eventlog.md): het NMC schrijft een LDV-registratie vóór elke externe aanroep.
 

@@ -6,7 +6,7 @@ Datum: 2026-09-16
 Proposed
 
 ## Gerelateerde documenten
-- [Hoofdstuk 12 - Testen](../docs/12-testen.md): teststrategie en testplan backendservices. Deze ADR voegt geen laag toe aan dat model, maar kiest gereedschap binnen twee bestaande lagen.
+- [Hoofdstuk 12 - Testen](https://docs.mijnoverheidzakelijk.nl/main/testen/): teststrategie en testplan backendservices. Deze ADR voegt geen laag toe aan dat model, maar kiest gereedschap binnen twee bestaande lagen.
 - [TESTVERBETERPLAN-PROFIELSERVICE](https://docs.rijksapp.nl/docs/23220aa3-e724-4356-986a-7ec5801f8dcf/) en [TESTVERBETERPLAN-NMC](https://docs.rijksapp.nl/docs/63254085-ac3c-4ce0-94b3-91af1bc21e78/): de items *Geen e2e-suite in de pipeline*, *Geen performancetests* en *Geen DAST*.
 
 ## Termen

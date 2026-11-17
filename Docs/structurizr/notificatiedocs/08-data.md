@@ -8,11 +8,11 @@ De Notificatiedienst gebruikt twee datastores:
   Relationele datastore voor het Notificatieregister: de bron van waarheid voor notificaties, taken en het eventlog.
 
 - **ClickHouse**
-  Kolom-georiënteerde datastore voor het Logboek Dataverwerking (LDV), gevuld via de LDV-wrapper conform [ADR 0005](/workspace/decisions#5) en [ADR 0010](/workspace/decisions#10).
+  Kolom-georiënteerde datastore voor het Logboek Dataverwerking (LDV), gevuld via de LDV-wrapper conform [ADR 0005](https://docs.mijnoverheidzakelijk.nl/main/decisions/5/) en [ADR 0010](https://docs.mijnoverheidzakelijk.nl/main/decisions/10/).
 
 ### Datamodel
 
-Het Notificatieregister volgt [ADR 0024](/workspace/decisions#24): `dienstverlener` is het register uit de onboarding, de tabellen `notificatie` en `poging` zijn de bron van waarheid, `taak` draagt de bijwerkingen, `verzendbudget` de tokens per Notify-service, `event` het eventlog en `bevestiging` en `webhookpositie` de cursors per dienstverlener. Hoofdstuk 7 werkt de tabellen uit tot klassen.
+Het Notificatieregister volgt [ADR 0024](https://docs.mijnoverheidzakelijk.nl/main/decisions/24/): `dienstverlener` is het register uit de onboarding, de tabellen `notificatie` en `poging` zijn de bron van waarheid, `taak` draagt de bijwerkingen, `verzendbudget` de tokens per Notify-service, `event` het eventlog en `bevestiging` en `webhookpositie` de cursors per dienstverlener. Hoofdstuk 7 werkt de tabellen uit tot klassen.
 
 | Tabel | Inhoud | Persoonsgegevens |
 |---|---|---|

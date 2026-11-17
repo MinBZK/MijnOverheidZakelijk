@@ -1,0 +1,111 @@
+# 34. mTLS tussen het NMC en NotifyNL
+
+Datum: 2026-11-16
+
+## Status
+
+Proposed
+
+## Gerelateerde ADRs
+
+* [ADR 0002 Notify Onderzoek](0002-notify-onderzoek.md): NotifyNL als verzendkanaal.
+* [ADR 0024 Georkestreerde state machine met eventlog](0024-georkestreerde-state-machine-met-eventlog.md): de twee koppelingen met NotifyNL en hun authenticatie met een JWT en een bearer-token. Deze ADR vervangt de zin "De authenticatie richting NotifyNL is een JWT, geen mTLS" uit de Consequences van ADR 0024.
+* [ADR 0025 Productiegereedheid van MOZa-backendsystemen](0025-productiegereedheid-backendsystemen.md): besluit 5 (naast de inway geen eigen publiek bereikbaar endpoint), besluit 10 (BIO-toetsing als formele toets) en het open besluit of verkeer tussen componenten via FSC loopt, met NotifyNL als voorbeeld.
+* ADR 0027 Koppelingen van het Notificatie Management Component (in voorbereiding): de koppelingen 2 en 3 met NotifyNL.
+* ADR 0029 FSC-ontsluiting van het NMC via internet (in voorbereiding): het netwerk telt niet als beveiligingsmaatregel.
+* ADR 0032 Beheer van TLS-certificaten (in voorbereiding): PKIoverheid-certificaten worden handmatig vernieuwd.
+
+## Context
+
+Het Notificatie Management Component (NMC) heeft twee koppelingen met NotifyNL (ADR 0024):
+
+* **Uitgaand.** Het NMC roept de REST-API van NotifyNL aan om een e-mail te versturen, op `reference` te zoeken en de afleverstatus op te vragen. Elke aanroep draagt een JWT die het NMC ondertekent met het secret uit de API-key van de NotifyNL-service.
+* **Inkomend.** NotifyNL meldt elke statuswijziging als delivery receipt op de Afleverstatus-callback van het NMC, met een bearer-token dat bij NotifyNL is geregistreerd.
+
+Over beide koppelingen lopen persoonsgegevens. Bij het verzenden zijn dat het e-mailadres van de ontvanger en de waarden voor de personalisation, die vrije inhoud van de dienstverlener zijn. De delivery receipt bevat het e-mailadres. Een identificerend nummer zoals het BSN stuurt het NMC niet als eigen veld naar NotifyNL.
+
+Beide koppelingen gebruiken TLS met alleen een servercertificaat. Wie de aanroeper is, blijkt uitsluitend uit de JWT en het bearer-token. Een gelekt secret is daarmee genoeg om zich als het NMC of als NotifyNL voor te doen. In de configuratie van het NMC accepteert de REST-client naar NotifyNL bovendien elk servercertificaat (`quarkus.tls.notify.trust-all=true`), in afwachting van dit besluit.
+
+Voor de landing in productie is het uitgangspunt dat verbindingen waarover persoonsgegevens lopen met mTLS zijn beveiligd: beide kanten tonen in de TLS-handshake een certificaat. De BIO-toetsing uit ADR 0025 is daarop de formele toets. mTLS kan op de koppelvlakken van NotifyNL worden ingeschakeld.
+
+Het verkeer tussen het NMC en NotifyNL loopt over twee soorten netwerkpaden:
+
+* **Verkeer van buiten Logius.** De ontwikkel- en previewomgevingen van het NMC draaien op ZAD, buiten Logius. Die omgevingen gebruiken naar verwachting een mock van NotifyNL. Roept een omgeving buiten Logius NotifyNL wel aan, dan loopt het verkeer over internet: het NMC roept het publieke adres van NotifyNL aan, en de Afleverstatus-callback is een pad van het NMC dat vanaf internet bereikbaar is. Zolang NotifyNL en het NMC in productie niet op hetzelfde platform staan, geldt dit pad ook daar.
+* **Verkeer binnen Logius.** Productie van het NMC gaat op de Logius Private Cloud (LPC) draaien, in dezelfde namespace als NotifyNL. Het verkeer hoeft Logius dan niet te verlaten.
+
+De koppelingen met NotifyNL zijn geen Digikoppeling-koppelvlak; NotifyNL biedt de GOV.UK Notify API. De voorschriften van Digikoppeling voor verkeer tussen overheidssystemen geven wel de maat voor mTLS: tweezijdig TLS is verplicht (TLS002), met authenticatie op basis van PKIoverheid-certificaten (TLS001) onder de private root (PKI005). De FSC-inway en -outway van MOZa gebruiken hetzelfde soort certificaat (ADR 0032).
+
+De callback van NotifyNL kent twee instellingen: een URL en een bearer-token.
+
+## Decision
+
+Het NMC en NotifyNL communiceren in beide richtingen over mTLS. Dat geldt voor het verkeer van buiten Logius en voor het verkeer binnen Logius, met dezelfde oplossing.
+
+1. **Uitgaand toont het NMC een clientcertificaat.** NotifyNL accepteert aanroepen voor de NotifyNL-services van het NMC alleen over een verbinding met dat certificaat. Het NMC valideert het servercertificaat van NotifyNL.
+2. **Inkomend toont NotifyNL een clientcertificaat.** Een verbinding naar het callback-adres zonder geldig clientcertificaat van NotifyNL wordt in de TLS-handshake geweigerd.
+3. **De clientcertificaten zijn PKIoverheid-certificaten onder de private root**, zoals Digikoppeling voorschrijft voor verkeer tussen overheidssystemen.
+4. **Beide kanten controleren de keten en het subject.** Het certificaat van de ander moet onder de PKIoverheid private root vallen en het subject moet dat van de wederpartij zijn. Alleen de keten controleren is onvoldoende, omdat dan elke houder van een PKIoverheid-certificaat wordt toegelaten.
+5. **mTLS komt bovenop de bestaande authenticatie.** De JWT op de uitgaande aanroepen en het bearer-token op de callback blijven. De JWT bepaalt bij NotifyNL namens welke service en met welke API-key wordt verzonden; mTLS stelt vast welk systeem de verbinding opzet.
+6. **Het verkeer loopt rechtstreeks tussen het NMC en NotifyNL**, zonder FSC en zonder een voorziening van het platform die mTLS namens de applicatie uitvoert.
+
+### Per netwerkpad
+
+| | Verkeer van buiten Logius | Verkeer binnen Logius |
+|---|---|---|
+| Route | Internet: het publieke adres van NotifyNL en het publiek bereikbare callback-pad van het NMC | Adressen binnen de LPC |
+| Uitgaand (NMC naar NotifyNL) | Clientcertificaat van het NMC, servercertificaat van NotifyNL gevalideerd | Hetzelfde |
+| Inkomend (NotifyNL naar NMC) | Clientcertificaat van NotifyNL, afgedwongen op het callback-adres | Hetzelfde |
+| Publiek callback-pad | Blijft nodig; zonder clientcertificaat van NotifyNL komt geen verzoek voorbij de TLS-handshake | Vervalt |
+| Bescherming op netwerkniveau | Aanroeplimiet op de ingress (ADR 0024) | Geen vervanging van mTLS: het netwerk telt niet als beveiligingsmaatregel |
+
+### Technische oplossingen
+
+| Onderdeel | Oplossing |
+|---|---|
+| Clientcertificaat van het NMC | De REST-client naar NotifyNL gebruikt de benoemde TLS-configuratie `notify` van Quarkus. Die krijgt een key store met het clientcertificaat en de private sleutel, en een trust store met de uitgever van het servercertificaat van NotifyNL. `trust-all` vervalt. |
+| Private sleutel van het NMC | Een secret in de secretsvoorziening van het platform, naast de API-key van NotifyNL en het callback-token. |
+| Clientcertificaat op de callback | De component die TLS voor het callback-adres beëindigt, vraagt een clientcertificaat, valideert de keten en het subject en stuurt alleen dan door naar het NMC. Het callback-pad van het NMC is alleen via die component bereikbaar. |
+| Eigen adres voor de callback | Clientauthenticatie wordt in de TLS-handshake afgedwongen, voordat het pad van het verzoek bekend is. De callback krijgt daarom een eigen hostname met een eigen listener, gescheiden van adressen waarop geen clientcertificaat wordt gevraagd. |
+| Kant van NotifyNL | NotifyNL dwingt het clientcertificaat van het NMC af op de API en toont het eigen clientcertificaat bij elke delivery receipt. De inrichting ligt bij het beheerteam van NotifyNL. |
+| Vernieuwing | PKIoverheid-certificaten worden per looptijd handmatig vernieuwd, met een nieuw sleutelpaar (ADR 0032). De controle op het subject in plaats van op één vast certificaat maakt dat een vernieuwd certificaat zonder wijziging aan de andere kant wordt geaccepteerd. |
+
+## Alternatieven
+
+### 1. FSC in beide richtingen
+
+NotifyNL zou als service op een FSC-inway staan en het NMC zou via een outway aanroepen; voor de delivery receipts andersom. FSC levert mTLS met PKIoverheid-certificaten en sluit aan op besluit 5 uit ADR 0025.
+
+Niet gekozen. FSC is de ontsluiting naar afnemers van een backendsysteem. Het NMC en NotifyNL vormen samen de Notificatiedienst; aan elke kant van deze koppeling staat precies één systeem. FSC vraagt hier per richting een inway, een outway en een contract, en maakt NotifyNL afhankelijk van een eigen outway om delivery receipts te kunnen afleveren, terwijl de callback van NotifyNL alleen een URL en een bearer-token kent. Daar staat geen autorisatie tegenover die het clientcertificaat met de subjectcontrole niet al geeft.
+
+### 2. mTLS door het platform binnen Logius, eigen mTLS alleen daarbuiten
+
+Binnen de LPC zou een voorziening van het platform, zoals een service mesh, het verkeer tussen de workloads versleutelen en wederzijds authenticeren. Alleen het verkeer over internet zou dan eigen clientcertificaten gebruiken.
+
+Niet gekozen. Dit geeft twee oplossingen voor dezelfde koppeling: de omgevingen buiten Logius testen dan een andere beveiliging dan productie gebruikt. Het werkt bovendien alleen als het NMC en NotifyNL binnen dezelfde voorziening van het platform vallen, en de identiteit van de wederpartij wordt dan door het platform uitgegeven, buiten het beheer van beide teams.
+
+## Consequences
+
+* De authenticatie van beide koppelingen steunt op twee factoren: het certificaat op de verbinding en het secret in het verzoek. Een gelekte API-key of een gelekt callback-token is zonder de private sleutel niet bruikbaar.
+* Voor de koppeling tussen het NMC en NotifyNL is het open besluit uit ADR 0025 hiermee genomen: dit verkeer loopt niet over FSC. Voor de overige koppelingen tussen componenten blijft dat besluit open.
+* Zodra beide systemen binnen Logius draaien, heeft het NMC naast de inway geen publiek bereikbaar endpoint meer, in lijn met besluit 5 uit ADR 0025. Tot dat moment blijft het callback-adres vanaf internet bereikbaar, met mTLS als toegangseis.
+* Het NMC krijgt er een secret bij (de private sleutel van het clientcertificaat) en een certificaat met een vervaldatum. De vervaldatum valt onder de bewaking uit ADR 0032.
+* Een verlopen of geweigerd certificaat stopt het verzenden en de delivery receipts tegelijk. Het NMC behandelt dat als een storing bij NotifyNL: de verzendtaken wachten en worden hervat, en de Afleverstatus-navraag haalt de statussen op van pogingen waarvoor geen receipt is binnengekomen.
+* Een geweigerde TLS-handshake op de callback bereikt het NMC niet en telt dus niet mee in de metriek voor afgewezen receipts. De component die TLS beëindigt, levert die signalering.
+* De certificaten van het NMC en NotifyNL worden op verschillende momenten vernieuwd. Verandert bij een vernieuwing het subject of de uitgever, dan moet de andere kant haar controle aanpassen voordat het nieuwe certificaat in gebruik gaat.
+* De callback heeft een eigen hostname nodig, met een eigen certificaat en een eigen registratie bij NotifyNL.
+
+### Buiten deze beslissing
+
+* De servercertificaten van de API van NotifyNL en van het callback-adres van het NMC.
+* Welke certificaten de omgevingen buiten productie gebruiken.
+* Welke component op de LPC TLS voor het callback-adres beëindigt en over welke adressen het verkeer binnen de LPC loopt.
+* mTLS op de overige koppelingen van het NMC.
+
+## Verwijzingen
+
+* [notificatiedocs §06 Software architectuur](../notificatiedocs/06-software-architectuur.md)
+* [notificatiedocs §14 Productiegereedheid](../notificatiedocs/14-productiegereedheid.md)
+* [Digikoppeling Beveiligingstandaarden en voorschriften 3.0.1](https://gitdocumentatie.logius.nl/publicatie/dk/beveilig/3.0.1/): TLS001, TLS002 en PKI005
+* [GOV.UK Notify REST API](https://docs.notifications.service.gov.uk/rest-api.html): authenticatie en callbacks
+* [Quarkus TLS registry](https://quarkus.io/guides/tls-registry-reference): benoemde TLS-configuraties met key store en trust store
+* [FSC, Federated Service Connectivity](https://fsc-standaard.nl/): inway, outway en contracten

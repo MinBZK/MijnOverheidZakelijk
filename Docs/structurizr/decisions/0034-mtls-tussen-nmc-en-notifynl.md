@@ -24,7 +24,7 @@ Het Notificatie Management Component (NMC) heeft twee koppelingen met NotifyNL (
 
 Over beide koppelingen lopen persoonsgegevens. Bij het verzenden zijn dat het e-mailadres van de ontvanger en de waarden voor de personalisation, die vrije inhoud van de dienstverlener zijn. De delivery receipt bevat het e-mailadres. Een identificerend nummer zoals het BSN stuurt het NMC niet als eigen veld naar NotifyNL.
 
-Beide koppelingen gebruiken TLS met alleen een servercertificaat. Wie de aanroeper is, blijkt uitsluitend uit de JWT en het bearer-token. Een gelekt secret is daarmee genoeg om zich als het NMC of als NotifyNL voor te doen.
+Zonder mTLS blijkt alleen uit de JWT en het bearer-token wie de aanroeper is. Een gelekt secret is dan genoeg om zich als het NMC of als NotifyNL voor te doen.
 Voor de landing in productie is het uitgangspunt dat verbindingen waarover persoonsgegevens lopen met mTLS zijn beveiligd: beide kanten tonen in de TLS-handshake een certificaat. De BIO-toetsing uit ADR 0025 is daarop de formele toets. mTLS kan op de koppelvlakken van NotifyNL worden ingeschakeld.
 
 Het verkeer tussen het NMC en NotifyNL loopt over twee soorten netwerkpaden:

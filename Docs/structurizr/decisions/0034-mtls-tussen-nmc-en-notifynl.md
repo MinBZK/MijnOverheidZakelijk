@@ -80,7 +80,7 @@ Niet gekozen. FSC is de ontsluiting naar afnemers van een backendsysteem. Het NM
 
 Binnen de LPC zou een voorziening van het platform, zoals een service mesh, het verkeer tussen de workloads versleutelen en wederzijds authenticeren. Alleen het verkeer over internet zou dan eigen clientcertificaten gebruiken.
 
-Niet gekozen. Dit geeft twee oplossingen voor dezelfde koppeling: de omgevingen buiten Logius testen dan een andere beveiliging dan productie gebruikt. Het werkt bovendien alleen als het NMC en NotifyNL binnen dezelfde voorziening van het platform vallen, en de identiteit van de wederpartij wordt dan door het platform uitgegeven, buiten het beheer van beide teams.
+Niet gekozen. Dit hangt af van een voorziening die het platform moet aanbieden en waar het NMC en NotifyNL allebei onder moeten vallen. Het dekt alleen verkeer binnen de LPC; over internet is het niet te gebruiken. De identiteit van de wederpartij wordt bovendien door het platform uitgegeven, buiten het beheer van beide teams.
 
 ## Consequences
 

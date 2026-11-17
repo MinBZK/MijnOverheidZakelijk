@@ -41,7 +41,7 @@ De callback van NotifyNL kent twee instellingen: een URL en een bearer-token.
 Het NMC en NotifyNL communiceren in beide richtingen over mTLS. Dat geldt voor het verkeer van buiten Logius en voor het verkeer binnen Logius, met dezelfde oplossing.
 
 1. **Uitgaand toont het NMC een clientcertificaat.** NotifyNL accepteert aanroepen voor de NotifyNL-services van het NMC alleen over een verbinding met dat certificaat. Het NMC valideert het servercertificaat van NotifyNL.
-2. **Inkomend toont NotifyNL een clientcertificaat.** Een verbinding naar het callback-adres zonder geldig clientcertificaat van NotifyNL wordt in de TLS-handshake geweigerd.
+2. **Inkomend toont NotifyNL een clientcertificaat.** Een verzoek op het callback-pad zonder geldig clientcertificaat van NotifyNL wordt geweigerd.
 3. **De clientcertificaten komen van een eigen CA die cert-manager beheert.** De CA geeft alleen de clientcertificaten voor deze koppeling uit. cert-manager vernieuwt ze automatisch, met een korte looptijd.
 4. **Beide kanten controleren de keten en het subject.** Het certificaat van de ander moet door de eigen CA zijn uitgegeven en het subject moet dat van de wederpartij zijn. Alleen de keten controleren is onvoldoende, omdat het NMC en NotifyNL zich dan met elkaars certificaat kunnen aanmelden.
 5. **mTLS komt bovenop de bestaande authenticatie.** De JWT op de uitgaande aanroepen en het bearer-token op de callback blijven. De JWT bepaalt bij NotifyNL namens welke service en met welke API-key wordt verzonden; mTLS stelt vast welk systeem de verbinding opzet.
@@ -54,7 +54,7 @@ Het NMC en NotifyNL communiceren in beide richtingen over mTLS. Dat geldt voor h
 | Route | Internet: het publieke adres van NotifyNL en het publiek bereikbare callback-pad van het NMC | Adressen binnen de LPC |
 | Uitgaand (NMC naar NotifyNL) | Clientcertificaat van het NMC, servercertificaat van NotifyNL gevalideerd | Hetzelfde |
 | Inkomend (NotifyNL naar NMC) | Clientcertificaat van NotifyNL, afgedwongen op het callback-adres | Hetzelfde |
-| Publiek callback-pad | Blijft nodig; zonder clientcertificaat van NotifyNL komt geen verzoek voorbij de TLS-handshake | NotifyNL bereikt de callback op een adres binnen de LPC, ook daar met clientcertificaat |
+| Publiek callback-pad | Blijft nodig; zonder clientcertificaat van NotifyNL wordt een verzoek op het callback-pad geweigerd | NotifyNL bereikt de callback op een adres binnen de LPC, ook daar met clientcertificaat |
 | Bescherming op netwerkniveau | Aanroeplimiet op de ingress (ADR 0024) | Geen vervanging van mTLS: het netwerk telt niet als beveiligingsmaatregel |
 
 ### Technische oplossingen
@@ -64,8 +64,8 @@ Het NMC en NotifyNL communiceren in beide richtingen over mTLS. Dat geldt voor h
 | Clientcertificaat van het NMC | De REST-client naar NotifyNL gebruikt de benoemde TLS-configuratie `notify` van Quarkus. Die krijgt een key store met het clientcertificaat en de private sleutel, en een trust store met de uitgever van het servercertificaat van NotifyNL. |
 | Eigen CA | Een `Issuer` van cert-manager met een eigen CA-certificaat. De private sleutel van de CA is een secret. |
 | Private sleutel van het NMC | cert-manager schrijft het clientcertificaat en de private sleutel als secret weg; het NMC leest ze daaruit. |
-| Clientcertificaat op de callback | De component die TLS voor het callback-adres beëindigt, vraagt een clientcertificaat, valideert de keten en het subject en stuurt alleen dan door naar het NMC. Het callback-pad van het NMC is alleen via die component bereikbaar. |
-| Eigen adres voor de callback | Clientauthenticatie wordt in de TLS-handshake afgedwongen, voordat het pad van het verzoek bekend is. De callback krijgt daarom een eigen hostname met een eigen listener, gescheiden van adressen waarop geen clientcertificaat wordt gevraagd. |
+| Clientcertificaat op de callback | De component die TLS voor het NMC beëindigt, vraagt een clientcertificaat, valideert de keten en het subject en stuurt een verzoek op het callback-pad alleen dan door naar het NMC. Het callback-pad van het NMC is alleen via die component bereikbaar. |
+| Adres van de callback | De callback staat op dezelfde hostname als de overige paden van het NMC, op een eigen pad. Het clientcertificaat wordt in de TLS-handshake gevraagd, voordat het pad van het verzoek bekend is; de eis dat het er is, geldt alleen op het callback-pad. |
 | Kant van NotifyNL | NotifyNL vertrouwt de eigen CA, dwingt het clientcertificaat van het NMC af op de API en toont bij elke delivery receipt een eigen clientcertificaat van die CA. De inrichting ligt bij het beheerteam van NotifyNL. |
 | Vernieuwing | cert-manager vernieuwt de certificaten automatisch vóór de vervaldatum, met een nieuw sleutelpaar. Het NMC laadt een vernieuwd certificaat zonder herstart (`reload-period` van de TLS-configuratie). De controle op het subject in plaats van op één vast certificaat maakt dat een vernieuwd certificaat zonder wijziging aan de andere kant wordt geaccepteerd. |
 
@@ -91,15 +91,13 @@ Niet gekozen. Dit geeft twee oplossingen voor dezelfde koppeling: de omgevingen 
 * Er komt een eigen CA bij. Wie de private sleutel van die CA beheert, wordt vastgelegd in het cryptografiebeleid, zoals de BIO vraagt. De vervaldata van de CA en van de clientcertificaten vallen onder de bewaking uit ADR 0032.
 * De koppeling hangt af van cert-manager op het platform en van de afspraak met het beheerteam van NotifyNL om de eigen CA te vertrouwen.
 * Een verlopen of geweigerd certificaat stopt het verzenden en de delivery receipts tegelijk. Het NMC behandelt dat als een storing bij NotifyNL: de verzendtaken wachten en worden hervat, en de Afleverstatus-navraag haalt de statussen op van pogingen waarvoor geen receipt is binnengekomen.
-* Een geweigerde TLS-handshake op de callback bereikt het NMC niet en telt dus niet mee in de metriek voor afgewezen receipts. De component die TLS beëindigt, levert die signalering.
+* Een verzoek dat om het clientcertificaat wordt geweigerd, bereikt het NMC niet en telt dus niet mee in de metriek voor afgewezen receipts. De component die TLS beëindigt, levert die signalering.
 * Wordt de CA vervangen of verandert een subject, dan moet de andere kant haar controle aanpassen voordat het nieuwe certificaat in gebruik gaat.
-* De callback heeft een eigen hostname nodig, met een eigen certificaat en een eigen registratie bij NotifyNL.
-
 ### Buiten deze beslissing
 
 * De servercertificaten van de API van NotifyNL en van het callback-adres van het NMC.
 * Welke certificaten de omgevingen buiten productie gebruiken.
-* Welke component op de LPC TLS voor het callback-adres beëindigt en over welke adressen het verkeer binnen de LPC loopt.
+* Welke component op de LPC TLS voor het NMC beëindigt en over welke adressen het verkeer binnen de LPC loopt.
 * mTLS op de overige koppelingen van het NMC.
 
 ## Verwijzingen

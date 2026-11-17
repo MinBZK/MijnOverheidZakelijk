@@ -4,7 +4,7 @@ Datum: 2026-10-08
 
 ## Status
 
-Proposed
+Accepted
 
 ## Gerelateerde ADRs
 
@@ -17,7 +17,7 @@ Proposed
 
 ## Context
 
-Dienstverleners roepen het Notificatie Management Component (NMC) aan over FSC (ADR 0020, ADR 0024). FSC is netwerkonafhankelijk. De beveiliging zit in mTLS (binnen het Digikoppeling REST API-profiel met PKIoverheid-certificaten en het OIN als PeerID), in de contracten (grants) en in de Directory. FSC is een verplicht onderdeel van het Digikoppeling REST API-profiel, en Digikoppeling staat zowel internet als Diginetwerk toe. Voor de FSC-inway van het NMC moet daarom een netwerk gekozen worden: internet of Diginetwerk.
+Dienstverleners roepen het Notificatie Management Component (NMC) aan over FSC (ADR 0020, ADR 0024). FSC is netwerkonafhankelijk. De beveiliging zit in mTLS (binnen het Digikoppeling REST API-profiel met PKIoverheid-certificaten en het OIN als PeerID), in de contracten (grants) en in de Directory. FSC is een verplicht onderdeel van het Digikoppeling REST API-profiel, en Digikoppeling staat zowel internet als Diginetwerk toe. Voor de FSC-componenten van het NMC moet daarom een netwerk gekozen worden: internet of Diginetwerk. Dat geldt voor de inway, waarop dienstverleners het NMC aanroepen, en voor de outway, waarmee het NMC zelf diensten over FSC aanroept, zoals de Profielservice (ADR 0024).
 
 De criteria voor die keuze, toegepast op het NMC:
 
@@ -32,7 +32,7 @@ De criteria voor die keuze, toegepast op het NMC:
 
 ## Decision
 
-Het NMC wordt op FSC ontsloten via **internet**. De FSC-inway van de Notificatiedienst is vanaf internet bereikbaar en staat met dat adres in de Directory. Er komt geen inway op Diginetwerk.
+Het NMC wordt op FSC ontsloten via **internet**. De FSC-inway van de Notificatiedienst is vanaf internet bereikbaar en staat met dat adres in de Directory. De outway bereikt de inways van andere peers via internet. Er komt geen inway of outway op Diginetwerk.
 
 Vier punten geven samen de doorslag; geen ervan is op zichzelf beslissend:
 
@@ -51,6 +51,7 @@ Deze keuze wordt heroverwogen zodra een dienstverlener of keten Diginetwerk als 
 * Er is geen aansluiting bij en geen netwerkchange via een koppelnetwerkaanbieder. Een nieuwe dienstverlener of omgeving sluit aan met een certificaat, een Directory-registratie en een FSC-contract.
 * De aansluitvoorwaarden van de Notificatiedienst verbieden bijzondere persoonsgegevens (artikel 9 AVG) en strafrechtelijke gegevens (artikel 10 AVG) in de personalisation. Gewone persoonsgegevens zoals naam, aanhef en zaaknummer zijn toegestaan. Een dienstverlener die bijzondere of strafrechtelijke gegevens toch nodig heeft, is aanleiding om deze keuze te heroverwegen.
 * Dienstverleners die alleen via Diginetwerk naar buiten kunnen, hebben een outway nodig die internet bereikt.
+* Een dienst die alleen op Diginetwerk is ontsloten, is voor de outway van het NMC niet bereikbaar.
 
 ## Verwijzingen
 

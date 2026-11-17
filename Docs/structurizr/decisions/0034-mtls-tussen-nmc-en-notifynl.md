@@ -24,8 +24,7 @@ Het Notificatie Management Component (NMC) heeft twee koppelingen met NotifyNL (
 
 Over beide koppelingen lopen persoonsgegevens. Bij het verzenden zijn dat het e-mailadres van de ontvanger en de waarden voor de personalisation, die vrije inhoud van de dienstverlener zijn. De delivery receipt bevat het e-mailadres. Een identificerend nummer zoals het BSN stuurt het NMC niet als eigen veld naar NotifyNL.
 
-Beide koppelingen gebruiken TLS met alleen een servercertificaat. Wie de aanroeper is, blijkt uitsluitend uit de JWT en het bearer-token. Een gelekt secret is daarmee genoeg om zich als het NMC of als NotifyNL voor te doen. In de configuratie van het NMC accepteert de REST-client naar NotifyNL bovendien elk servercertificaat (`quarkus.tls.notify.trust-all=true`), in afwachting van dit besluit.
-
+Beide koppelingen gebruiken TLS met alleen een servercertificaat. Wie de aanroeper is, blijkt uitsluitend uit de JWT en het bearer-token. Een gelekt secret is daarmee genoeg om zich als het NMC of als NotifyNL voor te doen.
 Voor de landing in productie is het uitgangspunt dat verbindingen waarover persoonsgegevens lopen met mTLS zijn beveiligd: beide kanten tonen in de TLS-handshake een certificaat. De BIO-toetsing uit ADR 0025 is daarop de formele toets. mTLS kan op de koppelvlakken van NotifyNL worden ingeschakeld.
 
 Het verkeer tussen het NMC en NotifyNL loopt over twee soorten netwerkpaden:
@@ -62,7 +61,7 @@ Het NMC en NotifyNL communiceren in beide richtingen over mTLS. Dat geldt voor h
 
 | Onderdeel | Oplossing |
 |---|---|
-| Clientcertificaat van het NMC | De REST-client naar NotifyNL gebruikt de benoemde TLS-configuratie `notify` van Quarkus. Die krijgt een key store met het clientcertificaat en de private sleutel, en een trust store met de uitgever van het servercertificaat van NotifyNL. `trust-all` vervalt. |
+| Clientcertificaat van het NMC | De REST-client naar NotifyNL gebruikt de benoemde TLS-configuratie `notify` van Quarkus. Die krijgt een key store met het clientcertificaat en de private sleutel, en een trust store met de uitgever van het servercertificaat van NotifyNL. |
 | Eigen CA | Een `Issuer` van cert-manager met een eigen CA-certificaat. De private sleutel van de CA is een secret. |
 | Private sleutel van het NMC | cert-manager schrijft het clientcertificaat en de private sleutel als secret weg; het NMC leest ze daaruit. |
 | Clientcertificaat op de callback | De component die TLS voor het callback-adres beëindigt, vraagt een clientcertificaat, valideert de keten en het subject en stuurt alleen dan door naar het NMC. Het callback-pad van het NMC is alleen via die component bereikbaar. |

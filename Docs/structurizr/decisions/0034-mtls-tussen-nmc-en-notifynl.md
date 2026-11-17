@@ -54,7 +54,7 @@ Het NMC en NotifyNL communiceren in beide richtingen over mTLS. Dat geldt voor h
 | Route | Internet: het publieke adres van NotifyNL en het publiek bereikbare callback-pad van het NMC | Adressen binnen de LPC |
 | Uitgaand (NMC naar NotifyNL) | Clientcertificaat van het NMC, servercertificaat van NotifyNL gevalideerd | Hetzelfde |
 | Inkomend (NotifyNL naar NMC) | Clientcertificaat van NotifyNL, afgedwongen op het callback-adres | Hetzelfde |
-| Publiek callback-pad | Blijft nodig; zonder clientcertificaat van NotifyNL komt geen verzoek voorbij de TLS-handshake | Vervalt |
+| Publiek callback-pad | Blijft nodig; zonder clientcertificaat van NotifyNL komt geen verzoek voorbij de TLS-handshake | NotifyNL bereikt de callback op een adres binnen de LPC, ook daar met clientcertificaat |
 | Bescherming op netwerkniveau | Aanroeplimiet op de ingress (ADR 0024) | Geen vervanging van mTLS: het netwerk telt niet als beveiligingsmaatregel |
 
 ### Technische oplossingen

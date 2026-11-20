@@ -49,7 +49,54 @@ kubectl port-forward service/postgres-service 5432:5432
 
 ### Certificaten
 
-Voor de omgevingen van MOZ hebben we nog geen certificaten aangevraagd.
+MOZa gebruikt twee soorten TLS-certificaten. De afweging staat in [ADR 0032](../decisions/0032-acme-voor-certificaatbeheer.md).
+
+* **Publiek vertrouwde certificaten** voor de publieke hostnamen van `mijnoverheidzakelijk.nl`. Deze worden automatisch aangevraagd en vernieuwd met ACME, via cert-manager en Let's Encrypt.
+* **PKIoverheid-certificaten** (private root) voor de inway en outway van FSC, en voor mutual TLS naar NotifyNL als die partij dat vereist. Deze worden handmatig aangevraagd bij een TSP en als sealed secret geïnstalleerd.
+
+**Publieke certificaten: ACME via cert-manager**
+
+Op acceptatie is dit zo ingericht:
+
+* Een `Issuer` voor Let's Encrypt met de HTTP-01-challenge via een tijdelijke HTTPRoute op de gateway. De solver-pods dragen de labels die de netwerkpolicies van het Standaard Platform vereisen. De ACME-accountsleutel staat in een eigen secret.
+* Eén `Certificate` met alle publieke hostnamen, met als doel het secret waarnaar de listeners van de gateway verwijzen, en vernieuwing 30 dagen vóór de vervaldatum.
+
+Een hostname toevoegen:
+
+1. Laat de hostname allowlisten bij het Standaard Platform en zet het DNS-record naar de edge van het platform.
+2. Zet de hostname in een vaste HTTPRoute op de gateway; het platform maakt op basis daarvan de edge-entry aan.
+3. Controleer dat de hostname van buiten bereikbaar is, bijvoorbeeld met `curl -si http://<hostname>/.well-known/acme-challenge/test`. Een 404 van envoy betekent dat de edge-entry er nog niet is.
+4. Valideer de hostname eerst tegen de staging-omgeving van Let's Encrypt en voeg hem daarna toe aan de `Certificate`. Let's Encrypt beperkt het aantal mislukte validaties per hostname per uur.
+
+Een vastgelopen aanvraag:
+
+```shell
+kubectl get challenges -n <namespace>
+kubectl describe challenge -n <namespace> <naam>
+```
+
+De `Reason` in de challenge zegt waar het hangt: `no such host` is een ontbrekend DNS-record, `wrong status code '404'` is een edge zonder entry voor de hostname of een solver-route die niet aan de gateway hangt, een timeout is een edge die niet doorstuurt. Zolang één hostname in de `Certificate` niet valideert, wordt het hele certificaat niet uitgegeven. cert-manager probeert het vanzelf opnieuw zodra de oorzaak is weggenomen.
+
+Vervangen en intrekken: cert-manager bewerkt geen certificaten en trekt ze niet in. Een certificaat opnieuw laten uitgeven gebeurt door het secret te verwijderen. Een intrekking bij Let's Encrypt gebeurt met een losse ACME-client en de accountsleutel. Een nieuwe accountsleutel ontstaat door het secret met de accountsleutel te verwijderen; cert-manager registreert dan een nieuw account.
+
+Bewaking: Gatus controleert de leeftijd van de certificaten op de publieke hostnamen en meldt een certificaat dat zijn vervaldatum nadert, zodat een vastgelopen vernieuwing ruim vóór de vervaldatum zichtbaar is.
+
+Openstaand punt:
+
+* Opsplitsen: één `Certificate` per omgeving of per hostname in plaats van één `Certificate` met alle hostnamen, en een aparte `Issuer` voor de staging-omgeving van Let's Encrypt, zodat één onbereikbare hostname de vernieuwing van de andere niet blokkeert.
+
+**PKIoverheid-certificaten: handmatig via de TSP**
+
+De TSP's van PKIoverheid (KPN, Digidentity, DigiCert) geven servercertificaten alleen uit via hun portaal, aan een geregistreerde certificaatbeheerder, op basis van een CSR. Geen van hen biedt ACME. De looptijd is een jaar. Bij vernieuwing eist PKIoverheid een nieuw sleutelpaar.
+
+Per certificaat, bij eerste aanvraag en bij elke vernieuwing:
+
+1. Genereer een nieuw sleutelpaar en een CSR met de hostname en het OIN van MOZa. De key moet unencrypted zijn.
+2. Dien de CSR in via het portaal van de TSP en download het certificaat met de keten.
+3. Installeer certificaat en key als sealed secret, zie "Certificaat als Sealed Secret installeren op OpenShift" hieronder. Gebruik dezelfde secretnaam als het bestaande secret, zodat de FSC-component het nieuwe certificaat na een herstart oppakt.
+4. Herstart de component die het secret gebruikt en controleer de verbinding.
+
+De vervaldatum van elk PKIoverheid-certificaat valt onder dezelfde Gatus-bewaking als de ACME-certificaten, met een voorlooptijd die de doorlooptijd van de TSP dekt.
 
 ### Secrets
 
@@ -88,9 +135,9 @@ Voor het installeren van een certificaat in OpenShift is een .key en een .crt be
    1. LET OP: op de productie namespaces kan dit commando alleen worden uitgevoerd onder account van technisch applicatie
       beheer met de toevoeging: `--as logius-moz-tab`
 
-**Certificaten bewerken**
+**Certificaten vervangen**
 
-- TODO: hier info over hoe certificaten te bewerken
+Een bestaand certificaat wordt vervangen door een nieuw sealed secret met dezelfde naam toe te passen en de component die het gebruikt te herstarten. Certificaten van cert-manager worden niet met de hand vervangen; zie "Certificaten" hierboven.
 
 ### Monitoring
 
